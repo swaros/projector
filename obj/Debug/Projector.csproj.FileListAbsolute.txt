@@ -1,0 +1,107 @@
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\bin\Debug\Projector.exe
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\bin\Debug\Projector.pdb
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\ResolveAssemblyReference.cache
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.Properties.Resources.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.csproj.GenerateResource.Cache
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.exe
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.pdb
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.ProjectorForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.ProfilSelect.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.setupForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.mysqlWatch.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.MysqlSensor.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.queryBrowser.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.MdiForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.copyDb.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.prozessMsg.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.ShowDiff.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.SetTimer.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.UserTextInput.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.PasteListView.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.ScriptExecuter.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\bin\Debug\Projector.exe.manifest
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\bin\Debug\Projector.application
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.exe.manifest
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.application
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\bin\Debug\MySql.Data.dll
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2008\Projects\Projector\Projector\obj\Debug\Projector.EditMacro.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.exe
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.pdb
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe.manifest
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.application
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.pdb
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResolveAssemblyReference.cache
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.Properties.Resources.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.exe.manifest
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.application
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.copyDb.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.EditMacro.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProjectorForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MdiForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MysqlSensor.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.mysqlWatch.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PasteListView.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProfilSelect.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.prozessMsg.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.queryBrowser.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptExecuter.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.SetTimer.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.setupForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ShowDiff.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.UserTextInput.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.4.tlog
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.DiffResultWindow.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.StructDiffWindow.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProfilGroup.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.GroupQuery.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TrustInfo.xml
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csproj.ResolveComReference.cache
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ImportSettings.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.SqlExecConfirm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TableStructForm.resources
+C:\Dokumente und Einstellungen\tziegler\Eigene Dateien\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CretaeInsertSelect.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csproj.ResolveComReference.cache
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.exe
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.pdb
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe.manifest
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.application
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.pdb
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.copyDb.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CretaeInsertSelect.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.DiffResultWindow.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.EditMacro.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProjectorForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.GroupQuery.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ImportSettings.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MdiForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MysqlSensor.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.mysqlWatch.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PasteListView.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProfilGroup.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ProfilSelect.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.Properties.Resources.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.prozessMsg.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.queryBrowser.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptExecuter.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.SetTimer.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.setupForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ShowDiff.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.SqlExecConfirm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.StructDiffWindow.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TableStructForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.UserTextInput.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.4.tlog
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResGen.read.1.tlog
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResGen.write.1.tlog
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TrustInfo.xml
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.exe.manifest
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.application
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CreateStructForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PlaceholderEditForm.resources

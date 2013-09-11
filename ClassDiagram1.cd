@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Projector.copyDb" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>d281E/3FHf1/tHQnAPm2e36DV+Q5z067RTy+i6kWxV0=</HashCode>
+      <FileName>copyDb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.DataContent" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.EditMacro" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAEAACAAAgAAAACAQAACAEA4AAAAADAoBQAAIAA=</HashCode>
+      <FileName>EditMacro.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ProjectorForm" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQAEAAlAZGACCA0kIEGQEAgDAaCUAgAQQAgAAHgAABE=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ListviewForWorker" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>ListviewForWorker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ListViewWorker" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAACAAAAEAAAEAAAgAQAAACAAQIAAQAA=</HashCode>
+      <FileName>ListViewWorker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MacroFunctions" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MacroFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MdiForm" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BwQ0EAMgACEFIUhAAACAINgGAKKICAAVAEAAAIIIAAE=</HashCode>
+      <FileName>MdiForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MysqlFleet" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MysqlFleet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MysqlHandler" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IkBACBBABAAAAoBAjAABQQAAwOAEAAoAAAwoEBEpAAA=</HashCode>
+      <FileName>MysqlHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MysqlSensor" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IghAAEkAIGAAAIRBoVeAgF6CQ4gtIQQgIEAAABBgEAg=</HashCode>
+      <FileName>MysqlSensor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MysqlStruct" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQgAAAAAACAAQABAiAIAAAAggFAAABEAIEBAEgAAE=</HashCode>
+      <FileName>MysqlStruct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.MysqlTools" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACBBACEAAAAAAgBBggwhIAAAAAQEAAAAAAQAAEAAgAA=</HashCode>
+      <FileName>MysqlTools.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.mysqlTrigger" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQEQAAgAAAAAAAAAAAAYAAAA=</HashCode>
+      <FileName>mysqlTrigger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.mysqlWatch" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>cAxABCAZICBwgiYAAICIACAGAiECCQAQsGAAC0EADGU=</HashCode>
+      <FileName>mysqlWatch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.NumberFlow" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBgAAAAIAAAAAAAAACIIIAQAAAAAQCBCEABAQAICAAA=</HashCode>
+      <FileName>NumberFlow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ObjectCloner" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ObjectCloner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.PanelDrawing" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAABEAAAABCgAAIACAEAABAAAAAAAQAAAAEBABA=</HashCode>
+      <FileName>PanelDrawing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.PasteListView" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAACAAABAAAACAAAADAAAYAAAAACAAAAAAAAA=</HashCode>
+      <FileName>PasteListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.Profil" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAgAAAAAAgAAQCAAACAAAAEAAABAAAEgAAAAAA=</HashCode>
+      <FileName>Profil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ProfilSelect" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAhQAISAAgAAAAAKCAABCAwAAAACAAGAAgAAABBA=</HashCode>
+      <FileName>ProfilSelect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.Program" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.prozessMsg" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAAAAAACAAAACAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>prozessMsg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.queryBrowser" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>NgK3cv9rkCwAoLRTwGejBloXTjCdCTbC+fBSB7CjRQs=</HashCode>
+      <FileName>queryBrowser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ScriptExecuter" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEACAAAEUAIECAAGACAAAAAAAEAIAIAQAACgE=</HashCode>
+      <FileName>ScriptExecuter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.Serializer" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.SetTimer" Collapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQACAAAAAAAACAAAACAAAYAAAAACAAAgAAAAg=</HashCode>
+      <FileName>SetTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.setupForm" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGKQAAQAASAAABAAAhCAACECAAAIBAiAAGgACkIDBBQ=</HashCode>
+      <FileName>setupForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.ShowDiff" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAABACACAAAACABAAAQAAAAAACEAAAAA=</HashCode>
+      <FileName>ShowDiff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.statusResult" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>statusResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.TableProp" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIBAAAAAAAAAAAAAAAAAIgAAAoAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>TableProp.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Projector.TablePropHandler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAEAAABAAAAAAAAAAAAAAgAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TablePropHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Projector.TextParser" Collapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIWAAEABAAAAkAIAAAwEiAAAAABRAQICAAAAgAAQ=</HashCode>
+      <FileName>TextParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.UserTextInput" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACAAAACAAAYAAAAAiAAAAAAAAA=</HashCode>
+      <FileName>UserTextInput.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.XmlSetup" Collapsed="true">
+    <Position X="4.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BCEgQQBAAAAAACAAJABEACAAAACAACAAAAAAgAAAAAA=</HashCode>
+      <FileName>XmlSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.Properties.Resources" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>vQpdJvNLDmewQNFq4aVruyGQCSUeXSCySqEI+iwQWbs=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projector.Properties.Settings" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

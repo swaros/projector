@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D3E0468A-9E0B-4E68-B0B1-EC5C44F32AD8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Projector</RootNamespace>
+    <AssemblyName>Projector</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>1CDD04C30104BDB933CCFD226D8F24B5BCB7DB9A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Projector_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <ApplicationIcon>1259675516_Synchronize.ico</ApplicationIcon>
+    <PublishUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
+    <ApplicationRevision>52</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.0.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoCompletion.cs" />
+    <Compile Include="BookmarkManager.cs" />
+    <Compile Include="CmdEvent.cs" />
+    <Compile Include="Combined1.g3.lexer.cs" />
+    <Compile Include="Combined1.g3.parser.cs" />
+    <Compile Include="CommandLineParser.cs" />
+    <Compile Include="ConfigProfil.cs" />
+    <Compile Include="copyDb.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="copyDb.Designer.cs">
+      <DependentUpon>copyDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateStructForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateStructForm.Designer.cs">
+      <DependentUpon>CreateStructForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreationTemplate.cs" />
+    <Compile Include="CreationTemplateDefinitions.cs" />
+    <Compile Include="CretaeInsertSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CretaeInsertSelect.Designer.cs">
+      <DependentUpon>CretaeInsertSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContent.cs" />
+    <Compile Include="DiffResultWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DiffResultWindow.Designer.cs">
+      <DependentUpon>DiffResultWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditMacro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditMacro.Designer.cs">
+      <DependentUpon>EditMacro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupQuery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupQuery.Designer.cs">
+      <DependentUpon>GroupQuery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HighlighterMysql.cs" />
+    <Compile Include="ImportSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportSettings.Designer.cs">
+      <DependentUpon>ImportSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InsertSelect.cs" />
+    <Compile Include="JoinTable.cs" />
+    <Compile Include="ListviewForWorker.cs" />
+    <Compile Include="ListViewReportContainer.cs" />
+    <Compile Include="ListViewWorker.cs" />
+    <Compile Include="MacroFunctions.cs" />
+    <Compile Include="MdiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MdiForm.Designer.cs">
+      <DependentUpon>MdiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MysqlCreateStruct.cs" />
+    <Compile Include="MysqlCreateStructContainer.cs" />
+    <Compile Include="MysqlExplain.cs" />
+    <Compile Include="MysqlFleet.cs" />
+    <Compile Include="MysqlHandler.cs" />
+    <Compile Include="MysqlIndexType.cs" />
+    <Compile Include="MysqlKeys.cs" />
+    <Compile Include="MysqlKeySet.cs" />
+    <Compile Include="MysqlProcdures.cs" />
+    <Compile Include="MysqlSensor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MysqlSensor.Designer.cs">
+      <DependentUpon>MysqlSensor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MysqlStruct.cs" />
+    <Compile Include="MysqlTools.cs" />
+    <Compile Include="mysqlTrigger.cs" />
+    <Compile Include="mysqlWatch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mysqlWatch.Designer.cs">
+      <DependentUpon>mysqlWatch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NumberFlow.cs" />
+    <Compile Include="ObjectCloner.cs" />
+    <Compile Include="PanelDrawing.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PasteListView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasteListView.Designer.cs">
+      <DependentUpon>PasteListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pattern.cs" />
+    <Compile Include="PatternGroup.cs" />
+    <Compile Include="PatternTypes.cs" />
+    <Compile Include="PatternVarchar.cs" />
+    <Compile Include="PlaceholderEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlaceholderEditForm.Designer.cs">
+      <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlacerHolder.cs" />
+    <Compile Include="Profil.cs" />
+    <Compile Include="ProfilGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilGroup.Designer.cs">
+      <DependentUpon>ProfilGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfilSelect.Designer.cs">
+      <DependentUpon>ProfilSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="copyDb.resx">
+      <DependentUpon>copyDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateStructForm.resx">
+      <DependentUpon>CreateStructForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CretaeInsertSelect.resx">
+      <DependentUpon>CretaeInsertSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DiffResultWindow.resx">
+      <DependentUpon>DiffResultWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditMacro.resx">
+      <DependentUpon>EditMacro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupQuery.resx">
+      <DependentUpon>GroupQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportSettings.resx">
+      <DependentUpon>ImportSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MdiForm.resx">
+      <DependentUpon>MdiForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MysqlSensor.resx">
+      <DependentUpon>MysqlSensor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mysqlWatch.resx">
+      <DependentUpon>mysqlWatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PasteListView.resx">
+      <DependentUpon>PasteListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlaceholderEditForm.resx">
+      <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfilGroup.resx">
+      <DependentUpon>ProfilGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfilSelect.resx">
+      <DependentUpon>ProfilSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="prozessMsg.resx">
+      <DependentUpon>prozessMsg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="queryBrowser.resx">
+      <DependentUpon>queryBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptExecuter.resx">
+      <DependentUpon>ScriptExecuter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetTimer.resx">
+      <DependentUpon>SetTimer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="setupForm.resx">
+      <DependentUpon>setupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowDiff.resx">
+      <DependentUpon>ShowDiff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlExecConfirm.resx">
+      <DependentUpon>SqlExecConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StructDiffWindow.resx">
+      <DependentUpon>StructDiffWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableStructForm.resx">
+      <DependentUpon>TableStructForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserTextInput.resx">
+      <DependentUpon>UserTextInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <Antlr3 Include="Combined1.g3">
+      <Generator>MSBuild:Compile</Generator>
+    </Antlr3>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="prozessMsg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="prozessMsg.Designer.cs">
+      <DependentUpon>prozessMsg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryBookMark.cs" />
+    <Compile Include="queryBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="queryBrowser.Designer.cs">
+      <DependentUpon>queryBrowser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryComposer.cs" />
+    <Compile Include="ScriptExecuter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScriptExecuter.Designer.cs">
+      <DependentUpon>ScriptExecuter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Serializer.cs" />
+    <Compile Include="SetTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetTimer.Designer.cs">
+      <DependentUpon>SetTimer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="setupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="setupForm.Designer.cs">
+      <DependentUpon>setupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShowDiff.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowDiff.Designer.cs">
+      <DependentUpon>ShowDiff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SqlExecConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SqlExecConfirm.Designer.cs">
+      <DependentUpon>SqlExecConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="statusResult.cs" />
+    <Compile Include="StoredProcedure.cs" />
+    <Compile Include="StructDiffWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StructDiffWindow.Designer.cs">
+      <DependentUpon>StructDiffWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableProp.cs" />
+    <Compile Include="TablePropHandler.cs" />
+    <Compile Include="TableStructForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TableStructForm.Designer.cs">
+      <DependentUpon>TableStructForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableToForm.cs" />
+    <Compile Include="TextParser.cs" />
+    <Compile Include="TimeUtil.cs" />
+    <Compile Include="UserTextInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserTextInput.Designer.cs">
+      <DependentUpon>UserTextInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WhereCompareStats.cs" />
+    <Compile Include="XmlDataHandler.cs" />
+    <Compile Include="XmlSetup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\url.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stock_connect-to-url.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapse_expand_all.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_play_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gnome-mime-application-x-sql.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bonobo-component-browser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emblem-money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emblem-people.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emblem-work.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Explorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\face-smile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gnome-fs-server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gnome-mime-application-x-smil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groupevent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\internet-group-chat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Network.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\networksettings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\picgladi.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_playlist_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_perspective.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stock_exit-group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stock_insert-chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\system-config-language.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tool_preferences.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_user_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_user.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\panic_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TRASH_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TRASH_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UNDO_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UNDO_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HOME_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MAIL_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MAIL_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MAIL_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PASTE_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PASTE_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PASTE_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PRINT_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PRINT_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PRINT_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\REDO_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\REDO_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\REDO_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAVE_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAVE_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SAVE_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TRASH_16.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disc-media_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disc-media_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disc-media_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\documents_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\documents_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\documents_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-closed_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-closed_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-closed_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-open_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-open_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-open_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HOME_24.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-down_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-down_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-down_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-forward_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-forward_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-up_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-up_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-up_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\applications_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\applications_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-back_24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-back_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UNDO_32.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-back_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-forward_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\applications_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\home_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HOME_161.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\computer_161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-back_161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow-forward_161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\applications_161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sqlresult.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sql_execute.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sql_editor.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\opentype.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database4 2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dbplus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\db.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_green_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\insert-table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_%28delete%29_16x16.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1259675516_Synchronize.ico" />
+    <Content Include="Resources\edit-replace.png" />
+    <None Include="Resources\ui-list-box-blue.png" />
+    <None Include="Resources\layer-group-add.png" />
+    <None Include="Resources\explain.png" />
+    <None Include="Resources\highlighter-text.png" />
+    <None Include="Resources\servers-network.png" />
+    <None Include="Resources\network-workgroup.png" />
+    <None Include="Resources\smb-workgroup.png" />
+    <None Include="Resources\stock_rotate.png" />
+    <None Include="Resources\stock_standardilter.png" />
+    <None Include="Resources\lock_unlock.png" />
+    <None Include="Resources\icon_key.gif" />
+    <None Include="Resources\padlock_closed.png" />
+    <None Include="Resources\recherche.png" />
+    <None Include="Resources\1260366040_resizecol.png" />
+    <None Include="Resources\1260538310_Binoculars.png" />
+    <None Include="Resources\bigsql.png" />
+    <Content Include="mysql_reserved.def" />
+    <Content Include="Resources\1279103131_padlock_closed.png" />
+    <None Include="Resources\bookmark_book_open.png" />
+    <None Include="Resources\clipboard-paste-document-text.png" />
+    <Content Include="Resources\diff.png" />
+    <None Include="Resources\stock_dataeditsqlquery.png" />
+    <None Include="Resources\stock_tools-macro.png" />
+    <None Include="Resources\stock_record-macro.png" />
+    <None Include="Resources\search1.png" />
+    <None Include="Projector_TemporaryKey.pfx" />
+    <None Include="Resources\difftab.png" />
+    <None Include="Resources\diff3.png" />
+    <None Include="Resources\diff2.png" />
+    <None Include="Resources\diff1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

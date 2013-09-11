@@ -1,0 +1,408 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace Projector
+{
+    class QueryComposer
+    {
+        // publics
+
+        public const int SELECT = 1;
+        public const int UPDATE = 2;
+        public const int INSERT = 3;
+
+        public const int ORDER_DESC = 2;
+        public const int ORDER = 1;
+
+
+        public string TableName = null;
+        public bool useLimit = true;
+
+        // privates
+
+        private Hashtable whereStates = new Hashtable();
+        private Hashtable whereCompares = new Hashtable();
+        private Hashtable joinTables = new Hashtable();
+        private Hashtable setValues = new Hashtable();
+        private Hashtable orderByField = new Hashtable();
+        private Boolean orderDesc = false;
+        private int whereCount = 0;
+
+        private JoinTable leftJoins;
+
+        private string FieldSelects = "*";
+        private Int64 startLimit = 0;
+        private Int64 limitCount = 100;
+
+        
+
+        public QueryComposer(string tableName)
+        {
+            this.TableName = tableName;
+        }
+
+
+        public bool addOrderField(string OrderBy)
+        {
+            if (!this.orderByField.ContainsKey(OrderBy))
+            {
+                this.orderByField.Add(OrderBy, OrderBy);
+                return true;
+            }
+            return false;
+        }
+
+        public void autoHandleSingleOrder(string ord)
+        {
+            if (this.orderByField.ContainsKey(ord))
+            {
+                this.orderDesc = !orderDesc;
+            }
+            else
+            {
+                this.removeAllOrder();
+                this.addOrderField(ord);
+            }
+        }
+
+
+        public bool removeOrderField(string Orderby)
+        {
+            if (!this.orderByField.ContainsKey(Orderby))
+            {
+                this.orderByField.Remove(Orderby);
+                return true;
+            }
+            return false;
+        }
+
+        public void removeAllOrder()
+        {
+            this.orderByField.Clear();
+        }
+
+        //------------ private tools ------------
+
+        private string composeOrder()
+        {
+            string orderStr = "";
+            if (this.orderByField.Count > 0)
+            {
+                string add = "";
+
+                foreach (DictionaryEntry de in this.orderByField)
+                {
+                   
+                    //where += add + de.Key.ToString() + getCompareValue(de.Key.ToString()) + " '" + de.Value.ToString().Replace("'",@"\'") + "' ";
+                    orderStr += add + de.Key.ToString();
+                    add = ",";
+                }
+                orderStr = " ORDER BY " + orderStr;
+                if (orderDesc) orderStr += " DESC ";
+            }
+            return orderStr;
+        }
+
+
+        private string composeAndWhere()
+        {
+            string where = "";
+            bool adding = false;
+            if (whereCount > 0)
+            {
+                string add = "";
+                where = " WHERE ";
+               
+                foreach (DictionaryEntry de in this.whereStates)
+                {
+                    adding = true;
+                    //where += add + de.Key.ToString() + getCompareValue(de.Key.ToString()) + " '" + de.Value.ToString().Replace("'",@"\'") + "' ";
+                    where += add + WhereCompareStats.getCompareString(this, de.Key.ToString());
+                    add = " AND ";
+                }
+            }
+            if (!adding) return "";
+            return where;
+        }
+
+        private string getLeftJoin()
+        {
+            return " LEFT JOIN ( " + leftJoins.selfTableName + " ) ON ( " + leftJoins.getJoinOnStatement() + " ) ";
+        }
+
+        public void setResultField(string name)
+        {
+            this.FieldSelects = name;
+        }
+
+        public bool ifAllfieldsSelected()
+        {
+            return (this.FieldSelects == "*");
+        }
+
+        public void addJoinTable(string tableName,string myFieldName,string refFieldName)
+        {
+            if (leftJoins == null)
+            {
+                leftJoins = new JoinTable(this.TableName, tableName);
+                leftJoins.addEqualJoinOn(refFieldName, myFieldName);
+            }
+            else
+            {
+                if (leftJoins.selfTableName == tableName)
+                {
+
+                }
+                else
+                {
+                    throw new Exception("Feature for handling mutliple tables not finished");
+                }
+            }
+        }
+
+
+        /** 
+         * Returns select query
+         */
+        public string getSelect()
+        {
+            if (TableName != null)
+            {
+                string sql = "SELECT ";
+                sql += FieldSelects;
+                sql += " FROM ";
+                sql += TableName;
+
+                if (leftJoins != null) sql += this.getLeftJoin();
+
+
+                sql += composeAndWhere();
+                sql += this.composeOrder();
+                if (useLimit)
+                {
+                    sql += " LIMIT " + startLimit + "," + limitCount;
+                }
+                return sql;
+            }
+            else
+            {
+                throw new Exception("TableName must defined");
+                
+            }
+            
+        }
+
+        public string getInsert()
+        {
+            
+            if (TableName != null && getSetStatement() != null)
+            {
+                string sql = "INSERT INTO " + TableName + " SET " + getSetStatement();
+                
+
+
+                return sql;
+            }
+
+            return null;
+        }
+
+
+        // set start for limit
+        public void limitStart(Int64 start)
+        {
+            this.startLimit = start;
+        }
+
+        //set range for limit
+        public void setLimitRange(Int64 limit)
+        {
+            this.limitCount = limit;
+        }
+
+        //increase start 
+        public void nextLimit()
+        {
+            this.startLimit += this.limitCount;
+        }
+
+        //decrease start 
+        public void prevLimit()
+        {
+            if (this.startLimit > this.limitCount)
+                this.startLimit -= this.limitCount;
+            else
+                this.startLimit = 0;
+        }
+
+       
+
+
+        public void addWhere(string name, string value)
+        {
+
+            if (whereStates.ContainsKey(name))
+            {
+                whereStates[name] = value;
+            }
+            else
+            {
+
+                try
+                {
+                    whereStates.Add(name, value);
+                    this.whereCount++;
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        public string getWhereValue(string keyName)
+        {
+            return this.whereStates[keyName].ToString();
+
+        }
+
+
+        public string getSetting(string name)
+        {
+            if (whereStates.ContainsKey(name)) return whereStates[name].ToString();
+            else return null;
+        }
+
+        public void removeWhere(string name)
+        {
+            if (whereStates.ContainsKey(name))
+            {
+                whereStates.Remove(name);
+            }
+        }
+
+        public void addWhereComp(string name, string value)
+        {
+
+            if (whereCompares.ContainsKey(name))
+            {
+                whereCompares[name] = value;
+            }
+            else
+            {
+
+                try
+                {
+                    whereCompares.Add(name, value);                    
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+
+        public String getWhereCompare(String name)
+        {
+            if (whereCompares.ContainsKey(name))
+            {
+                return whereCompares[name].ToString();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        // adds a value to database/table/field
+        public void addSetValue(string keyName, string value)
+        {
+            if (setValues.ContainsKey(keyName))
+            {
+                setValues[keyName] = value;
+            }
+            else
+            {
+                setValues.Add(keyName, value);
+            }
+        }
+
+        // get a set value
+        public string getSetValue(string keyName)
+        {
+            if (setValues.ContainsKey(keyName))
+            {
+                return setValues[keyName].ToString();
+            }
+            else
+            {
+                return null;
+            }
+        }
+        // remove value. return true if found en resettet or false if not exists
+        public bool resetSetValue(string keyName, string value)
+        {
+            if (setValues.ContainsKey(keyName))
+            {
+                setValues.Remove(keyName);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string getSetStatement()
+        {
+
+            if (setValues.Count < 1) return null;
+
+            string setStat = "";
+            string add = "";
+
+            foreach (DictionaryEntry de in this.setValues)
+            {
+
+                setStat += add + "`" + de.Key.ToString() + "` = '" + de.Value.ToString().Replace("'", @"\'") + "' ";
+                add = ", ";
+            }
+
+            return setStat;
+        }
+
+
+        public string getCompareValue(string keyName)
+        {
+            //return this.whereStates[keyName].ToString();
+            string compare = getCompareSetting(keyName);
+            if (compare == null) return "=";
+            else return compare;
+        }
+
+
+        public string getCompareSetting(string name)
+        {
+            if (whereCompares.ContainsKey(name)) return whereCompares[name].ToString();
+            else return null;
+        }
+
+        public static String addSemikolon(string sql){
+            if (sql.Length > 0)
+            {
+                string lastChar = sql.Substring(sql.Length - 1);
+                string secondLast = sql.Substring(sql.Length - 2);
+                string thirdLast = sql.Substring(sql.Length - 3);
+                if (lastChar != ";" && secondLast != "*/" && secondLast != ";" + System.Environment.NewLine && thirdLast != "*/" + System.Environment.NewLine) sql += ";";
+                
+            }
+            return sql;
+        }
+
+    }
+}
