@@ -97,7 +97,10 @@ namespace Projector
                 {
                    
                     //where += add + de.Key.ToString() + getCompareValue(de.Key.ToString()) + " '" + de.Value.ToString().Replace("'",@"\'") + "' ";
-                    orderStr += add + de.Key.ToString();
+                    if (leftJoins != null)
+                        orderStr += add + this.TableName + "." + de.Key.ToString();
+                    else
+                        orderStr += add + de.Key.ToString();
                     add = ",";
                 }
                 orderStr = " ORDER BY " + orderStr;
@@ -120,7 +123,11 @@ namespace Projector
                 {
                     adding = true;
                     //where += add + de.Key.ToString() + getCompareValue(de.Key.ToString()) + " '" + de.Value.ToString().Replace("'",@"\'") + "' ";
-                    where += add + WhereCompareStats.getCompareString(this, de.Key.ToString());
+                    if (leftJoins != null)
+                        where += add + this.TableName + "." + WhereCompareStats.getCompareString(this, de.Key.ToString());
+                    else
+                        where += add + WhereCompareStats.getCompareString(this, de.Key.ToString());
+
                     add = " AND ";
                 }
             }
@@ -264,7 +271,7 @@ namespace Projector
         }
 
         public string getWhereValue(string keyName)
-        {
+        {            
             return this.whereStates[keyName].ToString();
 
         }

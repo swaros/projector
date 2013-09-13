@@ -1512,12 +1512,12 @@ namespace Projector
         {
             if (canStartJoin())
             {
-                QueryComposer query = new QueryComposer(lastSelectedtable);
-                query.setLimitRange(autoGetLimit);
+                //QueryComposer query = new QueryComposer(lastSelectedtable);
+                maskQuery.setLimitRange(autoGetLimit);
 
-                query.addJoinTable(leftJoinTables.Text, leftJoinSource.Text, leftJoinTarget.Text);
+                maskQuery.addJoinTable(leftJoinTables.Text, leftJoinSource.Text, leftJoinTarget.Text);
 
-                textBox1.Text = query.getSelect();
+                textBox1.Text = maskQuery.getSelect();
                 parseSqlTextBox();
                 fireQuery();
             }
