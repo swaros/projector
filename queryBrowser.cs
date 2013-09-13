@@ -422,6 +422,43 @@ namespace Projector
             return res;
         }
 
+        private void findInputeElementbyFieldNameUpdate(string fieldName, string value)
+        {
+            string cpmStr = "DYNAMIC_PROJ_" + fieldName;
+            for (int i = 0; i < maskBox.Controls.Count; i++)
+            {
+                if (maskBox.Controls[i].Name == cpmStr)
+                {
+                    Type objType = maskBox.Controls[i].GetType();
+                    if (objType.Name == "NumericUpDown")
+                    {
+                        int numval = int.Parse(value);
+                        NumericUpDown tmpas = (NumericUpDown) maskBox.Controls[i];
+                        tmpas.Value = numval;
+                    }
+
+                    else if (objType.Name == "TextBox")
+                    {
+                        TextBox tmpas = (TextBox)maskBox.Controls[i];
+                        tmpas.Text = value;
+                    }
+                    //MaskedTextBox
+                    else if (objType.Name == "MaskedTextBox")
+                    {
+                        MaskedTextBox tmpas = (MaskedTextBox)maskBox.Controls[i];
+                        tmpas.Text = value;
+                    }
+
+                    else if (objType.Name == "ComboBox")
+                    {
+                        ComboBox tmpas = (ComboBox)maskBox.Controls[i];
+                        tmpas.Text = value;
+                    }
+                }
+            }
+        }
+
+
         private void getTableMask(string tableName, bool adAsLeftJoin)
         {
             //if (maskQuery == null) maskQuery = new QueryComposer(tableName);
@@ -498,7 +535,7 @@ namespace Projector
                 compareType.Items.Add("!=");
                 compareType.Items.Add("LIKE");
                 compareType.Items.Add("SUBSELECT");
-                compareType.Name = "DYNAMIC_PROJ_" + structInfo[i].name;
+                compareType.Name = "DYNAMIC_WHERE_" + structInfo[i].name;
                 compareType.TextChanged += new System.EventHandler(dynWhereCompare);
 
                 maskBox.Controls.Add(compareType);
@@ -732,7 +769,7 @@ namespace Projector
         private Button addWhereDel(int y,string name)
         {
             Button addingDelBtn = new Button();
-            addingDelBtn.Name = "DYNAMIC_PROJ_" + name;
+            addingDelBtn.Name = "DYNAMIC_WHERE_" + name;
             addingDelBtn.Left = 470;
             addingDelBtn.Top = y;
             addingDelBtn.Width = 100;
@@ -768,7 +805,7 @@ namespace Projector
         private void delWhere(object sender, System.EventArgs e)
         {
             Button VarCharAdd = (Button)sender;
-            String name = VarCharAdd.Name.Replace("DYNAMIC_PROJ_", "");
+            String name = VarCharAdd.Name.Replace("DYNAMIC_WHERE_", "");
             maskQuery.removeWhere(name);
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox(); 
@@ -832,7 +869,7 @@ namespace Projector
         private void dynWhereCompare(object sender, System.EventArgs e)
         {
             ComboBox VarCharAdd = (ComboBox)sender;
-            String name = VarCharAdd.Name.Replace("DYNAMIC_PROJ_", "");
+            String name = VarCharAdd.Name.Replace("DYNAMIC_WHERE_", "");
 
             //maskQuery.addWhere(name, VarCharAdd.Value.ToString());
 
@@ -1818,6 +1855,7 @@ namespace Projector
                 string value = lastSelectedItemInfo.SubItem.Text;
                 string field = lastSelectedItemInfo.SubItem.Name;
                 maskQuery.addWhere(field, value);
+                findInputeElementbyFieldNameUpdate(field,value);
                 textBox1.Text = maskQuery.getSelect();
                 parseSqlTextBox();
             }
