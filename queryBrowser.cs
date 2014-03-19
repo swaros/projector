@@ -318,22 +318,28 @@ namespace Projector
                 work.setRowColors(tableView, Color.LightBlue, Color.LightCyan);
                 work.autoSizeColumns(tableView, ColumnHeaderAutoResizeStyle.ColumnContent);
                 database.disConnect();
+                
                 myFuns.getProcedures(database);
+                ListViewGroup procGroup = new ListViewGroup();
+                procGroup.Header = "Procedures";
+                procGroup.Name = "Procedures";
 
+                tableView.Groups.Add(procGroup);
                 if (!myFuns.isError)
                 {
-
+                    
                     StoredProcedure tmpStored = new StoredProcedure();
                     tmpStored = myFuns.get();
                     while (tmpStored != null)
                     {
                         tmpStored = myFuns.get();
-                        if (tmpStored != null)
+                        if (tmpStored != null && tmpStored.db == sensorProfil.getProperty("db_schema"))
                         {
                             ListViewItem spView = new ListViewItem();
                             spView.BackColor = Color.LightYellow;
                             spView.ImageIndex = 3;
-                            spView.Text = tmpStored.name;
+                            spView.Text =  tmpStored.name;
+                            spView.Group = procGroup;
                             tableView.Items.Add(spView);
                         }
                     }
@@ -2301,6 +2307,12 @@ namespace Projector
             if (Control.ModifierKeys == Keys.Shift && textBox1.Enabled && splits.Length > 0)
             {
                 textBox1.SelectedText = splits[0];
+                parseSqlTextBox();
+            }
+            else if (Control.ModifierKeys == Keys.Alt && textBox1.Enabled && splits.Length > 0)
+            {
+                maskQuery.addUsedFieldNames(splits[0]);
+                textBox1.Text = maskQuery.getSelect();
                 parseSqlTextBox();
             }
             else

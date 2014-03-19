@@ -116,10 +116,14 @@ namespace Projector
 
                 if (res != null)
                 {
-                    while (res.Read())
+                    while (res.Read() && res.Depth > 0)
                     {
-                        proc.created = res.GetString(2);
-                        res.Close();
+                        string getResult = res.GetString(2);
+                        if (null != getResult)
+                        {
+                            proc.created = getResult;
+                            res.Close();
+                        }
                         return;
                     }
                     res.Close();

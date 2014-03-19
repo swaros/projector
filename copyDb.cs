@@ -2629,13 +2629,28 @@ namespace Projector
             modifyTableAddOnly = alterTableForNewFieldsOnlyToolStripMenuItem.Checked;
         }
 
+       
+
         private void copyTableToTargetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (sourcetabs.SelectedItems.Count > 0)
             {
+                ConfimSync confForm = new ConfimSync();
+                if (!fullsyncAllwasOverwriteTablesToolStripMenuItem.Checked)
+                {
+                    for (int i = 0; i < sourcetabs.SelectedItems.Count; i++)
+                    {
+                        confForm.confirmOverWrite.Items.Add(sourcetabs.SelectedItems[i].Text, true);
 
+                    }
 
-
+                    if (confForm.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                    {
+                        // if cancel get out
+                        return;
+                    }
+                }
+               
                 if (!tableCopyWorker.IsBusy)
                 {
 
@@ -2648,8 +2663,7 @@ namespace Projector
                         bool canAdd = true;
                         if (database_target.tableExists(synctable))
                         {
-                            if (fullsyncAllwasOverwriteTablesToolStripMenuItem.Checked ||
-                                MessageBox.Show("Table " + synctable + " allready exists in source!. Overwrite?", "Confirm Overwrite", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.No)
+                            if (!fullsyncAllwasOverwriteTablesToolStripMenuItem.Checked && !confForm.isConfirmed(synctable))
                             {
                                 canAdd = false;
                             }

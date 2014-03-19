@@ -28,6 +28,7 @@ namespace Projector
         private Hashtable joinTables = new Hashtable();
         private Hashtable setValues = new Hashtable();
         private Hashtable orderByField = new Hashtable();
+        private Hashtable usedFields = new Hashtable();
         private Boolean orderDesc = false;
         private int whereCount = 0;
 
@@ -38,6 +39,7 @@ namespace Projector
         private Int64 limitCount = 100;
 
         
+      
 
         public QueryComposer(string tableName)
         {
@@ -53,6 +55,34 @@ namespace Projector
                 return true;
             }
             return false;
+        }
+
+        public Boolean addUsedFieldNames(string fieldName)
+        {
+            if (!this.usedFields.ContainsKey(fieldName))
+            {
+                this.usedFields.Add(fieldName, fieldName);
+                this.buildFieldSring();
+                return true;
+            }
+
+            return false;
+        }
+
+        private void buildFieldSring()
+        {
+            if (this.usedFields.Count > 0)
+            {
+
+                string fieldStr = "";
+                string add = "";
+                foreach (DictionaryEntry de in this.usedFields)
+                {
+                    fieldStr += add + "`" + de.Key.ToString() + "`";
+                    add = ", ";
+                }
+                this.FieldSelects = fieldStr;
+            }
         }
 
         public void autoHandleSingleOrder(string ord)
@@ -88,6 +118,7 @@ namespace Projector
 
         private string composeOrder()
         {
+            this.buildFieldSring();
             string orderStr = "";
             if (this.orderByField.Count > 0)
             {

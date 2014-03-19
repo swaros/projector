@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(queryBrowser));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.selectedTableLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -361,16 +361,16 @@
             this.TablesAutoComplete.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.TablesAutoComplete.FullRowSelect = true;
-            listViewGroup4.Header = "Fields";
-            listViewGroup4.Name = "Fields";
-            listViewGroup5.Header = "Tables";
-            listViewGroup5.Name = "Tables";
-            listViewGroup6.Header = "Syntax";
-            listViewGroup6.Name = "Syntax";
+            listViewGroup1.Header = "Fields";
+            listViewGroup1.Name = "Fields";
+            listViewGroup2.Header = "Tables";
+            listViewGroup2.Name = "Tables";
+            listViewGroup3.Header = "Syntax";
+            listViewGroup3.Name = "Syntax";
             this.TablesAutoComplete.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.TablesAutoComplete.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.TablesAutoComplete.Location = new System.Drawing.Point(276, 12);
             this.TablesAutoComplete.MultiSelect = false;
@@ -689,7 +689,7 @@
             this.MaskTab.Location = new System.Drawing.Point(4, 22);
             this.MaskTab.Name = "MaskTab";
             this.MaskTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MaskTab.Size = new System.Drawing.Size(809, 450);
+            this.MaskTab.Size = new System.Drawing.Size(809, 452);
             this.MaskTab.TabIndex = 2;
             this.MaskTab.Text = "Search";
             this.MaskTab.UseVisualStyleBackColor = true;
@@ -730,7 +730,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(809, 450);
+            this.tabPage2.Size = new System.Drawing.Size(809, 452);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Trigger";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -859,7 +859,7 @@
             this.tabPageProcedures.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcedures.Name = "tabPageProcedures";
             this.tabPageProcedures.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcedures.Size = new System.Drawing.Size(809, 450);
+            this.tabPageProcedures.Size = new System.Drawing.Size(809, 452);
             this.tabPageProcedures.TabIndex = 3;
             this.tabPageProcedures.Text = "Stored Procedures";
             this.tabPageProcedures.UseVisualStyleBackColor = true;

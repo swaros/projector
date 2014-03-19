@@ -34,7 +34,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>52</ApplicationRevision>
+    <ApplicationRevision>55</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -92,6 +92,12 @@
     <Compile Include="Combined1.g3.parser.cs" />
     <Compile Include="CommandLineParser.cs" />
     <Compile Include="ConfigProfil.cs" />
+    <Compile Include="ConfimSync.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfimSync.Designer.cs">
+      <DependentUpon>ConfimSync.cs</DependentUpon>
+    </Compile>
     <Compile Include="copyDb.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +223,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ConfimSync.resx">
+      <DependentUpon>ConfimSync.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="copyDb.resx">
       <DependentUpon>copyDb.cs</DependentUpon>
     </EmbeddedResource>

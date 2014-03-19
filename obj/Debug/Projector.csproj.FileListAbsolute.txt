@@ -70,7 +70,6 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.application
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.pdb
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.copyDb.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CretaeInsertSelect.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.DiffResultWindow.resources
@@ -95,13 +94,11 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.StructDiffWindow.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TableStructForm.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.UserTextInput.resources
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.1.tlog
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.read.4.tlog
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResGen.read.1.tlog
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\GenerateResource-ResGen.write.1.tlog
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\ResGen.write.1.tlog
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.TrustInfo.xml
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.exe.manifest
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.application
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CreateStructForm.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PlaceholderEditForm.resources
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csproj.GenerateResource.Cache
+C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ConfimSync.resources
