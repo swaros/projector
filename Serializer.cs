@@ -61,7 +61,7 @@ namespace Projector
                 name = name.Replace(" ", "_");
                 name = name.Replace(":", "_");
             }
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + "placeHolder_" + name + ".plc";
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.PathSeparator + "placeHolder_" + name + ".plc";
         }
 
 

@@ -2447,7 +2447,7 @@ namespace Projector
             if (sourceProfil != null)
             {
                 string propSaveFilename = sourceProfil.getProperty("db_host") + '_' + sourceProfil.getProperty("db_schema");
-                propSaveFilename = path + @"\" + propSaveFilename.Replace('.', '_') + ".prp";
+                propSaveFilename = path + System.IO.Path.PathSeparator + propSaveFilename.Replace('.', '_') + ".prp";
                 //MessageBox.Show(propSaveFilename);
                 return propSaveFilename;
             }
