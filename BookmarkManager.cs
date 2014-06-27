@@ -102,7 +102,7 @@ namespace Projector
 
         public string getDefaultFilename()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.PathSeparator + "projector_bookmarks.def";
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar + "projector_bookmarks.def";
         }
 
         public BookmarkManager()
