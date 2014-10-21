@@ -32,6 +32,16 @@ namespace Projector
         {
             MysqlHandler TestConnect = new MysqlHandler(testProfil);
 
+            try
+            {
+                TestConnect.connect();
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+
             if (TestConnect.lastSqlErrorMessage.Length > 0)
             {
                 errorLabel.Text = TestConnect.lastSqlErrorMessage;

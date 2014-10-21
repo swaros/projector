@@ -25,7 +25,7 @@ namespace Projector
 
         private string getFileName(){
 
-            string filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.PathSeparator  + this.filename;
+            string filename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + System.IO.Path.DirectorySeparatorChar  + this.filename;
             this.fullFilename = filename;
             return filename;
         }
