@@ -2059,7 +2059,7 @@ namespace Projector
 
         private void tableView_KeyUp(object sender, KeyEventArgs e)
         {
-            if (searchTableTextBox.Visible == false)
+            if (e.Alt && searchTableTextBox.Visible == false)
             {
                 if (tableView.ShowGroups)
                 {
@@ -2472,6 +2472,125 @@ namespace Projector
         {
             string statement = getSelectedAsInsertStatement(true);
             if (null != statement) Clipboard.SetData(DataFormats.Text, statement);
+        }
+
+        private void tableContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        /**
+         * executes an query in an new database connection and refreshs 
+         * the table list
+         */
+        private Boolean execTableReleatedSql(string query)
+        {
+            database = new MysqlHandler(sensorProfil);
+            database.connect();
+            database.sql_select(query);
+            database.disConnect();
+            if (database.lastSqlErrorMessage.Length > 0)
+            {
+                MessageBox.Show(database.lastSqlErrorMessage, "Mysql Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            
+            listTables();
+            return true;
+            
+        }
+
+
+        private void copyTablessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tableView.SelectedItems.Count > 0)
+            {
+                UserTextInput prefixInput = new UserTextInput();
+                prefixInput.groupBox.Text = "Set an Prefix";
+                prefixInput.textinfo.Text = "copy_from_";
+                if (prefixInput.ShowDialog() == DialogResult.OK)
+                {
+                    string sql = "";
+                    for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                    {                       
+                        sql += "CREATE TABLE " + prefixInput.textinfo.Text + tableView.SelectedItems[i].Text + " LIKE " + tableView.SelectedItems[i].Text + ";" + System.Environment.NewLine;
+                        sql += "INSERT " + prefixInput.textinfo.Text + tableView.SelectedItems[i].Text + " SELECT * FROM " + tableView.SelectedItems[i].Text+ ";" + System.Environment.NewLine;
+                    }
+
+                    SqlExecConfirm copyConfirm = new SqlExecConfirm();
+                    copyConfirm.sqlTextBox.Text = sql;
+                    if (copyConfirm.ShowDialog() == DialogResult.OK)
+                    {
+                        this.execTableReleatedSql(sql);
+                    }
+
+
+                }
+  
+            }
+
+        }
+
+        private void dropTablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tableView.SelectedItems.Count > 0)
+            {
+                string sql = "";
+                for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                {
+                    sql += "DROP TABLE " + tableView.SelectedItems[i].Text + ";" + System.Environment.NewLine;                    
+                }
+
+                SqlExecConfirm copyConfirm = new SqlExecConfirm();
+                copyConfirm.sqlTextBox.Text = sql;
+                if (copyConfirm.ShowDialog() == DialogResult.OK)
+                {
+                    this.execTableReleatedSql(sql);
+                }
+            }
+        }
+
+        private void selectUnion_Click(object sender, EventArgs e)
+        {
+
+            if (tableView.SelectedItems.Count > 0)
+            {
+                string sql = "";
+                string union = "";
+                for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                {
+                    sql += union + "(SELECT * FROM  " + tableView.SelectedItems[i].Text + ")" + System.Environment.NewLine;
+                    union = "UNION" + System.Environment.NewLine;
+                }
+
+                SqlExecConfirm copyConfirm = new SqlExecConfirm();
+                copyConfirm.sqlTextBox.Text = sql;
+                if (copyConfirm.ShowDialog() == DialogResult.OK)
+                {
+                    textBox1.Text = sql;
+                    fireQuery();
+                    if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
+                }
+            }
+        }
+
+        private void truncateTablesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tableView.SelectedItems.Count > 0)
+            {
+                string sql = "";
+                for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                {
+                    sql += "TRUNCATE TABLE " + tableView.SelectedItems[i].Text + ";" + System.Environment.NewLine;
+                }
+
+                SqlExecConfirm copyConfirm = new SqlExecConfirm();
+                copyConfirm.sqlTextBox.Text = sql;
+                if (copyConfirm.ShowDialog() == DialogResult.OK)
+                {
+                    this.execTableReleatedSql(sql);
+                }
+            }
         }
         
 
