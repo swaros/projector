@@ -2592,6 +2592,34 @@ namespace Projector
                 }
             }
         }
+
+        private void renameTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tableView.SelectedItems.Count > 0)
+            {
+                string sql = "RENAME TABLE ";
+                // RENAME TABLE tbl_name TO new_tbl_name
+                UserTextInput prefixInput = new UserTextInput();
+                string add = "";
+                for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                {
+                    prefixInput.groupBox.Text = "Rename Table " + tableView.SelectedItems[i].Text + " into ...";
+                    prefixInput.textinfo.Text = tableView.SelectedItems[i].Text;
+                    if (prefixInput.ShowDialog() == DialogResult.OK && prefixInput.textinfo.Text.Length > 3)
+                    {
+                        sql += add + " " + tableView.SelectedItems[i].Text + " TO " + prefixInput.textinfo.Text + System.Environment.NewLine;
+                        add = ",";
+                    }
+                }
+
+                SqlExecConfirm copyConfirm = new SqlExecConfirm();
+                copyConfirm.sqlTextBox.Text = sql;
+                if (copyConfirm.ShowDialog() == DialogResult.OK)
+                {
+                    this.execTableReleatedSql(sql);
+                }
+            }
+        }
         
 
     }

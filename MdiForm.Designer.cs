@@ -80,27 +80,27 @@
             this.sensorsToolStripMenuItem,
             this.querysToolStripMenuItem1});
             this.watchToolStripMenuItem.Name = "watchToolStripMenuItem";
-            this.watchToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.watchToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.watchToolStripMenuItem.Text = "&Tools";
             // 
             // querysToolStripMenuItem
             // 
             this.querysToolStripMenuItem.Name = "querysToolStripMenuItem";
-            this.querysToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.querysToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.querysToolStripMenuItem.Text = "Query Watch...";
             this.querysToolStripMenuItem.Click += new System.EventHandler(this.querysToolStripMenuItem_Click);
             // 
             // sensorsToolStripMenuItem
             // 
             this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
-            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.sensorsToolStripMenuItem.Text = "Sensors...";
             this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.sensorsToolStripMenuItem_Click);
             // 
             // querysToolStripMenuItem1
             // 
             this.querysToolStripMenuItem1.Name = "querysToolStripMenuItem1";
-            this.querysToolStripMenuItem1.Size = new System.Drawing.Size(158, 22);
+            this.querysToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
             this.querysToolStripMenuItem1.Text = "Query Browser...";
             this.querysToolStripMenuItem1.Click += new System.EventHandler(this.querysToolStripMenuItem1_Click);
             // 
@@ -113,41 +113,41 @@
             this.maximizeToolStripMenuItem,
             this.arrangeIcToolStripMenuItem});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "W&indow";
             // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.cascadeToolStripMenuItem.Text = "Cascade";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
             // 
             // tileHorizontalToolStripMenuItem
             // 
             this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
-            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.tileHorizontalToolStripMenuItem.Text = "Tile Horizontal";
             this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.tileHorizontalToolStripMenuItem_Click);
             // 
             // tileVerticalToolStripMenuItem
             // 
             this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.tileVerticalToolStripMenuItem.Text = "Tile Vertical";
             this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.tileVerticalToolStripMenuItem_Click);
             // 
             // maximizeToolStripMenuItem
             // 
             this.maximizeToolStripMenuItem.Name = "maximizeToolStripMenuItem";
-            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.maximizeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.maximizeToolStripMenuItem.Text = "Maximize";
             this.maximizeToolStripMenuItem.Click += new System.EventHandler(this.maximizeToolStripMenuItem_Click);
             // 
             // arrangeIcToolStripMenuItem
             // 
             this.arrangeIcToolStripMenuItem.Name = "arrangeIcToolStripMenuItem";
-            this.arrangeIcToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.arrangeIcToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.arrangeIcToolStripMenuItem.Text = "Arrange Icons";
             this.arrangeIcToolStripMenuItem.Click += new System.EventHandler(this.arrangeIcToolStripMenuItem_Click);
             // 
@@ -156,7 +156,7 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolbarToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
             // 
             // toolbarToolStripMenuItem
@@ -165,7 +165,7 @@
             this.toolbarToolStripMenuItem.CheckOnClick = true;
             this.toolbarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolbarToolStripMenuItem.Name = "toolbarToolStripMenuItem";
-            this.toolbarToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.toolbarToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.toolbarToolStripMenuItem.Text = "&Toolbar";
             this.toolbarToolStripMenuItem.Click += new System.EventHandler(this.toolbarToolStripMenuItem_Click);
             // 
@@ -219,7 +219,7 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(51, 17);
+            this.statusLabel.Size = new System.Drawing.Size(55, 17);
             this.statusLabel.Text = "Projector";
             // 
             // MainTools
