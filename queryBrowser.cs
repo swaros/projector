@@ -215,6 +215,7 @@ namespace Projector
             tabControl1.SelectedIndex = 0;
             resetExplainMsg();
             fireQuery();
+            if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
@@ -966,6 +967,7 @@ namespace Projector
             tabControl1.SelectedIndex = 0;
             checkExplain();
             fireQuery();
+            if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
             //checkExplain();
         }
 
@@ -2623,6 +2625,65 @@ namespace Projector
                     this.execTableReleatedSql(sql);
                 }
             }
+        }
+
+        private void joinTryMenu_Click(object sender, EventArgs e)
+        {
+            if (tableView.SelectedItems.Count > 0)
+            {
+                maskQuery.resetJoinTable();
+                for (int i = 0; i < tableView.SelectedItems.Count; i++)
+                {
+                    string tableName = tableView.SelectedItems[i].Text;
+                    if (tableName != lastSelectedtable)
+                    {
+
+                       // maskQuery.addJoinTable(tableName
+                        List<MysqlStruct> matchingStructs = new List<MysqlStruct>();
+                        int found = autoFindMatchingJoins(lastSelectedtable, tableName, matchingStructs);
+                        for (int ad = 0; ad < matchingStructs.Count; ad++)
+                        {
+                            maskQuery.addJoinTable(matchingStructs[ad].tableName, matchingStructs[ad].name, matchingStructs[ad].name);
+                        }
+                    }
+                    textBox1.Text = maskQuery.getSelect();
+                    if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
+
+                }
+
+                
+
+            }
+        }
+
+        private int autoFindMatchingJoins(string tableLeft, string tableRight,List<MysqlStruct> returnStruct)
+        {
+            List<MysqlStruct> leftStructs = database.getAllFieldsStruct(tableLeft);
+            List<MysqlStruct> rightStructs = database.getAllFieldsStruct(tableRight);
+            List<string> excludeTypes = new List<string>();
+
+            excludeTypes.Add("datetime");
+            excludeTypes.Add("timestamp");
+            excludeTypes.Add("text");
+            excludeTypes.Add("mediumtext");
+            excludeTypes.Add("blob");
+
+            int foundCount = 0;                                    
+            for (int i = 0; i < leftStructs.Count; i++)
+            {
+                for (int f = 0; f < rightStructs.Count; f++)
+                {
+                    if (leftStructs[i].name == rightStructs[f].name
+                        && leftStructs[i].type == rightStructs[f].type 
+                        && excludeTypes.Contains(leftStructs[i].type) == false ) 
+                    {
+                        foundCount++;
+                        returnStruct.Add(rightStructs[f]);
+                    }
+                }
+            }
+
+            return foundCount;
         }
         
 

@@ -170,6 +170,7 @@
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.joinTryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -955,9 +956,10 @@
             this.truncateTablesToolStripMenuItem,
             this.toolStripSeparator19,
             this.createTableToolStripMenuItem,
-            this.renameTableToolStripMenuItem});
+            this.renameTableToolStripMenuItem,
+            this.joinTryMenu});
             this.tableContextMenu.Name = "tableContextMenu";
-            this.tableContextMenu.Size = new System.Drawing.Size(167, 148);
+            this.tableContextMenu.Size = new System.Drawing.Size(167, 192);
             this.tableContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.tableContextMenu_Opening);
             // 
             // selectUnion
@@ -1547,6 +1549,13 @@
             this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectToolStripMenuItem.Text = "Select";
             // 
+            // joinTryMenu
+            // 
+            this.joinTryMenu.Name = "joinTryMenu";
+            this.joinTryMenu.Size = new System.Drawing.Size(166, 22);
+            this.joinTryMenu.Text = "Try to Join...";
+            this.joinTryMenu.Click += new System.EventHandler(this.joinTryMenu_Click);
+            // 
             // queryBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1750,5 +1759,6 @@
         private System.Windows.Forms.ToolStripMenuItem createTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator19;
         private System.Windows.Forms.ToolStripMenuItem renameTableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem joinTryMenu;
     }
 }

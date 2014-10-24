@@ -29,11 +29,9 @@ namespace Projector
         {
             string joinSql = " ( ";
             string add = "";
-
-            bool adding = false;
+            
             foreach (DictionaryEntry de in this.onEqualJoins)
             {
-                adding = true;
                 joinSql += add + selfTableName + "." + de.Key.ToString() + " = " + this.refrenceTableName + "." + de.Value.ToString();
                 add = " AND ";
             }

@@ -32,7 +32,7 @@ namespace Projector
         private Boolean orderDesc = false;
         private int whereCount = 0;
 
-        private JoinTable leftJoins;
+        private List<JoinTable> leftJoins = new List<JoinTable>();
 
         private string FieldSelects = "*";
         private Int64 startLimit = 0;
@@ -167,8 +167,28 @@ namespace Projector
         }
 
         private string getLeftJoin()
-        {
-            return " LEFT JOIN ( " + leftJoins.selfTableName + " ) ON ( " + leftJoins.getJoinOnStatement() + " ) ";
+        {           
+            string res = "";
+            List<string> checkExistTables = new List<string>();
+            if (leftJoins.Count > 0)
+            {
+                string tab = "", compare = "", addTab = "", addComp = "";
+                for (int i = 0; i < leftJoins.Count; i++)
+                {
+                    if (checkExistTables.Count < 1 || checkExistTables.Contains(leftJoins[i].selfTableName) == false)
+                    {
+                        tab += addTab + leftJoins[i].selfTableName;
+                        addTab = ", ";
+                        checkExistTables.Add(leftJoins[i].selfTableName);
+                    }
+                    compare += addComp + leftJoins[i].getJoinOnStatement();
+
+                    addComp = " AND ";
+                }
+
+                res += " LEFT JOIN ( " + tab + ") ON (" + compare + ") ";
+            }
+            return res;
         }
 
         public void setResultField(string name)
@@ -183,24 +203,18 @@ namespace Projector
 
         public void addJoinTable(string tableName,string myFieldName,string refFieldName)
         {
-            if (leftJoins == null)
-            {
-                leftJoins = new JoinTable(this.TableName, tableName);
-                leftJoins.addEqualJoinOn(refFieldName, myFieldName);
-            }
-            else
-            {
-                if (leftJoins.selfTableName == tableName)
-                {
-
-                }
-                else
-                {
-                    throw new Exception("Feature for handling mutliple tables not finished");
-                }
-            }
+            JoinTable addleftJoins = new JoinTable(this.TableName, tableName);
+            addleftJoins.addEqualJoinOn(refFieldName, myFieldName);
+            leftJoins.Add(addleftJoins);
+           
+            
         }
 
+
+        public void resetJoinTable()
+        {
+            leftJoins = new List<JoinTable>();
+        }
 
         /** 
          * Returns select query
