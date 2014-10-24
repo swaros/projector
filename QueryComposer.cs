@@ -210,6 +210,12 @@ namespace Projector
             
         }
 
+        public void addJoinTable(MysqlStruct mstruct, MysqlStruct mstructRight)
+        {
+            JoinTable addleftJoins = new JoinTable(mstruct.tableName, mstructRight.tableName);
+            addleftJoins.addEqualJoinOn(mstruct.name, mstruct.name);
+            leftJoins.Add(addleftJoins);
+        }
 
         public void resetJoinTable()
         {

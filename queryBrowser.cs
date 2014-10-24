@@ -2641,9 +2641,18 @@ namespace Projector
                        // maskQuery.addJoinTable(tableName
                         List<MysqlStruct> matchingStructs = new List<MysqlStruct>();
                         int found = autoFindMatchingJoins(lastSelectedtable, tableName, matchingStructs);
-                        for (int ad = 0; ad < matchingStructs.Count; ad++)
+                        if (found == 0)                        
                         {
-                            maskQuery.addJoinTable(matchingStructs[ad].tableName, matchingStructs[ad].name, matchingStructs[ad].name);
+                            for (int m = 0; m < tableView.SelectedItems.Count; m++)
+                            {
+                                string secondTable = tableView.SelectedItems[m].Text;
+                                if (secondTable != tableName && secondTable != lastSelectedtable) {
+                                    if (autoFindMatchingJoins(secondTable, tableName, matchingStructs) > 0)
+                                    {
+
+                                    }
+                                }
+                            }
                         }
                     }
                     textBox1.Text = maskQuery.getSelect();
@@ -2655,6 +2664,7 @@ namespace Projector
 
             }
         }
+
 
         private int autoFindMatchingJoins(string tableLeft, string tableRight,List<MysqlStruct> returnStruct)
         {
@@ -2679,10 +2689,11 @@ namespace Projector
                     {
                         foundCount++;
                         returnStruct.Add(rightStructs[f]);
+                        maskQuery.addJoinTable(leftStructs[i], rightStructs[f]);
                     }
                 }
             }
-
+           
             return foundCount;
         }
         
