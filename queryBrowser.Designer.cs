@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup13 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup14 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup15 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(queryBrowser));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.selectedTableLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -101,6 +101,15 @@
             this.procName = new System.Windows.Forms.TextBox();
             this.searchTableTextBox = new System.Windows.Forms.TextBox();
             this.tableView = new System.Windows.Forms.ListView();
+            this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectUnion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.dropTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyTablessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.truncateTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.createTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dbPic = new System.Windows.Forms.ImageList(this.components);
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.dialogToolStrip = new System.Windows.Forms.ToolStrip();
@@ -160,16 +169,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
-            this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dropTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyTablessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectUnion = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
-            this.truncateTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.renameTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -198,12 +198,12 @@
             this.tabPageProcedures.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.values.SuspendLayout();
+            this.tableContextMenu.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
             this.dialogToolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.leftJoinToolStrip.SuspendLayout();
             this.rowOptTtoolStrip.SuspendLayout();
-            this.tableContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -372,16 +372,16 @@
             this.TablesAutoComplete.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.TablesAutoComplete.FullRowSelect = true;
-            listViewGroup13.Header = "Fields";
-            listViewGroup13.Name = "Fields";
-            listViewGroup14.Header = "Tables";
-            listViewGroup14.Name = "Tables";
-            listViewGroup15.Header = "Syntax";
-            listViewGroup15.Name = "Syntax";
+            listViewGroup1.Header = "Fields";
+            listViewGroup1.Name = "Fields";
+            listViewGroup2.Header = "Tables";
+            listViewGroup2.Name = "Tables";
+            listViewGroup3.Header = "Syntax";
+            listViewGroup3.Name = "Syntax";
             this.TablesAutoComplete.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup13,
-            listViewGroup14,
-            listViewGroup15});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.TablesAutoComplete.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.TablesAutoComplete.Location = new System.Drawing.Point(276, 12);
             this.TablesAutoComplete.MultiSelect = false;
@@ -498,7 +498,7 @@
             this.editBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.editBox.Location = new System.Drawing.Point(757, 39);
             this.editBox.Name = "editBox";
-            this.editBox.Size = new System.Drawing.Size(6, 19);
+            this.editBox.Size = new System.Drawing.Size(6, 5);
             this.editBox.TabIndex = 2;
             this.editBox.TabStop = false;
             this.editBox.Text = "Edit Values";
@@ -944,6 +944,74 @@
             this.tableView.ItemActivate += new System.EventHandler(this.tableView_ItemActivate);
             this.tableView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.tableView_ItemSelectionChanged);
             this.tableView.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tableView_KeyUp);
+            // 
+            // tableContextMenu
+            // 
+            this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectUnion,
+            this.toolStripSeparator18,
+            this.dropTablesToolStripMenuItem,
+            this.copyTablessToolStripMenuItem,
+            this.truncateTablesToolStripMenuItem,
+            this.toolStripSeparator19,
+            this.createTableToolStripMenuItem,
+            this.renameTableToolStripMenuItem});
+            this.tableContextMenu.Name = "tableContextMenu";
+            this.tableContextMenu.Size = new System.Drawing.Size(167, 148);
+            this.tableContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.tableContextMenu_Opening);
+            // 
+            // selectUnion
+            // 
+            this.selectUnion.Name = "selectUnion";
+            this.selectUnion.Size = new System.Drawing.Size(166, 22);
+            this.selectUnion.Text = "Select Union";
+            this.selectUnion.Click += new System.EventHandler(this.selectUnion_Click);
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(163, 6);
+            // 
+            // dropTablesToolStripMenuItem
+            // 
+            this.dropTablesToolStripMenuItem.Image = global::Projector.Properties.Resources.TRASH_16;
+            this.dropTablesToolStripMenuItem.Name = "dropTablesToolStripMenuItem";
+            this.dropTablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.dropTablesToolStripMenuItem.Text = "Drop Table(s)";
+            this.dropTablesToolStripMenuItem.Click += new System.EventHandler(this.dropTablesToolStripMenuItem_Click);
+            // 
+            // copyTablessToolStripMenuItem
+            // 
+            this.copyTablessToolStripMenuItem.Name = "copyTablessToolStripMenuItem";
+            this.copyTablessToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.copyTablessToolStripMenuItem.Text = "Copy Tables(s)";
+            this.copyTablessToolStripMenuItem.Click += new System.EventHandler(this.copyTablessToolStripMenuItem_Click);
+            // 
+            // truncateTablesToolStripMenuItem
+            // 
+            this.truncateTablesToolStripMenuItem.Name = "truncateTablesToolStripMenuItem";
+            this.truncateTablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.truncateTablesToolStripMenuItem.Text = "Truncate Table(s)";
+            this.truncateTablesToolStripMenuItem.Click += new System.EventHandler(this.truncateTablesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator19
+            // 
+            this.toolStripSeparator19.Name = "toolStripSeparator19";
+            this.toolStripSeparator19.Size = new System.Drawing.Size(163, 6);
+            // 
+            // createTableToolStripMenuItem
+            // 
+            this.createTableToolStripMenuItem.Name = "createTableToolStripMenuItem";
+            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.createTableToolStripMenuItem.Text = "Create Table...";
+            this.createTableToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton9_Click);
+            // 
+            // renameTableToolStripMenuItem
+            // 
+            this.renameTableToolStripMenuItem.Name = "renameTableToolStripMenuItem";
+            this.renameTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.renameTableToolStripMenuItem.Text = "Rename Table";
+            this.renameTableToolStripMenuItem.Click += new System.EventHandler(this.renameTableToolStripMenuItem_Click);
             // 
             // dbPic
             // 
@@ -1473,79 +1541,11 @@
             this.saveCvsFile.Title = "Export CSV";
             this.saveCvsFile.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
             // 
-            // tableContextMenu
-            // 
-            this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectUnion,
-            this.toolStripSeparator18,
-            this.dropTablesToolStripMenuItem,
-            this.copyTablessToolStripMenuItem,
-            this.truncateTablesToolStripMenuItem,
-            this.toolStripSeparator19,
-            this.createTableToolStripMenuItem,
-            this.renameTableToolStripMenuItem});
-            this.tableContextMenu.Name = "tableContextMenu";
-            this.tableContextMenu.Size = new System.Drawing.Size(167, 170);
-            this.tableContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.tableContextMenu_Opening);
-            // 
             // selectToolStripMenuItem
             // 
             this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
             this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectToolStripMenuItem.Text = "Select";
-            // 
-            // dropTablesToolStripMenuItem
-            // 
-            this.dropTablesToolStripMenuItem.Image = global::Projector.Properties.Resources.TRASH_16;
-            this.dropTablesToolStripMenuItem.Name = "dropTablesToolStripMenuItem";
-            this.dropTablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.dropTablesToolStripMenuItem.Text = "Drop Table(s)";
-            this.dropTablesToolStripMenuItem.Click += new System.EventHandler(this.dropTablesToolStripMenuItem_Click);
-            // 
-            // copyTablessToolStripMenuItem
-            // 
-            this.copyTablessToolStripMenuItem.Name = "copyTablessToolStripMenuItem";
-            this.copyTablessToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.copyTablessToolStripMenuItem.Text = "Copy Tables(s)";
-            this.copyTablessToolStripMenuItem.Click += new System.EventHandler(this.copyTablessToolStripMenuItem_Click);
-            // 
-            // selectUnion
-            // 
-            this.selectUnion.Name = "selectUnion";
-            this.selectUnion.Size = new System.Drawing.Size(152, 22);
-            this.selectUnion.Text = "Select Union";
-            this.selectUnion.Click += new System.EventHandler(this.selectUnion_Click);
-            // 
-            // toolStripSeparator18
-            // 
-            this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(149, 6);
-            // 
-            // truncateTablesToolStripMenuItem
-            // 
-            this.truncateTablesToolStripMenuItem.Name = "truncateTablesToolStripMenuItem";
-            this.truncateTablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.truncateTablesToolStripMenuItem.Text = "Truncate Table(s)";
-            this.truncateTablesToolStripMenuItem.Click += new System.EventHandler(this.truncateTablesToolStripMenuItem_Click);
-            // 
-            // createTableToolStripMenuItem
-            // 
-            this.createTableToolStripMenuItem.Name = "createTableToolStripMenuItem";
-            this.createTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.createTableToolStripMenuItem.Text = "Create Table...";
-            this.createTableToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton9_Click);
-            // 
-            // toolStripSeparator19
-            // 
-            this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(163, 6);
-            // 
-            // renameTableToolStripMenuItem
-            // 
-            this.renameTableToolStripMenuItem.Name = "renameTableToolStripMenuItem";
-            this.renameTableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-            this.renameTableToolStripMenuItem.Text = "Rename Table";
-            this.renameTableToolStripMenuItem.Click += new System.EventHandler(this.renameTableToolStripMenuItem_Click);
             // 
             // queryBrowser
             // 
@@ -1596,6 +1596,7 @@
             this.groupBox1.ResumeLayout(false);
             this.values.ResumeLayout(false);
             this.values.PerformLayout();
+            this.tableContextMenu.ResumeLayout(false);
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
             this.dialogToolStrip.ResumeLayout(false);
@@ -1606,7 +1607,6 @@
             this.leftJoinToolStrip.PerformLayout();
             this.rowOptTtoolStrip.ResumeLayout(false);
             this.rowOptTtoolStrip.PerformLayout();
-            this.tableContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

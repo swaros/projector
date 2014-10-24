@@ -971,10 +971,14 @@ namespace Projector
 
         private void tableView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            searchTableTextBox.Visible = false;
-            
-                        
+            // only simple click allowed
+            if (Control.ModifierKeys == Keys.Shift || Control.ModifierKeys == Keys.Control || Control.ModifierKeys == Keys.Alt)
+            {
+                return;
+            }
 
+            searchTableTextBox.Visible = false;
+                                    
             if (e.Item.ImageIndex == 1)
             {
                 

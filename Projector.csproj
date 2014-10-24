@@ -34,7 +34,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>56</ApplicationRevision>
+    <ApplicationRevision>57</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
