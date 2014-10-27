@@ -800,6 +800,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <None Include="Resources\chain_plus.png" />
     <Content Include="Resources\edit-replace.png" />
     <None Include="Resources\ui-list-box-blue.png" />
     <None Include="Resources\layer-group-add.png" />

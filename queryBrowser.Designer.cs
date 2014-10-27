@@ -102,6 +102,7 @@
             this.searchTableTextBox = new System.Windows.Forms.TextBox();
             this.tableView = new System.Windows.Forms.ListView();
             this.tableContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.joinTryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.selectUnion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.dropTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -170,7 +171,6 @@
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.joinTryMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -949,6 +949,7 @@
             // tableContextMenu
             // 
             this.tableContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.joinTryMenu,
             this.selectUnion,
             this.toolStripSeparator18,
             this.dropTablesToolStripMenuItem,
@@ -956,11 +957,18 @@
             this.truncateTablesToolStripMenuItem,
             this.toolStripSeparator19,
             this.createTableToolStripMenuItem,
-            this.renameTableToolStripMenuItem,
-            this.joinTryMenu});
+            this.renameTableToolStripMenuItem});
             this.tableContextMenu.Name = "tableContextMenu";
             this.tableContextMenu.Size = new System.Drawing.Size(167, 192);
             this.tableContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.tableContextMenu_Opening);
+            // 
+            // joinTryMenu
+            // 
+            this.joinTryMenu.Image = global::Projector.Properties.Resources.chain_plus;
+            this.joinTryMenu.Name = "joinTryMenu";
+            this.joinTryMenu.Size = new System.Drawing.Size(166, 22);
+            this.joinTryMenu.Text = "Try to Join...";
+            this.joinTryMenu.Click += new System.EventHandler(this.joinTryMenu_Click);
             // 
             // selectUnion
             // 
@@ -1548,13 +1556,6 @@
             this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
             this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectToolStripMenuItem.Text = "Select";
-            // 
-            // joinTryMenu
-            // 
-            this.joinTryMenu.Name = "joinTryMenu";
-            this.joinTryMenu.Size = new System.Drawing.Size(166, 22);
-            this.joinTryMenu.Text = "Try to Join...";
-            this.joinTryMenu.Click += new System.EventHandler(this.joinTryMenu_Click);
             // 
             // queryBrowser
             // 

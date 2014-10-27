@@ -234,7 +234,7 @@ namespace Projector
                 sql += " FROM ";
                 sql += TableName;
 
-                if (leftJoins != null) sql += this.getLeftJoin();
+                if (leftJoins.Count > 0) sql += this.getLeftJoin();
 
 
                 sql += composeAndWhere();

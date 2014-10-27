@@ -224,6 +224,22 @@ namespace Projector
         }
 
 
+        private void setSqlAndFire(string sql)
+        {
+            textBox1.Text = sql;
+            if (sqlHighlighting.Checked)
+            {
+                this.highlight.parse(textBox1);
+            }
+            tabControl1.SelectedIndex = 0;
+            resetExplainMsg();
+            if (!mysqlWorker.IsBusy)
+            {
+                fireQuery();
+            }
+            
+        }
+
         
 
         public void listTables()
@@ -2655,8 +2671,10 @@ namespace Projector
                             }
                         }
                     }
-                    textBox1.Text = maskQuery.getSelect();
-                    if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
+                    //textBox1.Text = maskQuery.getSelect();
+                    //if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
+                    //button1_Click(sender, e);
+                    setSqlAndFire(maskQuery.getSelect());
 
                 }
 
