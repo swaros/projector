@@ -18,6 +18,7 @@ namespace Projector
         string userPassword = null;
         string host = null;
         string table = null;
+        long timeOut = 22000;
         string lastSql = "";
 
         List<string> tableList = null;
@@ -62,6 +63,14 @@ namespace Projector
             this.userPassword = dbProfil.getProperty("db_password");
             this.host = dbProfil.getProperty("db_host");
             this.table =  dbProfil.getProperty("db_schema");
+
+            string timeOutStr = dbProfil.getProperty("db_timeout");
+            if (null != timeOutStr)
+            {
+                this.timeOut = long.Parse(timeOutStr);
+            }
+            
+
             getConnStr();
             this.connection = new MySql.Data.MySqlClient.MySqlConnection();
             
@@ -80,7 +89,7 @@ namespace Projector
                        ";uid=" + this.userName +
                        ";pwd=" + this.userPassword +
                        ";database=" + this.table +
-                       ";Treat Tiny As Boolean = false;charset=utf8";
+                       ";Treat Tiny As Boolean = false;charset=utf8;Connection Timeout=" + this.timeOut + ";";
 
                 if (this.currentProfil.getProperty("foreign_key_check") == "1")
                 {

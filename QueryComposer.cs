@@ -154,7 +154,7 @@ namespace Projector
                 {
                     adding = true;
                     //where += add + de.Key.ToString() + getCompareValue(de.Key.ToString()) + " '" + de.Value.ToString().Replace("'",@"\'") + "' ";
-                    if (leftJoins != null)
+                    if (leftJoins.Count > 0)
                         where += add + this.TableName + "." + WhereCompareStats.getCompareString(this, de.Key.ToString());
                     else
                         where += add + WhereCompareStats.getCompareString(this, de.Key.ToString());
