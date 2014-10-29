@@ -52,13 +52,15 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.colorText = new System.Windows.Forms.TextBox();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.transActionCheck = new System.Windows.Forms.CheckBox();
+            this.constrain_setup = new System.Windows.Forms.CheckBox();
             this.okbtn = new System.Windows.Forms.Button();
             this.cancelbtn = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openProfilXml = new System.Windows.Forms.OpenFileDialog();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.constrain_setup = new System.Windows.Forms.CheckBox();
-            this.transActionCheck = new System.Windows.Forms.CheckBox();
+            this.showDataBases = new System.Windows.Forms.Button();
+            this.tableListBox = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -91,6 +93,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.tableListBox);
+            this.groupBox1.Controls.Add(this.showDataBases);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.errorLabel);
             this.groupBox1.Controls.Add(this.btnChk);
@@ -304,6 +308,37 @@
             this.colorText.TabIndex = 0;
             this.colorText.Click += new System.EventHandler(this.textBox1_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.transActionCheck);
+            this.tabPage3.Controls.Add(this.constrain_setup);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(408, 259);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "MySQL connect Settings";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // transActionCheck
+            // 
+            this.transActionCheck.AutoSize = true;
+            this.transActionCheck.Location = new System.Drawing.Point(15, 48);
+            this.transActionCheck.Name = "transActionCheck";
+            this.transActionCheck.Size = new System.Drawing.Size(170, 17);
+            this.transActionCheck.TabIndex = 1;
+            this.transActionCheck.Text = "Use Transaction on any Query";
+            this.transActionCheck.UseVisualStyleBackColor = true;
+            // 
+            // constrain_setup
+            // 
+            this.constrain_setup.AutoSize = true;
+            this.constrain_setup.Location = new System.Drawing.Point(15, 24);
+            this.constrain_setup.Name = "constrain_setup";
+            this.constrain_setup.Size = new System.Drawing.Size(154, 17);
+            this.constrain_setup.TabIndex = 0;
+            this.constrain_setup.Text = "Disable Foreign Key Check";
+            this.constrain_setup.UseVisualStyleBackColor = true;
+            // 
             // okbtn
             // 
             this.okbtn.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -329,36 +364,24 @@
             this.openProfilXml.FileName = "openFileDialog1";
             this.openProfilXml.Filter = "Profil XML|*.xml";
             // 
-            // tabPage3
+            // showDataBases
             // 
-            this.tabPage3.Controls.Add(this.transActionCheck);
-            this.tabPage3.Controls.Add(this.constrain_setup);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(408, 259);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "MySQL connect Settings";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.showDataBases.Location = new System.Drawing.Point(324, 107);
+            this.showDataBases.Name = "showDataBases";
+            this.showDataBases.Size = new System.Drawing.Size(32, 23);
+            this.showDataBases.TabIndex = 11;
+            this.showDataBases.Text = "...";
+            this.showDataBases.UseVisualStyleBackColor = true;
+            this.showDataBases.Click += new System.EventHandler(this.showDataBases_Click);
             // 
-            // constrain_setup
+            // tableListBox
             // 
-            this.constrain_setup.AutoSize = true;
-            this.constrain_setup.Location = new System.Drawing.Point(15, 24);
-            this.constrain_setup.Name = "constrain_setup";
-            this.constrain_setup.Size = new System.Drawing.Size(154, 17);
-            this.constrain_setup.TabIndex = 0;
-            this.constrain_setup.Text = "Disable Foreign Key Check";
-            this.constrain_setup.UseVisualStyleBackColor = true;
-            // 
-            // transActionCheck
-            // 
-            this.transActionCheck.AutoSize = true;
-            this.transActionCheck.Location = new System.Drawing.Point(15, 48);
-            this.transActionCheck.Name = "transActionCheck";
-            this.transActionCheck.Size = new System.Drawing.Size(170, 17);
-            this.transActionCheck.TabIndex = 1;
-            this.transActionCheck.Text = "Use Transaction on any Query";
-            this.transActionCheck.UseVisualStyleBackColor = true;
+            this.tableListBox.FormattingEnabled = true;
+            this.tableListBox.Location = new System.Drawing.Point(131, 134);
+            this.tableListBox.Name = "tableListBox";
+            this.tableListBox.Size = new System.Drawing.Size(187, 95);
+            this.tableListBox.TabIndex = 12;
+            this.tableListBox.SelectedIndexChanged += new System.EventHandler(this.tableListBox_SelectedIndexChanged);
             // 
             // setupForm
             // 
@@ -417,5 +440,7 @@
         private System.Windows.Forms.TabPage tabPage3;
         public System.Windows.Forms.CheckBox transActionCheck;
         public System.Windows.Forms.CheckBox constrain_setup;
+        private System.Windows.Forms.Button showDataBases;
+        private System.Windows.Forms.ListBox tableListBox;
     }
 }

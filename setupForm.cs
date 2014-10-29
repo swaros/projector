@@ -25,6 +25,7 @@ namespace Projector
             tabPage1.Text = Projector.Properties.Resources.mysqlSettings;
             btnChk.Text = Projector.Properties.Resources.MysqlCheckConnetion;
             checkInput();
+            tableListBox.Visible = false;
 
         }
 
@@ -55,6 +56,22 @@ namespace Projector
 
         }
 
+        private void getDatabases(Profil testProfil)
+        {
+            MysqlHandler TestConnect = new MysqlHandler(testProfil);
+            List<string> shematas = TestConnect.getDataBases();
+            tableListBox.Items.Clear();
+            if (shematas != null)
+            {
+                for (int i = 0; i < shematas.Count; i++)
+                {
+                    tableListBox.Items.Add(shematas[i]);
+                }
+                tableListBox.Visible = true;
+            }                         
+        }
+
+
         private bool checkInput()
         {
             if (username.Text.Length == 0 || password.Text.Length == 0 || schema.Text.Length == 0 || host.Text.Length == 0)
@@ -71,23 +88,22 @@ namespace Projector
             }
         }
 
+        private Profil getProfil()
+        {
+            Profil testProfil = new Profil("test");
+            testProfil.setProperty("db_password", password.Text);
+            testProfil.setProperty("db_username", username.Text);
+            testProfil.setProperty("db_host", host.Text);
+            testProfil.setProperty("db_schema", schema.Text);
+            return testProfil;
+        }
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (checkInput())
-            {
-                Profil testProfil = new Profil("test");
-                testProfil.setProperty("db_password",password.Text);
-                testProfil.setProperty("db_username", username.Text);
-                testProfil.setProperty("db_host", host.Text);
-                testProfil.setProperty("db_schema", schema.Text);
-                checkConnection(testProfil);
-
-                /*
-                 * username.Text = tmpSetup.getValue("db_username");
-                password.Text = tmpSetup.getValue("db_password");
-                host.Text = tmpSetup.getValue("db_host");
-                schema.Text = tmpSetup.getValue("db_schema");
-                 */
+            {             
+                checkConnection(getProfil());
             }
         }
 
@@ -140,6 +156,20 @@ namespace Projector
                 schema.Text = tmpSetup.getValue("db_schema");
                 
             }
+        }
+
+        private void showDataBases_Click(object sender, EventArgs e)
+        {
+            if (username.Text.Length > 0 && password.Text.Length > 0  && host.Text.Length > 0)
+            {
+                getDatabases(getProfil());
+            }
+        }
+
+        private void tableListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            schema.Text = tableListBox.Text;
+            tableListBox.Visible = false;
         }
 
 

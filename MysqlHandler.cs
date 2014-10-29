@@ -76,20 +76,30 @@ namespace Projector
             
         }
 
+        public string getConnStr()
+        {
+            return getConnStr(true);
+        }
+
+
         /**
          * buld the connectionstring for mysql/NET
          * if all needed information exits
          */ 
-        public string getConnStr()
+        public string getConnStr(Boolean useDatabase)
         {
-            if (this.host != null && this.userName != null && this.userPassword != null && this.table != null &&
-                this.host.Length > 0 && this.userName.Length > 0 && this.userPassword.Length > 0 && this.table.Length > 0)
+            if (this.host != null && this.userName != null && this.userPassword != null && (this.table != null || !useDatabase)  &&
+                this.host.Length > 0 && this.userName.Length > 0 && this.userPassword.Length > 0 && (this.table.Length > 0 || !useDatabase))
             {
                 myConnectionString = "server=" + this.host +
                        ";uid=" + this.userName +
-                       ";pwd=" + this.userPassword +
-                       ";database=" + this.table +
+                       ";pwd=" + this.userPassword +                    
                        ";Treat Tiny As Boolean = false;charset=utf8;Connection Timeout=" + this.timeOut + ";";
+
+                if (useDatabase)
+                {
+                    myConnectionString += ";database=" + this.table;
+                }
 
                 if (this.currentProfil.getProperty("foreign_key_check") == "1")
                 {
@@ -106,6 +116,36 @@ namespace Projector
                 return null;
             }
         }
+
+        public List<string> getDataBases()
+        {
+            List<string> databases = new List<string>();
+            if (this.isConnected())
+            {
+                this.disConnect();
+            }
+
+            try
+            {
+                string tmpConnectionStr = this.getConnStr(false);
+                this.connection.ConnectionString = myConnectionString;
+                this.connection.Open();
+                this.connected = true;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                this.lastSqlErrorMessage = ex.Message;
+                this.lastErrorCode = ex.ErrorCode;
+                this.connected = false;
+                return null;
+            }
+
+            databases = selectFirstAsList("SHOW DATABASES");
+
+
+            return databases;
+        }
+
 
         /**
          * connect the database.

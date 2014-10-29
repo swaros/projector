@@ -959,7 +959,7 @@
             this.createTableToolStripMenuItem,
             this.renameTableToolStripMenuItem});
             this.tableContextMenu.Name = "tableContextMenu";
-            this.tableContextMenu.Size = new System.Drawing.Size(167, 192);
+            this.tableContextMenu.Size = new System.Drawing.Size(167, 170);
             this.tableContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.tableContextMenu_Opening);
             // 
             // joinTryMenu
