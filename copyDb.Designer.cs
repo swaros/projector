@@ -107,6 +107,8 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.savePropToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadPropToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.buildCompareScriptFromSelectedTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionAutoProp = new System.Windows.Forms.ToolStripMenuItem();
             this.fullsyncOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,6 +125,7 @@
             this.writeResultInExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useDefinedKeysForCompareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useMassQuery = new System.Windows.Forms.ToolStripMenuItem();
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkSync = new System.ComponentModel.BackgroundWorker();
             this.fullSyncWorker = new System.ComponentModel.BackgroundWorker();
             this.saveDump = new System.Windows.Forms.SaveFileDialog();
@@ -153,9 +156,6 @@
             this.tableCopyWorker = new System.ComponentModel.BackgroundWorker();
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.exportCsvFileDlg = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.buildCompareScriptFromSelectedTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -290,10 +290,10 @@
             this.tabimages.Images.SetKeyName(1, "database_table.png");
             this.tabimages.Images.SetKeyName(2, "edit-find-replace.png");
             this.tabimages.Images.SetKeyName(3, "delete.png");
-            this.tabimages.Images.SetKeyName(4, "1259837282_stock_data_edit_sql_query.ico");
+            this.tabimages.Images.SetKeyName(4, "stock_data-new-sql-query.png");
             this.tabimages.Images.SetKeyName(5, "arrow-forward_16.png");
             this.tabimages.Images.SetKeyName(6, "reload3.png");
-            this.tabimages.Images.SetKeyName(7, "1279103131_padlock_closed.png");
+            this.tabimages.Images.SetKeyName(7, "bullet_key.png");
             this.tabimages.Images.SetKeyName(8, "applications_16.png");
             // 
             // splitContainer1
@@ -1012,6 +1012,18 @@
             this.loadPropToolStripMenuItem.Text = "Load Prop";
             this.loadPropToolStripMenuItem.Click += new System.EventHandler(this.loadPropToolStripMenuItem_Click);
             // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(187, 6);
+            // 
+            // buildCompareScriptFromSelectedTablesToolStripMenuItem
+            // 
+            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Name = "buildCompareScriptFromSelectedTablesToolStripMenuItem";
+            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Text = "Build Compare Macro";
+            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Click += new System.EventHandler(this.buildCompareScriptFromSelectedTablesToolStripMenuItem_Click);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1031,7 +1043,7 @@
             this.optionAutoProp.CheckOnClick = true;
             this.optionAutoProp.CheckState = System.Windows.Forms.CheckState.Checked;
             this.optionAutoProp.Name = "optionAutoProp";
-            this.optionAutoProp.Size = new System.Drawing.Size(230, 22);
+            this.optionAutoProp.Size = new System.Drawing.Size(249, 22);
             this.optionAutoProp.Text = "Automatic store Propertie";
             // 
             // fullsyncOptionsToolStripMenuItem
@@ -1041,7 +1053,7 @@
             this.useGroupQueryDialog,
             this.massInsertQuerysToolStripMenuItem});
             this.fullsyncOptionsToolStripMenuItem.Name = "fullsyncOptionsToolStripMenuItem";
-            this.fullsyncOptionsToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.fullsyncOptionsToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.fullsyncOptionsToolStripMenuItem.Text = "Fullsync Options";
             // 
             // dropTableFirstOption
@@ -1072,7 +1084,7 @@
             // 
             this.alterTableForNewFieldsOnlyToolStripMenuItem.CheckOnClick = true;
             this.alterTableForNewFieldsOnlyToolStripMenuItem.Name = "alterTableForNewFieldsOnlyToolStripMenuItem";
-            this.alterTableForNewFieldsOnlyToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.alterTableForNewFieldsOnlyToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.alterTableForNewFieldsOnlyToolStripMenuItem.Text = "Alter table for new Fields only";
             // 
             // rowcheckToolStripMenuItem
@@ -1086,7 +1098,7 @@
             this.writeResultInExportToolStripMenuItem,
             this.useDefinedKeysForCompareToolStripMenuItem});
             this.rowcheckToolStripMenuItem.Name = "rowcheckToolStripMenuItem";
-            this.rowcheckToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.rowcheckToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.rowcheckToolStripMenuItem.Text = "Rowcheck";
             // 
             // DIFF_only
@@ -1154,8 +1166,16 @@
             this.useMassQuery.CheckOnClick = true;
             this.useMassQuery.CheckState = System.Windows.Forms.CheckState.Checked;
             this.useMassQuery.Name = "useMassQuery";
-            this.useMassQuery.Size = new System.Drawing.Size(230, 22);
+            this.useMassQuery.Size = new System.Drawing.Size(249, 22);
             this.useMassQuery.Text = "use Mass Query";
+            // 
+            // fullsyncAllwasOverwriteTablesToolStripMenuItem
+            // 
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.CheckOnClick = true;
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Name = "fullsyncAllwasOverwriteTablesToolStripMenuItem";
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Text = "Fullsync allways Overwrite Tables";
+            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Click += new System.EventHandler(this.fullsyncAllwasOverwriteTablesToolStripMenuItem_Click);
             // 
             // checkSync
             // 
@@ -1418,26 +1438,6 @@
             this.exportCsvFileDlg.DefaultExt = "csv";
             this.exportCsvFileDlg.Filter = "CSV Textfiles|*.csv";
             this.exportCsvFileDlg.Title = "Export";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(187, 6);
-            // 
-            // buildCompareScriptFromSelectedTablesToolStripMenuItem
-            // 
-            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Name = "buildCompareScriptFromSelectedTablesToolStripMenuItem";
-            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Text = "Build Compare Macro";
-            this.buildCompareScriptFromSelectedTablesToolStripMenuItem.Click += new System.EventHandler(this.buildCompareScriptFromSelectedTablesToolStripMenuItem_Click);
-            // 
-            // fullsyncAllwasOverwriteTablesToolStripMenuItem
-            // 
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.CheckOnClick = true;
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Name = "fullsyncAllwasOverwriteTablesToolStripMenuItem";
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Text = "Fullsync allways Overwrite Tables";
-            this.fullsyncAllwasOverwriteTablesToolStripMenuItem.Click += new System.EventHandler(this.fullsyncAllwasOverwriteTablesToolStripMenuItem_Click);
             // 
             // copyDb
             // 

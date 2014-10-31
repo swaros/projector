@@ -11,14 +11,14 @@
     <deploymentProvider codebase="file://bigpoint.local/SharedData/Development/Public/Projector/Projector.application" />
   </deployment>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Projector.exe.manifest" size="7166">
+    <dependentAssembly dependencyType="install" codebase="Projector.exe.manifest" size="7534">
       <assemblyIdentity name="Projector.exe" version="1.0.0.59" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>NjsL8vkoi65lF8ygOrosuzsNFvo=</dsig:DigestValue>
+        <dsig:DigestValue>K6ZuRJ1c0U64OLF5h6nbTFTB4D4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

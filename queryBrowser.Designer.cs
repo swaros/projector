@@ -689,10 +689,10 @@
             // 
             this.DbColumnPics.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("DbColumnPics.ImageStream")));
             this.DbColumnPics.TransparentColor = System.Drawing.Color.Transparent;
-            this.DbColumnPics.Images.SetKeyName(0, "1260371515_database_table_16x16.gif");
-            this.DbColumnPics.Images.SetKeyName(1, "1260371448_stock_data-tables.png");
-            this.DbColumnPics.Images.SetKeyName(2, "1260371569_key.png");
-            this.DbColumnPics.Images.SetKeyName(3, "1279103131_padlock_closed.png");
+            this.DbColumnPics.Images.SetKeyName(0, "database_table.gif");
+            this.DbColumnPics.Images.SetKeyName(1, "stock_data-tables.png");
+            this.DbColumnPics.Images.SetKeyName(2, "key.png");
+            this.DbColumnPics.Images.SetKeyName(3, "bullet_key.png");
             // 
             // MaskTab
             // 
