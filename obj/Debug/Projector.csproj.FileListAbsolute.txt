@@ -99,7 +99,6 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.application
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.CreateStructForm.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PlaceholderEditForm.resources
-C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csproj.GenerateResource.Cache
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ConfimSync.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\MySql.Data.dll
