@@ -94,7 +94,7 @@ namespace Projector
                 myConnectionString = "server=" + this.host +
                        ";uid=" + this.userName +
                        ";pwd=" + this.userPassword +                    
-                       ";Treat Tiny As Boolean = false;charset=utf8;Connection Timeout=" + this.timeOut + ";";
+                       ";Treat Tiny As Boolean = false;charset=utf8;Connection Timeout=" + this.timeOut;
 
                 if (useDatabase)
                 {
