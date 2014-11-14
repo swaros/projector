@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace Projector
 {
@@ -66,8 +67,14 @@ namespace Projector
 
         private void querysToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            windowID++;
+            
             queryBrowser qb = new queryBrowser();
+            this.addQueryWindow(qb);
+        }
+
+        public void addQueryWindow(queryBrowser qb)
+        {
+            windowID++;
             qb.Name = "QueryBrowser " + windowID;
             if (currentProfil.getProperty("set_bgcolor") != null && currentProfil.getProperty("set_bgcolor").Length > 2)
             {
@@ -82,6 +89,7 @@ namespace Projector
 
             listWindows();
         }
+
 
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -119,7 +127,65 @@ namespace Projector
         {
             listWindows(Projector.Properties.Resources.computer_16);
         }
-        
+
+        /**
+         * walk over all windows from type queryBrowser and fires the querys
+         */ 
+        private void updateQueryWindows()
+        {
+            Form[] charr = this.MdiChildren;
+            foreach (Form chform in charr)
+            {
+                String displayname = chform.Name;
+
+                if (chform.Text == "queryBrowser")
+                {
+                    Type queryWinType = chform.GetType();
+                    MethodInfo myMethodInfo = queryWinType.GetMethod("fireQuery");
+                    object[] mParam = new object[] {};
+                    myMethodInfo.Invoke(chform, null);
+                }
+                
+            }
+        }
+
+        private String getWindowScripts()
+        {
+            string code = "# Projector Query Script" + System.Environment.NewLine;
+
+            Form[] charr = this.MdiChildren;
+            foreach (Form chform in charr)
+            {
+                String displayname = chform.Name;
+                
+                if (chform.Text == "queryBrowser")
+                {
+                    string varName = displayname.Replace(" ", "_");
+                    code += "New QueryBrowser " + varName + System.Environment.NewLine;
+
+
+                    code += varName + ".setCoords " + chform.Left + "," + chform.Top + "," + chform.Width + "," + chform.Height + System.Environment.NewLine;
+
+                    Type queryWinType = chform.GetType();
+                    MethodInfo myMethodInfo = queryWinType.GetMethod("getCurrentSql");
+                    object[] mParam = new object[] { };
+                    string sql = (string) myMethodInfo.Invoke(chform, null);
+
+                    code += varName + ".setSql \"" + sql + "\"" + System.Environment.NewLine;
+                }
+
+            }
+
+          //  ReflectionScript script = new ReflectionScript();
+          //  script.setCode(code);
+            ScriptWriter scriptEditor = new ScriptWriter(this);
+            scriptEditor.codeBox.Text = code;
+            scriptEditor.Show();
+
+
+            return code;
+        }
+
         private void listWindows(Image pic)
         {
             Form[] charr = this.MdiChildren;
@@ -223,6 +289,22 @@ namespace Projector
         private void MainTools_MouseLeave(object sender, EventArgs e)
         {
             refreshTimer.Start();
+        }
+
+        private void refreshAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            updateQueryWindows();
+        }
+
+        private void makeSnapshotAsScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            getWindowScripts();
+        }
+
+        private void editScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptWriter scriptEditor = new ScriptWriter(this);            
+            scriptEditor.Show();
         }
     }
 }

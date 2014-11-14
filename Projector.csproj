@@ -23,6 +23,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <ApplicationIcon>1259675516_Synchronize.ico</ApplicationIcon>
+    <TargetFrameworkProfile />
     <PublishUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
@@ -34,12 +35,11 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>59</ApplicationRevision>
+    <ApplicationRevision>60</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -286,6 +286,9 @@
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScriptWriter.resx">
+      <DependentUpon>ScriptWriter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetTimer.resx">
       <DependentUpon>SetTimer.cs</DependentUpon>
     </EmbeddedResource>
@@ -342,11 +345,23 @@
       <DependentUpon>queryBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="QueryComposer.cs" />
+    <Compile Include="ReflectionScript.cs" />
+    <Compile Include="ReflectionScriptDefines.cs" />
+    <Compile Include="ReflectNew.cs" />
+    <Compile Include="ReflectObjectInterface.cs" />
+    <Compile Include="RefScriptExecute.cs" />
+    <Compile Include="ScriptErrors.cs" />
     <Compile Include="ScriptExecuter.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ScriptExecuter.Designer.cs">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptWriter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScriptWriter.Designer.cs">
+      <DependentUpon>ScriptWriter.cs</DependentUpon>
     </Compile>
     <Compile Include="Serializer.cs" />
     <Compile Include="SetTimer.cs">

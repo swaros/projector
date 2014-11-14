@@ -174,6 +174,24 @@ namespace Projector
             return query;
         }
 
+        public void setCoords(int left, int top, int width, int height)
+        {
+            this.Width = width;
+            this.Height = height;
+            this.Top = top;
+            this.Left = left;
+            
+        }
+
+        public string getCurrentSql()
+        {
+            return textBox1.Text;
+        }
+
+        public string getCurrentTable() {
+            return this.lastSelectedtable;
+        }
+
         public void fireQuery()
         {
             database = new MysqlHandler(sensorProfil);

@@ -43,6 +43,9 @@
             this.arrangeIcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makeSnapshotAsScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -56,6 +59,7 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MainTools.SuspendLayout();
@@ -66,7 +70,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.watchToolStripMenuItem,
             this.windowToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.manageToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1243, 24);
@@ -168,6 +173,30 @@
             this.toolbarToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.toolbarToolStripMenuItem.Text = "&Toolbar";
             this.toolbarToolStripMenuItem.Click += new System.EventHandler(this.toolbarToolStripMenuItem_Click);
+            // 
+            // manageToolStripMenuItem
+            // 
+            this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshAllToolStripMenuItem,
+            this.makeSnapshotAsScriptToolStripMenuItem,
+            this.editScriptToolStripMenuItem});
+            this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+            this.manageToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.manageToolStripMenuItem.Text = "&Manage";
+            // 
+            // refreshAllToolStripMenuItem
+            // 
+            this.refreshAllToolStripMenuItem.Name = "refreshAllToolStripMenuItem";
+            this.refreshAllToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.refreshAllToolStripMenuItem.Text = "&Refresh All Query Browser";
+            this.refreshAllToolStripMenuItem.Click += new System.EventHandler(this.refreshAllToolStripMenuItem_Click);
+            // 
+            // makeSnapshotAsScriptToolStripMenuItem
+            // 
+            this.makeSnapshotAsScriptToolStripMenuItem.Name = "makeSnapshotAsScriptToolStripMenuItem";
+            this.makeSnapshotAsScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.makeSnapshotAsScriptToolStripMenuItem.Text = "&Make Snapshot as Script";
+            this.makeSnapshotAsScriptToolStripMenuItem.Click += new System.EventHandler(this.makeSnapshotAsScriptToolStripMenuItem_Click);
             // 
             // BottomToolStripPanel
             // 
@@ -282,6 +311,13 @@
             this.refreshTimer.Interval = 1000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
+            // editScriptToolStripMenuItem
+            // 
+            this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
+            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.editScriptToolStripMenuItem.Text = "Edit Script";
+            this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
+            // 
             // MdiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,6 +372,10 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolbarToolStripMenuItem;
         private System.Windows.Forms.Timer refreshTimer;
+        private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem makeSnapshotAsScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editScriptToolStripMenuItem;
 
     }
 }
