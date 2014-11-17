@@ -13,6 +13,8 @@ namespace Projector
 {
     public partial class queryBrowser : Form
     {
+        public string ScriptIdent = "";
+
         private Pattern patternHandle = new Pattern();
 
         public Profil sensorProfil;
@@ -130,6 +132,10 @@ namespace Projector
            
         }
 
+        public void setSql(string sql)
+        {
+            textBox1.Text = sql;
+        }
 
         public void enableDialogMode()
         {
@@ -191,6 +197,18 @@ namespace Projector
         public string getCurrentTable() {
             return this.lastSelectedtable;
         }
+
+        public void setWhere(string field, string value)
+        {
+            if (maskQuery != null)
+            {                
+                maskQuery.addWhere(field, value);
+                findInputeElementbyFieldNameUpdate(field, value);
+                textBox1.Text = maskQuery.getSelect();
+                parseSqlTextBox();
+            }
+        }
+
 
         public void fireQuery()
         {
@@ -1005,6 +1023,41 @@ namespace Projector
             //checkExplain();
         }
 
+        public Boolean selectTable(string name)
+        {
+            for (int i = 0; i < tableView.Items.Count; i++)
+            {
+                if (tableView.Items[i].Text == name)
+                {
+                    tableView.Items[i].Selected = true;
+                    resetExplainMsg();
+                    getTableMask(name);
+                    lastSelectedtable = name;
+                    this.Name = lastSelectedtable;
+                    TableNameView.Text = lastSelectedtable;
+                    selectedTableLabel.Text = lastSelectedtable;
+
+                    textBox1.Text = maskQuery.getSelect();
+                    parseSqlTextBox();
+
+                    List<MysqlStruct> structs = database.getAllFieldsStruct(name);
+                    fieldList.Clear();
+                    leftJoinSource.Items.Clear();
+
+                    for (int b = 0; b < structs.Count; b++)
+                    {
+                        fieldList.Add(structs[b].name);
+                        leftJoinSource.Items.Add(structs[b].name);
+
+                    }
+                    
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void tableView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             // only simple click allowed
@@ -1157,6 +1210,7 @@ namespace Projector
            
            button1.Enabled = true;
            rowResultCount.Text = "Rows " + tmpObj.listView.Items.Count;
+           tabControl1.SelectedIndex = 0;
         }
 
         private void mysqlWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -2443,6 +2497,11 @@ namespace Projector
             }
         }
 
+        public void showTableList(Boolean onOff)
+        {
+            splitContainer3.Panel2Collapsed = !onOff;
+        }
+
         private void toolStripButton10_Click(object sender, EventArgs e)
         {
             splitContainer3.Panel2Collapsed = !toolStripButton10.Checked;
@@ -2596,15 +2655,18 @@ namespace Projector
             if (tableView.SelectedItems.Count > 0)
             {
                 string sql = "";
-                string union = "";
+                //string union = "";
+                List<string> unionTables = new List<string>();
                 for (int i = 0; i < tableView.SelectedItems.Count; i++)
                 {
-                    sql += union + "(SELECT * FROM  " + tableView.SelectedItems[i].Text + ")" + System.Environment.NewLine;
-                    union = "UNION" + System.Environment.NewLine;
+                    //sql += union + "(SELECT * FROM  " + tableView.SelectedItems[i].Text + ")" + System.Environment.NewLine;
+                    
+                   // union = "UNION" + System.Environment.NewLine;
+                    unionTables.Add(tableView.SelectedItems[i].Text);
                 }
 
                 SqlExecConfirm copyConfirm = new SqlExecConfirm();
-                copyConfirm.sqlTextBox.Text = sql;
+                copyConfirm.sqlTextBox.Text = maskQuery.selectUnion(unionTables);
                 if (copyConfirm.ShowDialog() == DialogResult.OK)
                 {
                     textBox1.Text = sql;

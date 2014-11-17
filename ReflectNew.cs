@@ -16,17 +16,34 @@ namespace Projector
         {
             if (refObject.typeOfObject == "QueryBrowser")
             {
-                queryBrowser browser = new queryBrowser();
-                browser.Name = refObject.name;
-
-                if (parent is MdiForm){
-                    MdiForm mdi = (MdiForm)parent;
-                    mdi.addQueryWindow(browser);
-                }
-
-                return browser;
+                return this.getQueryBrowser(refObject,parent);
             }
             return null;
+        }
+
+        private queryBrowser getQueryBrowser(ReflectionScriptDefines refObject, Object parent)
+        {
+            queryBrowser browser = new queryBrowser();
+            browser.Name = refObject.name;
+            browser.ScriptIdent = refObject.name;
+
+            if (parent is MdiForm)
+            {
+
+                MdiForm mdi = (MdiForm)parent;
+                queryBrowser existingQb = (queryBrowser)mdi.getQueryForm(refObject.name);
+                if (null == existingQb)
+                {
+                    mdi.addQueryWindow(browser);
+                }
+                else
+                {
+                    return existingQb;
+
+                }
+            }
+
+            return browser;
         }
     }
 }

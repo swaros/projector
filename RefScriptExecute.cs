@@ -68,7 +68,10 @@ namespace Projector
 
             Type executeableObj = obj.GetType();
             MethodInfo myMethodInfo = executeableObj.GetMethod(refObj.originCode);
-            
+            if (myMethodInfo == null)
+            {
+                return null;
+            }
             int countOfparams = refObj.parameters.Count();
             object[] mParam = new object[countOfparams];
             for (int i = 0; i < countOfparams; i++)

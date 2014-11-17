@@ -15,10 +15,13 @@ namespace Projector
         public Profil currentProfil;
 
         private int windowID =0;
+
+        private String scriptText = null;
      
         public MdiForm()
         {
             InitializeComponent();
+            scriptExec.Enabled = (this.scriptText != null);
         }
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
@@ -90,6 +93,20 @@ namespace Projector
             listWindows();
         }
 
+
+        public void addSubWindow(Form qb, string prefix)
+        {
+            windowID++;
+            qb.Name = prefix + windowID;
+            if (currentProfil.getProperty("set_bgcolor") != null && currentProfil.getProperty("set_bgcolor").Length > 2)
+            {
+                qb.BackColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+            }
+            //watcher.profil = profil;                        
+            qb.MdiParent = this;            
+            qb.Show();
+            listWindows();
+        }
 
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -163,15 +180,22 @@ namespace Projector
                     string varName = displayname.Replace(" ", "_");
                     code += "New QueryBrowser " + varName + System.Environment.NewLine;
 
+                    code += varName + " showTableList false " + System.Environment.NewLine;
 
-                    code += varName + ".setCoords " + chform.Left + "," + chform.Top + "," + chform.Width + "," + chform.Height + System.Environment.NewLine;
+                    code += varName + " setCoords " + chform.Left + "," + chform.Top + "," + chform.Width + "," + chform.Height + System.Environment.NewLine;
 
                     Type queryWinType = chform.GetType();
-                    MethodInfo myMethodInfo = queryWinType.GetMethod("getCurrentSql");
+                    MethodInfo myMethodInfo = queryWinType.GetMethod("getCurrentTable");
                     object[] mParam = new object[] { };
-                    string sql = (string) myMethodInfo.Invoke(chform, null);
+                    string table = (string) myMethodInfo.Invoke(chform, null);
+                    code += varName + " selectTable \"" + table + "\"" + System.Environment.NewLine;
 
-                    code += varName + ".setSql \"" + sql + "\"" + System.Environment.NewLine;
+
+                    myMethodInfo = queryWinType.GetMethod("getCurrentSql");
+                    string sql = (string)myMethodInfo.Invoke(chform, null);
+                    code += varName + " setSql \"" + sql + "\"" + System.Environment.NewLine;
+
+                    
                 }
 
             }
@@ -180,7 +204,7 @@ namespace Projector
           //  script.setCode(code);
             ScriptWriter scriptEditor = new ScriptWriter(this);
             scriptEditor.codeBox.Text = code;
-            scriptEditor.Show();
+            scriptEditor.ShowDialog();
 
 
             return code;
@@ -303,8 +327,57 @@ namespace Projector
 
         private void editScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScriptWriter scriptEditor = new ScriptWriter(this);            
-            scriptEditor.Show();
+            ScriptWriter scriptEditor = new ScriptWriter(this,this.scriptText);
+            this.addSubWindow(scriptEditor, "P-Script");
+            //scriptEditor.MdiParent = this;
+            //qb.MdiParent = this;
+            //scriptEditor.Show();
+        }
+
+        public Form getQueryForm(string name)
+        {
+            foreach (Form chform in this.MdiChildren)
+            {
+                String displayname = chform.Name;
+
+                if (chform.Text == "queryBrowser")
+                {
+                    queryBrowser querBrw = (queryBrowser)chform;
+
+                    if (querBrw.ScriptIdent == name)
+                    {
+                        return chform;
+                    }
+                }
+
+            }
+            return null;
+        }
+
+        private void scriptExec_Click(object sender, EventArgs e)
+        {
+            if (this.scriptText != null)
+            {
+                ReflectionScript script = new ReflectionScript();
+                script.setCode(this.scriptText);
+                if (script.getErrorCount() == 0)
+                {
+                    RefScriptExecute executer = new RefScriptExecute(script, this);
+                    executer.run();
+                }
+            }
+        }
+
+        private void manageToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            scriptExec.Enabled = (this.scriptText != null);
+        }
+
+        private void loadScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptWriter scriptEditor = new ScriptWriter(this, true);
+            scriptEditor.ShowDialog();
+            this.scriptText = scriptEditor.assignedExternalScript;
         }
     }
 }

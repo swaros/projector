@@ -46,6 +46,7 @@
             this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.makeSnapshotAsScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -59,7 +60,8 @@
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptExec = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.MainTools.SuspendLayout();
@@ -179,10 +181,13 @@
             this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshAllToolStripMenuItem,
             this.makeSnapshotAsScriptToolStripMenuItem,
-            this.editScriptToolStripMenuItem});
+            this.editScriptToolStripMenuItem,
+            this.scriptExec,
+            this.loadScriptToolStripMenuItem});
             this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
             this.manageToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
             this.manageToolStripMenuItem.Text = "&Manage";
+            this.manageToolStripMenuItem.DropDownOpening += new System.EventHandler(this.manageToolStripMenuItem_DropDownOpening);
             // 
             // refreshAllToolStripMenuItem
             // 
@@ -197,6 +202,13 @@
             this.makeSnapshotAsScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.makeSnapshotAsScriptToolStripMenuItem.Text = "&Make Snapshot as Script";
             this.makeSnapshotAsScriptToolStripMenuItem.Click += new System.EventHandler(this.makeSnapshotAsScriptToolStripMenuItem_Click);
+            // 
+            // editScriptToolStripMenuItem
+            // 
+            this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
+            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.editScriptToolStripMenuItem.Text = "&Edit Script...";
+            this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
             // 
             // BottomToolStripPanel
             // 
@@ -311,12 +323,19 @@
             this.refreshTimer.Interval = 1000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
-            // editScriptToolStripMenuItem
+            // scriptExec
             // 
-            this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
-            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
-            this.editScriptToolStripMenuItem.Text = "Edit Script";
-            this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
+            this.scriptExec.Name = "scriptExec";
+            this.scriptExec.Size = new System.Drawing.Size(210, 22);
+            this.scriptExec.Text = "E&xecute Script";
+            this.scriptExec.Click += new System.EventHandler(this.scriptExec_Click);
+            // 
+            // loadScriptToolStripMenuItem
+            // 
+            this.loadScriptToolStripMenuItem.Name = "loadScriptToolStripMenuItem";
+            this.loadScriptToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.loadScriptToolStripMenuItem.Text = "Load Script...";
+            this.loadScriptToolStripMenuItem.Click += new System.EventHandler(this.loadScriptToolStripMenuItem_Click);
             // 
             // MdiForm
             // 
@@ -376,6 +395,8 @@
         private System.Windows.Forms.ToolStripMenuItem refreshAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem makeSnapshotAsScriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptExec;
+        private System.Windows.Forms.ToolStripMenuItem loadScriptToolStripMenuItem;
 
     }
 }

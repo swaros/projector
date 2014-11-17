@@ -14,6 +14,8 @@ namespace Projector
         private const string REGEX_BRACKETS = "({[^}]*})";
         private const string REGEX_STRING = "\"([^\"]*)\"";
 
+        private const string MASK_DELIMITER = "#";
+
         private Boolean followRecusives = true;
 
         private String code = "";
@@ -116,12 +118,25 @@ namespace Projector
 
         public String fillUpVars(string source)
         {
+            string newStr = this.fillUpVarsBack(source);
+            string chkStr = source;
+            while (newStr != source)
+            {
+                source = newStr;
+                newStr = fillUpVarsBack(source);
+            }
+            return newStr;
+        }
+
+
+        public String fillUpVarsBack(string source)
+        {
             string newSrc = source;
             foreach (DictionaryEntry de in this.stringFounds)
             {
                 newSrc = newSrc.Replace(de.Key.ToString(), de.Value.ToString());
             }
-            return newSrc;
+            return newSrc.Replace("\"","");
         }
 
         public String getCodeByName(string name)
@@ -153,12 +168,25 @@ namespace Projector
              */
 
             //base commands
-            this.mask.Add("NEW § %=OBJECT");
-            this.mask.Add("PROCEDURE % ?=PARSE");
+            this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
+            this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
+
+            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT");
+            //this.mask.Add("STR § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR"  + Projector.ReflectionScript.MASK_DELIMITER + ". . . STR");
+            //this.mask.Add("INT § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR" + Projector.ReflectionScript.MASK_DELIMITER + ". . . INT");
 
             //object depended commands
-            this.mask.Add("& SETCOORDS ? ? ? ?=METHOD=. . INT INT INT INT");
-            this.mask.Add("& SETSQL ?=METHOD=. . STR");
+            this.mask.Add("& SETCOORDS ? ? ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setCoords INT INT INT INT");
+            this.mask.Add("& SELECTTABLE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". selectTable STR");
+            this.mask.Add("& FIREQUERY" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". fireQuery");
+            this.mask.Add("& SETWHERE ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setWhere STR STR");
+
+            this.mask.Add("& SETSQL ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setSql STR");
+            this.mask.Add("& SHOWTABLELIST ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". showTableList BOOL");
+
+
+            // just to store something
+            // this.mask.Add("VAR § SET ?=STRINGVAR STR");
         }
 
         public string getSourceInfo()
@@ -181,7 +209,7 @@ namespace Projector
                     string add = "";
                     foreach (String param in tmpCode.scriptParamaters)
                     {
-                        info += add + param;
+                        info += add + this.fillUpVars(param);
                         add = ", ";
                     }
                     info += ")";
@@ -269,6 +297,33 @@ namespace Projector
                 this.addError("this method is invalid because of a unknown Reference" + testObj.code);
             }
 
+            if (testObj.isVariable)
+            {
+                if (testObj.name != null && testObj.scriptParamaters.Count() == 1)
+                {
+                    string name = this.fillUpVars(testObj.name);
+                    foreach (string varValue in testObj.scriptParamaters)
+                    {
+                        string varName = testObj.name;
+                        string varStr = this.fillUpVars(varValue);
+                        if (stringFounds.ContainsKey(varName))
+                        {
+                            this.addError("variable " + varName + " allready defined");
+                        } else {
+                            stringFounds.Add(testObj.name, varStr);
+                            stringFounds.Add("&" + testObj.name, varStr);
+                            stringFounds.Add("&&" + testObj.name, "'" + varStr + "'");
+                        }
+                    }
+                    //stringFounds.Add(name,
+                }
+                else
+                {
+                    this.addError("invalid paramatercount or invalid name for assignement ");
+                }
+            }
+
+
             // just something to do
 
             // this opbject is parseable so it must have some part of code as param
@@ -335,7 +390,7 @@ namespace Projector
 
 
                     // split mask into the mask himself (left) and the props (right)
-                    string[] def = hash.Split('=');
+                    string[] def = hash.Split(Projector.ReflectionScript.MASK_DELIMITER[0]);
 
                     // get the mask as words
                     string[] maskPart = def[0].Split(' ');
@@ -367,11 +422,23 @@ namespace Projector
                         // check if on the expected position an keyword
                         if (maskPart[partPosition] == highPart)
                         {
+
+                            if (varDefines != null && varDefines.Count() > partPosition)
+                            {
+                                string definedSpelling = varDefines[partPosition];
+                                if (definedSpelling != part)
+                                {
+                                    this.addError("wrong spelling of " + part + ". must be " + definedSpelling);
+                                    return null;
+                                }
+                            }
+
                             foundRef = maskPart[partPosition];
                             cmdResult = new ReflectionScriptDefines();
                             cmdResult.isObject = definePart.Contains("OBJECT");
                             cmdResult.isMethod = definePart.Contains("METHOD");
                             cmdResult.parseable = definePart.Contains("PARSE");
+                            cmdResult.isVariable = definePart.Contains("VAR");
                             cmdResult.code = highPart;
                             cmdResult.originCode = part;
                             cmdResult.parameters = new List<object>();
@@ -385,12 +452,21 @@ namespace Projector
                             {
                                 string definedType = varDefines[partPosition];
                                 if (definedType == "INT"){
-                                    int parInt = int.Parse(part);
-                                    cmdResult.parameters.Add(parInt);
+                                    try
+                                    {
+                                        int parInt = int.Parse(part);
+                                        cmdResult.parameters.Add(parInt);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        this.addError("Parameter must bee an number" + e.Message);
+                                        return null;
+                                    }
+                                    
                                 }
                                 else if (definedType == "STR")
                                 {
-                                    cmdResult.parameters.Add(part.ToString());
+                                    cmdResult.parameters.Add( this.fillUpVars(part) );
                                 }
                                 else if (definedType == "BOOL")
                                 {
@@ -402,7 +478,7 @@ namespace Projector
                                     {
                                         cmdResult.parameters.Add(false);
                                     }
-                                }
+                                }                                
                             }
 
                         }

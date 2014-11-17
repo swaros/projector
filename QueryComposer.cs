@@ -222,6 +222,24 @@ namespace Projector
             leftJoins = new List<JoinTable>();
         }
 
+        public string selectUnion(List<string> tables)
+        {
+            string sql = "";
+            string saveTableName = this.TableName;
+            string add ="";
+            foreach (string tmpCurrTable in tables){
+                this.TableName = tmpCurrTable;
+
+                sql += add + "(" + this.getSelect() + ")";
+                add = System.Environment.NewLine + "UNION";
+            }
+
+            this.TableName = saveTableName;
+            return sql;
+
+        }
+
+
         /** 
          * Returns select query
          */

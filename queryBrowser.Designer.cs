@@ -279,10 +279,10 @@
             // 
             // toolStripContainer1.TopToolStripPanel
             // 
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.leftJoinToolStrip);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.dialogToolStrip);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.leftJoinToolStrip);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.rowOptTtoolStrip);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.dialogToolStrip);
             // 
             // splitContainer3
             // 
@@ -1191,9 +1191,9 @@
             this.dialogToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DialogOKBtn,
             this.dialogCancelBtn});
-            this.dialogToolStrip.Location = new System.Drawing.Point(3, 25);
+            this.dialogToolStrip.Location = new System.Drawing.Point(3, 0);
             this.dialogToolStrip.Name = "dialogToolStrip";
-            this.dialogToolStrip.Size = new System.Drawing.Size(149, 25);
+            this.dialogToolStrip.Size = new System.Drawing.Size(118, 25);
             this.dialogToolStrip.TabIndex = 5;
             // 
             // DialogOKBtn
@@ -1240,7 +1240,7 @@
             this.toolStripDropDownButton1,
             this.toolStripSeparator16,
             this.toolStripButton9});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(3, 25);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(544, 25);
             this.toolStrip1.TabIndex = 2;
