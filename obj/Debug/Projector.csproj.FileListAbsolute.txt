@@ -105,3 +105,44 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\bin\Debug\Projector.exe.config
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptWriter.resources
+C:\Users\Thomas\Source\Repos\projektor\bin\Debug\Projector.exe.config
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.csproj.ResolveComReference.cache
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.exe
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.pdb
+C:\Users\Thomas\Source\Repos\projektor\bin\Debug\Projector.exe.manifest
+C:\Users\Thomas\Source\Repos\projektor\bin\Debug\Projector.application
+C:\Users\Thomas\Source\Repos\projektor\bin\Debug\Projector.exe
+C:\Users\Thomas\Source\Repos\projektor\bin\Debug\Projector.pdb
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ConfimSync.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.copyDb.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.CreateStructForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.CretaeInsertSelect.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.DiffResultWindow.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.EditMacro.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ProjectorForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.GroupQuery.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ImportSettings.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.MdiForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.MysqlSensor.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.mysqlWatch.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.PasteListView.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.PlaceholderEditForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ProfilGroup.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ProfilSelect.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.Properties.Resources.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.prozessMsg.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.queryBrowser.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ScriptExecuter.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ScriptWriter.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.SetTimer.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.setupForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.ShowDiff.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.SqlExecConfirm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.StructDiffWindow.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.TableStructForm.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.UserTextInput.resources
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.csproj.GenerateResource.Cache
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.TrustInfo.xml
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.exe.manifest
+C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.application

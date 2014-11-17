@@ -72,6 +72,7 @@
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             this.MainContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainSlitter)).BeginInit();
             this.mainSlitter.Panel1.SuspendLayout();
             this.mainSlitter.Panel2.SuspendLayout();
             this.mainSlitter.SuspendLayout();
@@ -102,40 +103,41 @@
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
             this.startToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.startToolStripMenuItem.Text = "&Project";
+            this.startToolStripMenuItem.DropDownOpening += new System.EventHandler(this.startToolStripMenuItem_DropDownOpening);
             // 
             // databaseWatchToolStripMenuItem
             // 
             this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
             this.databaseWatchToolStripMenuItem.Name = "databaseWatchToolStripMenuItem";
             this.databaseWatchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.databaseWatchToolStripMenuItem.Text = "Sync Database...";
             this.databaseWatchToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // mDIToolStripMenuItem
             // 
             this.mDIToolStripMenuItem.Name = "mDIToolStripMenuItem";
-            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.mDIToolStripMenuItem.Text = "Show Database...";
             this.mDIToolStripMenuItem.Click += new System.EventHandler(this.mDIToolStripMenuItem_Click);
             // 
             // groupQueryToolStripMenuItem
             // 
             this.groupQueryToolStripMenuItem.Name = "groupQueryToolStripMenuItem";
-            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.groupQueryToolStripMenuItem.Text = "Group Query...";
             this.groupQueryToolStripMenuItem.Click += new System.EventHandler(this.groupQueryToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(203, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
             // 
             // loadProjectToolStripMenuItem
             // 
             this.loadProjectToolStripMenuItem.Image = global::Projector.Properties.Resources.folder_closed_16;
             this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
-            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.loadProjectToolStripMenuItem.Text = "Load Project...";
             this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
             // 
@@ -143,7 +145,7 @@
             // 
             this.saveProjectToolStripMenuItem.Image = global::Projector.Properties.Resources.SAVE_16;
             this.saveProjectToolStripMenuItem.Name = "saveProjectToolStripMenuItem";
-            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.saveProjectToolStripMenuItem.Text = "Save Project...";
             this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.backupProfilesToolStripMenuItem_Click);
             // 
@@ -325,7 +327,7 @@
             this.chooseGroup});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(323, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(290, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -434,6 +436,7 @@
             this.MainContainer.ResumeLayout(false);
             this.mainSlitter.Panel1.ResumeLayout(false);
             this.mainSlitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainSlitter)).EndInit();
             this.mainSlitter.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

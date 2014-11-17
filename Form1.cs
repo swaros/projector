@@ -610,12 +610,15 @@ namespace Projector
 
         private void mDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MdiForm mdif = new MdiForm();
-            //mdif.currentProfil = profil;
-            if (mdif.currentProfil == null) mdif.currentProfil = new Profil("midi");
-            mdif.currentProfil.getValuesFromProfil(profil);
-            mdif.Text = " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_host") + "/" + profil.getProperty("db_schema") + "]";
-            mdif.Show();
+            if (profil.getProperty("db_username") != null)
+            {
+                MdiForm mdif = new MdiForm();
+                //mdif.currentProfil = profil;
+                if (mdif.currentProfil == null) mdif.currentProfil = new Profil("midi");
+                mdif.currentProfil.getValuesFromProfil(profil);
+                mdif.Text = " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_host") + "/" + profil.getProperty("db_schema") + "]";
+                mdif.Show();
+            }
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -846,6 +849,17 @@ namespace Projector
         private void groupButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
+        }
+
+        private void startToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            Boolean profilesvalid = (profil.getProperty("db_username") != null && profil.getProperty("db_username") != "");
+            databaseWatchToolStripMenuItem.Enabled = profilesvalid;
+            mDIToolStripMenuItem.Enabled = profilesvalid;
+            groupQueryToolStripMenuItem.Enabled = profilesvalid;
+            setupToolStripMenuItem.Enabled = profilesvalid;
+            exportCurrentProfilToolStripMenuItem.Enabled = profilesvalid;
+            groupButtonsToolStripMenuItem.Enabled = profilesvalid;
         }
 
 

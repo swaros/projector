@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("Projector")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("MySQL Manager")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bigpoint GmbH")]
 [assembly: AssemblyProduct("Projector")]
-[assembly: AssemblyCopyright("Copyright © Bigpoint GmbH 2009")]
+[assembly: AssemblyCopyright("Copyright © Thomas Ziegler")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
