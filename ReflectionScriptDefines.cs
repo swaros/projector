@@ -22,6 +22,8 @@ namespace Projector
         public string namedReference;
         public Object Referenz;
         public Object ReflectObject;
+        public int lineNumber = 0;
+        public int lineCount = 1;
 
         public ReflectionScript subScript;
 

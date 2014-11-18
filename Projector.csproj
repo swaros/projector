@@ -145,6 +145,7 @@
       <DependentUpon>GroupQuery.cs</DependentUpon>
     </Compile>
     <Compile Include="HighlighterMysql.cs" />
+    <Compile Include="HighlightStyle.cs" />
     <Compile Include="ImportSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,9 +348,11 @@
     <Compile Include="QueryComposer.cs" />
     <Compile Include="ReflectionScript.cs" />
     <Compile Include="ReflectionScriptDefines.cs" />
+    <Compile Include="ReflectionScriptHighLight.cs" />
     <Compile Include="ReflectNew.cs" />
     <Compile Include="ReflectObjectInterface.cs" />
     <Compile Include="RefScriptExecute.cs" />
+    <Compile Include="RtfColoring.cs" />
     <Compile Include="ScriptErrors.cs" />
     <Compile Include="ScriptExecuter.cs">
       <SubType>Form</SubType>

@@ -34,7 +34,13 @@ namespace Projector
 
         private List<ReflectionScriptDefines> buildedSource = new List<ReflectionScriptDefines>();
 
+        private List<int> emptyLines = new List<int>();
+
         private int currentReadLine = 0;
+
+        private int lineOffset = 0;
+
+        
 
         public ReflectionScript()
         {
@@ -56,6 +62,7 @@ namespace Projector
          */ 
         private void reset()
         {
+            this.lineOffset = 0;
             this.errorMessages.Clear();
             this.objectList.Clear();
             this.stringFounds.Clear();
@@ -68,8 +75,10 @@ namespace Projector
         {
             this.reset();
             this.code = code;
-            this.prepareCodeLines();
-            this.build();
+            if (this.prepareCodeLines() == true)
+            {
+                this.build();
+            }
         }
 
         public string getErrors()
@@ -82,12 +91,23 @@ namespace Projector
             return error;
         }
 
+        public List<ScriptErrors> getAllErrors()
+        {
+            return errorMessages;
+        }
+
+        private int getLineNumber()
+        {
+            return this.currentReadLine + this.lineOffset;
+        }
+
+
         private void addError(String Errormessage)
         {
             ScriptErrors error = new ScriptErrors();
             error.errorCode = 0;
             error.errorMessage = Errormessage;
-            error.lineNumber = this.currentReadLine;
+            error.lineNumber = this.getLineNumber();
             this.errorMessages.Add(error);
         }
 
@@ -99,7 +119,7 @@ namespace Projector
             ScriptErrors error = new ScriptErrors();
             error.errorCode = ErrorCode;
             error.errorMessage = Errormessage;
-            error.lineNumber = this.currentReadLine;
+            error.lineNumber = this.getLineNumber();
             this.errorMessages.Add(error);
         }
 
@@ -148,6 +168,11 @@ namespace Projector
             return null;
         }
 
+        public Hashtable getAllStrings()
+        {
+            return this.stringFounds;
+        }
+
         private void init()
         {
             /**
@@ -189,6 +214,12 @@ namespace Projector
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
         }
 
+        public List<int> getEmptyLines()
+        {
+            return this.emptyLines;
+        }
+
+
         public string getSourceInfo()
         {
             string info = "";
@@ -196,28 +227,115 @@ namespace Projector
             {
 
                 ReflectionScriptDefines tmpCode = (ReflectionScriptDefines)buildedSource[i];
-                info += tmpCode.code;
-
-                if (tmpCode.name != null)
-                {
-                    info += "<" + tmpCode.name + "> ";
-                }
-
-                if (tmpCode.scriptParamaters != null)
-                {
-                    info += " (";
-                    string add = "";
-                    foreach (String param in tmpCode.scriptParamaters)
-                    {
-                        info += add + this.fillUpVars(param);
-                        add = ", ";
-                    }
-                    info += ")";
-                }
-
-                info += System.Environment.NewLine;
+                info += this.getSrcInfo(tmpCode);
             }
             return info;
+        }
+
+        public string getSrcInfo(ReflectionScriptDefines tmpCode)
+        {
+            string info ="";
+            info += tmpCode.code;
+
+            if (tmpCode.name != null)
+            {
+                info += "<" + tmpCode.name + "> ";
+            }
+
+            if (tmpCode.scriptParamaters != null)
+            {
+                info += " (";
+                string add = "";
+                foreach (String param in tmpCode.scriptParamaters)
+                {
+                    info += add + this.fillUpVars(param);
+                    add = ", ";
+                }
+                info += ")";
+            }
+
+            info += System.Environment.NewLine;
+
+            return info;
+        }
+
+        /**
+         * show the Script properties as user readable string
+         */ 
+        public string dump(ReflectionScriptDefines tmpCode)
+        {
+            string info = "";
+            info += strDump("code", tmpCode.code);
+            info += strDump("name", tmpCode.name);
+            info += strDump("namedReference", tmpCode.namedReference);
+            info += strDump("originCode", tmpCode.originCode);
+            info += strDump("typeOfObject", tmpCode.typeOfObject);
+            info += strDump("isLinked", tmpCode.isLinked);
+            info += strDump("isMethod", tmpCode.isMethod);
+            info += strDump("isObject", tmpCode.isObject);
+            info += strDump("isReflection", tmpCode.isReflection);
+            info += strDump("isVariable", tmpCode.isVariable);
+            info += strDump("lineNumber", tmpCode.lineNumber.ToString());
+            info += strDump("count of Lines", tmpCode.lineCount.ToString());
+            info += strDump("parseabale", tmpCode.parseable);
+            info += strDump("Referenz", tmpCode.Referenz);
+            info += strDump("ReflectedObject", tmpCode.ReflectObject);
+            if (tmpCode.subScript != null)
+            {
+                info += strDump("SubSource", tmpCode.subScript.getSourceInfo());
+            }
+            info += "--parameters ---<" + System.Environment.NewLine;
+            string info2 = "";
+            if (tmpCode.scriptParamaters != null)
+            {
+                
+                
+                foreach (String param in tmpCode.scriptParamaters)
+                {
+                    info += param + System.Environment.NewLine;
+                    info2 += this.fillUpVars(param) + System.Environment.NewLine;
+                
+                }
+                info += System.Environment.NewLine;
+            }
+
+            info += System.Environment.NewLine + ">---- filed params ------< " + System.Environment.NewLine + info2;
+
+            return info;
+        }
+
+        /**
+         * some dump methods for different kind of parameters
+         * 
+         */ 
+        private string strDump(string label, string value)
+        {
+            if (value == null)
+            {
+                value = "null";
+            }
+
+            return label + ": " + value + System.Environment.NewLine;
+        }
+
+        private string strDump(string label, Boolean value)
+        {
+            string strVal = "true";
+            if (value == false)
+            {
+                strVal = "false";
+            }
+
+            return label + ": " + strVal + System.Environment.NewLine;
+        }
+
+        private string strDump(string label, Object value)
+        {
+            if (value == null)
+            {
+                return label + ": NULL" + System.Environment.NewLine;
+            }
+            return label + ": " + value.GetType() + System.Environment.NewLine;
         }
 
         /**
@@ -226,9 +344,13 @@ namespace Projector
          * split lines depending on endline code
          * INFO System.Environment.Newline dosn't work for some reason (??) so \n is used
          */ 
-        private void prepareCodeLines()
+        private Boolean prepareCodeLines()
         {
-
+            // get out on empty code. maybe until writing
+            if (this.code == null)
+            {
+                return false;
+            }
             //Match match = Regex.Match(this.code, @"'([^']*)");
 
             // parse all strings so at the end code only will be in the source
@@ -252,21 +374,23 @@ namespace Projector
                 string key = "%subscr_" + i + "%";
                 stringFounds.Add(key, str);
                 code = code.Replace(str, key);
-                string nCode = str.Replace("{", "");
+                string nCode = str.Substring(1, str.Length - 2);
                 namedSubScripts.Add(
                         key, 
-                        nCode.Replace("}","")
+                        nCode
                     );
             }
 
             //lines = Regex.Split(code.Replace(";", System.Environment.NewLine), System.Environment.NewLine);
             this.lines = Regex.Split(code, "\n");
+            return true;
         }
 
         private void build()
         {
             int line = 0;
-            
+            emptyLines.Clear();
+
             foreach (String currentLine in lines)
             {
                 this.currentReadLine = line;   
@@ -275,6 +399,10 @@ namespace Projector
                 if (null != buildRes && this.validate(buildRes))
                 {
                     this.buildedSource.Add(buildRes);
+                }
+                else
+                {
+                    emptyLines.Add(line);
                 }
                 line++;
             }
@@ -349,6 +477,27 @@ namespace Projector
                     }
                 }
             }
+
+            // check how many lines of sourcecode is used to write this. so check strings because this is
+            // the first valid source of linebreaks
+
+            if (testObj.scriptParamaters.Count > 0)
+            {
+                string parFull = "";
+                foreach (String subCode in testObj.scriptParamaters)
+                {
+                    parFull += this.fillUpVars(subCode);
+                }
+
+                string[] testOfCnt = parFull.Split('\n');
+                int cnt = testOfCnt.Count();
+                if (cnt > 1)
+                {
+                    testObj.lineCount = cnt;
+                    this.lineOffset += cnt -1;
+                }
+            }
+
 
             return true;
         }
@@ -435,6 +584,7 @@ namespace Projector
 
                             foundRef = maskPart[partPosition];
                             cmdResult = new ReflectionScriptDefines();
+                            cmdResult.lineNumber = getLineNumber();
                             cmdResult.isObject = definePart.Contains("OBJECT");
                             cmdResult.isMethod = definePart.Contains("METHOD");
                             cmdResult.parseable = definePart.Contains("PARSE");
