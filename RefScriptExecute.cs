@@ -17,6 +17,10 @@ namespace Projector
 
         private Object parentObject;
 
+        private Boolean internalError = false;
+
+        private int lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_UNKNOWNREASON;
+
         public RefScriptExecute(ReflectionScript script, Object parent)
         {
             this.parentObject = parent;
@@ -30,16 +34,19 @@ namespace Projector
         }
 
 
-        public void run()
+        public Boolean run()
         {
+            this.internalError = false;
             if (this.currentScript.getErrorCount() == 0)
             {
-                this.exec();
+                Boolean runSucceed = this.exec();
+                return (runSucceed == true && this.internalError == false);
             }
+            return false;
         }
 
 
-        private void exec()
+        private Boolean exec()
         {
             foreach (ReflectionScriptDefines scrLine in this.currentScript.getScript())
             {
@@ -48,7 +55,18 @@ namespace Projector
                 {
                     scrLine.Referenz = objectDefines[cmd];
                     this.execReflectObject(scrLine);
+                    if (scrLine.ReflectObject == null)
+                    {
+                        ScriptErrors error = new ScriptErrors();
+                        error.errorMessage = "object " + scrLine.typeOfObject + " not createable";
+                        error.lineNumber = scrLine.lineNumber;
+                        error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
 
+                        this.currentScript.addError(error);
+
+                        lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
+                        return false;
+                    }
                     this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
 
                 }
@@ -57,19 +75,29 @@ namespace Projector
                 {
                     if (objectReferences.ContainsKey(scrLine.namedReference))
                     {
-                        this.execMethod(objectReferences[scrLine.namedReference],scrLine);
+                       this.execMethod(objectReferences[scrLine.namedReference],scrLine);
                     }
                 }
             }
+            return true;
         }
 
         private Object execMethod(Object obj, ReflectionScriptDefines refObj)
         {
 
+            if (obj == null)
+            {
+                lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
+                this.internalError = true;
+                return null;
+            }
+
             Type executeableObj = obj.GetType();
             MethodInfo myMethodInfo = executeableObj.GetMethod(refObj.originCode);
             if (myMethodInfo == null)
             {
+                lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_NONMETHOD;
+                this.internalError = true;
                 return null;
             }
             int countOfparams = refObj.parameters.Count();
@@ -78,7 +106,6 @@ namespace Projector
             {
                 mParam[i] = refObj.parameters[i];
             }
-                //object[] mParam = new object[] { obj, refObj.parameters };
             return myMethodInfo.Invoke(obj, mParam);            
         }
 

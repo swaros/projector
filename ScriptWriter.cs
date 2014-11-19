@@ -30,7 +30,6 @@ namespace Projector
 
         ReflectionScriptHighLight Highlight;
 
-        private Boolean autClose = false;
 
         private RtfColoring colorize;
 
@@ -40,8 +39,7 @@ namespace Projector
 
             if (openFile)
             {
-                loadToolStripMenuItem_Click(null, null);
-                this.autClose = true;
+                loadToolStripMenuItem_Click(null, null);            
             }
             
 
@@ -67,7 +65,11 @@ namespace Projector
 
         private void initStuff(Object targetObject)
         {
+            
             InitializeComponent();
+            messageSplit.Panel1Collapsed = true;
+            codeSplitContainer.Panel2Collapsed = true;
+            statusLabel.Text = "no file";
             mainSplitContainer.Panel1Collapsed = true;
             debugView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             this.execObject = targetObject;
@@ -86,22 +88,28 @@ namespace Projector
         {
             //script.setCode(codeBox.Text);
             //errorTextBox.Text = script.getErrors();
+            refreshTimer.Enabled = true;
+            
             
         }
 
         private void codeBox_KeyUp(object sender, KeyEventArgs e)
         {
             keyTrigger.Enabled = false;
-            this.recheckScript();
+            //            refreshTimer.Enabled = true;
+            //this.recheckScript();
         }
 
         private void refitElements()
         {
-            int cursorPosition = codeBox.SelectionStart;
-            this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
-            if (this.currentLineInEdit < debugView.Items.Count)
+            if (!codeSplitContainer.Panel2Collapsed)
             {
-                debugView.TopItem = debugView.Items[this.currentLineInEdit];
+                int cursorPosition = codeBox.SelectionStart;
+                this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
+                if (this.currentLineInEdit < debugView.Items.Count)
+                {
+                    debugView.TopItem = debugView.Items[this.currentLineInEdit];
+                }
             }
         }
 
@@ -192,33 +200,36 @@ namespace Projector
                 }
 
             }
-            this.updateColors();
+            
         }
 
         private void updateLogBookRow(ListViewItem row)
         {
-            int posNumber = int.Parse(row.Text);
-            if (debugView.Items.Count > posNumber)
+            if (!codeSplitContainer.Panel2Collapsed)
             {
-                if (posNumber == this.currentLineInEdit)
+                int posNumber = int.Parse(row.Text);
+                if (debugView.Items.Count > posNumber)
                 {
-                    row.Font =  new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Bold);
+                    if (posNumber == this.currentLineInEdit)
+                    {
+                        row.Font = new System.Drawing.Font("Arial", 10, System.Drawing.FontStyle.Bold);
+                    }
+                    debugView.Items[posNumber] = row;
                 }
-                debugView.Items[posNumber] = row;
-            }
-            else
-            {
-                int diff = posNumber - debugView.Items.Count;
-                for (int i = debugView.Items.Count; i <= posNumber; i++)
+                else
                 {
+                    int diff = posNumber - debugView.Items.Count;
+                    for (int i = debugView.Items.Count; i <= posNumber; i++)
+                    {
 
-                    ListViewItem empty = new ListViewItem(i.ToString());
-                    ListViewItem.ListViewSubItem emptyMessage = new ListViewItem.ListViewSubItem();
-                    emptyMessage.Text = "...";
-                    empty.SubItems.Add(emptyMessage);
-                    debugView.Items.Add(empty);
-                    
+                        ListViewItem empty = new ListViewItem(i.ToString());
+                        ListViewItem.ListViewSubItem emptyMessage = new ListViewItem.ListViewSubItem();
+                        emptyMessage.Text = "...";
+                        empty.SubItems.Add(emptyMessage);
+                        debugView.Items.Add(empty);
 
+
+                    }
                 }
             }
         }
@@ -226,15 +237,54 @@ namespace Projector
 
         private void executeScript()
         {
-            this.Visible = false;
-            this.Refresh();
+
+
+            
+
             script.setCode(codeBox.Text);
             if (script.getErrorCount() == 0)
             {
+
+                errorLabels.Text = "Start exec";
+                errorLabels.ForeColor = Color.LightBlue;
+                errorLabels.BackColor = Color.DarkBlue;
+                errorLabels.ToolTipText = "";
+                Application.DoEvents();
+
                 RefScriptExecute executer = new RefScriptExecute(script, this.execObject);
-                executer.run();
+                Boolean succeed = executer.run();
+
+                if (succeed == false)
+                {
+                    updateColors();
+                    Application.DoEvents();
+                    string errorMessages = script.getErrors();
+
+                    errorLabels.Text = script.getErrorCount() + "Execution errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
+                    errorLabels.ForeColor = Color.Red;
+                    errorLabels.BackColor = Color.DarkOrange;
+                    errorLabels.ToolTipText = script.getErrors();
+
+
+                }
+                else
+                {
+                    errorLabels.Text = "executed without errors";
+                    errorLabels.ForeColor = Color.LightGreen;
+                    errorLabels.BackColor = Color.DarkGreen;
+                }
+
             }
-            this.Visible = true;
+            else
+            {
+                string errorMessages = script.getErrors();
+
+                errorLabels.Text = script.getErrorCount() + "parsing errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
+                errorLabels.ForeColor = Color.Red;
+                errorLabels.BackColor = Color.LightGoldenrodYellow;
+                errorLabels.ToolTipText = script.getErrors();
+            }
+
         }
 
 
@@ -255,6 +305,10 @@ namespace Projector
                 System.IO.File.WriteAllText(this.filename, codeBox.Text);
                 this.lastSaved = codeBox.Text;
                 return true;
+            }
+            else
+            {
+                saveToolStripMenuItem_Click(null, null);
             }
             return false;
         }
@@ -284,14 +338,12 @@ namespace Projector
                 this.lastSaved = codeBox.Text;
                 this.filename = openFile.FileName;
                 this.assignedExternalScript = codeBox.Text;
+                this.recheckScript();
+                this.updateColors();
+                statusLabel.Text = this.filename;
                 
             }
-
-            if (this.autClose)
-            {
-                this.Close();
-                DialogResult = DialogResult.OK;
-            }
+           
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -301,6 +353,8 @@ namespace Projector
                 this.filename = saveFileDialog.FileName;
                 this.lastSaved = codeBox.Text;
                 System.IO.File.WriteAllText(saveFileDialog.FileName, codeBox.Text);
+                statusLabel.Text = this.filename;
+                
             }
         }
 
@@ -311,17 +365,20 @@ namespace Projector
 
         private void codeBox_VScroll(object sender, EventArgs e)
         {
+            refreshTimer.Enabled = false;
             refitElements();
         }
 
         private void keyTrigger_Tick(object sender, EventArgs e)
         {
             refitElements();
+           
         }
 
         private void codeBox_KeyDown(object sender, KeyEventArgs e)
         {
             keyTrigger.Enabled = true;
+            refreshTimer.Enabled = false;
         }
 
         private void enlargeContent()
@@ -333,15 +390,16 @@ namespace Projector
         private void debugView_ItemActivate(object sender, EventArgs e)
         {
             debugView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-
+            messageSplit.Panel1Collapsed = true;
             foreach (ListViewItem lItem in debugView.SelectedItems)
             {
                 if (lItem.Name == Projector.ScriptWriter.SCRIPT_IDENT)
                 {
                     ReflectionScriptDefines assignedScript = (ReflectionScriptDefines)lItem.Tag;
-                    errorTextBox.Text = script.dump(assignedScript);                                       
-
+                    errorTextBox.Text = script.dump(assignedScript);
+                    messageSplit.Panel1Collapsed = false;
                 }
+                
             }
         }
 
@@ -358,6 +416,33 @@ namespace Projector
         private void saveButton_Click(object sender, EventArgs e)
         {
             this.saveChanges();
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            this.recheckScript();
+            this.updateColors();
+            refreshTimer.Enabled = false;
+        }
+
+        private void showDebug_Click(object sender, EventArgs e)
+        {
+            codeSplitContainer.Panel2Collapsed = !showDebug.Checked;
+        }
+
+        private void errorLabels_Click(object sender, EventArgs e)
+        {
+            if (errorLabels.ToolTipText.Length > 15)
+            {
+                MessageBox.Show(errorLabels.ToolTipText,
+                    "Errors", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+
+        private void ScriptWriter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            checkBeforeOpen();
         }
     }
 }

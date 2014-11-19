@@ -30,14 +30,21 @@
         {
             this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
             this.codeBox = new System.Windows.Forms.RichTextBox();
+            this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
+            this.debugView = new System.Windows.Forms.ListView();
+            this.lineHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.messageHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.runButton = new System.Windows.Forms.ToolStripButton();
+            this.loadButton = new System.Windows.Forms.ToolStripButton();
+            this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,13 +54,13 @@
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.messageSplit = new System.Windows.Forms.SplitContainer();
-            this.debugView = new System.Windows.Forms.ListView();
-            this.lineHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.messageHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
-            this.loadButton = new System.Windows.Forms.ToolStripButton();
-            this.saveButton = new System.Windows.Forms.ToolStripButton();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.showDebug = new System.Windows.Forms.ToolStripButton();
+            this.errorLabels = new System.Windows.Forms.ToolStripStatusLabel();
+            this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -61,6 +68,10 @@
             this.codeSplitContainer.Panel1.SuspendLayout();
             this.codeSplitContainer.Panel2.SuspendLayout();
             this.codeSplitContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).BeginInit();
+            this.messageSplit.Panel1.SuspendLayout();
+            this.messageSplit.Panel2.SuspendLayout();
+            this.messageSplit.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -70,20 +81,25 @@
             this.toolStripContainer2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).BeginInit();
-            this.messageSplit.Panel1.SuspendLayout();
-            this.messageSplit.Panel2.SuspendLayout();
-            this.messageSplit.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
             // 
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.errorLabels});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(985, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(28, 17);
+            this.statusLabel.Text = "- - -";
             // 
             // mainSplitContainer
             // 
@@ -119,6 +135,7 @@
             // codeBox
             // 
             this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeBox.Location = new System.Drawing.Point(0, 0);
             this.codeBox.Name = "codeBox";
             this.codeBox.ShowSelectionMargin = true;
@@ -132,15 +149,61 @@
             this.codeBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.codeBox_KeyUp);
             this.codeBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseUp);
             // 
+            // messageSplit
+            // 
+            this.messageSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messageSplit.Location = new System.Drawing.Point(0, 0);
+            this.messageSplit.Name = "messageSplit";
+            // 
+            // messageSplit.Panel1
+            // 
+            this.messageSplit.Panel1.Controls.Add(this.errorTextBox);
+            // 
+            // messageSplit.Panel2
+            // 
+            this.messageSplit.Panel2.Controls.Add(this.debugView);
+            this.messageSplit.Size = new System.Drawing.Size(814, 165);
+            this.messageSplit.SplitterDistance = 271;
+            this.messageSplit.TabIndex = 1;
+            // 
             // errorTextBox
             // 
+            this.errorTextBox.BackColor = System.Drawing.SystemColors.Info;
             this.errorTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.errorTextBox.Font = new System.Drawing.Font("MS Reference Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorTextBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.errorTextBox.Location = new System.Drawing.Point(0, 0);
             this.errorTextBox.Name = "errorTextBox";
             this.errorTextBox.Size = new System.Drawing.Size(271, 165);
             this.errorTextBox.TabIndex = 0;
             this.errorTextBox.Text = "";
             this.errorTextBox.WordWrap = false;
+            // 
+            // debugView
+            // 
+            this.debugView.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.debugView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lineHeader,
+            this.messageHeader});
+            this.debugView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.debugView.FullRowSelect = true;
+            this.debugView.GridLines = true;
+            this.debugView.Location = new System.Drawing.Point(0, 0);
+            this.debugView.Name = "debugView";
+            this.debugView.Size = new System.Drawing.Size(539, 165);
+            this.debugView.TabIndex = 0;
+            this.debugView.UseCompatibleStateImageBehavior = false;
+            this.debugView.View = System.Windows.Forms.View.Details;
+            this.debugView.ItemActivate += new System.EventHandler(this.debugView_ItemActivate);
+            // 
+            // lineHeader
+            // 
+            this.lineHeader.Text = "Line";
+            // 
+            // messageHeader
+            // 
+            this.messageHeader.Text = "Message";
+            this.messageHeader.Width = 600;
             // 
             // toolStripContainer1
             // 
@@ -189,21 +252,43 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runButton,
             this.loadButton,
-            this.saveButton});
+            this.saveButton,
+            this.toolStripSeparator1,
+            this.showDebug});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(112, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(110, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // runButton
             // 
             this.runButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.runButton.Image = global::Projector.Properties.Resources.applications_16;
+            this.runButton.Image = global::Projector.Properties.Resources.stock_tools_macro;
             this.runButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(23, 22);
             this.runButton.Text = "runButton";
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
+            // 
+            // loadButton
+            // 
+            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.loadButton.Image = global::Projector.Properties.Resources.folder_open_16;
+            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(23, 22);
+            this.loadButton.Text = "Load Script";
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveButton.Image = global::Projector.Properties.Resources.SAVE_16;
+            this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(23, 22);
+            this.saveButton.Text = "Save Script";
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // menuStrip1
             // 
@@ -237,14 +322,14 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.loadToolStripMenuItem.Text = "&Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem.Text = "&Save As...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -252,7 +337,7 @@
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -260,7 +345,7 @@
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -276,72 +361,39 @@
             this.saveFileDialog.Filter = "Projector Script|*.pscr|Alle Dateien|*.*";
             this.saveFileDialog.Title = "Load Scriptfile";
             // 
-            // messageSplit
-            // 
-            this.messageSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.messageSplit.Location = new System.Drawing.Point(0, 0);
-            this.messageSplit.Name = "messageSplit";
-            // 
-            // messageSplit.Panel1
-            // 
-            this.messageSplit.Panel1.Controls.Add(this.errorTextBox);
-            // 
-            // messageSplit.Panel2
-            // 
-            this.messageSplit.Panel2.Controls.Add(this.debugView);
-            this.messageSplit.Size = new System.Drawing.Size(814, 165);
-            this.messageSplit.SplitterDistance = 271;
-            this.messageSplit.TabIndex = 1;
-            // 
-            // debugView
-            // 
-            this.debugView.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.debugView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lineHeader,
-            this.messageHeader});
-            this.debugView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.debugView.FullRowSelect = true;
-            this.debugView.GridLines = true;
-            this.debugView.Location = new System.Drawing.Point(0, 0);
-            this.debugView.Name = "debugView";
-            this.debugView.Size = new System.Drawing.Size(539, 165);
-            this.debugView.TabIndex = 0;
-            this.debugView.UseCompatibleStateImageBehavior = false;
-            this.debugView.View = System.Windows.Forms.View.Details;
-            this.debugView.ItemActivate += new System.EventHandler(this.debugView_ItemActivate);
-            // 
-            // lineHeader
-            // 
-            this.lineHeader.Text = "Line";
-            // 
-            // messageHeader
-            // 
-            this.messageHeader.Text = "Message";
-            this.messageHeader.Width = 600;
-            // 
             // keyTrigger
             // 
             this.keyTrigger.Tick += new System.EventHandler(this.keyTrigger_Tick);
             // 
-            // loadButton
+            // refreshTimer
             // 
-            this.loadButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.loadButton.Image = global::Projector.Properties.Resources.folder_open_16;
-            this.loadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(23, 22);
-            this.loadButton.Text = "Load Script";
-            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            this.refreshTimer.Interval = 1000;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
-            // saveButton
+            // toolStripSeparator1
             // 
-            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveButton.Image = global::Projector.Properties.Resources.SAVE_16;
-            this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(23, 22);
-            this.saveButton.Text = "Save Script";
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // showDebug
+            // 
+            this.showDebug.CheckOnClick = true;
+            this.showDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.showDebug.Image = global::Projector.Properties.Resources.application_view_list;
+            this.showDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showDebug.Name = "showDebug";
+            this.showDebug.Size = new System.Drawing.Size(23, 22);
+            this.showDebug.Text = "toolStripButton1";
+            this.showDebug.Click += new System.EventHandler(this.showDebug_Click);
+            // 
+            // errorLabels
+            // 
+            this.errorLabels.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.errorLabels.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.errorLabels.Name = "errorLabels";
+            this.errorLabels.Size = new System.Drawing.Size(75, 17);
+            this.errorLabels.Text = "not Executed";
+            this.errorLabels.Click += new System.EventHandler(this.errorLabels_Click);
             // 
             // ScriptWriter
             // 
@@ -352,6 +404,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ScriptWriter";
             this.Text = "ScriptWriter";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScriptWriter_FormClosing);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.mainSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
             this.mainSplitContainer.ResumeLayout(false);
@@ -359,6 +414,10 @@
             this.codeSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).EndInit();
             this.codeSplitContainer.ResumeLayout(false);
+            this.messageSplit.Panel1.ResumeLayout(false);
+            this.messageSplit.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).EndInit();
+            this.messageSplit.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -375,10 +434,6 @@
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.messageSplit.Panel1.ResumeLayout(false);
-            this.messageSplit.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).EndInit();
-            this.messageSplit.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -410,5 +465,11 @@
         private System.Windows.Forms.Timer keyTrigger;
         private System.Windows.Forms.ToolStripButton loadButton;
         private System.Windows.Forms.ToolStripButton saveButton;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.Timer refreshTimer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton showDebug;
+        private System.Windows.Forms.ToolStripStatusLabel errorLabels;
+        private System.Windows.Forms.ToolTip messageToolTip;
     }
 }

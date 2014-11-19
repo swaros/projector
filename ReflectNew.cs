@@ -18,8 +18,29 @@ namespace Projector
             {
                 return this.getQueryBrowser(refObject,parent);
             }
+
+            if (refObject.typeOfObject == "Form")
+            {
+                return this.getForm(refObject, parent);
+            }
+
             return null;
         }
+
+        private ReflectForm getForm(ReflectionScriptDefines refObject, Object parent)
+        {
+            ReflectForm newForm = new ReflectForm();
+            newForm.ScriptIdent = refObject.name;
+
+            if (parent is MdiForm)
+            {
+                MdiForm mdi = (MdiForm)parent;
+                mdi.addSubWindow(newForm,refObject.name);
+            }
+
+            return newForm;
+        }
+
 
         private queryBrowser getQueryBrowser(ReflectionScriptDefines refObject, Object parent)
         {

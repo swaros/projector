@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace Projector
 {
-    class ReflectionScript
+    public class ReflectionScript
     {
 
         private const string REGEX_BRACKETS = "({[^}]*})";
@@ -19,6 +19,8 @@ namespace Projector
         private Boolean followRecusives = true;
 
         private String code = "";
+
+        private String storedCode = "";
 
         private String[] lines;
 
@@ -36,9 +38,13 @@ namespace Projector
 
         private List<int> emptyLines = new List<int>();
 
+        private List<int> commentedLines = new List<int>();
+
         private int currentReadLine = 0;
 
         private int lineOffset = 0;
+
+
 
         
 
@@ -49,7 +55,7 @@ namespace Projector
 
         public List<ReflectionScriptDefines> getScript()
         {
-            return buildedSource;
+            return this.buildedSource;
         }
         /**
          * the getters
@@ -62,6 +68,7 @@ namespace Projector
          */ 
         private void reset()
         {
+            this.commentedLines.Clear();
             this.lineOffset = 0;
             this.errorMessages.Clear();
             this.objectList.Clear();
@@ -73,11 +80,16 @@ namespace Projector
 
         public void setCode(string code)
         {
-            this.reset();
-            this.code = code;
-            if (this.prepareCodeLines() == true)
+            if (this.storedCode != code)
             {
-                this.build();
+                this.reset();
+                this.code = code;
+                // just to find out if the not the same code again will be set
+                this.storedCode = code;
+                if (this.prepareCodeLines() == true)
+                {
+                    this.build();
+                }
             }
         }
 
@@ -90,6 +102,12 @@ namespace Projector
             }
             return error;
         }
+
+        public List<int> getCommentLines()
+        {
+            return this.commentedLines;
+        }
+
 
         public List<ScriptErrors> getAllErrors()
         {
@@ -131,7 +149,7 @@ namespace Projector
             return this.errorMessages.Count();
         }
 
-        private void addError(ScriptErrors error)
+        public void addError(ScriptErrors error)
         {
             this.errorMessages.Add(error);
         }
@@ -562,9 +580,10 @@ namespace Projector
                     if (maskPart.Count() > partPosition)
                     {
 
-                        // comments ?
-                        if (partPosition == 0 && part == "#")
+                        // comment ?
+                        if (partPosition == 0 && part[0] == '#')
                         {
+                            this.commentedLines.Add( this.getLineNumber() );
                             return null;
                         }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Projector
 {
-    class ReflectionScriptDefines
+    public class ReflectionScriptDefines
     {        
         public string code;
         public string originCode;

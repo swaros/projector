@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Projector
 {
-    class ScriptErrors
+    public class ScriptErrors
     {
         public int errorCode = 0;
         public String errorMessage = "";

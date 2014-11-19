@@ -284,6 +284,9 @@
     <EmbeddedResource Include="queryBrowser.resx">
       <DependentUpon>queryBrowser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ReflectForm.resx">
+      <DependentUpon>ReflectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,12 +349,19 @@
       <DependentUpon>queryBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="QueryComposer.cs" />
+    <Compile Include="ReflectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReflectForm.Designer.cs">
+      <DependentUpon>ReflectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReflectionScript.cs" />
     <Compile Include="ReflectionScriptDefines.cs" />
     <Compile Include="ReflectionScriptHighLight.cs" />
     <Compile Include="ReflectNew.cs" />
     <Compile Include="ReflectObjectInterface.cs" />
     <Compile Include="RefScriptExecute.cs" />
+    <Compile Include="RefSrcStates.cs" />
     <Compile Include="RtfColoring.cs" />
     <Compile Include="ScriptErrors.cs" />
     <Compile Include="ScriptExecuter.cs">

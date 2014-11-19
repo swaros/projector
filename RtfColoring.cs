@@ -34,6 +34,15 @@ namespace Projector
         }
 
 
+        public void markWordsAll(string[] words, HighlightStyle color)
+        {
+            foreach (string word in words)
+            {
+                markWordsAll(word, color);
+            }
+        }
+
+
         public void markWordsAll(string word, HighlightStyle color)
         {
             this.storePositions();
@@ -44,12 +53,43 @@ namespace Projector
             }
             this.resetPositions();
         }
+        
+
 
         public int markWord(int start,string word, HighlightStyle color)
         {
             int retInt = -1;
-                     
-            int end = this.intRtf.Find(word, start, RichTextBoxFinds.None);
+
+            if (start > this.intRtf.Text.Length)
+            {
+                return -1;
+            }
+
+            int end = this.intRtf.Find(word, start, RichTextBoxFinds.WholeWord);
+            if (end > -1 )
+            {
+                this.intRtf.Select(end, word.Length);
+                this.intRtf.SelectionColor = color.ForeColor;
+                this.intRtf.SelectionBackColor = color.BackColor;
+                this.intRtf.SelectionFont = color.Font;
+                retInt = end + word.Length + 1;
+
+                if (retInt > this.intRtf.Text.Length || retInt <= start)
+                {
+                    return -1;
+                }
+            }
+            
+            return retInt;
+        }
+
+        public int markTextLine(string word, HighlightStyle color)
+        {
+            int retInt = -1;
+            string[] words = word.Split('\n');
+            this.markWordsAll(words, color);
+            /*
+            int end = this.intRtf.Find(words[0], 0, RichTextBoxFinds.None);
             if (end > -1)
             {
                 this.intRtf.Select(end, word.Length);
@@ -57,11 +97,29 @@ namespace Projector
                 this.intRtf.SelectionBackColor = color.BackColor;
                 this.intRtf.SelectionFont = color.Font;
                 retInt = end + 1;
-            }
-
-            this.resetPositions();
+            } 
+             */
             return retInt;
         }
+
+        public void markFullLine(int lineNumber, HighlightStyle color)
+        {
+            int index = this.intRtf.GetFirstCharIndexFromLine(lineNumber);
+            int end = this.intRtf.Lines[lineNumber].Length;
+            string word = this.intRtf.Lines[lineNumber];
+            this.markWordsAll(word, color);
+            /**
+            if (end > 0)
+            {
+                this.intRtf.Select(index, end);
+                this.intRtf.SelectionColor = color.ForeColor;
+                this.intRtf.SelectionBackColor = color.BackColor;
+                this.intRtf.SelectionFont = color.Font;
+              
+            } 
+             */
+        }
+
 
         public Boolean markWordInCurrentLine(string word, Color color)
         {

@@ -25,9 +25,11 @@ namespace Projector
         private HighlightStyle ReferenzStyle = new HighlightStyle();
         private HighlightStyle VarStyle = new HighlightStyle();
         private HighlightStyle TextStyle = new HighlightStyle();
+        private HighlightStyle CommentStyle = new HighlightStyle();
+        private HighlightStyle ErrorStyle = new HighlightStyle();
 
         private int fontDefaultSize = 8;
-        private string defaultFontName = "Arial";
+        private string defaultFontName = "Courier New";
 
         private Boolean elementsReaded = false;
 
@@ -52,6 +54,15 @@ namespace Projector
             this.VarStyle.ForeColor = Color.DarkOrange;
             this.VarStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
+            this.CommentStyle.ForeColor = Color.DarkOliveGreen;
+            this.CommentStyle.BackColor = Color.LightGray;
+            this.CommentStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+
+            this.ErrorStyle.ForeColor = Color.Red;
+            this.ErrorStyle.BackColor = Color.Yellow;
+            this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+
+
             this.TextStyle.ForeColor = Color.SlateBlue;
             //this.TextStyle.BackColor = Color.LightSlateGray;
             
@@ -69,6 +80,12 @@ namespace Projector
                 this.getElements();
             }
 
+            this.drawingRtf.Select(0, this.drawingRtf.TextLength);
+            this.drawingRtf.SelectionColor = drawingRtf.ForeColor;
+            this.drawingRtf.SelectionBackColor = drawingRtf.BackColor;
+            
+
+
             foreach (DictionaryEntry de in this.KeyWords)
             {
                 string word = de.Key.ToString();
@@ -79,9 +96,21 @@ namespace Projector
             foreach (DictionaryEntry de in this.Srcipt.getAllStrings())
             {
                 string word = de.Value.ToString();
-                this.RtfColors.markWordsAll(word, TextStyle);
+                this.RtfColors.markTextLine(word, TextStyle);
 
             }
+
+
+            foreach (int lino in this.Srcipt.getCommentLines())
+            {
+                this.RtfColors.markFullLine(lino, CommentStyle);
+            }
+
+            foreach (ScriptErrors err in this.Srcipt.getAllErrors())
+            {
+                this.RtfColors.markFullLine(err.lineNumber, ErrorStyle);
+            }
+
 
             this.assignedRtf.Rtf = this.drawingRtf.Rtf;
             this.assignedRtf.SelectionStart = startpos;
