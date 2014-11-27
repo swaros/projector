@@ -15,6 +15,7 @@ namespace Projector
         public const int EXEC_ERROR_NONOBJECT = 2003;
         public const int EXEC_ERROR_NONMETHOD = 2004;
         public const int EXEC_ERROR_INVALIDOBJECT = 2005;
+        public const int EXEC_ERROR_INVALID_PARAMETER_COUNT = 2006;
 
 
     }

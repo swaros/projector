@@ -14,7 +14,7 @@ namespace Projector
         private const string REGEX_BRACKETS = "({[^}]*})";
         private const string REGEX_STRING = "\"([^\"]*)\"";
 
-        private const string MASK_DELIMITER = "#";
+        public const string MASK_DELIMITER = "#";
 
         private Boolean followRecusives = true;
 
@@ -22,26 +22,59 @@ namespace Projector
 
         private String storedCode = "";
 
+        // current code lines
         private String[] lines;
 
-        private List<String> mask = new List<String>();
-
+    
+        // VARIABLES: the list of Objects
         private List<String> objectList = new List<string>();
 
-        private List<ScriptErrors> errorMessages = new List<ScriptErrors>();
+        // VARIABLES: contains the refrences for all objects
+        private Hashtable objectReferences = new Hashtable();
 
+        // VARIABLES: list of all Int Variables
+        private Hashtable globalRenameHash = new Hashtable();
+
+        // VARIABLES: list of all string Variables
         private Hashtable stringFounds = new Hashtable();
 
+        // VARIABLES: list of all Long Variables
+        private Hashtable int64Founds = new Hashtable();
+
+        // VARIABLES: list of all Long Variables
+        private Hashtable intFloatFounds = new Hashtable();
+
+        // VARIABLES: list of all Long Variables
+        private Hashtable intDoubleFounds = new Hashtable();
+
+        // VARIABLES: list of all Boolean Variables
+        private Hashtable BoolFounds = new Hashtable();
+
+        // VARIABLES: list of all subscripts defined by methods
         private Hashtable namedSubScripts = new Hashtable();       
 
+        // CONTROL: list of objects that be already parsed. (all methods and paramaters extracted)
+        private List<string> parsedObjects = new List<string>();
+
+        // CONTROL: the mask that defines how to parse the code
+        private List<String> mask = new List<String>();
+
+        // CONTROL: the jit result
         private List<ReflectionScriptDefines> buildedSource = new List<ReflectionScriptDefines>();
 
+        // contains all errors
+        private List<ScriptErrors> errorMessages = new List<ScriptErrors>();
+
+        // list of full emtpty lines
         private List<int> emptyLines = new List<int>();
 
+        // list of comment lines
         private List<int> commentedLines = new List<int>();
 
+        // current line that actualy parsed
         private int currentReadLine = 0;
 
+        // offest by mutlilines (line breaking strings or subcode)
         private int lineOffset = 0;
 
 
@@ -57,14 +90,10 @@ namespace Projector
         {
             return this.buildedSource;
         }
-        /**
-         * the getters
-         */ 
-       
-        
 
         /**
-         * resets all elements to starts a clear iteration
+         * resets all elements to starts a 
+         * clear iteration
          */ 
         private void reset()
         {
@@ -72,12 +101,16 @@ namespace Projector
             this.lineOffset = 0;
             this.errorMessages.Clear();
             this.objectList.Clear();
-            this.stringFounds.Clear();
+            this.objectReferences.Clear();
+            this.globalRenameHash.Clear();
             this.buildedSource.Clear();
             this.namedSubScripts.Clear();
         }
 
-
+        /**
+         * assign text as Code and starts the Build if the code 
+         * different from the last assigned
+         */
         public void setCode(string code)
         {
             if (this.storedCode != code)
@@ -93,6 +126,12 @@ namespace Projector
             }
         }
 
+        /**
+         * return an string with all error informations.
+         * usabel if you have only one string for display
+         * errormessages
+         * 
+         */
         public string getErrors()
         {
             string error = "";
@@ -103,20 +142,13 @@ namespace Projector
             return error;
         }
 
-        public List<int> getCommentLines()
-        {
-            return this.commentedLines;
-        }
-
-
+        /**
+         * return full List of all Errors
+         * 
+         */ 
         public List<ScriptErrors> getAllErrors()
         {
             return errorMessages;
-        }
-
-        private int getLineNumber()
-        {
-            return this.currentReadLine + this.lineOffset;
         }
 
 
@@ -131,7 +163,7 @@ namespace Projector
 
         /**
          * add an error in to the backlog
-         */ 
+         */
         private void addError(String Errormessage, int ErrorCode)
         {
             ScriptErrors error = new ScriptErrors();
@@ -149,28 +181,75 @@ namespace Projector
             return this.errorMessages.Count();
         }
 
+        /**
+         * add an error
+         */ 
         public void addError(ScriptErrors error)
         {
             this.errorMessages.Add(error);
         }
 
-        public String fillUpVars(string source)
+
+        /**
+         * return a list of linenumbers 
+         * that are comments only         
+         */
+        public List<int> getCommentLines()
         {
-            string newStr = this.fillUpVarsBack(source);
+            return this.commentedLines;
+        }
+
+        /**
+         * return the current line number.
+         * includes offest calculation
+         * for linebreaking code
+         */
+        private int getLineNumber()
+        {
+            return this.currentReadLine + this.lineOffset;
+        }
+
+        public String fillUpAll(string source)
+        {
+            return this.fillUpCodeLines(
+                    this.fillUpStrings(source)
+                );
+        }
+
+
+        public String fillUpStrings(string source)
+        {
+            return this.fillUpVars(source, this.globalRenameHash);
+        }
+
+        public String fillUpCodeLines(string source)
+        {
+            return this.fillUpVars(source, this.namedSubScripts);
+        }
+
+        /**
+         * fills up all placeHolder
+         * with content from assigned Hashtable
+         */ 
+        public String fillUpVars(string source, Hashtable useThis)
+        {
+            string newStr = this.fillUpVarsBack(source, useThis);
             string chkStr = source;
             while (newStr != source)
             {
                 source = newStr;
-                newStr = fillUpVarsBack(source);
+                newStr = fillUpVarsBack(source, useThis);
             }
             return newStr;
         }
 
-
-        public String fillUpVarsBack(string source)
+        /**
+         * fills placeholder recursiv
+         */
+        public String fillUpVarsBack(string source, Hashtable useThis)
         {
             string newSrc = source;
-            foreach (DictionaryEntry de in this.stringFounds)
+            foreach (DictionaryEntry de in useThis)
             {
                 newSrc = newSrc.Replace(de.Key.ToString(), de.Value.ToString());
             }
@@ -188,7 +267,7 @@ namespace Projector
 
         public Hashtable getAllStrings()
         {
-            return this.stringFounds;
+            return this.globalRenameHash;
         }
 
         private void init()
@@ -214,18 +293,24 @@ namespace Projector
             this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
             this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
 
+            this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
+
             this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT");
             //this.mask.Add("STR § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR"  + Projector.ReflectionScript.MASK_DELIMITER + ". . . STR");
             //this.mask.Add("INT § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR" + Projector.ReflectionScript.MASK_DELIMITER + ". . . INT");
 
             //object depended commands
-            this.mask.Add("& SETCOORDS ? ? ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setCoords INT INT INT INT");
-            this.mask.Add("& SELECTTABLE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". selectTable STR");
-            this.mask.Add("& FIREQUERY" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". fireQuery");
-            this.mask.Add("& SETWHERE ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setWhere STR STR");
+            /*
+            this.mask.Add("&QueryBrowser SETCOORDS ? ? ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setCoords INT INT INT INT");
+            this.mask.Add("&QueryBrowser SELECTTABLE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". selectTable STR");
+            this.mask.Add("&QueryBrowser FIREQUERY" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". fireQuery");
+            this.mask.Add("&QueryBrowser SETWHERE ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setWhere STR STR");
 
             this.mask.Add("& SETSQL ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setSql STR");
             this.mask.Add("& SHOWTABLELIST ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". showTableList BOOL");
+
+            this.mask.Add("& INVOKE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD PARSE");
+            */
 
 
             // just to store something
@@ -266,7 +351,7 @@ namespace Projector
                 string add = "";
                 foreach (String param in tmpCode.scriptParamaters)
                 {
-                    info += add + this.fillUpVars(param);
+                    info += add + this.fillUpAll(param);
                     add = ", ";
                 }
                 info += ")";
@@ -311,7 +396,7 @@ namespace Projector
                 foreach (String param in tmpCode.scriptParamaters)
                 {
                     info += param + System.Environment.NewLine;
-                    info2 += this.fillUpVars(param) + System.Environment.NewLine;
+                    info2 += this.fillUpAll(param) + System.Environment.NewLine;
                 
                 }
                 info += System.Environment.NewLine;
@@ -379,7 +464,7 @@ namespace Projector
             {
                 string str = match[i].Value;
                 string key = "%str_" + i + "%";
-                stringFounds.Add(key, str);
+                globalRenameHash.Add(key, str);
                 code = code.Replace(str, key);
             }
 
@@ -390,7 +475,7 @@ namespace Projector
             {
                 string str = bracketMatch[i].Value;
                 string key = "%subscr_" + i + "%";
-                stringFounds.Add(key, str);
+                //globalRenameHash.Add(key, str);
                 code = code.Replace(str, key);
                 string nCode = str.Substring(1, str.Length - 2);
                 namedSubScripts.Add(
@@ -447,18 +532,17 @@ namespace Projector
             {
                 if (testObj.name != null && testObj.scriptParamaters.Count() == 1)
                 {
-                    string name = this.fillUpVars(testObj.name);
+                    string name = this.fillUpStrings(testObj.name);
                     foreach (string varValue in testObj.scriptParamaters)
                     {
                         string varName = testObj.name;
-                        string varStr = this.fillUpVars(varValue);
-                        if (stringFounds.ContainsKey(varName))
+                        string varStr = this.fillUpStrings(varValue);
+                        if (globalRenameHash.ContainsKey(varName))
                         {
                             this.addError("variable " + varName + " allready defined");
-                        } else {
-                            stringFounds.Add(testObj.name, varStr);
-                            stringFounds.Add("&" + testObj.name, varStr);
-                            stringFounds.Add("&&" + testObj.name, "'" + varStr + "'");
+                        } else {                            
+                            globalRenameHash.Add("&" + testObj.name, varStr);
+                            globalRenameHash.Add("&&" + testObj.name, "'" + varStr + "'");
                         }
                     }
                     //stringFounds.Add(name,
@@ -469,6 +553,28 @@ namespace Projector
                 }
             }
 
+
+            // get methods from an object
+            if (testObj.isObject)
+            {
+                string cmd = testObj.code.ToUpper();
+
+                if (testObj.isObject && cmd == "NEW" && !this.parsedObjects.Contains(testObj.typeOfObject))
+                {
+                    ReflectNew reflector = new ReflectNew();
+                    Object testObject = reflector.getObject(testObj,this);
+                    ObjectInfo obInfo = new ObjectInfo();
+                    List<string> objMethods = obInfo.getObjectInfo(testObject);
+                    if (objMethods != null)
+                    {
+                        foreach (string maskStr in objMethods)
+                        {
+                            this.mask.Add(maskStr);
+                        }
+                    }
+                    this.parsedObjects.Add(testObj.typeOfObject);
+                }
+            }
 
             // just something to do
 
@@ -481,11 +587,14 @@ namespace Projector
                 }
                 else if (this.followRecusives)
                 {
+                    testObj.parameters = new List<object>();
                     foreach (String subCode in testObj.scriptParamaters)
-                    {
+                    {                        
                         string fullCode = this.getCodeByName(subCode);
                         testObj.subScript = new ReflectionScript();
                         testObj.subScript.setCode(fullCode);
+
+                        testObj.parameters.Add(testObj.subScript);
 
                         if (testObj.subScript.getErrorCount() > 0)
                         {
@@ -504,7 +613,7 @@ namespace Projector
                 string parFull = "";
                 foreach (String subCode in testObj.scriptParamaters)
                 {
-                    parFull += this.fillUpVars(subCode);
+                    parFull += this.fillUpAll(subCode);
                 }
 
                 string[] testOfCnt = parFull.Split('\n');
@@ -523,13 +632,21 @@ namespace Projector
 
         private ReflectionScriptDefines buildDefine(string[] words)
         {
-           
-
+            if (words.Count() > 0 && words[0][0] == '#')
+            {                
+                this.commentedLines.Add(this.getLineNumber());
+                return null;
+            }
 
             // look on any mask
             foreach (string hash in this.mask)
             {
 
+                RefScriptMaskMatch maskMatch = new RefScriptMaskMatch(hash);
+                if (maskMatch.possibleMatch(words) != RefScriptMaskMatch.MATCH)
+                {
+                    continue;
+                }
                 // the reference ..alias the command
                 string foundRef = null;
 
@@ -588,7 +705,8 @@ namespace Projector
                         }
 
                         // check if on the expected position an keyword
-                        if (maskPart[partPosition] == highPart)
+                        string currentMaskPart = maskPart[partPosition];
+                        if (currentMaskPart == highPart)
                         {
 
                             if (varDefines != null && varDefines.Count() > partPosition)
@@ -613,14 +731,15 @@ namespace Projector
                             cmdResult.parameters = new List<object>();
                         }
                         // a parameter
-                        else if (cmdResult != null && maskPart[partPosition] == "?")
+                        else if (cmdResult != null && currentMaskPart == "?")
                         {
                             cmdResult.scriptParamaters.Add(part);
 
                             if (varDefines != null && varDefines.Count() > partPosition)
                             {
                                 string definedType = varDefines[partPosition];
-                                if (definedType == "INT"){
+                                if (definedType == "INT" || definedType == "Int32")
+                                {
                                     try
                                     {
                                         int parInt = int.Parse(part);
@@ -633,11 +752,11 @@ namespace Projector
                                     }
                                     
                                 }
-                                else if (definedType == "STR")
+                                else if (definedType == "STR" || definedType == "String")
                                 {
-                                    cmdResult.parameters.Add( this.fillUpVars(part) );
+                                    cmdResult.parameters.Add( this.fillUpStrings(part) );
                                 }
-                                else if (definedType == "BOOL")
+                                else if (definedType == "BOOL" || definedType == "Boolean")
                                 {
                                     if (part.ToUpper() == "TRUE" || part == "1")
                                     {
@@ -647,26 +766,45 @@ namespace Projector
                                     {
                                         cmdResult.parameters.Add(false);
                                     }
-                                }                                
+                                }
+                                else if (definedType == "ReflectionScript")
+                                {
+                                    cmdResult.parameters.Add(this.fillUpCodeLines(part));
+                                    cmdResult.parseable = true;
+                                }
                             }
 
                         }
                         // a name definition
-                        else if (maskPart[partPosition] == "%")
+                        else if (currentMaskPart == "%")
                         {
                             objName = part;
                         }
                         // define the type 
-                        else if (maskPart[partPosition] == "§")
+                        else if (currentMaskPart == "§")
                         {
                             typeOfObject = part;
                         }
                         // use an reference to a named object
-                        else if (maskPart[partPosition] == "&")
+                        else if (currentMaskPart[0] == '&')
                         {
-                            if (objectList.Contains(part))
+                            string objectType = "";
+
+                            if (currentMaskPart.Length > 1)
                             {
-                                referenceObject = part;
+                                objectType = currentMaskPart.Remove(0, 1);
+                            }
+
+                            if (this.objectReferences.Contains(part))
+                            {
+                                if (objectType == "" || this.objectReferences[part].ToString() == objectType)
+                                {
+                                    referenceObject = part;
+                                }
+                                else
+                                {
+                                    this.addError("wrong Object Type. Must be an Instance of type: " + objectType + " .");
+                                }
                             }
                             else
                             {
@@ -698,7 +836,14 @@ namespace Projector
 
                     if (cmdResult.isObject && objName != null)
                     {
-                        objectList.Add(objName);
+                        if (this.objectReferences.Contains(objName))
+                        {
+                            string error = "a Object " + objName + " already exists";
+                            return null;
+                        } else {
+                            objectList.Add(objName);
+                            this.objectReferences.Add(objName, typeOfObject);
+                        }
                     }                    
                     // build parameters
 

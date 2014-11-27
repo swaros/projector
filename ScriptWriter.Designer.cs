@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.errorLabels = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
             this.codeBox = new System.Windows.Forms.RichTextBox();
@@ -45,6 +46,8 @@
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.showDebug = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,9 +59,6 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.showDebug = new System.Windows.Forms.ToolStripButton();
-            this.errorLabels = new System.Windows.Forms.ToolStripStatusLabel();
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
@@ -101,6 +101,15 @@
             this.statusLabel.Size = new System.Drawing.Size(28, 17);
             this.statusLabel.Text = "- - -";
             // 
+            // errorLabels
+            // 
+            this.errorLabels.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.errorLabels.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.errorLabels.Name = "errorLabels";
+            this.errorLabels.Size = new System.Drawing.Size(75, 17);
+            this.errorLabels.Text = "not Executed";
+            this.errorLabels.Click += new System.EventHandler(this.errorLabels_Click);
+            // 
             // mainSplitContainer
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -138,6 +147,7 @@
             this.codeBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeBox.Location = new System.Drawing.Point(0, 0);
             this.codeBox.Name = "codeBox";
+            this.codeBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.codeBox.ShowSelectionMargin = true;
             this.codeBox.Size = new System.Drawing.Size(814, 423);
             this.codeBox.TabIndex = 0;
@@ -290,6 +300,22 @@
             this.saveButton.Text = "Save Script";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // showDebug
+            // 
+            this.showDebug.CheckOnClick = true;
+            this.showDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.showDebug.Image = global::Projector.Properties.Resources.application_view_list;
+            this.showDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.showDebug.Name = "showDebug";
+            this.showDebug.Size = new System.Drawing.Size(23, 22);
+            this.showDebug.Text = "toolStripButton1";
+            this.showDebug.Click += new System.EventHandler(this.showDebug_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -369,31 +395,6 @@
             // 
             this.refreshTimer.Interval = 1000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // showDebug
-            // 
-            this.showDebug.CheckOnClick = true;
-            this.showDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.showDebug.Image = global::Projector.Properties.Resources.application_view_list;
-            this.showDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.showDebug.Name = "showDebug";
-            this.showDebug.Size = new System.Drawing.Size(23, 22);
-            this.showDebug.Text = "toolStripButton1";
-            this.showDebug.Click += new System.EventHandler(this.showDebug_Click);
-            // 
-            // errorLabels
-            // 
-            this.errorLabels.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.errorLabels.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.errorLabels.Name = "errorLabels";
-            this.errorLabels.Size = new System.Drawing.Size(75, 17);
-            this.errorLabels.Text = "not Executed";
-            this.errorLabels.Click += new System.EventHandler(this.errorLabels_Click);
             // 
             // ScriptWriter
             // 

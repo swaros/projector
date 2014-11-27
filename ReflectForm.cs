@@ -22,9 +22,14 @@ namespace Projector
             InitializeComponent();
         }
 
-        public void setScript (ReflectionScript script)
+        public void invoke (ReflectionScript script)
         {
             this.Script = script;
+            if (this.Script.getErrorCount() == 0)
+            {
+                RefScriptExecute executer = new RefScriptExecute(this.Script,this);
+                executer.run();
+            }
         }
 
     }

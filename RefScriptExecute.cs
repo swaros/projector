@@ -19,7 +19,9 @@ namespace Projector
 
         private Boolean internalError = false;
 
-        private int lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_UNKNOWNREASON;
+        private int lastErrorCode = 0;
+
+        private String lastErrorMessage = "";
 
         public RefScriptExecute(ReflectionScript script, Object parent)
         {
@@ -51,6 +53,7 @@ namespace Projector
             foreach (ReflectionScriptDefines scrLine in this.currentScript.getScript())
             {
                 string cmd = scrLine.code.ToUpper();
+
                 if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
                 {
                     scrLine.Referenz = objectDefines[cmd];
@@ -75,7 +78,18 @@ namespace Projector
                 {
                     if (objectReferences.ContainsKey(scrLine.namedReference))
                     {
-                       this.execMethod(objectReferences[scrLine.namedReference],scrLine);
+                        this.lastErrorCode = 0;  
+                        this.execMethod(objectReferences[scrLine.namedReference],scrLine);
+
+                        if (this.lastErrorCode > 0)
+                        {
+                            ScriptErrors error = new ScriptErrors();
+                            error.errorMessage = "object " + scrLine.typeOfObject + " reports an error on execution " + this.lastErrorCode;
+                            error.lineNumber = scrLine.lineNumber;
+                            error.errorCode = this.lastErrorCode;
+                            this.currentScript.addError(error);
+                        }
+
                     }
                 }
             }
@@ -101,12 +115,29 @@ namespace Projector
                 return null;
             }
             int countOfparams = refObj.parameters.Count();
-            object[] mParam = new object[countOfparams];
-            for (int i = 0; i < countOfparams; i++)
+            if (countOfparams > 0)
             {
-                mParam[i] = refObj.parameters[i];
+                object[] mParam = new object[countOfparams];
+                for (int i = 0; i < countOfparams; i++)
+                {
+                    mParam[i] = refObj.parameters[i];
+                }
+                return myMethodInfo.Invoke(obj, mParam);
             }
-            return myMethodInfo.Invoke(obj, mParam);            
+            else
+            {
+                try
+                {
+                    return myMethodInfo.Invoke(obj, null);
+                }
+                catch (TargetParameterCountException te)
+                {
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALID_PARAMETER_COUNT;
+                    this.internalError = true;
+                    return null;
+                }
+                
+            }
         }
 
 

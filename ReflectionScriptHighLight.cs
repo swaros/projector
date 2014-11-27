@@ -28,7 +28,9 @@ namespace Projector
         private HighlightStyle CommentStyle = new HighlightStyle();
         private HighlightStyle ErrorStyle = new HighlightStyle();
 
-        private int fontDefaultSize = 8;
+        private HighlightStyle KeyWordStyle = new HighlightStyle();
+
+        private int fontDefaultSize = 10;
         private string defaultFontName = "Courier New";
 
         private Boolean elementsReaded = false;
@@ -42,7 +44,7 @@ namespace Projector
 
 
             this.ObjectStyle.ForeColor = Color.DarkMagenta;
-            this.ObjectStyle.Font = new Font(defaultFontName,this.fontDefaultSize,FontStyle.Italic);
+            this.ObjectStyle.Font = new Font("Times New Roman",this.fontDefaultSize,FontStyle.Bold | FontStyle.Italic);
 
             this.CommandStyle.ForeColor = Color.DarkGreen;
             this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
@@ -54,12 +56,16 @@ namespace Projector
             this.VarStyle.ForeColor = Color.DarkOrange;
             this.VarStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
+            this.KeyWordStyle.ForeColor = Color.DarkBlue;      
+            this.KeyWordStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+
+
             this.CommentStyle.ForeColor = Color.DarkOliveGreen;
             this.CommentStyle.BackColor = Color.LightGray;
             this.CommentStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
-            this.ErrorStyle.ForeColor = Color.Red;
-            this.ErrorStyle.BackColor = Color.Yellow;
+            this.ErrorStyle.ForeColor = Color.DarkRed;
+            this.ErrorStyle.BackColor = Color.LightPink;
             this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
 
@@ -69,11 +75,13 @@ namespace Projector
             this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
         }
 
-        public void reDraw(Boolean reNewElements)
+        public int reDraw(Boolean reNewElements)
         {
             this.drawingRtf.Rtf = this.assignedRtf.Rtf;
             int startpos = this.assignedRtf.SelectionStart;
-            int endPos = this.assignedRtf.SelectionLength;           
+            int endPos = this.assignedRtf.SelectionLength;
+            int start = this.assignedRtf.GetCharIndexFromPosition(new Point(0, 0));
+            int end = this.assignedRtf.GetCharIndexFromPosition(new Point(this.assignedRtf.ClientSize.Width, this.assignedRtf.ClientSize.Height));
 
             if (reNewElements == true || this.elementsReaded == false)
             {
@@ -93,13 +101,22 @@ namespace Projector
                 this.RtfColors.markWordsAll(word, setColor);
             }
 
+            // must be at the end
+
+            foreach (String keyWord in Projector.RefScriptMaskMatch.KeyWords)
+            {
+
+                this.RtfColors.markTextLine(keyWord, KeyWordStyle);
+            }
+
+
+
             foreach (DictionaryEntry de in this.Srcipt.getAllStrings())
             {
                 string word = de.Value.ToString();
                 this.RtfColors.markTextLine(word, TextStyle);
 
             }
-
 
             foreach (int lino in this.Srcipt.getCommentLines())
             {
@@ -111,11 +128,19 @@ namespace Projector
                 this.RtfColors.markFullLine(err.lineNumber, ErrorStyle);
             }
 
-
             this.assignedRtf.Rtf = this.drawingRtf.Rtf;
+
+            // try to scroll last visible position
+            this.assignedRtf.SelectionLength = 0;
+            this.assignedRtf.SelectionStart = end;
+            this.assignedRtf.ScrollToCaret();
+            this.assignedRtf.SelectionStart = start + this.assignedRtf.Lines[this.assignedRtf.GetLineFromCharIndex(start)].Length + 1;
+            this.assignedRtf.ScrollToCaret();
+
             this.assignedRtf.SelectionStart = startpos;
             this.assignedRtf.SelectionLength = endPos;
-
+           
+            return 1;
         }
 
 

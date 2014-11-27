@@ -14,12 +14,12 @@ namespace Projector
 
         public Object getObject(ReflectionScriptDefines refObject, Object parent)
         {
-            if (refObject.typeOfObject == "QueryBrowser")
+            if (refObject.typeOfObject == "queryBrowser")
             {
                 return this.getQueryBrowser(refObject,parent);
             }
 
-            if (refObject.typeOfObject == "Form")
+            if (refObject.typeOfObject == "ReflectForm")
             {
                 return this.getForm(refObject, parent);
             }

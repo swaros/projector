@@ -321,7 +321,7 @@ namespace Projector
         private void checkBeforeOpen()
         {
             if (checkChanges() &&  MessageBox.Show("The Source Have changed. would you save this changes?", "Changed Source", 
-                MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == System.Windows.Forms.DialogResult.OK )
+                MessageBoxButtons.YesNo, MessageBoxIcon.Information) == System.Windows.Forms.DialogResult.Yes )
             {
                 saveChanges();
             }
@@ -375,10 +375,16 @@ namespace Projector
            
         }
 
+        private void resetRedrawTick()
+        {
+            refreshTimer.Enabled = false;
+            refreshTimer.Enabled = true;
+        }
+
         private void codeBox_KeyDown(object sender, KeyEventArgs e)
         {
             keyTrigger.Enabled = true;
-            refreshTimer.Enabled = false;
+            resetRedrawTick();
         }
 
         private void enlargeContent()
@@ -428,6 +434,12 @@ namespace Projector
         private void showDebug_Click(object sender, EventArgs e)
         {
             codeSplitContainer.Panel2Collapsed = !showDebug.Checked;
+            if (codeSplitContainer.Panel2Collapsed)
+            {
+                this.recheckScript();
+                this.updateColors();
+                resetRedrawTick();
+            }
         }
 
         private void errorLabels_Click(object sender, EventArgs e)
