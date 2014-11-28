@@ -42,10 +42,13 @@ namespace Projector
         private Hashtable int64Founds = new Hashtable();
 
         // VARIABLES: list of all Long Variables
-        private Hashtable intFloatFounds = new Hashtable();
+        private Hashtable int32Founds = new Hashtable();
 
         // VARIABLES: list of all Long Variables
-        private Hashtable intDoubleFounds = new Hashtable();
+        private Hashtable floatFounds = new Hashtable();
+
+        // VARIABLES: list of all Long Variables
+        private Hashtable doubleFounds = new Hashtable();
 
         // VARIABLES: list of all Boolean Variables
         private Hashtable BoolFounds = new Hashtable();
@@ -65,6 +68,9 @@ namespace Projector
         // contains all errors
         private List<ScriptErrors> errorMessages = new List<ScriptErrors>();
 
+        // stores allready reported errors. so only the first one is used
+        private List<int> errorLines = new List<int>();
+
         // list of full emtpty lines
         private List<int> emptyLines = new List<int>();
 
@@ -77,7 +83,7 @@ namespace Projector
         // offest by mutlilines (line breaking strings or subcode)
         private int lineOffset = 0;
 
-
+        
 
         
 
@@ -105,6 +111,7 @@ namespace Projector
             this.globalRenameHash.Clear();
             this.buildedSource.Clear();
             this.namedSubScripts.Clear();
+            this.errorLines.Clear();
         }
 
         /**
@@ -169,7 +176,7 @@ namespace Projector
             ScriptErrors error = new ScriptErrors();
             error.errorCode = ErrorCode;
             error.errorMessage = Errormessage;
-            error.lineNumber = this.getLineNumber();
+            error.lineNumber = this.getLineNumber();            
             this.errorMessages.Add(error);
         }
 
@@ -186,6 +193,11 @@ namespace Projector
          */ 
         public void addError(ScriptErrors error)
         {
+            if (this.errorLines.Contains(error.lineNumber))
+            {
+                return;
+            }
+            this.errorLines.Add(error.lineNumber);
             this.errorMessages.Add(error);
         }
 
@@ -295,23 +307,11 @@ namespace Projector
 
             this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
 
-            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT");
-            //this.mask.Add("STR § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR"  + Projector.ReflectionScript.MASK_DELIMITER + ". . . STR");
-            //this.mask.Add("INT § = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR" + Projector.ReflectionScript.MASK_DELIMITER + ". . . INT");
+            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" +  Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
+            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR"  + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
+            this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
 
-            //object depended commands
-            /*
-            this.mask.Add("&QueryBrowser SETCOORDS ? ? ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setCoords INT INT INT INT");
-            this.mask.Add("&QueryBrowser SELECTTABLE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". selectTable STR");
-            this.mask.Add("&QueryBrowser FIREQUERY" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". fireQuery");
-            this.mask.Add("&QueryBrowser SETWHERE ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setWhere STR STR");
-
-            this.mask.Add("& SETSQL ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". setSql STR");
-            this.mask.Add("& SHOWTABLELIST ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + ". showTableList BOOL");
-
-            this.mask.Add("& INVOKE ?" + Projector.ReflectionScript.MASK_DELIMITER + "METHOD PARSE");
-            */
-
+            
 
             // just to store something
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
@@ -345,11 +345,11 @@ namespace Projector
                 info += "<" + tmpCode.name + "> ";
             }
 
-            if (tmpCode.scriptParamaters != null)
+            if (tmpCode.scriptParameters != null)
             {
                 info += " (";
                 string add = "";
-                foreach (String param in tmpCode.scriptParamaters)
+                foreach (String param in tmpCode.scriptParameters)
                 {
                     info += add + this.fillUpAll(param);
                     add = ", ";
@@ -389,11 +389,11 @@ namespace Projector
             }
             info += "--parameters ---<" + System.Environment.NewLine;
             string info2 = "";
-            if (tmpCode.scriptParamaters != null)
+            if (tmpCode.scriptParameters != null)
             {
                 
                 
-                foreach (String param in tmpCode.scriptParamaters)
+                foreach (String param in tmpCode.scriptParameters)
                 {
                     info += param + System.Environment.NewLine;
                     info2 += this.fillUpAll(param) + System.Environment.NewLine;
@@ -491,23 +491,26 @@ namespace Projector
 
         private void build()
         {
-            int line = 0;
+            int lineNr = 0;
             emptyLines.Clear();
 
-            foreach (String currentLine in lines)
+            foreach (String currentLine in this.lines)
             {
-                this.currentReadLine = line;   
+                this.currentReadLine = lineNr;   
                 string[] words = currentLine.Split(new char[] { ' ', '(', ')', ',', '.' }, StringSplitOptions.RemoveEmptyEntries);
-                ReflectionScriptDefines buildRes = this.buildDefine(words);
-                if (null != buildRes && this.validate(buildRes))
+                if (words.Count() > 0)
                 {
-                    this.buildedSource.Add(buildRes);
+                    ReflectionScriptDefines buildRes = this.buildDefine(words);
+                    if (null != buildRes && this.validate(buildRes))
+                    {
+                        this.buildedSource.Add(buildRes);
+                    }
                 }
                 else
                 {
-                    emptyLines.Add(line);
+                    emptyLines.Add(lineNr);
                 }
-                line++;
+                lineNr++;
             }
         }
 
@@ -530,22 +533,44 @@ namespace Projector
 
             if (testObj.isVariable)
             {
-                if (testObj.name != null && testObj.scriptParamaters.Count() == 1)
+                if (testObj.name != null && testObj.scriptParameters.Count() == 1)
                 {
                     string name = this.fillUpStrings(testObj.name);
-                    foreach (string varValue in testObj.scriptParamaters)
+                    int readPos =0;
+                    foreach (string varValue in testObj.scriptParameters)
                     {
                         string varName = testObj.name;
+                        readPos++;
+                        string type = "?";
+                        if (testObj.scriptParameterTypes.Count() > readPos)
+                        {
+                            type = testObj.scriptParameterTypes[readPos];
+                        }
+
                         string varStr = this.fillUpStrings(varValue);
-                        if (globalRenameHash.ContainsKey(varName))
+                        if (globalRenameHash.ContainsKey("&" + varName))
                         {
                             this.addError("variable " + varName + " allready defined");
-                        } else {                            
-                            globalRenameHash.Add("&" + testObj.name, varStr);
-                            globalRenameHash.Add("&&" + testObj.name, "'" + varStr + "'");
                         }
-                    }
-                    //stringFounds.Add(name,
+                        else
+                        {
+                            globalRenameHash.Add("&" + testObj.name, varStr);
+                            if (type == "INT" || type == "Int32")
+                            {
+                                try
+                                {
+                                    this.int32Founds.Add(testObj.name, Int32.Parse(varStr));
+                                }
+                                catch (Exception ex)
+                                {
+                                    this.addError(ex.Message);
+                                }
+                            }
+                        }
+                        
+
+                        
+                    }                    
                 }
                 else
                 {
@@ -581,14 +606,14 @@ namespace Projector
             // this opbject is parseable so it must have some part of code as param
             if (testObj.parseable)
             {
-                if (testObj.scriptParamaters.Count < 1)
+                if (testObj.scriptParameters.Count < 1)
                 {
                     this.addError("Missing Code Exception: " + testObj.code);
                 }
                 else if (this.followRecusives)
                 {
                     testObj.parameters = new List<object>();
-                    foreach (String subCode in testObj.scriptParamaters)
+                    foreach (String subCode in testObj.scriptParameters)
                     {                        
                         string fullCode = this.getCodeByName(subCode);
                         testObj.subScript = new ReflectionScript();
@@ -608,10 +633,10 @@ namespace Projector
             // check how many lines of sourcecode is used to write this. so check strings because this is
             // the first valid source of linebreaks
 
-            if (testObj.scriptParamaters.Count > 0)
+            if (testObj.scriptParameters.Count > 0)
             {
                 string parFull = "";
-                foreach (String subCode in testObj.scriptParamaters)
+                foreach (String subCode in testObj.scriptParameters)
                 {
                     parFull += this.fillUpAll(subCode);
                 }
@@ -630,21 +655,73 @@ namespace Projector
         }
 
 
+        private ReflectionScriptDefines setParams(ReflectionScriptDefines cmdResult, int partPosition, String[] varDefines, String part)
+        {
+            cmdResult.scriptParameters.Add(part);
+
+            if (varDefines != null && varDefines.Count() > partPosition)
+            {
+                cmdResult.scriptParameterTypes.Add(varDefines[partPosition]);
+                string definedType = varDefines[partPosition];
+                if (definedType == "INT" || definedType == "Int32")
+                {
+                    try
+                    {
+                        int parInt = int.Parse(part);
+                        cmdResult.parameters.Add(parInt);
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError("Parameter must bee an number" + e.Message);
+                        return null;
+                    }
+
+                }
+                else if (definedType == "STR" || definedType == "String")
+                {
+                    cmdResult.parameters.Add(this.fillUpStrings(part));
+                }
+                else if (definedType == "BOOL" || definedType == "Boolean")
+                {
+                    if (part.ToUpper() == "TRUE" || part == "1")
+                    {
+                        cmdResult.parameters.Add(true);
+                    }
+                    else
+                    {
+                        cmdResult.parameters.Add(false);
+                    }
+                }
+                else if (definedType == "ReflectionScript")
+                {
+                    cmdResult.parameters.Add(this.fillUpCodeLines(part));
+                    cmdResult.parseable = true;
+                }
+            }
+            else
+            {
+                cmdResult.scriptParameterTypes.Add("?");
+            }
+            return cmdResult;
+        }
+
         private ReflectionScriptDefines buildDefine(string[] words)
         {
+
             if (words.Count() > 0 && words[0][0] == '#')
             {                
                 this.commentedLines.Add(this.getLineNumber());
                 return null;
             }
 
+           // Boolean foundMatch = false;
             // look on any mask
             foreach (string hash in this.mask)
             {
 
                 RefScriptMaskMatch maskMatch = new RefScriptMaskMatch(hash);
                 if (maskMatch.possibleMatch(words) != RefScriptMaskMatch.MATCH)
-                {
+                {                    
                     continue;
                 }
                 // the reference ..alias the command
@@ -730,13 +807,20 @@ namespace Projector
                             cmdResult.originCode = part;
                             cmdResult.parameters = new List<object>();
                         }
-                        // a parameter
+                        // here we found an parameter. so we reed what type is expected;
                         else if (cmdResult != null && currentMaskPart == "?")
                         {
-                            cmdResult.scriptParamaters.Add(part);
+                            ReflectionScriptDefines cmdTmpResult = this.setParams(cmdResult, partPosition, varDefines, part);
+                            if (cmdTmpResult == null)
+                            {
+                                return null;
+                            }
+                            /*
+                            cmdResult.scriptParameters.Add(part);
 
                             if (varDefines != null && varDefines.Count() > partPosition)
                             {
+                                cmdResult.scriptParameterTypes.Add(varDefines[partPosition]);
                                 string definedType = varDefines[partPosition];
                                 if (definedType == "INT" || definedType == "Int32")
                                 {
@@ -750,11 +834,11 @@ namespace Projector
                                         this.addError("Parameter must bee an number" + e.Message);
                                         return null;
                                     }
-                                    
+
                                 }
                                 else if (definedType == "STR" || definedType == "String")
                                 {
-                                    cmdResult.parameters.Add( this.fillUpStrings(part) );
+                                    cmdResult.parameters.Add(this.fillUpStrings(part));
                                 }
                                 else if (definedType == "BOOL" || definedType == "Boolean")
                                 {
@@ -773,7 +857,11 @@ namespace Projector
                                     cmdResult.parseable = true;
                                 }
                             }
-
+                            else
+                            {
+                                cmdResult.scriptParameterTypes.Add("?");
+                            }
+                            */
                         }
                         // a name definition
                         else if (currentMaskPart == "%")
@@ -814,7 +902,7 @@ namespace Projector
 
                         }
                     }
-                   
+                    
                     partPosition++;
                 }
                                
@@ -852,7 +940,9 @@ namespace Projector
                     return cmdResult;
                 }
             }
-            
+
+            this.addError("Invalid Source:" + this.lines[this.currentReadLine]);
+
             return null;
         }
 

@@ -27,6 +27,7 @@ namespace Projector
         private HighlightStyle TextStyle = new HighlightStyle();
         private HighlightStyle CommentStyle = new HighlightStyle();
         private HighlightStyle ErrorStyle = new HighlightStyle();
+        private HighlightStyle VaribalesStyle = new HighlightStyle();
 
         private HighlightStyle KeyWordStyle = new HighlightStyle();
 
@@ -45,6 +46,10 @@ namespace Projector
 
             this.ObjectStyle.ForeColor = Color.DarkMagenta;
             this.ObjectStyle.Font = new Font("Times New Roman",this.fontDefaultSize,FontStyle.Bold | FontStyle.Italic);
+
+            this.VaribalesStyle.ForeColor = Color.DarkKhaki;
+            this.VaribalesStyle.Font = new Font("Times New Roman", this.fontDefaultSize, FontStyle.Bold | FontStyle.Italic);
+
 
             this.CommandStyle.ForeColor = Color.DarkGreen;
             this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
@@ -77,6 +82,10 @@ namespace Projector
 
         public int reDraw(Boolean reNewElements)
         {
+            if (this.assignedRtf.Text.Length < 1)
+            {
+                return 0;
+            }
             this.drawingRtf.Rtf = this.assignedRtf.Rtf;
             int startpos = this.assignedRtf.SelectionStart;
             int endPos = this.assignedRtf.SelectionLength;
@@ -110,13 +119,20 @@ namespace Projector
             }
 
 
+            string[] variables = new String[this.Srcipt.getAllStrings().Count];
 
+            int it = 0;
             foreach (DictionaryEntry de in this.Srcipt.getAllStrings())
             {
                 string word = de.Value.ToString();
+                string keyWord = de.Key.ToString();
                 this.RtfColors.markTextLine(word, TextStyle);
-
+                //this.RtfColors.markTextLine(keyWord, VaribalesStyle);
+                variables[it] = keyWord;
+                it++;
             }
+
+            this.RtfColors.markWordsAll(variables, VaribalesStyle);
 
             foreach (int lino in this.Srcipt.getCommentLines())
             {

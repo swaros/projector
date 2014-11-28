@@ -60,6 +60,7 @@
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.errCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel2.SuspendLayout();
@@ -88,7 +89,8 @@
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel,
-            this.errorLabels});
+            this.errorLabels,
+            this.errCount});
             this.statusStrip1.Location = new System.Drawing.Point(0, 0);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(985, 22);
@@ -320,8 +322,8 @@
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(985, 24);
@@ -348,14 +350,14 @@
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "&Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "&Save As...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -363,7 +365,7 @@
             // 
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -371,7 +373,7 @@
             // 
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -395,6 +397,12 @@
             // 
             this.refreshTimer.Interval = 1000;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            // 
+            // errCount
+            // 
+            this.errCount.Name = "errCount";
+            this.errCount.Size = new System.Drawing.Size(22, 17);
+            this.errCount.Text = "---";
             // 
             // ScriptWriter
             // 
@@ -472,5 +480,6 @@
         private System.Windows.Forms.ToolStripButton showDebug;
         private System.Windows.Forms.ToolStripStatusLabel errorLabels;
         private System.Windows.Forms.ToolTip messageToolTip;
+        private System.Windows.Forms.ToolStripStatusLabel errCount;
     }
 }

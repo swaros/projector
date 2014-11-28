@@ -118,7 +118,14 @@ namespace Projector
             script.setCode(codeBox.Text);
             if (script.getErrorCount() == 0)
             {
+                errCount.Text = "no errors";
+                errCount.ForeColor = Color.DarkGreen;
                 this.assignedExternalScript = codeBox.Text;
+            }
+            else
+            {
+                errCount.Text = script.getErrorCount() + " errors";
+                errCount.ForeColor = Color.DarkRed;
             }
            
             updateLogBook();
@@ -237,10 +244,7 @@ namespace Projector
 
         private void executeScript()
         {
-
-
-            
-
+           
             script.setCode(codeBox.Text);
             if (script.getErrorCount() == 0)
             {
