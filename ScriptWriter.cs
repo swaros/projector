@@ -30,6 +30,8 @@ namespace Projector
 
         ReflectionScriptHighLight Highlight;
 
+        private AutoCompletion AutoComplete;
+
 
         private RtfColoring colorize;
 
@@ -76,6 +78,8 @@ namespace Projector
             script.setCode(codeBox.Text);
             colorize = new RtfColoring(codeBox);
             Highlight = new ReflectionScriptHighLight(script, codeBox);
+            this.AutoComplete = new AutoCompletion(codeBox);
+            this.AutoComplete.assignListBox(wordListing);
         }
 
         private void updateColors()
@@ -98,6 +102,7 @@ namespace Projector
             keyTrigger.Enabled = false;
             //            refreshTimer.Enabled = true;
             //this.recheckScript();
+            this.AutoComplete.setSelection(e);
         }
 
         private void refitElements()
@@ -127,11 +132,44 @@ namespace Projector
                 errCount.Text = script.getErrorCount() + " errors";
                 errCount.ForeColor = Color.DarkRed;
             }
-           
+
+            extractObjectInfos();
             updateLogBook();
             refitElements();
         }
 
+        // updates the generic tree depending on actually used objects
+        private void extractObjectInfos()
+        {
+            genericTree.Nodes.Clear();
+            foreach(RefScrObjectStorage usedObject in Projector.ObjectInfo.getAllObjects() ){
+                
+                TreeNode objectNode = new TreeNode(usedObject.originObjectName);
+                TreeNode methods = new TreeNode("Methods");
+
+                
+                foreach (string methodmask in usedObject.methodNames)
+                {
+                    methods.Nodes.Add(methodmask);
+                    this.AutoComplete.addWord(methodmask);
+                    
+                }
+                objectNode.Nodes.Add(methods);
+                genericTree.Nodes.Add(objectNode);
+
+                List<string> instances = this.script.getCurrentObjectsByType(usedObject.originObjectName);
+                if (instances != null)
+                {
+                    TreeNode usedBy = new TreeNode("Instances");
+                    foreach (string instOf in instances)
+                    {
+                        usedBy.Nodes.Add(instOf);
+                    }
+                    objectNode.Nodes.Add(usedBy);
+                }
+
+            }
+        }
 
         private void updateLogBook()
         {
@@ -388,6 +426,7 @@ namespace Projector
         private void codeBox_KeyDown(object sender, KeyEventArgs e)
         {
             keyTrigger.Enabled = true;
+            AutoComplete.keypressHandler( e );
             resetRedrawTick();
         }
 
@@ -459,6 +498,11 @@ namespace Projector
         private void ScriptWriter_FormClosing(object sender, FormClosingEventArgs e)
         {
             checkBeforeOpen();
+        }
+
+        private void showToolbarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mainSplitContainer.Panel1Collapsed = !mainSplitContainer.Panel1Collapsed;
         }
     }
 }

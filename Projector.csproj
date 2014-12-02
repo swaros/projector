@@ -363,6 +363,8 @@
     <Compile Include="ReflectObjectInterface.cs" />
     <Compile Include="RefScriptExecute.cs" />
     <Compile Include="RefScriptMaskMatch.cs" />
+    <Compile Include="RefScrObjectStorage.cs" />
+    <Compile Include="RefScrVariable.cs" />
     <Compile Include="RefSrcStates.cs" />
     <Compile Include="RtfColoring.cs" />
     <Compile Include="ScriptErrors.cs" />

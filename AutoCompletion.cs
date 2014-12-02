@@ -14,9 +14,19 @@ namespace Projector
     class AutoCompletion
     {
         private Hashtable wordList = new Hashtable();
+        RichTextBox usedTextBox;
+
+        private ListBox ownListBox;
+
+        private Form parentForm;
 
         private int setSelStart = 0;
         private int setSelLength = 0;
+
+        public AutoCompletion(RichTextBox useThis)
+        {
+            this.usedTextBox = useThis;
+        }
 
         public void addWord(string word)
         {
@@ -47,10 +57,11 @@ namespace Projector
             }
         }
 
-        private string getlastSelectedWord(RichTextBox textBox1)
+        private string getlastSelectedWord()
         {
-            int selPos = textBox1.SelectionStart;
-            string leftTxt = textBox1.Text.Substring(0, selPos);            
+
+            int selPos = this.usedTextBox.SelectionStart;
+            string leftTxt = this.usedTextBox.Text.Substring(0, selPos);            
             string[] allwords = Regex.Split(leftTxt, "[ ,=+-/*]");
             leftTxt = allwords[allwords.Length - 1];
             this.setSelStart = selPos - leftTxt.Length;
@@ -69,20 +80,28 @@ namespace Projector
             return this.setSelLength;
         }
 
-        public void setSelection(RichTextBox inputBox)
+        public void setSelection(KeyEventArgs keyEvent)
         {
-            if (this.setSelStart > 0 && this.setSelLength > 0)
+            if (keyEvent.KeyCode == Keys.Space && keyEvent.Control)
             {
-                inputBox.SelectionStart = this.setSelStart;
-                inputBox.SelectionLength = this.setSelLength;
+                this.setSelection();
             }
         }
 
-        public List<string> getListFromPart(RichTextBox inputBox)
+        public void setSelection()
         {
-            string part = getlastSelectedWord(inputBox);
-            //inputBox.SelectionStart = this.setSelStart;
-            //inputBox.SelectionLength = this.setSelLength;
+            if (this.setSelStart > 0 && this.setSelLength > 0)
+            {
+                this.usedTextBox.SelectionStart = this.setSelStart;
+                this.usedTextBox.SelectionLength = this.setSelLength;
+            }
+        }
+
+        
+
+        public List<string> getListFromPart()
+        {
+            string part = getlastSelectedWord();            
             return getListFromPart(part); 
         }
 
@@ -104,6 +123,92 @@ namespace Projector
             return result;
         }
 
+        // own autocomplete management
+        public void assignListBox(ListBox outList)
+        {
+            if (this.ownListBox == null)
+            {
+                this.ownListBox = outList;
+                this.ownListBox.SelectedIndexChanged += new System.EventHandler(listBoxEvent);
+                this.hideList();
+            }
+        }
+
+        private void listBoxEvent(object sender, System.EventArgs e)
+        {             
+            //ListBox VarCharAdd = (ListBox)sender;
+            this.doAutoInsert(this.ownListBox.Text);
+            this.hideList();
+        
+        }
+
+        public void keypressHandler(KeyEventArgs e)
+        {
+            if (this.ownListBox != null && e.Control && e.KeyCode == Keys.Space)
+            {
+                List<string> codes = this.getListFromPart();
+                this.ownListBox.Items.Clear();
+                bool show = false;
+                bool doReplaceNow = false;
+                for (int i = 0; i < codes.Count; i++)
+                {
+                    this.ownListBox.Items.Add(codes[i]);
+                    if (i > 1) show = true;
+                    doReplaceNow = true;
+                }
+                if (show)
+                {
+                    Point pos = this.usedTextBox.GetPositionFromCharIndex(this.usedTextBox.SelectionStart);
+                    this.ownListBox.Left = pos.X;
+                    this.ownListBox.Top = pos.Y + this.usedTextBox.Font.Height + 5;
+                    this.showList();
+                    
+                }
+                else if (doReplaceNow)
+                {
+                    this.doAutoInsert( codes[0] );
+                }
+            }
+        }
+
+        private void doAutoInsert(string newText)
+        {
+            int insertPos = this.getSelectionStart();
+
+            this.usedTextBox.Text = this.usedTextBox.Text.Remove(insertPos, this.getSelectionLength());
+            this.usedTextBox.Text = this.usedTextBox.Text.Insert(insertPos, newText);            
+            this.ownListBox.Text = "";
+            this.usedTextBox.SelectionStart = insertPos + newText.Length;
+        }
+
+        private void hideList()
+        {
+            this.ownListBox.SendToBack();
+            this.ownListBox.Visible = false;
+        }
+
+        private void showList()
+        {
+            this.ownListBox.BringToFront();
+            this.ownListBox.Visible = true;
+        }
+
+
+        public void autoCreateList(Form toParent)
+        {
+            if (null == ownListBox)
+            {
+                ownListBox = new ListBox();
+                ownListBox.BackColor = Color.LightYellow;
+                ownListBox.Visible = true;
+                ownListBox.Top = 10;
+                ownListBox.Left = 10;
+
+                ownListBox.BringToFront();
+                parentForm = toParent;
+                toParent.Controls.Add(ownListBox);
+            }
+        }
 
     }
 }

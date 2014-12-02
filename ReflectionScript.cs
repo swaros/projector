@@ -92,6 +92,46 @@ namespace Projector
             this.init();
         }
 
+        private void init()
+        {
+            /**
+             * mask for define the expected commands.
+             * 
+             *   - any keyword must be written in upercase and on the place who it is expected
+             *  § the type of an object 
+             *  % here is the name excpected. also this is the variable name
+             *  ? this is an parameter AFTER THE KEY WORD
+             *  & must be an existing variable. the name is expected
+             *  
+             *  = delimiter for the mask definition 
+             *  
+             * mask definitions
+             * 
+             * OBJECT   means this is an object
+             * PARSE    any parameter is a reflectionScript
+             * VAR      will create an Variable
+             * ASSIGN   change the value of a given Object. so an Type of Object must be an Part of this (%)
+             * 
+             */
+
+            //base commands
+            this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
+            this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
+
+            this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
+
+            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
+            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
+            this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
+
+
+
+
+            // just to store something
+            // this.mask.Add("VAR § SET ?=STRINGVAR STR");
+        }
+
+
         public List<ReflectionScriptDefines> getScript()
         {
             return this.buildedSource;
@@ -132,6 +172,30 @@ namespace Projector
                 }
             }
         }
+
+        // -------------------- methods to get Infomations about the current Situation of the script ------------
+
+        public List<string> getCurrentObjectsByType(string objectType)
+        {
+            if (this.objectReferences.ContainsValue(objectType))
+            {
+                List<string> usedBy = new List<string>();
+                foreach (DictionaryEntry de in this.objectReferences)
+                {
+                    if (de.Value != null && de.Value.ToString() == objectType)
+                    {
+                        usedBy.Add(de.Key.ToString());
+                    }
+                }
+                return usedBy;
+            }
+            return null;
+        }
+
+
+
+        // -------------------  error handlings, methods for add and get the errors -----------------------------
+
 
         /**
          * return an string with all error informations.
@@ -282,45 +346,15 @@ namespace Projector
             return this.globalRenameHash;
         }
 
-        private void init()
-        {
-            /**
-             * mask for define the expected commands.
-             * 
-             *   - any keyword must be written in upercase and on the place who it is expected
-             *  § the type of an object 
-             *  % here is the name excpected. also this is the variable name
-             *  ? this is an parameter AFTER THE KEY WORD
-             *  & must be an existing variable. the name is expected
-             *  
-             *  = delimiter for the mask definition 
-             *  
-             * mask definitions
-             * 
-             * OBJECT   means this is an object
-             *   
-             */
-
-            //base commands
-            this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
-            this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
-
-            this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
-
-            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" +  Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
-            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR"  + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
-            this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
-
-            
-
-            // just to store something
-            // this.mask.Add("VAR § SET ?=STRINGVAR STR");
-        }
+      
 
         public List<int> getEmptyLines()
         {
             return this.emptyLines;
         }
+
+
+        // ---- inline debuginfos following ------------
 
 
         public string getSourceInfo()
@@ -441,6 +475,8 @@ namespace Projector
             return label + ": " + value.GetType() + System.Environment.NewLine;
         }
 
+        // -------------------  here are all the stuff for building, parsing and so on -------------------------- 
+
         /**
          * find strings ("xxx") store these in string memory. replace these string with placeholder
          * so following string methods do not affect them.
@@ -531,6 +567,7 @@ namespace Projector
                 this.addError("this method is invalid because of a unknown Reference" + testObj.code);
             }
 
+            // variable assinements
             if (testObj.isVariable)
             {
                 if (testObj.name != null && testObj.scriptParameters.Count() == 1)
@@ -557,14 +594,24 @@ namespace Projector
                             globalRenameHash.Add("&" + testObj.name, varStr);
                             if (type == "INT" || type == "Int32")
                             {
+                                int intValue = 0;
                                 try
                                 {
-                                    this.int32Founds.Add(testObj.name, Int32.Parse(varStr));
+                                    //this.int32Founds.Add(testObj.name, Int32.Parse(varStr));
+                                    intValue = Int32.Parse(varStr);
+
                                 }
                                 catch (Exception ex)
                                 {
                                     this.addError(ex.Message);
                                 }
+
+                                RefScrVariable newVar = new RefScrVariable();
+                                newVar.Name = testObj.name;
+                                newVar.Value = intValue;
+                                newVar.referenceOf = null;
+                                newVar.TypeName = "INT";
+                                this.int32Founds.Add(newVar.Name, newVar);
                             }
                         }
                         
@@ -654,7 +701,10 @@ namespace Projector
             return true;
         }
 
-
+        /**
+         * work on parameters
+         * 
+         */ 
         private ReflectionScriptDefines setParams(ReflectionScriptDefines cmdResult, int partPosition, String[] varDefines, String part)
         {
             cmdResult.scriptParameters.Add(part);
@@ -815,53 +865,7 @@ namespace Projector
                             {
                                 return null;
                             }
-                            /*
-                            cmdResult.scriptParameters.Add(part);
-
-                            if (varDefines != null && varDefines.Count() > partPosition)
-                            {
-                                cmdResult.scriptParameterTypes.Add(varDefines[partPosition]);
-                                string definedType = varDefines[partPosition];
-                                if (definedType == "INT" || definedType == "Int32")
-                                {
-                                    try
-                                    {
-                                        int parInt = int.Parse(part);
-                                        cmdResult.parameters.Add(parInt);
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        this.addError("Parameter must bee an number" + e.Message);
-                                        return null;
-                                    }
-
-                                }
-                                else if (definedType == "STR" || definedType == "String")
-                                {
-                                    cmdResult.parameters.Add(this.fillUpStrings(part));
-                                }
-                                else if (definedType == "BOOL" || definedType == "Boolean")
-                                {
-                                    if (part.ToUpper() == "TRUE" || part == "1")
-                                    {
-                                        cmdResult.parameters.Add(true);
-                                    }
-                                    else
-                                    {
-                                        cmdResult.parameters.Add(false);
-                                    }
-                                }
-                                else if (definedType == "ReflectionScript")
-                                {
-                                    cmdResult.parameters.Add(this.fillUpCodeLines(part));
-                                    cmdResult.parseable = true;
-                                }
-                            }
-                            else
-                            {
-                                cmdResult.scriptParameterTypes.Add("?");
-                            }
-                            */
+                          
                         }
                         // a name definition
                         else if (currentMaskPart == "%")

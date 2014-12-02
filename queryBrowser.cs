@@ -54,7 +54,7 @@ namespace Projector
         MysqlProcedures myFuns = new MysqlProcedures();
 
         HighlighterMysql highlight = new HighlighterMysql();
-        AutoCompletion AutoText = new AutoCompletion();
+        AutoCompletion AutoText;
 
         private bool showProcedures = true;
 
@@ -76,6 +76,7 @@ namespace Projector
         public queryBrowser()
         {
             InitializeComponent();
+            this.AutoText = new AutoCompletion(textBox1);
             splitContainer1.Panel1Collapsed = true;
             tabControl1.SelectedIndex = 1;
             BookMarkSerializer serializer = new BookMarkSerializer();
@@ -1651,7 +1652,7 @@ namespace Projector
 
             if (TablesAutoComplete.Visible)
             {
-                AutoText.setSelection(textBox1);
+                AutoText.setSelection();
             }
             parseSqlTextBox();
 
@@ -1666,7 +1667,7 @@ namespace Projector
         {
             if (e.Control && e.KeyCode == Keys.Space)
             {
-                List<string> codes = AutoText.getListFromPart(textBox1);
+                List<string> codes = AutoText.getListFromPart();
                 TablesAutoComplete.Items.Clear();
                 bool show = false;
                 bool doReplaceNow = false;
