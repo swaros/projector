@@ -79,7 +79,7 @@ namespace Projector
                     if (objectReferences.ContainsKey(scrLine.namedReference))
                     {
                         this.lastErrorCode = 0;  
-                        this.execMethod(objectReferences[scrLine.namedReference],scrLine);
+                        Object execResult = this.execMethod(objectReferences[scrLine.namedReference],scrLine);
 
                         if (this.lastErrorCode > 0)
                         {
@@ -88,6 +88,13 @@ namespace Projector
                             error.lineNumber = scrLine.lineNumber;
                             error.errorCode = this.lastErrorCode;
                             this.currentScript.addError(error);
+                        }
+                        else
+                        {
+                            if (scrLine.isAssignement && execResult != null)
+                            {
+                                this.currentScript.updateVarByObject(scrLine.name, execResult);
+                            }
                         }
 
                     }

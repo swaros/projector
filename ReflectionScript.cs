@@ -12,6 +12,8 @@ namespace Projector
     {
 
         private const string REGEX_BRACKETS = "({[^}]*})";
+        private const string REGEX_CALC_BRACKETS = @"(\([^\)]*\))";
+       // private const string REGEX_CALC_BRACKETS = "((.+)\\)/U";
         private const string REGEX_STRING = "\"([^\"]*)\"";
 
         public const string MASK_DELIMITER = "#";
@@ -54,7 +56,15 @@ namespace Projector
         private Hashtable BoolFounds = new Hashtable();
 
         // VARIABLES: list of all subscripts defined by methods
-        private Hashtable namedSubScripts = new Hashtable();       
+        private Hashtable namedSubScripts = new Hashtable();
+
+        // VARIABLES: list of entries between () brackets that used for calculations
+
+        // ---- this one contains the Maths himself. this will be used for calculations
+        private Hashtable calcingBrackets = new Hashtable();
+
+        // ---- this one contains the results only so it will be easier to fill up vars
+        private Hashtable calcingBracketsResults = new Hashtable();   
 
         // CONTROL: list of objects that be already parsed. (all methods and paramaters extracted)
         private List<string> parsedObjects = new List<string>();
@@ -121,8 +131,10 @@ namespace Projector
             this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
 
             this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
-            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
+            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
             this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
+
+            this.mask.Add("% = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + ". = ?");
 
 
 
@@ -152,6 +164,8 @@ namespace Projector
             this.buildedSource.Clear();
             this.namedSubScripts.Clear();
             this.errorLines.Clear();
+            this.calcingBrackets.Clear();
+            this.calcingBracketsResults.Clear();
         }
 
         /**
@@ -287,8 +301,11 @@ namespace Projector
 
         public String fillUpAll(string source)
         {
-            return this.fillUpCodeLines(
-                    this.fillUpStrings(source)
+            return 
+                this.fillUpMaths(
+                    this.fillUpCodeLines(
+                        this.fillUpStrings(source)
+                    )
                 );
         }
 
@@ -301,6 +318,11 @@ namespace Projector
         public String fillUpCodeLines(string source)
         {
             return this.fillUpVars(source, this.namedSubScripts);
+        }
+
+        public String fillUpMaths(string source)
+        {
+            return this.fillUpVars(source, this.calcingBracketsResults);
         }
 
         /**
@@ -346,13 +368,58 @@ namespace Projector
             return this.globalRenameHash;
         }
 
-      
+
+        public void updateVarByObject(String name,Object obj)
+        {
+            if (globalRenameHash.ContainsKey("&" + name))
+            {
+                globalRenameHash["&" + name] = obj.ToString();
+            }
+        }
+
+
+        private void updateVarByMath(String name, RefScrMath math)
+        {
+            if (globalRenameHash.ContainsKey("&" + name))
+            {
+                globalRenameHash["&" + name] = math.getResult();
+            }
+        }
+
+        private void updateVarByMath(String name, RefScrMath math, Hashtable varTable)
+        {
+            if (varTable.ContainsKey("&" + name))
+            {
+                varTable["&" + name] = math.getResult();
+            }
+        }
+
+
+       // ---------------
 
         public List<int> getEmptyLines()
         {
             return this.emptyLines;
         }
 
+
+        public double getVarNumber(string name)
+        {
+            if (this.int32Founds.ContainsKey(name))
+            {
+                return (double)this.int32Founds[name];
+            }
+            return 0;
+        }
+
+        public string getVarNumberAsString(string name)
+        {
+            if (this.int32Founds.ContainsKey(name))
+            {
+                return this.int32Founds[name].ToString();
+            }
+            return "0";
+        }
 
         // ---- inline debuginfos following ------------
 
@@ -520,6 +587,23 @@ namespace Projector
                     );
             }
 
+            // all content that in normal brackets, that will be used for calculations
+            MatchCollection cBracketsMatch = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_CALC_BRACKETS);
+            for (int i = 0; i < cBracketsMatch.Count; i++)
+            {
+                string str = cBracketsMatch[i].Value;
+                string key = "%cbracket_" + i + "%";                
+                code = code.Replace(str, key);
+                string nCode = str.Substring(1, str.Length - 2);
+
+                RefScrMath math = new RefScrMath(this, key, nCode);
+                
+                this.calcingBrackets.Add(key, math);
+
+                this.calcingBracketsResults.Add(key, math.getResult());
+                
+            }
+
             //lines = Regex.Split(code.Replace(";", System.Environment.NewLine), System.Environment.NewLine);
             this.lines = Regex.Split(code, "\n");
             return true;
@@ -533,7 +617,7 @@ namespace Projector
             foreach (String currentLine in this.lines)
             {
                 this.currentReadLine = lineNr;   
-                string[] words = currentLine.Split(new char[] { ' ', '(', ')', ',', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] words = currentLine.Split(new char[] { ' ', ',', '.' }, StringSplitOptions.RemoveEmptyEntries);
                 if (words.Count() > 0)
                 {
                     ReflectionScriptDefines buildRes = this.buildDefine(words);
@@ -565,6 +649,36 @@ namespace Projector
             if (testObj.isMethod && testObj.namedReference == null)
             {
                 this.addError("this method is invalid because of a unknown Reference" + testObj.code);
+            }
+
+
+            if (testObj.isAssignement && testObj.name != null)
+            {
+                // for any assignement a variable must be exists and allready defined
+                if (globalRenameHash.ContainsKey("&" + testObj.name))
+                {
+                    foreach (string tparam in testObj.scriptParameters)
+                    {
+                        if (this.calcingBrackets.ContainsKey(tparam))
+                        {
+                            RefScrMath mathObj = (RefScrMath)this.calcingBrackets[tparam];
+                            mathObj.calc();
+                            this.updateVarByMath(testObj.name, mathObj);
+                        }
+                        else
+                        {
+
+                        }
+                        
+                 
+                    }
+                }
+
+                if (testObj.isMethod)
+                {
+                    
+                }
+
             }
 
             // variable assinements
@@ -852,9 +966,12 @@ namespace Projector
                             cmdResult.isObject = definePart.Contains("OBJECT");
                             cmdResult.isMethod = definePart.Contains("METHOD");
                             cmdResult.parseable = definePart.Contains("PARSE");
+                            cmdResult.isAssignement = definePart.Contains("ASSIGN");
                             cmdResult.isVariable = definePart.Contains("VAR");
                             cmdResult.code = highPart;
                             cmdResult.originCode = part;
+
+
                             cmdResult.parameters = new List<object>();
                         }
                         // here we found an parameter. so we reed what type is expected;

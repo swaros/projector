@@ -41,6 +41,28 @@ namespace Projector
             return returnList;
         }
 
+        private String getReturnValue(string typeStr)
+        {
+            switch (typeStr)
+            {
+                case "System.Void":
+                    return "";
+                    break;
+                case "System.Boolean":
+                    return "Boolean";
+                    break;
+                case "System.String":
+                    return "STR";
+                    break;
+                case "System.Int32":
+                    return "INT";
+                    break;
+
+            }
+            return "";
+        }
+
+
         public List<string> getObjectInfo(Object obj)
         {
            
@@ -79,8 +101,8 @@ namespace Projector
                 string maskStr = "&"+ objname + " " + mInfo.Name.ToUpper();
                 string paramPart = ". " + mInfo.Name;
                 objStore.methods.Add(mInfo);
-                objStore.methodNames.Add(mInfo.Name);                
-
+                objStore.methodNames.Add(mInfo.Name);
+                
                 ParameterInfo[] parameters = mInfo.GetParameters();
                 foreach (ParameterInfo parInfo in parameters)
                 {
@@ -88,9 +110,25 @@ namespace Projector
                     maskStr += " ?";
                     paramPart += " " + partype;
                 }
+
+
+
+                string keepMe = maskStr;
                 maskStr += Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + paramPart;
+
                 maskData.Add(maskStr);
                 objStore.methodMask.Add(maskStr);
+
+                string returnVar = mInfo.ReturnType.FullName;
+                string retval = this.getReturnValue(returnVar);
+                if (retval != "")
+                {
+                    //maskStr = retval + " " + maskStr;
+                    maskStr = "% = " + keepMe + Projector.ReflectionScript.MASK_DELIMITER + "METHOD ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + retval + " = " + paramPart;
+                    maskData.Add(maskStr);
+                    objStore.methodMask.Add(maskStr);
+                }
+
             }
             this.storeObjectInfo(objStore);
             return maskData;

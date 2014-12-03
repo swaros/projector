@@ -13,6 +13,7 @@ namespace Projector
         public Boolean isVariable = false;
         public Boolean isMethod = false;
         public Boolean isLinked = false;
+        public Boolean isAssignement = false;
         public Boolean isReflection = false;
         public Boolean parseable = false;
         public List<string> scriptParameters = new List<string>();
