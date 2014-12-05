@@ -83,6 +83,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap application_side_tree {
+            get {
+                object obj = ResourceManager.GetObject("application_side_tree", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap application_view_list {
             get {
                 object obj = ResourceManager.GetObject("application_view_list", resourceCulture);

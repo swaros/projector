@@ -10,6 +10,8 @@ namespace Projector
     public class ObjectInfo
     {
 
+        public RefScrObjectStorage lastObjectInfo;
+
         private static Hashtable knownOjectMethods = new Hashtable();
 
         private void storeObjectInfo(RefScrObjectStorage objectToStore)
@@ -62,6 +64,31 @@ namespace Projector
             return "";
         }
 
+        private void updatePropInfos(Type executeableObj, RefScrObjectStorage objStore)
+        {
+            PropertyInfo[] propInfo = executeableObj.GetProperties();
+
+            foreach (PropertyInfo prop in propInfo)
+            {
+                if (prop.CanRead && prop.CanWrite)
+                {
+                    switch (prop.PropertyType.Name)
+                    {
+                        case "In32":
+                            objStore.Integers.Add(prop.Name);
+                            break;
+                        case "String":
+                            objStore.Strings.Add(prop.Name);
+                            break;
+                        case "Boolean":
+                            objStore.Booleans.Add(prop.Name);
+                            break;
+                    }
+        
+                }
+            }
+
+        }
 
         public List<string> getObjectInfo(Object obj)
         {
@@ -83,12 +110,16 @@ namespace Projector
 
             RefScrObjectStorage objStore = new RefScrObjectStorage();
 
+            this.updatePropInfos(executeableObj, objStore);
+
             string objStr = obj.ToString();
             string[] objParts = objStr.Split(',');
             string[] nameParts = objParts[0].Split('.');
-            string objname = nameParts[1];
+            string objname = nameParts[nameParts.Count()-1];
 
             objStore.originObjectName = objname;
+
+            
 
             foreach (MethodInfo mInfo in myMethodInfos)
             {
@@ -131,6 +162,7 @@ namespace Projector
 
             }
             this.storeObjectInfo(objStore);
+            this.lastObjectInfo = objStore;
             return maskData;
         }
     }

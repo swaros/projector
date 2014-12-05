@@ -15,6 +15,7 @@ namespace Projector
         public Boolean isLinked = false;
         public Boolean isAssignement = false;
         public Boolean isReflection = false;
+        public Boolean isParentAssigned = false;
         public Boolean parseable = false;
         public List<string> scriptParameters = new List<string>();
         public List<String> scriptParameterTypes = new List<String>();
@@ -26,6 +27,7 @@ namespace Projector
         public Object ReflectObject;
         public int lineNumber = 0;
         public int lineCount = 1;
+        public int setState = 0;
 
         public ReflectionScript subScript;
 

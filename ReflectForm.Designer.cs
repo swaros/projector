@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(239, 224);
             this.Name = "ReflectForm";
             this.Text = "ReflectForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ReflectForm_FormClosing);
             this.ResumeLayout(false);
 
         }

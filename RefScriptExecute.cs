@@ -4,11 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Projector
 {
-    class RefScriptExecute
+    public class RefScriptExecute
     {
+
+        public const int STATE_NOTHING = 0;
+        public const int STATE_RUN = 1;
+        public const int STATE_RUN_STEPWISE = 2;
+        public const int STATE_WAIT = 5;
+        public const int STATE_FINISHED = 10;
+
+
+        public int runState = 0;
+
         private ReflectionScript currentScript;
 
         private Hashtable objectDefines = new Hashtable();
@@ -23,12 +34,33 @@ namespace Projector
 
         private String lastErrorMessage = "";
 
+        public Boolean debugMode = false;
+        public Object parentWatcher;
+        public string watcherMethod;
+
+        // debugging stuff
+        private ReflectionScriptDefines currentDebugLine;
+        private int currentExecLine = 0;
+        
+        
+
         public RefScriptExecute(ReflectionScript script, Object parent)
         {
             this.parentObject = parent;
             this.currentScript = script;
+            this.currentScript.CurrentExecuter = this;
+
             this.init();
         }
+
+        public void setWatcher(Object watcher, String MethodName)
+        {
+            // must have parameters   ReflectionScriptDefines, int , int
+            this.watcherMethod = MethodName;
+            this.parentWatcher = watcher;
+            this.debugMode = true;
+        }
+
 
         private void init()
         {
@@ -41,6 +73,7 @@ namespace Projector
             this.internalError = false;
             if (this.currentScript.getErrorCount() == 0)
             {
+                this.runState = RefScriptExecute.STATE_RUN;
                 Boolean runSucceed = this.exec();
                 return (runSucceed == true && this.internalError == false);
             }
@@ -48,60 +81,207 @@ namespace Projector
         }
 
 
-        private Boolean exec()
+        public void setDebuRun()
         {
-            foreach (ReflectionScriptDefines scrLine in this.currentScript.getScript())
+            this.internalError = false;
+            if (this.currentScript.getErrorCount() == 0)
             {
-                string cmd = scrLine.code.ToUpper();
+                this.currentExecLine = 0;               
+            }            
+        }
 
-                if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
+        public Boolean Next()
+        {
+           
+
+            if (this.currentExecLine >= this.currentScript.getScript().Count)
+            {
+                this.runState = RefScriptExecute.STATE_FINISHED;
+                if (this.debugMode && this.currentDebugLine != null)
                 {
-                    scrLine.Referenz = objectDefines[cmd];
-                    this.execReflectObject(scrLine);
-                    if (scrLine.ReflectObject == null)
+                    this.updateMessage(this.currentDebugLine);
+                }
+                return false;
+            }
+
+            this.runState = RefScriptExecute.STATE_RUN;
+            Boolean execRes = this.execSingleLine(this.currentExecLine);
+            this.runState = RefScriptExecute.STATE_WAIT;
+            this.currentExecLine++;
+            
+            return execRes;
+
+        }
+
+        public void Stop()
+        {
+            this.runState = RefScriptExecute.STATE_WAIT;
+
+        }
+
+        public Boolean Continue()
+        {
+
+
+            if (this.currentExecLine >= this.currentScript.getScript().Count)
+            {
+                this.runState = RefScriptExecute.STATE_FINISHED;
+                if (this.debugMode)
+                {
+                    if (this.currentDebugLine != null)
                     {
-                        ScriptErrors error = new ScriptErrors();
-                        error.errorMessage = "object " + scrLine.typeOfObject + " not createable";
-                        error.lineNumber = scrLine.lineNumber;
-                        error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
-
-                        this.currentScript.addError(error);
-
-                        lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
-                        return false;
+                        this.updateMessage(this.currentDebugLine);
                     }
-                    this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
-
                 }
 
-                if (scrLine.isMethod && scrLine.namedReference != null)
-                {
-                    if (objectReferences.ContainsKey(scrLine.namedReference))
-                    {
-                        this.lastErrorCode = 0;  
-                        Object execResult = this.execMethod(objectReferences[scrLine.namedReference],scrLine);
+                return true;
+            }
 
-                        if (this.lastErrorCode > 0)
+            this.runState = RefScriptExecute.STATE_RUN;
+            Boolean execRes = this.execSingleLine(this.currentExecLine);            
+            this.currentExecLine++;
+            return execRes;
+
+        }
+
+        public int getCurrentLineNumber()
+        {
+            return this.currentExecLine;
+        }
+
+        public void changedState()
+        {
+            if (this.runState == RefScriptExecute.STATE_RUN)
+            {
+                this.exec();
+            }
+        }
+
+        private Boolean execLine(ReflectionScriptDefines scrLine)
+        {
+            string cmd = scrLine.code.ToUpper();
+
+            if (this.debugMode)
+            {
+                this.currentDebugLine = scrLine;
+                this.updateMessage(scrLine);
+            }
+
+
+            if (scrLine.setState != 0)
+            {
+                if (scrLine.isParentAssigned)
+                {
+                    if (this.currentScript.Parent != null && this.currentScript.Parent.CurrentExecuter != null)
+                    {
+                        //this.currentScript.Parent.
+                        this.currentScript.Parent.CurrentExecuter.runState = scrLine.setState;
+                        this.currentScript.Parent.CurrentExecuter.changedState();
+                    }
+                    else
+                    {
+                        ScriptErrors error = new ScriptErrors();
+                        error.errorMessage = "Parent can be used in subscripts only ";
+                        error.lineNumber = scrLine.lineNumber;
+                        error.errorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
+                    }
+                }
+                else
+                {
+                    this.runState = scrLine.setState;
+                }
+                
+            }
+
+
+            if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
+            {
+                scrLine.Referenz = objectDefines[cmd];
+                this.execReflectObject(scrLine);
+                if (scrLine.ReflectObject == null)
+                {
+                    ScriptErrors error = new ScriptErrors();
+                    error.errorMessage = "object " + scrLine.typeOfObject + " not createable";
+                    error.lineNumber = scrLine.lineNumber;
+                    error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
+
+                    this.currentScript.addError(error);
+
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
+                    return false;
+                }
+                this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
+
+            }
+
+            if (scrLine.isMethod && scrLine.namedReference != null)
+            {
+                if (objectReferences.ContainsKey(scrLine.namedReference))
+                {
+                    this.lastErrorCode = 0;
+                    Object execResult = this.execMethod(objectReferences[scrLine.namedReference], scrLine);
+
+                    if (this.lastErrorCode > 0)
+                    {
+                        ScriptErrors error = new ScriptErrors();
+                        error.errorMessage = "object " + scrLine.typeOfObject + " reports an error on execution " + this.lastErrorCode + this.lastErrorMessage;
+                        error.lineNumber = scrLine.lineNumber;
+                        error.errorCode = this.lastErrorCode;
+                        this.currentScript.addError(error);
+                    }
+                    else
+                    {
+                        if (scrLine.isAssignement && execResult != null)
                         {
-                            ScriptErrors error = new ScriptErrors();
-                            error.errorMessage = "object " + scrLine.typeOfObject + " reports an error on execution " + this.lastErrorCode;
-                            error.lineNumber = scrLine.lineNumber;
-                            error.errorCode = this.lastErrorCode;
-                            this.currentScript.addError(error);
-                        }
-                        else
-                        {
-                            if (scrLine.isAssignement && execResult != null)
+                            if (scrLine.isParentAssigned)
+                            {
+                                if (this.currentScript.Parent != null)
+                                {
+                                    this.currentScript.Parent.updateVarByObject(scrLine.name, execResult);
+                                }
+                            }
+                            else
                             {
                                 this.currentScript.updateVarByObject(scrLine.name, execResult);
                             }
                         }
-
                     }
+
                 }
             }
             return true;
         }
+
+        private Boolean exec()
+        {
+
+            if (this.runState == RefScriptExecute.STATE_RUN)
+            {
+                while (this.runState == RefScriptExecute.STATE_RUN)
+                {
+                   Boolean execResult = this.Continue();
+                   if (execResult == false)
+                   {
+                       return false;
+                   }
+                }                
+            }
+
+            return true;
+        }
+
+
+        private Boolean execSingleLine(int nr)
+        {
+            List<ReflectionScriptDefines> src = this.currentScript.getScript();
+
+            if (src.Count > nr)
+            {
+                return this.execLine(src[nr]);
+            }
+            return false;
+        }
+
 
         private Object execMethod(Object obj, ReflectionScriptDefines refObj)
         {
@@ -109,6 +289,7 @@ namespace Projector
             if (obj == null)
             {
                 lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
+                lastErrorMessage = "Object is NULL";
                 this.internalError = true;
                 return null;
             }
@@ -118,6 +299,7 @@ namespace Projector
             if (myMethodInfo == null)
             {
                 lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_NONMETHOD;
+                lastErrorMessage = "invalid Method (null)";
                 this.internalError = true;
                 return null;
             }
@@ -129,7 +311,25 @@ namespace Projector
                 {
                     mParam[i] = refObj.parameters[i];
                 }
-                return myMethodInfo.Invoke(obj, mParam);
+                
+                try
+                {
+                    return myMethodInfo.Invoke(obj, mParam);
+                }
+                catch (TargetParameterCountException te)
+                {
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALID_PARAMETER_COUNT;
+                    lastErrorMessage = te.Message;
+                    this.internalError = true;
+                    return null;
+                }
+                catch (TargetInvocationException te)
+                {
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_UNKNOWNREASON;
+                    lastErrorMessage = te.Message;
+                    this.internalError = true;
+                    return null;
+                }
             }
             else
             {
@@ -140,11 +340,24 @@ namespace Projector
                 catch (TargetParameterCountException te)
                 {
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALID_PARAMETER_COUNT;
+                    lastErrorMessage = te.Message;
                     this.internalError = true;
                     return null;
                 }
                 
             }
+        }
+
+        private void updateMessage(ReflectionScriptDefines refObj)
+        {
+            if (this.parentWatcher != null && watcherMethod != null)
+            {
+                Type queryWinType = this.parentWatcher.GetType();
+                MethodInfo myMethodInfo = queryWinType.GetMethod(this.watcherMethod);
+                object[] mParam = new object[] { refObj, this.currentExecLine, this.runState };
+                refObj.ReflectObject = myMethodInfo.Invoke(this.parentWatcher, mParam);
+            }
+            Application.DoEvents();
         }
 
 

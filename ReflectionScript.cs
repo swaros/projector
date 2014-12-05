@@ -18,6 +18,11 @@ namespace Projector
 
         public const string MASK_DELIMITER = "#";
 
+        public ReflectionScript Parent;
+
+        //public RefScriptExecute ParentExecuter;
+        public RefScriptExecute CurrentExecuter;
+
         private Boolean followRecusives = true;
 
         private String code = "";
@@ -33,6 +38,8 @@ namespace Projector
 
         // VARIABLES: contains the refrences for all objects
         private Hashtable objectReferences = new Hashtable();
+
+        private Hashtable objectStorage = new Hashtable();
 
         // VARIABLES: list of all Int Variables
         private Hashtable globalRenameHash = new Hashtable();
@@ -92,7 +99,6 @@ namespace Projector
 
         // offest by mutlilines (line breaking strings or subcode)
         private int lineOffset = 0;
-
         
 
         
@@ -121,6 +127,9 @@ namespace Projector
              * PARSE    any parameter is a reflectionScript
              * VAR      will create an Variable
              * ASSIGN   change the value of a given Object. so an Type of Object must be an Part of this (%)
+             * PARENT   means an operation on the parent script.
+             * WAIT     set the execution state to wait (for this script part)
+             * RUN      set the execution state to continue
              * 
              */
 
@@ -137,7 +146,15 @@ namespace Projector
             this.mask.Add("% = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + ". = ?");
 
 
+            // access to parent if exists
+            this.mask.Add("PARENT % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
 
+            // exection controlls
+            this.mask.Add("STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT" + Projector.ReflectionScript.MASK_DELIMITER + "STOP");
+            this.mask.Add("RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN");
+
+            this.mask.Add("PARENT STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT STOP");
+            this.mask.Add("PARENT RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT RUN");
 
             // just to store something
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
@@ -166,6 +183,7 @@ namespace Projector
             this.errorLines.Clear();
             this.calcingBrackets.Clear();
             this.calcingBracketsResults.Clear();
+            this.parsedObjects.Clear();
         }
 
         /**
@@ -271,6 +289,12 @@ namespace Projector
          */ 
         public void addError(ScriptErrors error)
         {
+            if (Parent != null)
+            {
+                Parent.addError(error);
+            }
+
+
             if (this.errorLines.Contains(error.lineNumber))
             {
                 return;
@@ -309,10 +333,14 @@ namespace Projector
                 );
         }
 
-
         public String fillUpStrings(string source)
         {
-            return this.fillUpVars(source, this.globalRenameHash);
+            return this.fillUpStrings(source, "", "");
+        }
+
+        public String fillUpStrings(string source, String pre, String post)
+        {
+            return this.fillUpVars(source, this.globalRenameHash, pre, post);
         }
 
         public String fillUpCodeLines(string source)
@@ -325,18 +353,51 @@ namespace Projector
             return this.fillUpVars(source, this.calcingBracketsResults);
         }
 
+        public String fillUpVars(string source, Hashtable useThis)
+        {
+           return this.fillUpVars(source, useThis, "", "");
+        }
+
+
+        // check if the variable exists from the given object
+
+        public Boolean varExists(string name)
+        {
+            return this.globalRenameHash.ContainsKey("&"+name);
+        }
+
+        public Boolean varExists(ReflectionScriptDefines refObj)
+        {
+            if (refObj.isParentAssigned)
+            {
+                if (Parent != null)
+                {
+                    return this.Parent.varExists(refObj.name);
+                }
+                else
+                {
+                    this.addError("There is no Parent. use PARENT in subscript only");
+                    return false;
+                }
+            }
+            else
+            {
+                return this.varExists(refObj.name);
+            }
+        }
+
         /**
          * fills up all placeHolder
          * with content from assigned Hashtable
-         */ 
-        public String fillUpVars(string source, Hashtable useThis)
+         */
+        public String fillUpVars(string source, Hashtable useThis, string pre, string post)
         {
-            string newStr = this.fillUpVarsBack(source, useThis);
+            string newStr = this.fillUpVarsBack(source, useThis, pre, post );
             string chkStr = source;
             while (newStr != source)
             {
                 source = newStr;
-                newStr = fillUpVarsBack(source, useThis);
+                newStr = fillUpVarsBack(source, useThis, pre , post);
             }
             return newStr;
         }
@@ -344,21 +405,21 @@ namespace Projector
         /**
          * fills placeholder recursiv
          */
-        public String fillUpVarsBack(string source, Hashtable useThis)
+        public String fillUpVarsBack(string source, Hashtable useThis, string pre, string post)
         {
             string newSrc = source;
             foreach (DictionaryEntry de in useThis)
             {
-                newSrc = newSrc.Replace(de.Key.ToString(), de.Value.ToString());
+                newSrc = newSrc.Replace(de.Key.ToString(),pre + de.Value.ToString() + post);
             }
-            return newSrc.Replace("\"","");
+            return newSrc;
         }
 
         public String getCodeByName(string name)
         {
             if (namedSubScripts.ContainsKey(name))
             {
-                return namedSubScripts[name].ToString();
+                return this.fillUpStrings( namedSubScripts[name].ToString(),"\"","\"");
             }
             return null;
         }
@@ -378,7 +439,7 @@ namespace Projector
         }
 
 
-        private void updateVarByMath(String name, RefScrMath math)
+        public void updateVarByMath(String name, RefScrMath math)
         {
             if (globalRenameHash.ContainsKey("&" + name))
             {
@@ -386,7 +447,7 @@ namespace Projector
             }
         }
 
-        private void updateVarByMath(String name, RefScrMath math, Hashtable varTable)
+        public void updateVarByMath(String name, RefScrMath math, Hashtable varTable)
         {
             if (varTable.ContainsKey("&" + name))
             {
@@ -567,7 +628,7 @@ namespace Projector
             {
                 string str = match[i].Value;
                 string key = "%str_" + i + "%";
-                globalRenameHash.Add(key, str);
+                globalRenameHash.Add(key, str.Replace("\"",""));
                 code = code.Replace(str, key);
             }
 
@@ -617,7 +678,7 @@ namespace Projector
             foreach (String currentLine in this.lines)
             {
                 this.currentReadLine = lineNr;   
-                string[] words = currentLine.Split(new char[] { ' ', ',', '.' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] words = currentLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (words.Count() > 0)
                 {
                     ReflectionScriptDefines buildRes = this.buildDefine(words);
@@ -655,7 +716,7 @@ namespace Projector
             if (testObj.isAssignement && testObj.name != null)
             {
                 // for any assignement a variable must be exists and allready defined
-                if (globalRenameHash.ContainsKey("&" + testObj.name))
+                if (this.varExists(testObj))
                 {
                     foreach (string tparam in testObj.scriptParameters)
                     {
@@ -663,7 +724,23 @@ namespace Projector
                         {
                             RefScrMath mathObj = (RefScrMath)this.calcingBrackets[tparam];
                             mathObj.calc();
-                            this.updateVarByMath(testObj.name, mathObj);
+                            if (testObj.isParentAssigned)
+                            {
+                                // update for the parent script
+                                if (this.Parent != null)
+                                {
+                                    this.Parent.updateVarByMath(testObj.name, mathObj);
+                                }
+                                else
+                                {
+                                    this.addError("There is no Parent Instance");
+                                }
+                            }
+                            else
+                            {
+                                // update for the current script
+                                this.updateVarByMath(testObj.name, mathObj);
+                            }
                         }
                         else
                         {
@@ -672,7 +749,7 @@ namespace Projector
                         
                  
                     }
-                }
+                }                
 
                 if (testObj.isMethod)
                 {
@@ -706,7 +783,7 @@ namespace Projector
                         else
                         {
                             globalRenameHash.Add("&" + testObj.name, varStr);
-                            if (type == "INT" || type == "Int32")
+                            if (type == "INT" || type == "Int32" || type == "Decimal")
                             {
                                 int intValue = 0;
                                 try
@@ -744,11 +821,17 @@ namespace Projector
             if (testObj.isObject)
             {
                 string cmd = testObj.code.ToUpper();
-
-                if (testObj.isObject && cmd == "NEW" && !this.parsedObjects.Contains(testObj.typeOfObject))
+                string keyForObj = testObj.typeOfObject + "." + testObj.name;
+                if (testObj.isObject && cmd == "NEW" && !this.parsedObjects.Contains(keyForObj))
                 {
                     ReflectNew reflector = new ReflectNew();
                     Object testObject = reflector.getObject(testObj,this);
+                    
+                    if (!this.objectStorage.Contains(testObj.name))
+                    {
+                        this.objectStorage.Add(testObj.name,testObject);
+                    }
+
                     ObjectInfo obInfo = new ObjectInfo();
                     List<string> objMethods = obInfo.getObjectInfo(testObject);
                     if (objMethods != null)
@@ -757,8 +840,18 @@ namespace Projector
                         {
                             this.mask.Add(maskStr);
                         }
+                        if (obInfo.lastObjectInfo != null)
+                        {
+                            foreach (String strVar in obInfo.lastObjectInfo.Strings)
+                            {
+                                globalRenameHash.Add("&" + testObj.name+ "." + strVar, "");
+                            }
+                        }
                     }
-                    this.parsedObjects.Add(testObj.typeOfObject);
+
+
+
+                    this.parsedObjects.Add(keyForObj);
                 }
             }
 
@@ -778,6 +871,7 @@ namespace Projector
                     {                        
                         string fullCode = this.getCodeByName(subCode);
                         testObj.subScript = new ReflectionScript();
+                        testObj.subScript.Parent = this;                        
                         testObj.subScript.setCode(fullCode);
 
                         testObj.parameters.Add(testObj.subScript);
@@ -841,6 +935,20 @@ namespace Projector
                     }
 
                 }
+                else if (definedType == "Decimal")
+                {
+                    try
+                    {
+                        Decimal parInt = Decimal.Parse(part);
+                        cmdResult.parameters.Add(parInt);
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError("Parameter must bee an Decimal Number" + e.Message);
+                        return null;
+                    }
+
+                }
                 else if (definedType == "STR" || definedType == "String")
                 {
                     cmdResult.parameters.Add(this.fillUpStrings(part));
@@ -860,6 +968,17 @@ namespace Projector
                 {
                     cmdResult.parameters.Add(this.fillUpCodeLines(part));
                     cmdResult.parseable = true;
+                }
+                else if (definedType == "?")
+                {
+                    cmdResult.parameters.Add(this.fillUpStrings(part));
+                }
+                else
+                {
+                    if (this.objectStorage.ContainsKey(part))
+                    {
+                        cmdResult.parameters.Add(this.objectStorage[part]);
+                    }
                 }
             }
             else
@@ -968,6 +1087,18 @@ namespace Projector
                             cmdResult.parseable = definePart.Contains("PARSE");
                             cmdResult.isAssignement = definePart.Contains("ASSIGN");
                             cmdResult.isVariable = definePart.Contains("VAR");
+                            cmdResult.isParentAssigned = definePart.Contains("PARENT");
+
+                            if (definePart.Contains("WAIT"))
+                            {
+                                cmdResult.setState = RefScriptExecute.STATE_WAIT;
+                            }
+
+                            if (definePart.Contains("RUN"))
+                            {
+                                cmdResult.setState = RefScriptExecute.STATE_RUN;
+                            }
+
                             cmdResult.code = highPart;
                             cmdResult.originCode = part;
 

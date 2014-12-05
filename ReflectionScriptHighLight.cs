@@ -29,12 +29,17 @@ namespace Projector
         private HighlightStyle ErrorStyle = new HighlightStyle();
         private HighlightStyle VaribalesStyle = new HighlightStyle();
 
+
+        private HighlightStyle executionStyle = new HighlightStyle();
+
         private HighlightStyle KeyWordStyle = new HighlightStyle();
 
         private int fontDefaultSize = 10;
         private string defaultFontName = "Courier New";
 
         private Boolean elementsReaded = false;
+
+        public int markLine = -1;
 
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
             this.Srcipt = script;
@@ -73,6 +78,10 @@ namespace Projector
             this.ErrorStyle.BackColor = Color.LightPink;
             this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
+
+            this.executionStyle.ForeColor = Color.LightGreen;
+            this.executionStyle.BackColor = Color.DarkGreen;
+            this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
             this.TextStyle.ForeColor = Color.SlateBlue;
             //this.TextStyle.BackColor = Color.LightSlateGray;
@@ -144,18 +153,35 @@ namespace Projector
                 this.RtfColors.markFullLine(err.lineNumber, ErrorStyle);
             }
 
+            if (this.markLine > -1)
+            {
+                this.RtfColors.markFullLine(markLine, executionStyle);
+            }
+
+            // ------------ end drawing ----------------
+
             this.assignedRtf.Rtf = this.drawingRtf.Rtf;
 
             // try to scroll last visible position
-            this.assignedRtf.SelectionLength = 0;
-            this.assignedRtf.SelectionStart = end;
-            this.assignedRtf.ScrollToCaret();
-            this.assignedRtf.SelectionStart = start + this.assignedRtf.Lines[this.assignedRtf.GetLineFromCharIndex(start)].Length + 1;
-            this.assignedRtf.ScrollToCaret();
+            if (this.markLine < 0)
+            {
+                this.assignedRtf.SelectionLength = 0;
+                this.assignedRtf.SelectionStart = end;
+                this.assignedRtf.ScrollToCaret();
+                this.assignedRtf.SelectionStart = start + this.assignedRtf.Lines[this.assignedRtf.GetLineFromCharIndex(start)].Length + 1;
+                this.assignedRtf.ScrollToCaret();
 
-            this.assignedRtf.SelectionStart = startpos;
-            this.assignedRtf.SelectionLength = endPos;
-           
+                this.assignedRtf.SelectionStart = startpos;
+                this.assignedRtf.SelectionLength = endPos;
+            }
+            else
+            {
+                int index = this.assignedRtf.GetFirstCharIndexFromLine(this.markLine);
+                this.assignedRtf.SelectionStart = index;
+                this.assignedRtf.SelectionLength = 1;
+                this.assignedRtf.ScrollToCaret();
+            
+            }
             return 1;
         }
 

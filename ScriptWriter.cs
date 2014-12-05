@@ -16,6 +16,14 @@ namespace Projector
 
         public const string SCRIPT_IDENT = "ReflectionScript";
 
+        private const int TREE_METHOD_IMG_IDENT = 4;
+        private const int TREE_OBJECT_IMG_IDENT = 2;
+        private const int TREE_INSTANCE_IMG_IDENT = 3;
+        private const int TREE_INT_IMG_IDENT = 6;
+        private const int TREE_STRING_IMG_IDENT = 7;
+        private const int TREE_BOOL_IMG_IDENT = 8;
+
+
         public Object execObject;
 
         private string filename = null;
@@ -32,8 +40,12 @@ namespace Projector
 
         private AutoCompletion AutoComplete;
 
+        Boolean isRunning = false;
+
 
         private RtfColoring colorize;
+
+        RefScriptExecute executer;
 
         public ScriptWriter(Object targetObject, Boolean openFile)
         {                      
@@ -82,9 +94,16 @@ namespace Projector
             this.AutoComplete.assignListBox(wordListing);
         }
 
+
+        private void updateColors(int markLine)
+        {
+            Highlight.markLine = markLine;
+            Highlight.reDraw(false);
+        }
+
         private void updateColors()
         {
-            
+            Highlight.markLine = -1;
             Highlight.reDraw(true);
         }
 
@@ -92,7 +111,10 @@ namespace Projector
         {
             //script.setCode(codeBox.Text);
             //errorTextBox.Text = script.getErrors();
-            refreshTimer.Enabled = true;
+            if (!isRunning)
+            {
+                refreshTimer.Enabled = true;
+            }
             
             
         }
@@ -107,7 +129,7 @@ namespace Projector
 
         private void refitElements()
         {
-            if (!codeSplitContainer.Panel2Collapsed)
+            if (!codeSplitContainer.Panel2Collapsed && !isRunning)
             {
                 int cursorPosition = codeBox.SelectionStart;
                 this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
@@ -120,6 +142,11 @@ namespace Projector
 
         private void recheckScript()
         {
+            if (isRunning)
+            {
+                return;
+            }
+
             script.setCode(codeBox.Text);
             if (script.getErrorCount() == 0)
             {
@@ -138,6 +165,21 @@ namespace Projector
             refitElements();
         }
 
+        private void updateObjectTree(List<string> objList, string parentName, int imageNr, TreeNode toNode, string binding)
+        {
+            foreach (string methodmask in objList)
+            {
+                TreeNode mNode = new TreeNode();
+                mNode.Text = methodmask;
+                mNode.ToolTipText = parentName + binding + methodmask;
+                mNode.ImageIndex = imageNr;
+                mNode.SelectedImageIndex = mNode.ImageIndex;
+                toNode.Nodes.Add(mNode);
+                this.AutoComplete.addWord(methodmask);
+
+            }
+        }
+
         // updates the generic tree depending on actually used objects
         private void extractObjectInfos()
         {
@@ -145,15 +187,21 @@ namespace Projector
             foreach(RefScrObjectStorage usedObject in Projector.ObjectInfo.getAllObjects() ){
                 
                 TreeNode objectNode = new TreeNode(usedObject.originObjectName);
-                TreeNode methods = new TreeNode("Methods");
-
+                objectNode.ImageIndex = ScriptWriter.TREE_OBJECT_IMG_IDENT;
+                objectNode.SelectedImageIndex = objectNode.ImageIndex;
                 
+                TreeNode methods = new TreeNode("Methods");
+                methods.ImageIndex = 3;
+                methods.SelectedImageIndex = 3;
+
+               
                 foreach (string methodmask in usedObject.methodNames)
                 {
                     methods.Nodes.Add(methodmask);
                     this.AutoComplete.addWord(methodmask);
                     
                 }
+                
                 objectNode.Nodes.Add(methods);
                 genericTree.Nodes.Add(objectNode);
 
@@ -161,9 +209,36 @@ namespace Projector
                 if (instances != null)
                 {
                     TreeNode usedBy = new TreeNode("Instances");
+                    usedBy.SelectedImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT;
+                    usedBy.ImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT; ;
                     foreach (string instOf in instances)
                     {
-                        usedBy.Nodes.Add(instOf);
+                        // add methods
+                        TreeNode objInstance = new TreeNode(instOf);
+                        updateObjectTree(usedObject.methodNames, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
+                        updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
+                        updateObjectTree(usedObject.Integers, instOf, ScriptWriter.TREE_INT_IMG_IDENT, objInstance, ".");
+                        updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");
+                        /*
+                        foreach (string methodmask in usedObject.methodNames)
+                        {
+                            TreeNode mNode = new TreeNode();
+                            mNode.Text = methodmask;
+                            mNode.ToolTipText = instOf + " " + methodmask;
+                            mNode.ImageIndex = ScriptWriter.TREE_METHOD_IMG_IDENT;
+                            mNode.SelectedImageIndex = mNode.ImageIndex;
+                            objInstance.Nodes.Add(mNode);
+                            this.AutoComplete.addWord(methodmask);
+
+                        }
+
+                        foreach (string strings in usedObject.Strings)
+                        {
+
+                        }
+                        */
+                        //objInstance.Nodes.Add(methods);
+                        usedBy.Nodes.Add(objInstance);
                     }
                     objectNode.Nodes.Add(usedBy);
                 }
@@ -280,6 +355,54 @@ namespace Projector
         }
 
 
+        public void watcher(ReflectionScriptDefines currentLine, int lineNumber, int State)
+        {
+
+            updateColors(currentLine.lineNumber);
+            if (State == RefScriptExecute.STATE_RUN)
+            {
+                errorLabels.Text = "Currently Running " + currentLine.lineNumber;
+                errorLabels.ForeColor = Color.DarkBlue;
+                errorLabels.BackColor = Color.LightBlue;
+                errorLabels.ToolTipText = "";
+                
+            }
+
+            if (State == RefScriptExecute.STATE_WAIT)
+            {
+                errorLabels.Text = "Currently Waiting " + currentLine.lineNumber;
+                errorLabels.ForeColor = Color.DarkOrange;
+                errorLabels.BackColor = Color.LightYellow;
+                errorLabels.ToolTipText = "";
+                
+            }
+
+            if (State == RefScriptExecute.STATE_FINISHED)
+            {
+                errorLabels.Text = "Execution is done " + currentLine.lineNumber;
+                errorLabels.ForeColor = Color.DarkGreen;
+                errorLabels.BackColor = Color.LightGreen;
+                errorLabels.ToolTipText = "";
+                isRunning = false;
+
+                updateColors();
+
+                
+            }
+
+           
+
+            if (script.getErrorCount() > 0)
+            {
+                errorLabels.Text = script.getErrorCount() + "Execution errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
+                errorLabels.ForeColor = Color.Red;
+                errorLabels.BackColor = Color.DarkOrange;
+                errorLabels.ToolTipText = script.getErrors();
+            }
+
+            Application.DoEvents();
+        }
+
         private void executeScript()
         {
            
@@ -293,9 +416,17 @@ namespace Projector
                 errorLabels.ToolTipText = "";
                 Application.DoEvents();
 
-                RefScriptExecute executer = new RefScriptExecute(script, this.execObject);
+                executer = new RefScriptExecute(script, this.execObject);
+
+                // set me as watcher
+                executer.setWatcher(this, "watcher");
+                isRunning = true;
+
                 Boolean succeed = executer.run();
 
+
+
+                /*
                 if (succeed == false)
                 {
                     updateColors();
@@ -315,7 +446,7 @@ namespace Projector
                     errorLabels.ForeColor = Color.LightGreen;
                     errorLabels.BackColor = Color.DarkGreen;
                 }
-
+                */
             }
             else
             {
@@ -503,6 +634,35 @@ namespace Projector
         private void showToolbarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSplitContainer.Panel1Collapsed = !mainSplitContainer.Panel1Collapsed;
+        }
+
+        private void navigatorBtn_Click(object sender, EventArgs e)
+        {
+            showToolbarToolStripMenuItem_Click(sender, e);
+        }
+
+        private void genericTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            
+        }
+
+        private void genericTree_DoubleClick(object sender, EventArgs e)
+        {
+            if( (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_METHOD_IMG_IDENT)
+                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_STRING_IMG_IDENT)
+                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_BOOL_IMG_IDENT)
+                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_INT_IMG_IDENT)
+                )
+            {
+                //codeBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
+                int startPos = codeBox.SelectionStart;
+                int sellength = codeBox.SelectionLength;
+                codeBox.Text = codeBox.Text.Remove(startPos, sellength);
+                codeBox.Text = codeBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
+                //codeBox.Text = "";
+                codeBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
+
+            }
         }
     }
 }

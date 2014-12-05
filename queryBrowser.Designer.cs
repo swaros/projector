@@ -130,13 +130,6 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.leftJoinTarget = new System.Windows.Forms.ToolStripComboBox();
             this.leftJoinRunBtn = new System.Windows.Forms.ToolStripButton();
-            this.dialogToolStrip = new System.Windows.Forms.ToolStrip();
-            this.DialogOKBtn = new System.Windows.Forms.ToolStripButton();
-            this.dialogCancelBtn = new System.Windows.Forms.ToolStripButton();
-            this.rowOptTtoolStrip = new System.Windows.Forms.ToolStrip();
-            this.rowOptions = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.TableNameView = new System.Windows.Forms.ToolStripLabel();
             this.reloadtoolBtn = new System.Windows.Forms.ToolStripButton();
@@ -166,6 +159,13 @@
             this.showGrouplabelInTableListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.rowOptTtoolStrip = new System.Windows.Forms.ToolStrip();
+            this.rowOptions = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.dialogToolStrip = new System.Windows.Forms.ToolStrip();
+            this.DialogOKBtn = new System.Windows.Forms.ToolStripButton();
+            this.dialogCancelBtn = new System.Windows.Forms.ToolStripButton();
             this.mysqlWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
@@ -205,9 +205,9 @@
             this.tableContextMenu.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
             this.leftJoinToolStrip.SuspendLayout();
-            this.dialogToolStrip.SuspendLayout();
-            this.rowOptTtoolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.rowOptTtoolStrip.SuspendLayout();
+            this.dialogToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -280,9 +280,9 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.leftJoinToolStrip);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.rowOptTtoolStrip);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.dialogToolStrip);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.rowOptTtoolStrip);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
             // splitContainer3
             // 
@@ -503,7 +503,7 @@
             this.editBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.editBox.Location = new System.Drawing.Point(757, 39);
             this.editBox.Name = "editBox";
-            this.editBox.Size = new System.Drawing.Size(6, 19);
+            this.editBox.Size = new System.Drawing.Size(6, 5);
             this.editBox.TabIndex = 2;
             this.editBox.TabStop = false;
             this.editBox.Text = "Edit Values";
@@ -1185,78 +1185,6 @@
             this.leftJoinRunBtn.Text = "Left Join Run";
             this.leftJoinRunBtn.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
-            // dialogToolStrip
-            // 
-            this.dialogToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.dialogToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DialogOKBtn,
-            this.dialogCancelBtn});
-            this.dialogToolStrip.Location = new System.Drawing.Point(32, 0);
-            this.dialogToolStrip.Name = "dialogToolStrip";
-            this.dialogToolStrip.Size = new System.Drawing.Size(118, 25);
-            this.dialogToolStrip.TabIndex = 5;
-            // 
-            // DialogOKBtn
-            // 
-            this.DialogOKBtn.Image = global::Projector.Properties.Resources.stock_dataeditsqlquery;
-            this.DialogOKBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DialogOKBtn.Name = "DialogOKBtn";
-            this.DialogOKBtn.Size = new System.Drawing.Size(43, 22);
-            this.DialogOKBtn.Text = "OK";
-            this.DialogOKBtn.Click += new System.EventHandler(this.DialogOKBtn_Click);
-            // 
-            // dialogCancelBtn
-            // 
-            this.dialogCancelBtn.Image = global::Projector.Properties.Resources.delete_16;
-            this.dialogCancelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.dialogCancelBtn.Name = "dialogCancelBtn";
-            this.dialogCancelBtn.Size = new System.Drawing.Size(63, 22);
-            this.dialogCancelBtn.Text = "Cancel";
-            this.dialogCancelBtn.Click += new System.EventHandler(this.dialogCancelBtn_Click);
-            // 
-            // rowOptTtoolStrip
-            // 
-            this.rowOptTtoolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.rowOptTtoolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rowOptions,
-            this.toolStripButton6,
-            this.toolStripButton7});
-            this.rowOptTtoolStrip.Location = new System.Drawing.Point(386, 0);
-            this.rowOptTtoolStrip.Name = "rowOptTtoolStrip";
-            this.rowOptTtoolStrip.Size = new System.Drawing.Size(81, 25);
-            this.rowOptTtoolStrip.TabIndex = 4;
-            this.rowOptTtoolStrip.Visible = false;
-            // 
-            // rowOptions
-            // 
-            this.rowOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.rowOptions.Image = global::Projector.Properties.Resources.add_16;
-            this.rowOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.rowOptions.Name = "rowOptions";
-            this.rowOptions.Size = new System.Drawing.Size(23, 22);
-            this.rowOptions.Text = "Add a new Row";
-            this.rowOptions.Click += new System.EventHandler(this.insertRowMenuItem_Click);
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = global::Projector.Properties.Resources.delete_16;
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "Delete Selected Row(s)";
-            this.toolStripButton6.Click += new System.EventHandler(this.DeleteRowMenuItem_Click);
-            // 
-            // toolStripButton7
-            // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = global::Projector.Properties.Resources.clipboard_paste_document_text;
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "Copy Selected Rows to ClipBoard";
-            this.toolStripButton7.Click += new System.EventHandler(this.Copy_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -1535,6 +1463,78 @@
             this.toolStripButton9.Text = "Create Table";
             this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
+            // rowOptTtoolStrip
+            // 
+            this.rowOptTtoolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.rowOptTtoolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rowOptions,
+            this.toolStripButton6,
+            this.toolStripButton7});
+            this.rowOptTtoolStrip.Location = new System.Drawing.Point(386, 0);
+            this.rowOptTtoolStrip.Name = "rowOptTtoolStrip";
+            this.rowOptTtoolStrip.Size = new System.Drawing.Size(81, 25);
+            this.rowOptTtoolStrip.TabIndex = 4;
+            this.rowOptTtoolStrip.Visible = false;
+            // 
+            // rowOptions
+            // 
+            this.rowOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.rowOptions.Image = global::Projector.Properties.Resources.add_16;
+            this.rowOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.rowOptions.Name = "rowOptions";
+            this.rowOptions.Size = new System.Drawing.Size(23, 22);
+            this.rowOptions.Text = "Add a new Row";
+            this.rowOptions.Click += new System.EventHandler(this.insertRowMenuItem_Click);
+            // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton6.Image = global::Projector.Properties.Resources.delete_16;
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton6.Text = "Delete Selected Row(s)";
+            this.toolStripButton6.Click += new System.EventHandler(this.DeleteRowMenuItem_Click);
+            // 
+            // toolStripButton7
+            // 
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = global::Projector.Properties.Resources.clipboard_paste_document_text;
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton7.Text = "Copy Selected Rows to ClipBoard";
+            this.toolStripButton7.Click += new System.EventHandler(this.Copy_Click);
+            // 
+            // dialogToolStrip
+            // 
+            this.dialogToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.dialogToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DialogOKBtn,
+            this.dialogCancelBtn});
+            this.dialogToolStrip.Location = new System.Drawing.Point(32, 0);
+            this.dialogToolStrip.Name = "dialogToolStrip";
+            this.dialogToolStrip.Size = new System.Drawing.Size(118, 25);
+            this.dialogToolStrip.TabIndex = 5;
+            // 
+            // DialogOKBtn
+            // 
+            this.DialogOKBtn.Image = global::Projector.Properties.Resources.stock_dataeditsqlquery;
+            this.DialogOKBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DialogOKBtn.Name = "DialogOKBtn";
+            this.DialogOKBtn.Size = new System.Drawing.Size(43, 22);
+            this.DialogOKBtn.Text = "OK";
+            this.DialogOKBtn.Click += new System.EventHandler(this.DialogOKBtn_Click);
+            // 
+            // dialogCancelBtn
+            // 
+            this.dialogCancelBtn.Image = global::Projector.Properties.Resources.delete_16;
+            this.dialogCancelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.dialogCancelBtn.Name = "dialogCancelBtn";
+            this.dialogCancelBtn.Size = new System.Drawing.Size(63, 22);
+            this.dialogCancelBtn.Text = "Cancel";
+            this.dialogCancelBtn.Click += new System.EventHandler(this.dialogCancelBtn_Click);
+            // 
             // mysqlWorker
             // 
             this.mysqlWorker.WorkerReportsProgress = true;
@@ -1617,12 +1617,12 @@
             this.toolStripContainer2.PerformLayout();
             this.leftJoinToolStrip.ResumeLayout(false);
             this.leftJoinToolStrip.PerformLayout();
-            this.dialogToolStrip.ResumeLayout(false);
-            this.dialogToolStrip.PerformLayout();
-            this.rowOptTtoolStrip.ResumeLayout(false);
-            this.rowOptTtoolStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.rowOptTtoolStrip.ResumeLayout(false);
+            this.rowOptTtoolStrip.PerformLayout();
+            this.dialogToolStrip.ResumeLayout(false);
+            this.dialogToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }

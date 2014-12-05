@@ -120,6 +120,7 @@ namespace Projector
              */
         }
 
+        
 
         public Boolean markWordInCurrentLine(string word, Color color)
         {

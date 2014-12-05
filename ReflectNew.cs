@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Projector
 {
@@ -24,8 +25,47 @@ namespace Projector
                 return this.getForm(refObject, parent);
             }
 
+            if (refObject.typeOfObject == "TextBox")
+            {
+                return this.getTextBox(refObject, parent);
+            }
+
+            if (refObject.typeOfObject == "NumericUpDown")
+            {
+                return this.getNumeric(refObject, parent);
+            }
+
             return null;
         }
+
+        private TextBox getTextBox(ReflectionScriptDefines refObject, Object parent)
+        {
+            TextBox newTextBox = new TextBox();
+            newTextBox.Name = refObject.name;
+
+            if (parent is Form)
+            {
+                Form parForm = (Form)parent;
+                parForm.Controls.Add(newTextBox);
+            }
+
+            return newTextBox;
+        }
+
+        private NumericUpDown getNumeric(ReflectionScriptDefines refObject, Object parent)
+        {
+            NumericUpDown newTextBox = new NumericUpDown();
+            newTextBox.Name = refObject.name;
+
+            if (parent is Form)
+            {
+                Form parForm = (Form)parent;
+                parForm.Controls.Add(newTextBox);
+            }
+
+            return newTextBox;
+        }
+
 
         private ReflectForm getForm(ReflectionScriptDefines refObject, Object parent)
         {

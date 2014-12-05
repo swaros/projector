@@ -17,6 +17,8 @@ namespace Projector
 
         private ReflectionScript Script;
 
+        private ReflectionScript onCloseScript;
+
         public ReflectForm()
         {
             InitializeComponent();
@@ -32,5 +34,21 @@ namespace Projector
             }
         }
 
+        public void OnCloseForm(ReflectionScript script)
+        {
+            this.onCloseScript = script;
+        }
+
+        private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.onCloseScript != null)
+            {
+                if (this.onCloseScript.getErrorCount() == 0)
+                {
+                    RefScriptExecute executer = new RefScriptExecute(this.onCloseScript, this);
+                    executer.run();
+                }
+            }
+        }
     }
 }
