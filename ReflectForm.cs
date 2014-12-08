@@ -43,6 +43,23 @@ namespace Projector
         {
             if (this.onCloseScript != null)
             {
+                
+                foreach (Control element in this.Controls)
+                {
+                    //this.onCloseScript.updateVarByObject()
+
+                    string nameOfObject = element.Name;
+                    string objectValue = element.Text;
+
+                    this.onCloseScript.createOrUpdateStringVar("&" + nameOfObject + "." + "Text", objectValue);
+
+                    if (this.onCloseScript.Parent != null)
+                    {
+                        this.onCloseScript.Parent.createOrUpdateStringVar("&" + this.ScriptIdent + "." + nameOfObject + "." + "Text", objectValue);
+                    }
+
+                }
+                
                 if (this.onCloseScript.getErrorCount() == 0)
                 {
                     RefScriptExecute executer = new RefScriptExecute(this.onCloseScript, this);

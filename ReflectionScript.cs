@@ -137,7 +137,7 @@ namespace Projector
             this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
             this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
 
-            this.mask.Add("MESSAGE ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE" + Projector.ReflectionScript.MASK_DELIMITER + ". STR");
+            this.mask.Add("MESSAGEBOX ?" + Projector.ReflectionScript.MASK_DELIMITER + "");
 
             this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
             this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
@@ -602,6 +602,22 @@ namespace Projector
             }
             return label + ": " + value.GetType() + System.Environment.NewLine;
         }
+
+        // --------------- creat, assign and update vars -------------------------------------------------------
+
+        public void createOrUpdateStringVar(string name, string value)
+        {
+            if (this.globalRenameHash.ContainsKey(name))
+            {
+                this.globalRenameHash[name] = value;
+            }
+            else
+            {
+                this.globalRenameHash.Add(name, value);
+            }
+            
+        }
+
 
         // -------------------  here are all the stuff for building, parsing and so on -------------------------- 
 

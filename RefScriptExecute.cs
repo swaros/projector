@@ -167,6 +167,15 @@ namespace Projector
                 this.updateMessage(scrLine);
             }
 
+            if (cmd == "MESSAGEBOX")
+            {
+                string message = "";
+                foreach (string parStr in scrLine.scriptParameters)
+                {
+                    message += this.currentScript.fillUpAll(parStr);
+                }
+                MessageBox.Show(message);
+            }
 
             if (scrLine.setState != 0)
             {
