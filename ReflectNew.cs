@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace Projector
 {
     class ReflectNew : ReflectObjectInterface
     {
+
+        private static Hashtable obReferences = new Hashtable();
+
         public Object execute()
         {
             return null;
@@ -50,6 +54,11 @@ namespace Projector
             if (refObject.typeOfObject == "NumericUpDown")
             {
                 return this.getNumeric(refObject, parent);
+            }
+
+            if (refObject.typeOfObject == "GroupQuery")
+            {
+                return this.getGroupQuery(refObject, parent);
             }
 
             return null;
@@ -143,6 +152,44 @@ namespace Projector
             return newForm;
         }
 
+        private GroupQuery getGroupQuery(ReflectionScriptDefines refObject, Object parent)
+        {
+
+            if (ReflectNew.obReferences.ContainsKey(refObject.name))
+            {
+                Object hValue = obReferences[refObject.name];
+                if(hValue is GroupQuery){
+                    GroupQuery exists = (GroupQuery)hValue;
+                    try
+                    {
+                        //exists.Show();
+                        //exists.BringToFront();
+                        exists.Update();
+                        return exists;    
+                    }
+                    catch (ObjectDisposedException disposed)
+                    {
+                        ReflectNew.obReferences.Remove(refObject.name);
+                    }
+                    
+                }
+            }
+
+            GroupQuery grQuery = new GroupQuery();
+            grQuery.Name = refObject.name;
+            
+            if (parent is MdiForm)
+            {
+                MdiForm mdi = (MdiForm)parent;
+                mdi.addSubWindow(grQuery, refObject.name);
+            }
+            grQuery.Show();
+            if (!ReflectNew.obReferences.ContainsKey(refObject.name))
+            {
+                ReflectNew.obReferences.Add(refObject.name, grQuery);
+            }
+            return grQuery;
+        }
 
         private queryBrowser getQueryBrowser(ReflectionScriptDefines refObject, Object parent)
         {

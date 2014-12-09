@@ -354,6 +354,25 @@ namespace Projector
             return null;
         }
 
+
+        public Form getExistsForm(string name)
+        {
+            foreach (Form chform in this.MdiChildren)
+            {
+                String displayname = chform.Name;
+
+                if (displayname == name)
+                {
+                    
+                   return chform;
+                    
+                }
+
+            }
+            return null;
+        }
+
+
         private void scriptExec_Click(object sender, EventArgs e)
         {
             if (this.scriptText != null)

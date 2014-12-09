@@ -66,11 +66,68 @@ namespace Projector
             }
         }
 
+        public void setGroup(string groupname)
+        {
+            try
+            {
+                groupSelectBox.Text = groupname;
+            }
+            catch
+            {
+
+            }
+            
+        }
+
+        public void setSql(string sql)
+        {
+            try
+            {
+                this.richTextBox1.Text = sql;
+            }
+            catch
+            {
+
+            }
+            
+        }
+
+        //###################   reflection script #################
+
+        private ReflectionScript onDoneScript;
+        public void execute()
+        {
+            button1_Click(null, null);
+        }
+
         private void iterateOverProfiles()
         {
             iterateOverProfiles(false);
         }
 
+        public void OnDoneReading(ReflectionScript onDoneReading){
+            this.onDoneScript = onDoneReading;
+        }
+
+
+        public void exportCsv()
+        {
+            if (saveCvsFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                exportCsvFiles(saveCvsFile.FileName);
+
+            }
+        }
+
+        private void onDone()
+        {
+            if (this.onDoneScript != null && this.onDoneScript.getErrorCount() == 0)
+            {
+                RefScriptExecute executer = new RefScriptExecute(this.onDoneScript, this);
+                executer.run();
+            }
+        }
+        //########################
         private void iterateOverProfiles(bool singleFire)
         {
             toolStripButton1.Enabled = false;
@@ -192,6 +249,8 @@ namespace Projector
                 richTextBox1.Enabled = true;
                 exportEnable.Enabled = true;
                 ThreadList = new List<BackgroundWorker>();
+
+                this.onDone();
             }
 
         }
