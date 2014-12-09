@@ -143,7 +143,7 @@
             // 
             this.mainSplitContainer.Panel2.Controls.Add(this.codeSplitContainer);
             this.mainSplitContainer.Size = new System.Drawing.Size(985, 592);
-            this.mainSplitContainer.SplitterDistance = 218;
+            this.mainSplitContainer.SplitterDistance = 217;
             this.mainSplitContainer.TabIndex = 2;
             // 
             // leftTools
@@ -156,7 +156,7 @@
             // leftTools.Panel2
             // 
             this.leftTools.Panel2.Controls.Add(this.genericTree);
-            this.leftTools.Size = new System.Drawing.Size(218, 592);
+            this.leftTools.Size = new System.Drawing.Size(217, 592);
             this.leftTools.SplitterDistance = 236;
             this.leftTools.TabIndex = 0;
             // 
@@ -168,7 +168,7 @@
             this.genericTree.Location = new System.Drawing.Point(0, 0);
             this.genericTree.Name = "genericTree";
             this.genericTree.SelectedImageIndex = 0;
-            this.genericTree.Size = new System.Drawing.Size(218, 352);
+            this.genericTree.Size = new System.Drawing.Size(217, 352);
             this.genericTree.TabIndex = 0;
             this.genericTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.genericTree_AfterSelect);
             this.genericTree.DoubleClick += new System.EventHandler(this.genericTree_DoubleClick);
@@ -212,7 +212,7 @@
             // codeSplitContainer.Panel2
             // 
             this.codeSplitContainer.Panel2.Controls.Add(this.messageSplit);
-            this.codeSplitContainer.Size = new System.Drawing.Size(763, 592);
+            this.codeSplitContainer.Size = new System.Drawing.Size(764, 592);
             this.codeSplitContainer.SplitterDistance = 423;
             this.codeSplitContainer.TabIndex = 0;
             // 
@@ -233,7 +233,7 @@
             this.codeBox.Name = "codeBox";
             this.codeBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
             this.codeBox.ShowSelectionMargin = true;
-            this.codeBox.Size = new System.Drawing.Size(763, 423);
+            this.codeBox.Size = new System.Drawing.Size(764, 423);
             this.codeBox.TabIndex = 0;
             this.codeBox.Text = "";
             this.codeBox.WordWrap = false;
@@ -256,7 +256,7 @@
             // messageSplit.Panel2
             // 
             this.messageSplit.Panel2.Controls.Add(this.debugView);
-            this.messageSplit.Size = new System.Drawing.Size(763, 165);
+            this.messageSplit.Size = new System.Drawing.Size(764, 165);
             this.messageSplit.SplitterDistance = 253;
             this.messageSplit.TabIndex = 1;
             // 
@@ -284,7 +284,7 @@
             this.debugView.GridLines = true;
             this.debugView.Location = new System.Drawing.Point(0, 0);
             this.debugView.Name = "debugView";
-            this.debugView.Size = new System.Drawing.Size(506, 165);
+            this.debugView.Size = new System.Drawing.Size(507, 165);
             this.debugView.TabIndex = 0;
             this.debugView.UseCompatibleStateImageBehavior = false;
             this.debugView.View = System.Windows.Forms.View.Details;
@@ -439,14 +439,14 @@
             this.loadToolStripMenuItem.Image = global::Projector.Properties.Resources.folder_open_16;
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.loadToolStripMenuItem.Text = "&Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem.Text = "&Save As...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -455,7 +455,7 @@
             this.saveToolStripMenuItem1.Image = global::Projector.Properties.Resources.SAVE_16;
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -464,7 +464,7 @@
             this.runToolStripMenuItem.Image = global::Projector.Properties.Resources.stock_tools_macro;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -480,7 +480,7 @@
             // 
             this.showToolbarToolStripMenuItem.Image = global::Projector.Properties.Resources.application_side_tree;
             this.showToolbarToolStripMenuItem.Name = "showToolbarToolStripMenuItem";
-            this.showToolbarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showToolbarToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.showToolbarToolStripMenuItem.Text = "&Show Toolbar";
             this.showToolbarToolStripMenuItem.Click += new System.EventHandler(this.showToolbarToolStripMenuItem_Click);
             // 

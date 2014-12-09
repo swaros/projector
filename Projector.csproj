@@ -154,6 +154,18 @@
     </Compile>
     <Compile Include="InsertSelect.cs" />
     <Compile Include="JoinTable.cs" />
+    <Compile Include="LabelInteger.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LabelInteger.Designer.cs">
+      <DependentUpon>LabelInteger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LabelText.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LabelText.Designer.cs">
+      <DependentUpon>LabelText.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListviewForWorker.cs" />
     <Compile Include="ListViewReportContainer.cs" />
     <Compile Include="ListViewWorker.cs" />
@@ -253,6 +265,12 @@
     <EmbeddedResource Include="ImportSettings.resx">
       <DependentUpon>ImportSettings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LabelInteger.resx">
+      <DependentUpon>LabelInteger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabelText.resx">
+      <DependentUpon>LabelText.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MdiForm.resx">
       <DependentUpon>MdiForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -284,6 +302,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="queryBrowser.resx">
       <DependentUpon>queryBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReflectButton.resx">
+      <DependentUpon>ReflectButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReflectForm.resx">
       <DependentUpon>ReflectForm.cs</DependentUpon>
@@ -350,6 +371,12 @@
       <DependentUpon>queryBrowser.cs</DependentUpon>
     </Compile>
     <Compile Include="QueryComposer.cs" />
+    <Compile Include="ReflectButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ReflectButton.Designer.cs">
+      <DependentUpon>ReflectButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReflectForm.cs">
       <SubType>Form</SubType>
     </Compile>

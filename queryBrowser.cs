@@ -85,9 +85,9 @@ namespace Projector
                 bookMarks = serializer.DeSerializeObject(bookMarks.getDefaultFilename());
                 updateBookmarks();
             }
-            
-           
 
+
+            MessagePanel.Visible = false;
             textBox1.Text = startSql;
             cellEditField.Visible = false;
             searchTableTextBox.Visible = false;
@@ -213,6 +213,7 @@ namespace Projector
 
         public void fireQuery()
         {
+            closePanelMessage();
             database = new MysqlHandler(sensorProfil);
             database.connect();
             
@@ -293,6 +294,7 @@ namespace Projector
                 if (reader == null)
                 {
                     MessageBox.Show(this, "Error on Reading ", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    showPanelMessage("Connection Error. Check Network and/or Database Connection Settings", Color.DarkRed, Color.White);
                     return;
                 }
 
@@ -492,9 +494,17 @@ namespace Projector
                     Type objType = maskBox.Controls[i].GetType();
                     if (objType.Name == "NumericUpDown")
                     {
-                        int numval = int.Parse(value);
-                        NumericUpDown tmpas = (NumericUpDown) maskBox.Controls[i];
-                        tmpas.Value = numval;
+                        NumericUpDown tmpas = (NumericUpDown)maskBox.Controls[i];
+                        try
+                        {
+                            int numval = int.Parse(value);                            
+                            tmpas.Value = numval;
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Invalid Input " + value, "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            tmpas.Value = 0;
+                        }
                     }
 
                     else if (objType.Name == "TextBox")
@@ -1197,11 +1207,13 @@ namespace Projector
            {
                if (tmpObj.errorMessage != null && tmpObj.errorMessage != "")
                {
-                   MessageBox.Show(tmpObj.errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   //MessageBox.Show(tmpObj.errorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   showPanelMessage(tmpObj.errorMessage, Color.DarkRed, Color.White);
                }
                else
                {
-                   MessageBox.Show("No Results", "Query", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   //MessageBox.Show("No Results", "Query", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   showPanelMessage("No Result");
                }
                
            }
@@ -2112,6 +2124,20 @@ namespace Projector
             }
         }
 
+        public void ExportCsv()
+        {
+            if (listView1.Items.Count > 0)
+            {
+                csvToolStripMenuItem_Click(null, null);
+            }
+            else
+            {
+                MessageBox.Show("There are no Data to Export");
+            }
+           
+        }
+
+
         private void csvToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveCvsFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -2795,7 +2821,33 @@ namespace Projector
            
             return foundCount;
         }
-        
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            closePanelMessage();
+        }
+
+        public void closePanelMessage()
+        {
+            MessagePanel.Visible = false;
+        }
+
+        public void showPanelMessage(string message)
+        {
+            showPanelMessage(message, Color.LightYellow, Color.DarkBlue);
+        }
+
+        public void showPanelMessage(string message, Color backColor, Color TextColor)
+        {
+            MessagePanel.BackColor = backColor;
+            MessagePanel.Visible = true;
+            MessageLabel.Text = message;
+            MessageLabel.ForeColor = TextColor;
+        }
+
+        private void MessageLabel_MouseClick(object sender, MouseEventArgs e)
+        {
+            closePanelMessage();
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace Projector
 
         private String sourceStr;
 
+        public ReflectionScript parent;
+
         public static List<String> KeyWords = new List<string>();
 
         // contains the main sections
@@ -30,9 +32,10 @@ namespace Projector
         // defines the types of paramaters
         private string[] varDefines;
 
-        public RefScriptMaskMatch(String source)
+        public RefScriptMaskMatch(String source, ReflectionScript useMe)
         {
             this.sourceStr = source;
+            this.parent = useMe;
             this.buildElements();
         }
 
@@ -92,6 +95,18 @@ namespace Projector
                 else if (compareMask[0] == '&')
                 {
                     Hit = true;
+
+                    string rest = "";
+                    if (compareMask.Length > 1)
+                    {
+                        rest = compareMask.Substring(1);
+                        List<string> possibleObjects = this.parent.getCurrentObjectsByType(rest);
+                        if (possibleObjects != null)
+                        {
+                            Hit = possibleObjects.Contains(testWord);
+                        }
+                    }
+                    
                 }
 
 

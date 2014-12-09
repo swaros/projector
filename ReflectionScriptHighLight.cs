@@ -141,6 +141,7 @@ namespace Projector
                 it++;
             }
 
+
             this.RtfColors.markWordsAll(variables, VaribalesStyle);
 
             foreach (int lino in this.Srcipt.getCommentLines())

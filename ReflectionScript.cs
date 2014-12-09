@@ -18,7 +18,15 @@ namespace Projector
 
         public const string MASK_DELIMITER = "#";
 
+        public string name = "this";
+
+        public int parentLineNumber = 0;
+
+        // parent reflection script
         public ReflectionScript Parent;
+
+        // parent reflectionScript Owner
+        public ReflectionScriptDefines ParentOwner;
 
         //public RefScriptExecute ParentExecuter;
         public RefScriptExecute CurrentExecuter;
@@ -64,6 +72,9 @@ namespace Projector
 
         // VARIABLES: list of all subscripts defined by methods
         private Hashtable namedSubScripts = new Hashtable();
+
+        // CONTROL: all subscripts
+        private List<ReflectionScript> subScripts = new List<ReflectionScript>();
 
         // VARIABLES: list of entries between () brackets that used for calculations
 
@@ -180,6 +191,7 @@ namespace Projector
             this.globalRenameHash.Clear();
             this.buildedSource.Clear();
             this.namedSubScripts.Clear();
+            this.subScripts.Clear();
             this.errorLines.Clear();
             this.calcingBrackets.Clear();
             this.calcingBracketsResults.Clear();
@@ -619,6 +631,7 @@ namespace Projector
         }
 
 
+
         // -------------------  here are all the stuff for building, parsing and so on -------------------------- 
 
         /**
@@ -662,6 +675,8 @@ namespace Projector
                         key, 
                         nCode
                     );
+
+
             }
 
             // all content that in normal brackets, that will be used for calculations
@@ -858,10 +873,19 @@ namespace Projector
                         }
                         if (obInfo.lastObjectInfo != null)
                         {
+                            
                             foreach (String strVar in obInfo.lastObjectInfo.Strings)
                             {
-                                globalRenameHash.Add("&" + testObj.name+ "." + strVar, "");
+                                //globalRenameHash.Add("&" + testObj.name+ "." + strVar, "");
+                                this.createOrUpdateStringVar("&" + testObj.name + "." + strVar, "IN");
+
+                                if (this.Parent != null && this.ParentOwner != null && this.ParentOwner.namedReference != null)
+                                {
+                                    this.Parent.createOrUpdateStringVar("&" + this.ParentOwner.namedReference+ "." + testObj.name + "." + strVar, "IN");
+                                }
+
                             }
+                            
                         }
                     }
 
@@ -887,7 +911,8 @@ namespace Projector
                     {                        
                         string fullCode = this.getCodeByName(subCode);
                         testObj.subScript = new ReflectionScript();
-                        testObj.subScript.Parent = this;                        
+                        testObj.subScript.Parent = this;
+                        testObj.subScript.ParentOwner = testObj;
                         testObj.subScript.setCode(fullCode);
 
                         testObj.parameters.Add(testObj.subScript);
@@ -924,6 +949,126 @@ namespace Projector
 
             return true;
         }
+
+
+        private Object getParamValue(string type, string part)
+        {
+            Object retValue = null;
+            switch (type)
+            {
+                case "String": case "STR":
+                    retValue = this.fillUpAll(part);
+                    break;
+                case "INT": case "Int32":
+                    try
+                    {
+                        string tmpStr = this.fillUpAll(part);
+                        int parInt = int.Parse(tmpStr);
+                        retValue = part;
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError("Parameter must bee an number" + e.Message);
+                        return null;
+                    }
+                    break;
+                case "Decimal":
+                
+                    try
+                    {
+                        string tmpStr = this.fillUpAll(part);
+                        Decimal parInt = Decimal.Parse(tmpStr);
+                        retValue = part;
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError("Parameter must bee an Decimal number" + e.Message);
+                        return null;
+                    }
+                    break;
+                case "Boolean":
+                case "Bool":
+                    if (part.ToUpper() == "TRUE" || part == "1")
+                    {
+                        retValue = true;
+                    }
+                    else
+                    {
+                        retValue = false;
+                    }
+                    break;
+                case "ReflectionScript":
+                    ReflectionScript tmpSript = new ReflectionScript();
+                    tmpSript.setCode(this.fillUpCodeLines(part));
+                    retValue = tmpSript;
+                    break;
+                default :
+                    if (this.objectStorage.ContainsKey(part))
+                    {
+                        retValue = this.objectStorage[part];
+                    }
+                    break;
+            }
+            return retValue;
+        }
+
+        private Object upateParamValue(Object param, string type, string defined)
+        {
+            Object tmpObject = param;
+            switch (type)
+            {
+                case "String":
+                case "STR":
+                    tmpObject = this.fillUpAll(param.ToString());
+                    if (tmpObject.ToString() == "IN")
+                    {
+                        tmpObject = this.fillUpAll(defined);
+                    }
+                    break;
+                case "?":
+                    if (param is string)
+                    {
+                        tmpObject = this.fillUpAll(param.ToString());
+                        if (tmpObject.ToString() == "IN")
+                        {
+                            tmpObject = this.fillUpAll(defined);
+                        }
+                    }
+                    break;
+
+            }
+            return tmpObject;
+        }
+
+
+        /**
+         * upateing the parameters with current State
+         */ 
+        public void updateParam(ReflectionScriptDefines cmdResult)
+        {
+
+            for (int i = 0; i < cmdResult.parameters.Count; i++ )
+            {
+                string type = cmdResult.scriptParameterTypes[i];
+                string defined = cmdResult.scriptParameters[i];
+                cmdResult.parameters[i] = this.upateParamValue(cmdResult.parameters[i], type, defined);
+
+            }
+
+            /*
+            cmdResult.parameters.Clear();
+            int i=0;
+            foreach (string pType in cmdResult.scriptParameterTypes)
+            {
+                cmdResult.parameters.Add(this.getParamValue(pType, cmdResult.scriptParameters[i]));
+                i++;
+            }
+            */
+        }
+
+
+
+
 
         /**
          * work on parameters
@@ -1018,7 +1163,7 @@ namespace Projector
             foreach (string hash in this.mask)
             {
 
-                RefScriptMaskMatch maskMatch = new RefScriptMaskMatch(hash);
+                RefScriptMaskMatch maskMatch = new RefScriptMaskMatch(hash, this);
                 if (maskMatch.possibleMatch(words) != RefScriptMaskMatch.MATCH)
                 {                    
                     continue;
@@ -1159,7 +1304,7 @@ namespace Projector
                                 }
                                 else
                                 {
-                                    this.addError("wrong Object Type. Must be an Instance of type: " + objectType + " .");
+                                   this.addError("wrong Object Type. Must be an Instance of type: " + objectType + " .");
                                 }
                             }
                             else

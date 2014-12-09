@@ -178,11 +178,11 @@ namespace Projector
                 if (chform.Text == "queryBrowser")
                 {
                     string varName = displayname.Replace(" ", "_");
-                    code += "New QueryBrowser " + varName + System.Environment.NewLine;
+                    code += "New QueryBrowser " + varName.Replace(".","") + System.Environment.NewLine;
 
                     code += varName + " showTableList false " + System.Environment.NewLine;
 
-                    code += varName + " setCoords " + chform.Left + "," + chform.Top + "," + chform.Width + "," + chform.Height + System.Environment.NewLine;
+                    code += varName + " setCoords " + chform.Left + " " + chform.Top + " " + chform.Width + " " + chform.Height + System.Environment.NewLine;
 
                     Type queryWinType = chform.GetType();
                     MethodInfo myMethodInfo = queryWinType.GetMethod("getCurrentTable");
@@ -375,9 +375,10 @@ namespace Projector
 
         private void loadScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScriptWriter scriptEditor = new ScriptWriter(this, true);
-            scriptEditor.ShowDialog();
-            this.scriptText = scriptEditor.assignedExternalScript;
+            if (openScript.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.scriptText = System.IO.File.ReadAllText(openScript.FileName);
+            }
         }
     }
 }

@@ -160,7 +160,7 @@ namespace Projector
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
             string cmd = scrLine.code.ToUpper();
-
+            this.currentScript.updateParam(scrLine);
             if (this.debugMode)
             {
                 this.currentDebugLine = scrLine;
@@ -312,6 +312,7 @@ namespace Projector
                 this.internalError = true;
                 return null;
             }
+
             int countOfparams = refObj.parameters.Count();
             if (countOfparams > 0)
             {
@@ -320,7 +321,7 @@ namespace Projector
                 {
                     mParam[i] = refObj.parameters[i];
                 }
-                
+
                 try
                 {
                     return myMethodInfo.Invoke(obj, mParam);
@@ -333,6 +334,13 @@ namespace Projector
                     return null;
                 }
                 catch (TargetInvocationException te)
+                {
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_UNKNOWNREASON;
+                    lastErrorMessage = te.Message;
+                    this.internalError = true;
+                    return null;
+                }
+                catch (ArgumentException te)
                 {
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_UNKNOWNREASON;
                     lastErrorMessage = te.Message;

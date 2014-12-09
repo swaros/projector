@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace Projector
 {
@@ -244,6 +245,20 @@ namespace Projector
                 }
 
             }
+            TreeNode varibales = new TreeNode("Variables");
+            varibales.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
+            varibales.SelectedImageIndex = varibales.ImageIndex;
+
+            foreach (DictionaryEntry scrVars in this.script.getAllStrings())
+            {
+
+                TreeNode var = new TreeNode(scrVars.Key + " " + scrVars.Value);
+                var.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
+                var.SelectedImageIndex = varibales.ImageIndex;
+                varibales.Nodes.Add(var);
+            }
+            genericTree.Nodes.Add(varibales);
+
         }
 
         private void updateLogBook()
@@ -648,20 +663,23 @@ namespace Projector
 
         private void genericTree_DoubleClick(object sender, EventArgs e)
         {
-            if( (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_METHOD_IMG_IDENT)
-                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_STRING_IMG_IDENT)
-                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_BOOL_IMG_IDENT)
-                || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_INT_IMG_IDENT)
-                )
+            if (genericTree.SelectedNode != null)
             {
-                //codeBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
-                int startPos = codeBox.SelectionStart;
-                int sellength = codeBox.SelectionLength;
-                codeBox.Text = codeBox.Text.Remove(startPos, sellength);
-                codeBox.Text = codeBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
-                //codeBox.Text = "";
-                codeBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
+                if ((genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_METHOD_IMG_IDENT)
+                    || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_STRING_IMG_IDENT)
+                    || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_BOOL_IMG_IDENT)
+                    || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_INT_IMG_IDENT)
+                    )
+                {
+                    //codeBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
+                    int startPos = codeBox.SelectionStart;
+                    int sellength = codeBox.SelectionLength;
+                    codeBox.Text = codeBox.Text.Remove(startPos, sellength);
+                    codeBox.Text = codeBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
+                    //codeBox.Text = "";
+                    codeBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
 
+                }
             }
         }
     }

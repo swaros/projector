@@ -39,6 +39,33 @@ namespace Projector
             this.onCloseScript = script;
         }
 
+        public void setLeft(int left)
+        {
+            this.Left = left;
+        }
+
+        public void setTop(int top)
+        {
+            this.Top = top;
+        }
+
+        public void setWidth(int w)
+        {
+            this.Width = w;
+        }
+
+        public void setHeight(int h)
+        {
+            this.Height = h;
+        }
+
+        public void CloseForm()
+        {
+            this.Close();
+        }
+
+
+
         private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.onCloseScript != null)

@@ -30,6 +30,23 @@ namespace Projector
                 return this.getTextBox(refObject, parent);
             }
 
+            if (refObject.typeOfObject == "LabelText")
+            {
+                return this.getLabelText(refObject, parent);
+            }
+
+            if (refObject.typeOfObject == "LabelInteger")
+            {
+                return this.getLabelInt(refObject, parent);
+            }
+
+
+            if (refObject.typeOfObject == "ReflectButton")
+            {
+                return this.getButton(refObject, parent);
+            }
+
+
             if (refObject.typeOfObject == "NumericUpDown")
             {
                 return this.getNumeric(refObject, parent);
@@ -37,6 +54,51 @@ namespace Projector
 
             return null;
         }
+
+        private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)
+        {
+            ReflectButton newTextBox = new ReflectButton();
+            newTextBox.Name = refObject.name;
+
+            if (parent is Form)
+            {
+                Form parForm = (Form)parent;
+                parForm.Controls.Add(newTextBox);
+            }
+
+            return newTextBox;
+        }
+
+
+
+        private LabelText getLabelText(ReflectionScriptDefines refObject, Object parent)
+        {
+            LabelText newTextBox = new LabelText();
+            newTextBox.Name = refObject.name;
+
+            if (parent is Form)
+            {
+                Form parForm = (Form)parent;
+                parForm.Controls.Add(newTextBox);
+            }
+
+            return newTextBox;
+        }
+
+        private LabelInteger getLabelInt(ReflectionScriptDefines refObject, Object parent)
+        {
+            LabelInteger newTextBox = new LabelInteger();
+            newTextBox.Name = refObject.name;
+
+            if (parent is Form)
+            {
+                Form parForm = (Form)parent;
+                parForm.Controls.Add(newTextBox);
+            }
+
+            return newTextBox;
+        }
+
 
         private TextBox getTextBox(ReflectionScriptDefines refObject, Object parent)
         {
