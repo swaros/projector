@@ -17,6 +17,16 @@ namespace Projector
             return null;
         }
 
+        public static void removeMe(Form refObject)
+        {
+            if (ReflectNew.obReferences.ContainsKey(refObject.Name))
+            {                
+                ReflectNew.obReferences.Remove(refObject.Name);                
+            }
+
+        }
+
+
         public Object getObject(ReflectionScriptDefines refObject, Object parent)
         {
             if (refObject.typeOfObject == "queryBrowser")
@@ -160,11 +170,12 @@ namespace Projector
                 Object hValue = obReferences[refObject.name];
                 if(hValue is GroupQuery){
                     GroupQuery exists = (GroupQuery)hValue;
+                    
                     try
                     {
                         //exists.Show();
                         //exists.BringToFront();
-                        exists.Update();
+                        exists.Show();    
                         return exists;    
                     }
                     catch (ObjectDisposedException disposed)

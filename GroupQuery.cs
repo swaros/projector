@@ -119,6 +119,23 @@ namespace Projector
             }
         }
 
+
+        public void exportCsvToFile(string filename)
+        {
+
+            try
+            {
+                exportCsvFiles(filename);
+            }
+            catch
+            {
+
+            }
+             
+
+            
+        }
+
         private void onDone()
         {
             if (this.onDoneScript != null && this.onDoneScript.getErrorCount() == 0)
@@ -777,6 +794,11 @@ namespace Projector
         private void databasesListView_MouseClick(object sender, MouseEventArgs e)
         {
             toolStripButton1.Enabled = (canRun());
+        }
+
+        private void GroupQuery_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ReflectNew.removeMe(this);
         }
     }
 }

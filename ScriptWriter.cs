@@ -421,7 +421,7 @@ namespace Projector
         private void executeScript()
         {
            
-            script.setCode(codeBox.Text);
+            script.setCode(codeBox.Text, true);
             if (script.getErrorCount() == 0)
             {
 

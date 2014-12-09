@@ -260,7 +260,7 @@
             this.toolHighlight});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(643, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(351, 39);
             this.toolStrip1.TabIndex = 0;
             // 
             // groupSelectBox
@@ -349,14 +349,14 @@
             // cSVToolStripMenuItem
             // 
             this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
-            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cSVToolStripMenuItem.Text = "CSV...";
             this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
             // 
             // excelToolStripMenuItem
             // 
             this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.excelToolStripMenuItem.Text = "Excel ...";
             this.excelToolStripMenuItem.Click += new System.EventHandler(this.exportEnable_Click);
             // 
@@ -427,6 +427,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GroupQuery";
             this.Text = "GroupQuery";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GroupQuery_FormClosed);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);

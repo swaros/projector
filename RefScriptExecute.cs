@@ -69,7 +69,7 @@ namespace Projector
 
 
         public Boolean run()
-        {
+        {         
             this.internalError = false;
             if (this.currentScript.getErrorCount() == 0)
             {
@@ -159,6 +159,8 @@ namespace Projector
 
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
+
+            
             string cmd = scrLine.code.ToUpper();
             this.currentScript.updateParam(scrLine);
             if (this.debugMode)
@@ -201,6 +203,15 @@ namespace Projector
                 }
                 
             }
+
+            if (scrLine.isAssignement && scrLine.name != null)
+            {
+                // for any assignement a variable must be exists and allready defined
+                this.currentScript.recalcBrackets(scrLine);
+
+               
+            }
+
 
 
             if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))

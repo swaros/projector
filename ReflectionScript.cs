@@ -207,7 +207,13 @@ namespace Projector
          * assign text as Code and starts the Build if the code 
          * different from the last assigned
          */
+
         public void setCode(string code)
+        {
+            this.setCode(code, false);
+        }
+
+        public void setCode(string code, Boolean forceRebuild)
         {
             if (this.storedCode != code)
             {
@@ -221,6 +227,19 @@ namespace Projector
                 }
             }
         }
+
+        public void reBuild()
+        {
+            this.reset(); 
+            this.code = this.storedCode;
+            if (this.prepareCodeLines() == true)
+            {
+                this.build();
+            }
+            this.build();
+            
+        }
+
 
         // -------------------- methods to get Infomations about the current Situation of the script ------------
 
@@ -734,6 +753,43 @@ namespace Projector
             }
         }
 
+        public void recalcBrackets(ReflectionScriptDefines testObj)
+        {
+           foreach (string tparam in testObj.scriptParameters)
+           {
+                if (this.calcingBrackets.ContainsKey(tparam))
+                {
+                    RefScrMath mathObj = (RefScrMath)this.calcingBrackets[tparam];
+                    mathObj.calc();
+                    if (testObj.isParentAssigned)
+                    {
+                        // update for the parent script
+                        if (this.Parent != null)
+                        {
+                            this.Parent.updateVarByMath(testObj.name, mathObj);
+                        }
+                        else
+                        {
+                            this.addError("There is no Parent Instance");
+                        }
+                    }
+                    else
+                    {
+                        // update for the current script
+                        this.updateVarByMath(testObj.name, mathObj);
+                    }
+                }
+                else
+                {
+                    this.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                }
+                        
+                 
+            }
+                
+        }
+
+
         /**
          * validate object, and executes some needed operations (parse for example) just to go deeper
          * and found errors
@@ -885,11 +941,19 @@ namespace Projector
                             foreach (String strVar in obInfo.lastObjectInfo.Strings)
                             {
                                 //globalRenameHash.Add("&" + testObj.name+ "." + strVar, "");
-                                this.createOrUpdateStringVar("&" + testObj.name + "." + strVar, "IN");
+                                string localVarname = "&" + testObj.name + "." + strVar;
+                                if (!varExists(localVarname))
+                                {
+                                    this.createOrUpdateStringVar(localVarname, "IN");
+                                }
 
                                 if (this.Parent != null && this.ParentOwner != null && this.ParentOwner.namedReference != null)
                                 {
-                                    this.Parent.createOrUpdateStringVar("&" + this.ParentOwner.namedReference+ "." + testObj.name + "." + strVar, "IN");
+                                    string parenVarName = "&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar;
+                                    if (!this.Parent.varExists(parenVarName))
+                                    {
+                                        this.Parent.createOrUpdateStringVar("&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar, "IN");
+                                    }
                                 }
 
                             }
@@ -1033,20 +1097,20 @@ namespace Projector
             {
                 case "String":
                 case "STR":
-                    tmpObject = this.fillUpAll(param.ToString());
-                    if (tmpObject.ToString() == "IN")
-                    {
+                    //tmpObject = this.fillUpAll(param.ToString());
+                    //if (tmpObject.ToString() == "IN")
+                    //{
                         tmpObject = this.fillUpAll(defined);
-                    }
+                    //}
                     break;
                 case "?":
                     if (param is string)
                     {
-                        tmpObject = this.fillUpAll(param.ToString());
-                        if (tmpObject.ToString() == "IN")
-                        {
-                            tmpObject = this.fillUpAll(defined);
-                        }
+                        //tmpObject = this.fillUpAll(param.ToString());
+                        //if (tmpObject.ToString() == "IN")
+                        //{
+                           tmpObject = this.fillUpAll(defined);
+                        //}
                     }
                     break;
 
