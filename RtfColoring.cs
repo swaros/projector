@@ -22,6 +22,12 @@ namespace Projector
             this.intRtf = rtf;
         }
 
+        public void reAssign(RichTextBox rtf)
+        {
+            this.intRtf = rtf;
+        }
+
+
         private void storePositions()
         {
             this.cursorPosition = this.intRtf.SelectionStart;
@@ -104,20 +110,42 @@ namespace Projector
 
         public void markFullLine(int lineNumber, HighlightStyle color)
         {
+            if (lineNumber >= this.intRtf.Lines.Count())
+            {
+                return;
+            }
+
+            int existingLinesCharCount = 0;
+            for (int ln = 0; ln < lineNumber; ln++)
+            {
+                existingLinesCharCount += this.intRtf.Lines[ln].Length + 1; // +1 for line ending
+            }
+
             int index = this.intRtf.GetFirstCharIndexFromLine(lineNumber);
-            int end = this.intRtf.Lines[lineNumber].Length;
-            string word = this.intRtf.Lines[lineNumber];
-            this.markWordsAll(word, color);
-            /**
+            string line = this.intRtf.Lines[lineNumber];
+
+            if (null == line)
+            {
+                return;
+            }
+
+            int end = line.Length;
+            
+            //string word = this.intRtf.Lines[lineNumber];
+            //this.markWordsAll(word, color);
+
+            
             if (end > 0)
             {
-                this.intRtf.Select(index, end);
+                //this.intRtf.Select(index, end);
+                this.intRtf.SelectionStart = existingLinesCharCount;
+                this.intRtf.SelectionLength = end;
                 this.intRtf.SelectionColor = color.ForeColor;
                 this.intRtf.SelectionBackColor = color.BackColor;
                 this.intRtf.SelectionFont = color.Font;
               
             } 
-             */
+            
         }
 
         

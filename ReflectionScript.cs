@@ -52,6 +52,10 @@ namespace Projector
         // VARIABLES: list of all Int Variables
         private Hashtable globalRenameHash = new Hashtable();
 
+        // VARIABLES: list of all variables that cutted out so we clean the sourcecode
+        private Hashtable globalParamRenameHash = new Hashtable();
+
+
         // VARIABLES: list of all string Variables
         private Hashtable stringFounds = new Hashtable();
 
@@ -189,6 +193,7 @@ namespace Projector
             this.objectList.Clear();
             this.objectReferences.Clear();
             this.globalRenameHash.Clear();
+            this.globalParamRenameHash.Clear();
             this.buildedSource.Clear();
             this.namedSubScripts.Clear();
             this.subScripts.Clear();
@@ -658,6 +663,7 @@ namespace Projector
                 string str = match[i].Value;
                 string key = "%str_" + i + "%";
                 globalRenameHash.Add(key, str.Replace("\"",""));
+                globalParamRenameHash.Add(key, str);
                 code = code.Replace(str, key);
             }
 
@@ -669,6 +675,7 @@ namespace Projector
                 string str = bracketMatch[i].Value;
                 string key = "%subscr_" + i + "%";
                 //globalRenameHash.Add(key, str);
+                globalParamRenameHash.Add(key, str);
                 code = code.Replace(str, key);
                 string nCode = str.Substring(1, str.Length - 2);
                 namedSubScripts.Add(
@@ -693,6 +700,7 @@ namespace Projector
                 this.calcingBrackets.Add(key, math);
 
                 this.calcingBracketsResults.Add(key, math.getResult());
+                globalParamRenameHash.Add(key, str);
                 
             }
 
@@ -934,7 +942,13 @@ namespace Projector
                 string parFull = "";
                 foreach (String subCode in testObj.scriptParameters)
                 {
-                    parFull += this.fillUpAll(subCode);
+                   // parFull += this.fillUpAll(subCode);
+                    foreach (DictionaryEntry rp in this.globalParamRenameHash)
+                    {
+                        parFull += subCode.Replace(rp.Key.ToString(), rp.Value.ToString());
+                    }
+                        
+
                 }
 
                 string[] testOfCnt = parFull.Split('\n');

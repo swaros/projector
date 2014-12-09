@@ -101,6 +101,8 @@ namespace Projector
             int start = this.assignedRtf.GetCharIndexFromPosition(new Point(0, 0));
             int end = this.assignedRtf.GetCharIndexFromPosition(new Point(this.assignedRtf.ClientSize.Width, this.assignedRtf.ClientSize.Height));
 
+            this.RtfColors.reAssign(this.drawingRtf);
+
             if (reNewElements == true || this.elementsReaded == false)
             {
                 this.getElements();
