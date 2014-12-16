@@ -35,7 +35,7 @@ namespace Projector
         private string currentProfileName = "";
         HighlighterMysql highlight = new HighlighterMysql();
 
-
+        public Boolean imHere = true;
         // helper for async
         int runningMaxEvents = 0;
         int runningCurrentEvents = 0;
@@ -95,6 +95,9 @@ namespace Projector
         //###################   reflection script #################
 
         private ReflectionScript onDoneScript;
+        private ReflectionScript onDoneExportCsv;
+        private ReflectionScript onCloseScript;
+
         public void execute()
         {
             button1_Click(null, null);
@@ -109,6 +112,15 @@ namespace Projector
             this.onDoneScript = onDoneReading;
         }
 
+        public void OnDoneCsvExport(ReflectionScript onDoneReading)
+        {
+            this.onDoneExportCsv = onDoneReading;
+        }
+
+        public void OnClose(ReflectionScript onDoneReading)
+        {
+            this.onCloseScript = onDoneReading;
+        }
 
         public void exportCsv()
         {
@@ -117,6 +129,7 @@ namespace Projector
                 exportCsvFiles(saveCvsFile.FileName);
 
             }
+            onDoneCsv();
         }
 
 
@@ -126,14 +139,43 @@ namespace Projector
             try
             {
                 exportCsvFiles(filename);
+               
             }
             catch
             {
 
             }
-             
 
+            onDoneCsv();
             
+        }
+
+        public void showMe()
+        {
+            this.Show();
+        }
+
+        public void closeMe()
+        {
+            this.Close();
+        }
+
+        private void onDoneCsv()
+        {
+            if (this.onDoneExportCsv!= null && this.onDoneExportCsv.getErrorCount() == 0)
+            {
+                RefScriptExecute executer = new RefScriptExecute(this.onDoneExportCsv, this);
+                executer.run();
+            }
+        }
+
+        private void onCloseFomrmScr()
+        {
+            if (this.onCloseScript != null)
+            {
+                RefScriptExecute executer = new RefScriptExecute(this.onCloseScript, this);
+                executer.run();
+            }
         }
 
         private void onDone()
@@ -258,7 +300,7 @@ namespace Projector
             runningCurrentEvents++;
             statusLabel.Text = "Done SQL @ " + currentProfileName + "  " + runningCurrentEvents + " / " + runningMaxEvents;
             statusStrip1.Refresh();
-            Application.DoEvents();
+            
             if (runningCurrentEvents == runningMaxEvents)
             {
                 sqlProgress.Visible = false;
@@ -269,7 +311,7 @@ namespace Projector
 
                 this.onDone();
             }
-
+            Application.DoEvents();
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -595,6 +637,54 @@ namespace Projector
             statusLabel.Text = "writing DONE ("+ filename +") ";
         }
 
+        private ListView buildSumList()
+        {
+            int pp = 0;
+
+            ListView sumerizeListView = new ListView();
+
+            ListViewWorker lw = new ListViewWorker();
+            foreach (ListView resultView in listViewExports)
+            {
+                resultView.Columns.Add("Group");
+                statusLabel.Text = "writing group no.: " + pp;
+                statusLabel.Invalidate();
+                Application.DoEvents();
+
+                for (int ai = 0; ai < resultView.Items.Count; ai++)
+                {
+                    resultView.Items[ai].SubItems.Add(listLabelExports[pp]);
+                }
+
+                if (sumerizeListView.Columns.Count == 0)
+                {
+                    lw.copyListView(resultView, sumerizeListView);
+                }
+                else
+                {
+                    lw.addListView(resultView, sumerizeListView, 0, 0);
+                }
+
+
+
+                
+                statusLabel.Text = "writing group no.: " + pp;
+                statusLabel.Invalidate();
+                Application.DoEvents();
+                for (int ai = 0; ai < resultView.Items.Count; ai++)
+                {
+                    resultView.Items[ai].SubItems.Add(listLabelExports[pp]);
+                }
+
+                
+
+                pp++;
+            }
+            statusLabel.Text = "build done ";
+            return sumerizeListView;
+        }
+
+
 
         private void exportEnable_Click(object sender, EventArgs e)
         {
@@ -712,18 +802,45 @@ namespace Projector
             if (openSqlFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 string sql = System.IO.File.ReadAllText(openSqlFileDialog.FileName);
+                string massSqlScript = this.buildScriptByMassQuery(sql);
+                ScriptWriter scrWriter = new ScriptWriter(this);
+                scrWriter.codeBox.Text = massSqlScript;
 
-                string[] queryListing = sql.Split(';');
+                scrWriter.Show();
+                //string[] queryListing = sql.Split(';');
+                /*
                 if (MessageBox.Show("firing " + queryListing.Length + " querys ? Async will be temporary disabled", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
                 {
                     
                     richTextBox1.Text = sql;
                     iterateOverProfiles(true);
                     richTextBox1.Text = "";
-                }
+                }*/
 
             }
         }
+
+        private string buildScriptByMassQuery(string massSql)
+        {
+            string scrpt = "NEW GroupQuery MassSend" + System.Environment.NewLine;
+            scrpt += "MassSend setGroup " + groupBox1.Text + System.Environment.NewLine;
+            scrpt += "MassSend showMe " + System.Environment.NewLine;
+            string[] queryListing = massSql.Split(';');
+            
+            foreach (string sql in queryListing)
+            {
+                scrpt += "#next query " + System.Environment.NewLine;
+                scrpt += "MassSend setSql " + "\"" + sql + "\"" +  System.Environment.NewLine;
+                scrpt += "REG \"MASS_SEND\" " +  System.Environment.NewLine;
+                scrpt += "MassSend OnDoneReading { UNREG \"MASS_SEND\" } " + System.Environment.NewLine;
+                scrpt += "MassSend execute " + System.Environment.NewLine;
+                scrpt += "waitfor \"MASS_SEND\" " +  System.Environment.NewLine;
+                scrpt += System.Environment.NewLine;
+            }
+
+            return scrpt;
+        }
+
 
         private void csvExporter_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -798,7 +915,38 @@ namespace Projector
 
         private void GroupQuery_FormClosed(object sender, FormClosedEventArgs e)
         {
+            onCloseFomrmScr();
             ReflectNew.removeMe(this);
+        }
+
+        public ListView getResultAsListView()
+        {
+            ListView resultView = buildSumList();
+
+            resultView.View = View.Details;
+
+            resultView.Width = MainView.Width - 60;
+            resultView.Height = MainView.Width;
+            resultView.Left = 10;
+            resultView.Top = 30;
+            resultView.AutoArrange = true;
+
+            resultView.FullRowSelect = true;
+
+            resultView.GridLines = true;
+            ListView CopyThat = new ListView();
+            ListViewWorker Worker = new ListViewWorker();
+            Worker.copyListView(resultView, CopyThat);
+            //return resultView;
+            return CopyThat;
+        }
+
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            ListView resultView = this.getResultAsListView();
+            MainView.Controls.Clear();
+            MainView.Controls.Add(resultView);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace Projector
         private int buttonStyle = 0;
         private int maxStyle = 2;
 
+        private string scriptFile;
+
         public ProjectorForm()
         {
             InitializeComponent();
@@ -846,6 +848,32 @@ namespace Projector
         private void groupButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
+        }
+
+        private void scriptRunButton_Click(object sender, EventArgs e)
+        {
+            if (this.scriptFile == null)
+            {
+                if (this.openScript.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.scriptFile = this.openScript.FileName;
+                }
+            }
+
+            if (this.scriptFile != null)
+            {
+                string execScript = System.IO.File.ReadAllText(this.scriptFile);
+                ReflectionScript script = new ReflectionScript();
+                script.setCode(execScript);
+                RefScriptExecute executer = new RefScriptExecute(script,this);
+                executer.run();
+            }
+        }
+
+        private void editScriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScriptWriter newScript = new ScriptWriter(this);
+            newScript.Show();
         }
 
 

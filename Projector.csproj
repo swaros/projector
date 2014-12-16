@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>62</ApplicationRevision>
+    <ApplicationRevision>66</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -120,6 +120,12 @@
       <DependentUpon>CretaeInsertSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="DataContent.cs" />
+    <Compile Include="DateSelect.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DateSelect.Designer.cs">
+      <DependentUpon>DateSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="DiffResultWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +229,7 @@
       <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlacerHolder.cs" />
+    <Compile Include="ProcSync.cs" />
     <Compile Include="Profil.cs" />
     <Compile Include="ProfilGroup.cs">
       <SubType>Form</SubType>
@@ -249,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CretaeInsertSelect.resx">
       <DependentUpon>CretaeInsertSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DateSelect.resx">
+      <DependentUpon>DateSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DiffResultWindow.resx">
       <DependentUpon>DiffResultWindow.cs</DependentUpon>
@@ -308,6 +318,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReflectForm.resx">
       <DependentUpon>ReflectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReflectList.resx">
+      <DependentUpon>ReflectList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
@@ -386,6 +399,12 @@
     <Compile Include="ReflectionScript.cs" />
     <Compile Include="ReflectionScriptDefines.cs" />
     <Compile Include="ReflectionScriptHighLight.cs" />
+    <Compile Include="ReflectList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ReflectList.Designer.cs">
+      <DependentUpon>ReflectList.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReflectNew.cs" />
     <Compile Include="ReflectObjectInterface.cs" />
     <Compile Include="RefScriptExecute.cs" />

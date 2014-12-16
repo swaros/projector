@@ -56,6 +56,33 @@ namespace Projector
             }
         }
 
+        public void addListView(ListView source, ListView target, int imageIndex, int selectImageIndex)
+        {
+            
+
+            for (int i = 0; i < source.Items.Count; i++)
+            {
+                ListViewItem tmpItem = new ListViewItem(source.Items[i].Text);
+
+                tmpItem.ImageIndex = imageIndex;
+                tmpItem.StateImageIndex = selectImageIndex;
+                tmpItem.Name = source.Items[i].Name;
+
+                for (int t = 0; t < source.Items[i].SubItems.Count && t < target.Items[i].SubItems.Count; t++)
+                {
+                    if (t > 0)
+                    {
+                        ListViewItem.ListViewSubItem addTmp = new ListViewItem.ListViewSubItem();
+                        addTmp.Text = source.Items[i].SubItems[t].Text;
+                        addTmp.Name = source.Items[i].SubItems[t].Name;
+                        tmpItem.SubItems.Add(addTmp);
+                    }
+                    else tmpItem.Text = source.Items[i].SubItems[t].Text;
+                }
+                target.Items.Add(tmpItem);
+            }
+        }
+
         private string getGroupName(string tableName)
         {
 
@@ -170,6 +197,29 @@ namespace Projector
             {               
                 listView1.Columns[i].AutoResize(style);                        
             }
+        }
+
+        public String getEntry(ListView listView1, string columName, int rowNumber)
+        {
+            if (listView1.Items.Count <= rowNumber)
+            {
+                return "";
+            }
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                string fieldname = listView1.Columns[i].Text;
+                string[] part = fieldname.Split(' ');
+
+                string field = part[0];
+                if (field == columName)
+                {
+                    string result = listView1.Items[rowNumber].SubItems[i].Text;
+                    return result;
+                }
+            }
+
+            return "";
         }
 
         public ListView setRowColors(ListView source, Color aRowColor, Color bRowColor)

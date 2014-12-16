@@ -60,6 +60,7 @@
             this.loadAndFireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSplitAndFireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolHighlight = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.excelExport = new System.ComponentModel.BackgroundWorker();
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
             this.openSqlFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -257,10 +258,11 @@
             this.runAsync,
             this.exportEnable,
             this.toolStripSplitButton1,
-            this.toolHighlight});
+            this.toolHighlight,
+            this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(351, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(679, 39);
             this.toolStrip1.TabIndex = 0;
             // 
             // groupSelectBox
@@ -349,14 +351,14 @@
             // cSVToolStripMenuItem
             // 
             this.cSVToolStripMenuItem.Name = "cSVToolStripMenuItem";
-            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cSVToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.cSVToolStripMenuItem.Text = "CSV...";
             this.cSVToolStripMenuItem.Click += new System.EventHandler(this.cSVToolStripMenuItem_Click);
             // 
             // excelToolStripMenuItem
             // 
             this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.excelToolStripMenuItem.Text = "Excel ...";
             this.excelToolStripMenuItem.Click += new System.EventHandler(this.exportEnable_Click);
             // 
@@ -395,6 +397,16 @@
             this.toolHighlight.Name = "toolHighlight";
             this.toolHighlight.Size = new System.Drawing.Size(36, 36);
             this.toolHighlight.Text = "highlighter";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::Projector.Properties.Resources.documents_32;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // excelExport
             // 
@@ -489,6 +501,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripButton toolHighlight;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
 
     }
 }

@@ -9,8 +9,8 @@ namespace Projector
 {
     class HighlightStyle
     {
-        public Color ForeColor = Color.DarkBlue;
+        public Color ForeColor = Color.Gray;
         public Color BackColor = Color.Transparent;
-        public Font Font = new Font("Courier", 10, FontStyle.Bold);
+        public Font Font = new Font("Courier New", 8, FontStyle.Regular);
     }
 }

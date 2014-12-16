@@ -99,13 +99,23 @@ namespace Projector
         private void updateColors(int markLine)
         {
             Highlight.markLine = markLine;
+            Highlight.setWordMode(switchDrawMode.Checked);
             Highlight.reDraw(false);
         }
 
         private void updateColors()
         {
             Highlight.markLine = -1;
+            int startLn = this.currentLineInEdit - 1;
+            if (startLn < 0)
+            {
+                startLn = 0;
+            }
+            Highlight.startLine = this.currentLineInEdit;
+            Highlight.startPos = this.codeBox.SelectionStart;
+            Highlight.setWordMode(switchDrawMode.Checked);
             Highlight.reDraw(true);
+            workerLabel.Text = Highlight.preRuntime + " | " + Highlight.runtime + " | " + Highlight.postRuntime;
         }
 
         private void codeBox_TextChanged(object sender, EventArgs e)
@@ -165,6 +175,22 @@ namespace Projector
             updateLogBook();
             refitElements();
         }
+
+        private void updateObjectTree(Hashtable objList, string parentName, int imageNr, TreeNode toNode, string binding)
+        {
+            foreach (string methodmask in objList.Keys)
+            {
+                TreeNode mNode = new TreeNode();
+                mNode.Text = methodmask;
+                mNode.ToolTipText = parentName + binding + methodmask;
+                mNode.ImageIndex = imageNr;
+                mNode.SelectedImageIndex = mNode.ImageIndex;
+                toNode.Nodes.Add(mNode);
+                this.AutoComplete.addWord(methodmask);
+
+            }
+        }
+
 
         private void updateObjectTree(List<string> objList, string parentName, int imageNr, TreeNode toNode, string binding)
         {
@@ -369,9 +395,36 @@ namespace Projector
             }
         }
 
-
-        public void watcher(ReflectionScriptDefines currentLine, int lineNumber, int State)
+        public void varChange(int lineNumber, string name, string val)
         {
+            this.logbook.Items.Add("       Change:" + name + "  | (" + val + ") " + lineNumber);
+        }
+
+        public void watcher(ReflectionScriptDefines currentLine, int lineNumber, int State, int executionLevel)
+        {
+            string objName = currentLine.name;
+            if (objName == null)
+            {
+                objName = "(null)";
+            }
+
+            objName += currentLine.code;
+
+            if (currentLine.namedReference != null)
+            {
+                objName += " :" + currentLine.namedReference;
+            }
+
+
+            string prompt = "";
+            for (int i = 0; i < executionLevel; i++)
+            {
+                prompt += " - ";
+            }
+
+
+            this.logbook.Items.Add( prompt + "> (" + lineNumber + "|" + currentLine.lineNumber + ") " + objName);
+
 
             updateColors(currentLine.lineNumber);
             if (State == RefScriptExecute.STATE_RUN)
@@ -389,7 +442,7 @@ namespace Projector
                 errorLabels.ForeColor = Color.DarkOrange;
                 errorLabels.BackColor = Color.LightYellow;
                 errorLabels.ToolTipText = "";
-                
+                continueBtn.Enabled = true;
             }
 
             if (State == RefScriptExecute.STATE_FINISHED)
@@ -401,7 +454,8 @@ namespace Projector
                 isRunning = false;
 
                 updateColors();
-
+                runButton.Enabled = true;
+                continueBtn.Enabled = false;
                 
             }
 
@@ -415,12 +469,14 @@ namespace Projector
                 errorLabels.ToolTipText = script.getErrors();
             }
 
-            Application.DoEvents();
+            // Application.DoEvents();
         }
 
         private void executeScript()
         {
-           
+            this.logbook.Items.Clear();
+            this.logbook.Items.Add("START ...");
+
             script.setCode(codeBox.Text, true);
             if (script.getErrorCount() == 0)
             {
@@ -435,33 +491,12 @@ namespace Projector
 
                 // set me as watcher
                 executer.setWatcher(this, "watcher");
+                script.registerDebugWatcher(this, "varChange");
                 isRunning = true;
-
+                runButton.Enabled = false;
                 Boolean succeed = executer.run();
 
 
-
-                /*
-                if (succeed == false)
-                {
-                    updateColors();
-                    Application.DoEvents();
-                    string errorMessages = script.getErrors();
-
-                    errorLabels.Text = script.getErrorCount() + "Execution errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
-                    errorLabels.ForeColor = Color.Red;
-                    errorLabels.BackColor = Color.DarkOrange;
-                    errorLabels.ToolTipText = script.getErrors();
-
-
-                }
-                else
-                {
-                    errorLabels.Text = "executed without errors";
-                    errorLabels.ForeColor = Color.LightGreen;
-                    errorLabels.BackColor = Color.DarkGreen;
-                }
-                */
             }
             else
             {
@@ -681,6 +716,25 @@ namespace Projector
 
                 }
             }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            if (executer != null)
+            {
+                executer.Next();
+            }
+        }
+
+        private void stopScr_Click(object sender, EventArgs e)
+        {
+            ProcSync.Reset(RefScriptExecute.PROC_NAME);
+            executer.Stop();
+        }
+
+        private void switchDrawMode_Click(object sender, EventArgs e)
+        {
+            updateColors();
         }
     }
 }

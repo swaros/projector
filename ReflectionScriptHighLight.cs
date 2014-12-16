@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Projector
 {
@@ -41,22 +42,37 @@ namespace Projector
 
         public int markLine = -1;
 
+        public int startPos = 0;
+        public int startLine = 0;
+        public Boolean updateScrols = false;
+
+        public string runtime = "0";
+        public string postRuntime = "0";
+        public string preRuntime = "0";
+
+        private int drawMode = 0;
+
+
+
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
             this.Srcipt = script;
             this.assignedRtf = rtf;
             this.drawingRtf = new RichTextBox();
             drawingRtf.Rtf = assignedRtf.Rtf;
             this.RtfColors = new RtfColoring(drawingRtf);
+            
+           
 
 
             this.ObjectStyle.ForeColor = Color.DarkMagenta;
-            this.ObjectStyle.Font = new Font("Times New Roman",this.fontDefaultSize,FontStyle.Bold | FontStyle.Italic);
+            this.ObjectStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold );
 
-            this.VaribalesStyle.ForeColor = Color.DarkKhaki;
-            this.VaribalesStyle.Font = new Font("Times New Roman", this.fontDefaultSize, FontStyle.Bold | FontStyle.Italic);
+            this.VaribalesStyle.ForeColor = Color.DarkGreen;
+            this.VaribalesStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.VaribalesStyle.BackColor = Color.Transparent;
 
 
-            this.CommandStyle.ForeColor = Color.DarkGreen;
+            this.CommandStyle.ForeColor = Color.DarkOliveGreen;
             this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
 
 
@@ -84,17 +100,34 @@ namespace Projector
             this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
             this.TextStyle.ForeColor = Color.SlateBlue;
-            //this.TextStyle.BackColor = Color.LightSlateGray;
+            this.TextStyle.BackColor = Color.LightCyan;
             
             this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+
+            this.RtfColors.stringStyle = this.TextStyle;
+            
+        }
+
+        public void setWordMode(Boolean onoff)
+        {
+            this.drawMode = RtfColoring.MODE_DIRECT;
+            if (onoff)
+            {
+                this.drawMode = RtfColoring.MODE_WORD;
+            }
         }
 
         public int reDraw(Boolean reNewElements)
         {
+            
+            this.RtfColors.setMode(this.drawMode);
             if (this.assignedRtf.Text.Length < 1)
             {
                 return 0;
             }
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             this.drawingRtf.Rtf = this.assignedRtf.Rtf;
             int startpos = this.assignedRtf.SelectionStart;
             int endPos = this.assignedRtf.SelectionLength;
@@ -102,17 +135,20 @@ namespace Projector
             int end = this.assignedRtf.GetCharIndexFromPosition(new Point(this.assignedRtf.ClientSize.Width, this.assignedRtf.ClientSize.Height));
 
             this.RtfColors.reAssign(this.drawingRtf);
+            this.RtfColors.startLine = this.startLine;
+            this.RtfColors.startPosition = this.startPos;
+
 
             if (reNewElements == true || this.elementsReaded == false)
             {
                 this.getElements();
             }
 
-            this.drawingRtf.Select(0, this.drawingRtf.TextLength);
+            this.drawingRtf.Select(this.startPos, this.drawingRtf.TextLength);
             this.drawingRtf.SelectionColor = drawingRtf.ForeColor;
             this.drawingRtf.SelectionBackColor = drawingRtf.BackColor;
-            
 
+           
 
             foreach (DictionaryEntry de in this.KeyWords)
             {
@@ -129,7 +165,7 @@ namespace Projector
                 this.RtfColors.markTextLine(keyWord, KeyWordStyle);
             }
 
-
+            //if (this.drawMode == RtfColoring.MODE_DIRECT) { };
             string[] variables = new String[this.Srcipt.getAllStrings().Count];
 
             int it = 0;
@@ -137,14 +173,26 @@ namespace Projector
             {
                 string word = de.Value.ToString();
                 string keyWord = de.Key.ToString();
-                this.RtfColors.markTextLine(word, TextStyle);
+                if (this.drawMode == RtfColoring.MODE_DIRECT)
+                {
+                    this.RtfColors.markTextLine("\"" + word + "\"", TextStyle);
+                }
+                
                 //this.RtfColors.markTextLine(keyWord, VaribalesStyle);
                 variables[it] = keyWord;
                 it++;
             }
 
+             watch.Stop();
+
+            this.preRuntime = watch.ElapsedMilliseconds.ToString();
+            watch.Restart();
 
             this.RtfColors.markWordsAll(variables, VaribalesStyle);
+
+            this.RtfColors.wordMode();
+
+            // full lines works in booth modes as the same
 
             foreach (int lino in this.Srcipt.getCommentLines())
             {
@@ -161,18 +209,25 @@ namespace Projector
                 this.RtfColors.markFullLine(markLine, executionStyle);
             }
 
+
+            watch.Stop();
+            this.runtime = watch.ElapsedMilliseconds.ToString();
+            
+            watch.Restart();
             // ------------ end drawing ----------------
 
             this.assignedRtf.Rtf = this.drawingRtf.Rtf;
 
             // try to scroll last visible position
+         
+            
             if (this.markLine < 0)
             {
                 this.assignedRtf.SelectionLength = 0;
                 this.assignedRtf.SelectionStart = end;
-                this.assignedRtf.ScrollToCaret();
+                if (this.updateScrols) this.assignedRtf.ScrollToCaret();
                 this.assignedRtf.SelectionStart = start + this.assignedRtf.Lines[this.assignedRtf.GetLineFromCharIndex(start)].Length + 1;
-                this.assignedRtf.ScrollToCaret();
+                if (this.updateScrols) this.assignedRtf.ScrollToCaret();
 
                 this.assignedRtf.SelectionStart = startpos;
                 this.assignedRtf.SelectionLength = endPos;
@@ -182,9 +237,12 @@ namespace Projector
                 int index = this.assignedRtf.GetFirstCharIndexFromLine(this.markLine);
                 this.assignedRtf.SelectionStart = index;
                 this.assignedRtf.SelectionLength = 1;
-                this.assignedRtf.ScrollToCaret();
-            
+                if (this.updateScrols) this.assignedRtf.ScrollToCaret();
+
             }
+
+            watch.Stop();
+            this.postRuntime = watch.ElapsedMilliseconds.ToString();
             return 1;
         }
 

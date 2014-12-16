@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(queryBrowser));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.selectedTableLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,6 +55,8 @@
             this.editSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createInsertSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
+            this.MessagePanel = new System.Windows.Forms.Panel();
+            this.MessageLabel = new System.Windows.Forms.Label();
             this.editBox = new System.Windows.Forms.GroupBox();
             this.cellEditField = new System.Windows.Forms.TextBox();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -171,8 +173,6 @@
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MessagePanel = new System.Windows.Forms.Panel();
-            this.MessageLabel = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -193,6 +193,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.editMenu.SuspendLayout();
+            this.MessagePanel.SuspendLayout();
             this.tableMenu.SuspendLayout();
             this.MaskTab.SuspendLayout();
             this.maskBox.SuspendLayout();
@@ -210,7 +211,6 @@
             this.dialogToolStrip.SuspendLayout();
             this.rowOptTtoolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.MessagePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -381,16 +381,16 @@
             this.TablesAutoComplete.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.TablesAutoComplete.FullRowSelect = true;
-            listViewGroup7.Header = "Fields";
-            listViewGroup7.Name = "Fields";
-            listViewGroup8.Header = "Tables";
-            listViewGroup8.Name = "Tables";
-            listViewGroup9.Header = "Syntax";
-            listViewGroup9.Name = "Syntax";
+            listViewGroup1.Header = "Fields";
+            listViewGroup1.Name = "Fields";
+            listViewGroup2.Header = "Tables";
+            listViewGroup2.Name = "Tables";
+            listViewGroup3.Header = "Syntax";
+            listViewGroup3.Name = "Syntax";
             this.TablesAutoComplete.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup7,
-            listViewGroup8,
-            listViewGroup9});
+            listViewGroup1,
+            listViewGroup2,
+            listViewGroup3});
             this.TablesAutoComplete.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.TablesAutoComplete.Location = new System.Drawing.Point(323, 24);
             this.TablesAutoComplete.MultiSelect = false;
@@ -501,13 +501,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // MessagePanel
+            // 
+            this.MessagePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MessagePanel.Controls.Add(this.MessageLabel);
+            this.MessagePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.MessagePanel.Location = new System.Drawing.Point(0, 237);
+            this.MessagePanel.Name = "MessagePanel";
+            this.MessagePanel.Size = new System.Drawing.Size(896, 72);
+            this.MessagePanel.TabIndex = 3;
+            // 
+            // MessageLabel
+            // 
+            this.MessageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MessageLabel.Location = new System.Drawing.Point(0, 0);
+            this.MessageLabel.Name = "MessageLabel";
+            this.MessageLabel.Size = new System.Drawing.Size(894, 70);
+            this.MessageLabel.TabIndex = 0;
+            this.MessageLabel.Text = "...";
+            this.MessageLabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MessageLabel_MouseClick);
+            // 
             // editBox
             // 
             this.editBox.AutoSize = true;
             this.editBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.editBox.Location = new System.Drawing.Point(757, 39);
             this.editBox.Name = "editBox";
-            this.editBox.Size = new System.Drawing.Size(6, 19);
+            this.editBox.Size = new System.Drawing.Size(6, 5);
             this.editBox.TabIndex = 2;
             this.editBox.TabStop = false;
             this.editBox.Text = "Edit Values";
@@ -709,7 +729,7 @@
             this.MaskTab.Location = new System.Drawing.Point(4, 22);
             this.MaskTab.Name = "MaskTab";
             this.MaskTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MaskTab.Size = new System.Drawing.Size(873, 427);
+            this.MaskTab.Size = new System.Drawing.Size(902, 443);
             this.MaskTab.TabIndex = 2;
             this.MaskTab.Text = "Search";
             this.MaskTab.UseVisualStyleBackColor = true;
@@ -750,7 +770,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(873, 427);
+            this.tabPage2.Size = new System.Drawing.Size(902, 443);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Trigger";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -778,7 +798,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.triggerCode);
-            this.splitContainer4.Size = new System.Drawing.Size(867, 421);
+            this.splitContainer4.Size = new System.Drawing.Size(896, 437);
             this.splitContainer4.SplitterDistance = 139;
             this.splitContainer4.TabIndex = 1;
             // 
@@ -868,7 +888,7 @@
             this.triggerCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.triggerCode.Location = new System.Drawing.Point(0, 0);
             this.triggerCode.Name = "triggerCode";
-            this.triggerCode.Size = new System.Drawing.Size(867, 278);
+            this.triggerCode.Size = new System.Drawing.Size(896, 294);
             this.triggerCode.TabIndex = 0;
             this.triggerCode.Text = "";
             // 
@@ -879,7 +899,7 @@
             this.tabPageProcedures.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcedures.Name = "tabPageProcedures";
             this.tabPageProcedures.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcedures.Size = new System.Drawing.Size(873, 427);
+            this.tabPageProcedures.Size = new System.Drawing.Size(902, 443);
             this.tabPageProcedures.TabIndex = 3;
             this.tabPageProcedures.Text = "Stored Procedures";
             this.tabPageProcedures.UseVisualStyleBackColor = true;
@@ -890,7 +910,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 62);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(867, 362);
+            this.groupBox1.Size = new System.Drawing.Size(896, 378);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source";
@@ -901,7 +921,7 @@
             this.procSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.procSource.Location = new System.Drawing.Point(3, 16);
             this.procSource.Name = "procSource";
-            this.procSource.Size = new System.Drawing.Size(861, 343);
+            this.procSource.Size = new System.Drawing.Size(890, 359);
             this.procSource.TabIndex = 0;
             this.procSource.Text = "";
             // 
@@ -911,7 +931,7 @@
             this.values.Dock = System.Windows.Forms.DockStyle.Top;
             this.values.Location = new System.Drawing.Point(3, 3);
             this.values.Name = "values";
-            this.values.Size = new System.Drawing.Size(867, 59);
+            this.values.Size = new System.Drawing.Size(896, 59);
             this.values.TabIndex = 0;
             this.values.TabStop = false;
             this.values.Text = "Properies";
@@ -1467,14 +1487,14 @@
             // csvToolStripMenuItem
             // 
             this.csvToolStripMenuItem.Name = "csvToolStripMenuItem";
-            this.csvToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.csvToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.csvToolStripMenuItem.Text = "csv ...";
             this.csvToolStripMenuItem.Click += new System.EventHandler(this.csvToolStripMenuItem_Click);
             // 
             // excelToolStripMenuItem
             // 
             this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.excelToolStripMenuItem.Text = "Excel ...";
             this.excelToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
@@ -1565,26 +1585,6 @@
             this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectToolStripMenuItem.Text = "Select";
             // 
-            // MessagePanel
-            // 
-            this.MessagePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MessagePanel.Controls.Add(this.MessageLabel);
-            this.MessagePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.MessagePanel.Location = new System.Drawing.Point(0, 237);
-            this.MessagePanel.Name = "MessagePanel";
-            this.MessagePanel.Size = new System.Drawing.Size(896, 72);
-            this.MessagePanel.TabIndex = 3;
-            // 
-            // MessageLabel
-            // 
-            this.MessageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MessageLabel.Location = new System.Drawing.Point(0, 0);
-            this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(894, 70);
-            this.MessageLabel.TabIndex = 0;
-            this.MessageLabel.Text = "...";
-            this.MessageLabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MessageLabel_MouseClick);
-            // 
             // queryBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1621,6 +1621,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.editMenu.ResumeLayout(false);
+            this.MessagePanel.ResumeLayout(false);
             this.tableMenu.ResumeLayout(false);
             this.MaskTab.ResumeLayout(false);
             this.MaskTab.PerformLayout();
@@ -1647,7 +1648,6 @@
             this.rowOptTtoolStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.MessagePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

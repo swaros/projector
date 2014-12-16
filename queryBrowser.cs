@@ -73,6 +73,13 @@ namespace Projector
         private BookmarkManager bookMarks = new BookmarkManager();
 
 
+        private ReflectionScript onFinishedScript;
+        private ReflectionScript onNoResultScript;
+
+        private ReflectionScript onExecScript;
+        
+
+
         public queryBrowser()
         {
             InitializeComponent();
@@ -190,6 +197,54 @@ namespace Projector
             
         }
 
+        public String getEntry(string columName, int rowNumber)
+        {
+            if (listView1.Items.Count <= rowNumber)
+            {
+                return "";
+            }
+
+            for (int i = 0; i < listView1.Columns.Count; i++)
+            {
+                string fieldname = listView1.Columns[i].Text;
+                string[] part = fieldname.Split(' ');
+
+                string field = part[0];
+                if (field == columName)
+                {
+                    string result = this.listView1.Items[rowNumber].SubItems[i].Text;
+                    return result;
+                }
+            }
+
+            return "";
+        }
+
+
+        public void OnQueryDone(ReflectionScript onDone)
+        {
+            this.onFinishedScript = onDone;
+        }
+
+        public void OnFireQuery(ReflectionScript onDone)
+        {
+            this.onExecScript = onDone;
+        }
+
+        public void OnNoResult(ReflectionScript onNoResult)
+        {
+            this.onNoResultScript = onNoResult;
+        }
+
+        private void executeScript(ReflectionScript scrExec)
+        {
+            if (scrExec != null && scrExec.getErrorCount() == 0)
+            {
+                RefScriptExecute executer = new RefScriptExecute(scrExec, this);
+                executer.run();
+            }
+        }
+
         public string getCurrentSql()
         {
             return textBox1.Text;
@@ -213,6 +268,8 @@ namespace Projector
 
         public void fireQuery()
         {
+            this.executeScript(this.onExecScript);
+
             closePanelMessage();
             database = new MysqlHandler(sensorProfil);
             database.connect();
@@ -221,12 +278,8 @@ namespace Projector
             {
                 if (!mysqlWorker.IsBusy)
                 {
-                    /*
-                    MySql.Data.MySqlClient.MySqlDataReader reader = database.sql_select(textBox1.Text);
 
-                    database.sql_data2ListView(reader, listView1,true);
-                    reader.Close();
-                    */
+
                     listView1.Items.Clear();
                     ListviewForWorker copy = new ListviewForWorker(new ListView(), textBox1.Text);
                     tableView.Enabled = false;
@@ -238,12 +291,12 @@ namespace Projector
                     }
                     else
                     {
-                        MessageBox.Show("Progress is busy");
+                        showPanelMessage("Progress is busy....");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Progress is busy");
+                    showPanelMessage("Progress is busy....");
                 }
             }
         }
@@ -1201,7 +1254,7 @@ namespace Projector
                worker.setRowColors(listView1, Color.Transparent, Color.LightYellow);
                worker.searchAndmark("null", listView1, 0, Color.SkyBlue);
                autosortColumns();
-
+               this.executeScript(this.onFinishedScript); 
            }
            else
            {
@@ -1214,6 +1267,7 @@ namespace Projector
                {
                    //MessageBox.Show("No Results", "Query", MessageBoxButtons.OK, MessageBoxIcon.Information);
                    showPanelMessage("No Result");
+                   this.executeScript(this.onNoResultScript);
                }
                
            }

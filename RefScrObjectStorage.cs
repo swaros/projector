@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Collections;
 
 namespace Projector
 {
@@ -12,9 +13,10 @@ namespace Projector
         public List<String> methodMask = new List<string>();
         public List<String> methodNames = new List<string>();
         public List<MethodInfo> methods = new List<MethodInfo>();
-        public List<String> Strings = new List<string>();
-        public List<String> Integers = new List<string>();
-        public List<String> Booleans = new List<string>();
+        public Hashtable Strings = new Hashtable();
+        public Hashtable Integers = new Hashtable();
+        public Hashtable Booleans = new Hashtable();
+        public Hashtable Objects = new Hashtable();
 
     }
 }

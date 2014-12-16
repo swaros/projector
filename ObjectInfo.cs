@@ -59,12 +59,20 @@ namespace Projector
                 case "System.Int32":
                     return "INT";
                     break;
+                default:
+                    string[] parts = typeStr.Split('.');
+                    int cnt = parts.Count()-1;
+                    if (cnt > 0)
+                    {
+                        return parts[cnt];
+                    }
+                    break;
 
             }
             return "";
         }
 
-        private void updatePropInfos(Type executeableObj, RefScrObjectStorage objStore)
+        private void updatePropInfos(Object execObject, Type executeableObj, RefScrObjectStorage objStore)
         {
             PropertyInfo[] propInfo = executeableObj.GetProperties();
 
@@ -72,25 +80,43 @@ namespace Projector
             {
                 if (prop.CanRead && prop.CanWrite)
                 {
+
+                    Object val = null;
+                    ParameterInfo[] pInfo = prop.GetIndexParameters();
+                    if (pInfo.Count() < 1 && executeableObj != null)
+                    {
+                        try
+                        {
+                            val = prop.GetValue(execObject, null);
+                        }
+                        catch (Exception e) { }
+                        
+                    }
+
                     switch (prop.PropertyType.Name)
                     {
                         case "In32":
-                            objStore.Integers.Add(prop.Name);
+                            objStore.Integers.Add(prop.Name, val);
                             break;
                         case "String":
-                            objStore.Strings.Add(prop.Name);
+                            objStore.Strings.Add(prop.Name, val);
                             break;
                         case "Boolean":
-                            objStore.Booleans.Add(prop.Name);
+                            objStore.Booleans.Add(prop.Name, val);
                             break;
                     }
-        
+
                 }
             }
 
         }
 
         public List<string> getObjectInfo(Object obj)
+        {
+            return this.getObjectInfo(obj, true);
+        }
+
+        public List<string> getObjectInfo(Object obj, Boolean getFullProp)
         {
            
             List<string> maskData = new List<string>();
@@ -109,8 +135,14 @@ namespace Projector
             }
 
             RefScrObjectStorage objStore = new RefScrObjectStorage();
-
-            this.updatePropInfos(executeableObj, objStore);
+            if (getFullProp)
+            {
+                this.updatePropInfos(obj, executeableObj, objStore);
+            }
+            else
+            {
+                this.updatePropInfos(null, executeableObj, objStore);
+            }
 
             string objStr = obj.ToString();
             string[] objParts = objStr.Split(',');

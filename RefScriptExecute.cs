@@ -17,6 +17,10 @@ namespace Projector
         public const int STATE_WAIT = 5;
         public const int STATE_FINISHED = 10;
 
+        public const string PROC_NAME = "ReflectionScript";
+
+        // wich subinstance i am?
+        public int runlevel = 0;
 
         public int runState = 0;
 
@@ -38,10 +42,12 @@ namespace Projector
         public Object parentWatcher;
         public string watcherMethod;
 
+
         // debugging stuff
         private ReflectionScriptDefines currentDebugLine;
         private int currentExecLine = 0;
-        
+
+        public int startLine = 0;
         
 
         public RefScriptExecute(ReflectionScript script, Object parent)
@@ -69,7 +75,23 @@ namespace Projector
 
 
         public Boolean run()
-        {         
+        {
+            
+            if (this.currentScript.Parent != null && this.currentScript.Parent.CurrentExecuter != null)
+            {
+                this.watcherMethod = this.currentScript.Parent.CurrentExecuter.watcherMethod;
+                this.parentWatcher = this.currentScript.Parent.CurrentExecuter.parentWatcher;
+                this.debugMode = this.currentScript.Parent.CurrentExecuter.debugMode;
+
+                this.runlevel += this.currentScript.Parent.CurrentExecuter.runlevel + 1;
+                this.startLine += this.currentScript.Parent.CurrentExecuter.startLine;
+            }
+
+            if (!ProcSync.isRegistered(RefScriptExecute.PROC_NAME))
+            {
+                ProcSync.registerProc(RefScriptExecute.PROC_NAME);
+            }
+
             this.internalError = false;
             if (this.currentScript.getErrorCount() == 0)
             {
@@ -93,7 +115,6 @@ namespace Projector
         public Boolean Next()
         {
            
-
             if (this.currentExecLine >= this.currentScript.getScript().Count)
             {
                 this.runState = RefScriptExecute.STATE_FINISHED;
@@ -105,9 +126,9 @@ namespace Projector
             }
 
             this.runState = RefScriptExecute.STATE_RUN;
-            Boolean execRes = this.execSingleLine(this.currentExecLine);
+            Boolean execRes = this.execSingleLine();
             this.runState = RefScriptExecute.STATE_WAIT;
-            this.currentExecLine++;
+          
             
             return execRes;
 
@@ -138,8 +159,8 @@ namespace Projector
             }
 
             this.runState = RefScriptExecute.STATE_RUN;
-            Boolean execRes = this.execSingleLine(this.currentExecLine);            
-            this.currentExecLine++;
+            Boolean execRes = this.execSingleLine();            
+            //this.currentExecLine++;
             return execRes;
 
         }
@@ -159,16 +180,20 @@ namespace Projector
 
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
+            // what ever happens ..tis line is executed
+            this.currentExecLine++;
 
-            
             string cmd = scrLine.code.ToUpper();
-            this.currentScript.updateParam(scrLine);
+            //this.currentScript.updateParam(scrLine);
+
+            // first trigger call
+            /*
             if (this.debugMode)
             {
                 this.currentDebugLine = scrLine;
                 this.updateMessage(scrLine);
             }
-
+            */
             if (cmd == "MESSAGEBOX")
             {
                 string message = "";
@@ -177,6 +202,55 @@ namespace Projector
                     message += this.currentScript.fillUpAll(parStr);
                 }
                 MessageBox.Show(message);
+            }
+
+            if (cmd == "REG")
+            {
+                string procIdent = "";
+                foreach (string parStr in scrLine.scriptParameters)
+                {
+                    procIdent += this.currentScript.fillUpAll(parStr);
+                }
+                ProcSync.addSubProc(RefScriptExecute.PROC_NAME, procIdent);
+            }
+
+            if (cmd == "UNREG")
+            {
+                string procIdent = "";
+                foreach (string parStr in scrLine.scriptParameters)
+                {
+                    procIdent += this.currentScript.fillUpAll(parStr);
+                }
+                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME, procIdent) > 0)
+                {
+                    ProcSync.removeSubProc(RefScriptExecute.PROC_NAME, procIdent);
+                }
+                
+            }
+
+
+            if (cmd == "WAITFOR")
+            {
+                Application.DoEvents();
+                string procIdent = "";
+                foreach (string parStr in scrLine.scriptParameters)
+                {
+                    procIdent += this.currentScript.fillUpAll(parStr);
+                }
+
+                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME, procIdent) > 0)
+                {
+                    currentExecLine--;
+                    /*
+                    if (this.debugMode)
+                    {
+                        this.currentDebugLine = scrLine;
+                        this.updateMessage(scrLine);
+                    }
+                    */
+                    Application.DoEvents();
+                    return true;
+                }
             }
 
             if (scrLine.setState != 0)
@@ -239,7 +313,9 @@ namespace Projector
                 if (objectReferences.ContainsKey(scrLine.namedReference))
                 {
                     this.lastErrorCode = 0;
+                    this.currentScript.updateParam(scrLine);
                     Object execResult = this.execMethod(objectReferences[scrLine.namedReference], scrLine);
+                    scrLine.ReflectObject = objectReferences[scrLine.namedReference]; 
 
                     if (this.lastErrorCode > 0)
                     {
@@ -251,6 +327,9 @@ namespace Projector
                     }
                     else
                     {
+
+                        //this.currentScript.updateMeByObject(scrLine);
+
                         if (scrLine.isAssignement && execResult != null)
                         {
                             if (scrLine.isParentAssigned)
@@ -269,6 +348,14 @@ namespace Projector
 
                 }
             }
+
+            // last trigger call
+            if (this.debugMode)
+            {
+                this.currentDebugLine = scrLine;
+                this.updateMessage(scrLine);
+            }
+
             return true;
         }
 
@@ -291,13 +378,13 @@ namespace Projector
         }
 
 
-        private Boolean execSingleLine(int nr)
+        private Boolean execSingleLine()
         {
             List<ReflectionScriptDefines> src = this.currentScript.getScript();
 
-            if (src.Count > nr)
+            if (src.Count > this.currentExecLine)
             {
-                return this.execLine(src[nr]);
+                return this.execLine(src[this.currentExecLine]);
             }
             return false;
         }
@@ -374,15 +461,29 @@ namespace Projector
                 }
                 
             }
+
+            
+        }
+
+        public int getCurrentExecutionLine()
+        {
+            return this.currentExecLine;
         }
 
         private void updateMessage(ReflectionScriptDefines refObj)
         {
             if (this.parentWatcher != null && watcherMethod != null)
-            {
+            {          
+                int startLn = 0;
+
+                if (this.currentScript.Parent != null)
+                {
+                    startLn = this.currentScript.Parent.CurrentExecuter.getCurrentExecutionLine();
+                }
+
                 Type queryWinType = this.parentWatcher.GetType();
                 MethodInfo myMethodInfo = queryWinType.GetMethod(this.watcherMethod);
-                object[] mParam = new object[] { refObj, this.currentExecLine, this.runState };
+                object[] mParam = new object[] { refObj, this.currentExecLine + startLn, this.runState , this.runlevel};
                 refObj.ReflectObject = myMethodInfo.Invoke(this.parentWatcher, mParam);
             }
             Application.DoEvents();
@@ -390,7 +491,7 @@ namespace Projector
 
 
         private ReflectionScriptDefines execReflectObject(ReflectionScriptDefines refObj)
-        {
+        {           
             Type queryWinType = refObj.Referenz.GetType();
             MethodInfo myMethodInfo = queryWinType.GetMethod("getObject");
             object[] mParam = new object[] { refObj, this.parentObject };

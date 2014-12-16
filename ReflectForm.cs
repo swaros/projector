@@ -64,13 +64,11 @@ namespace Projector
             this.Close();
         }
 
-
-
-        private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void closeRequestAction()
         {
             if (this.onCloseScript != null)
             {
-                
+
                 foreach (Control element in this.Controls)
                 {
                     //this.onCloseScript.updateVarByObject()
@@ -86,13 +84,24 @@ namespace Projector
                     }
 
                 }
-                
+
                 if (this.onCloseScript.getErrorCount() == 0)
                 {
                     RefScriptExecute executer = new RefScriptExecute(this.onCloseScript, this);
                     executer.run();
                 }
             }
+        }
+
+        private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+           
+        }
+
+        private void ReflectForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.closeRequestAction();
         }
     }
 }

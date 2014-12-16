@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.Reflection;
 
 
 namespace Projector
@@ -115,7 +116,12 @@ namespace Projector
         // offest by mutlilines (line breaking strings or subcode)
         private int lineOffset = 0;
         
+        // debuggig stuff
+        private Object parentWatcher;
 
+        private string parentWatcherMethod;
+
+        private Boolean debugMode = false;
         
 
         public ReflectionScript()
@@ -152,7 +158,11 @@ namespace Projector
             this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
             this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
 
-            this.mask.Add("MESSAGEBOX ?" + Projector.ReflectionScript.MASK_DELIMITER + "");
+            // hard coded native stufff
+            this.mask.Add("MESSAGEBOX ?" + Projector.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("REG ?" + Projector.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("UNREG ?" + Projector.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("WAITFOR ?" + Projector.ReflectionScript.MASK_DELIMITER);
 
             this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
             this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
@@ -167,9 +177,11 @@ namespace Projector
             // exection controlls
             this.mask.Add("STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT" + Projector.ReflectionScript.MASK_DELIMITER + "STOP");
             this.mask.Add("RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN");
+            this.mask.Add("EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT");
 
             this.mask.Add("PARENT STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT STOP");
             this.mask.Add("PARENT RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT RUN");
+            this.mask.Add("PARENT EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT EXIT");
 
             // just to store something
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
@@ -201,7 +213,17 @@ namespace Projector
             this.calcingBrackets.Clear();
             this.calcingBracketsResults.Clear();
             this.parsedObjects.Clear();
+
+            this.setDefaultVars();
+
         }
+
+        private void setDefaultVars()
+        {
+            this.createOrUpdateStringVar("&PATH.DOCUMENTS", System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonDocuments) + System.IO.Path.DirectorySeparatorChar.ToString());
+            this.createOrUpdateStringVar(".PATH.SEP", System.IO.Path.DirectorySeparatorChar.ToString());
+        }
+
 
         /**
          * assign text as Code and starts the Build if the code 
@@ -221,10 +243,18 @@ namespace Projector
                 this.code = code;
                 // just to find out if the not the same code again will be set
                 this.storedCode = code;
+
+                if (this.Parent != null)
+                {
+                    this.Parent.updateDebugInfo(this);
+                }
+
                 if (this.prepareCodeLines() == true)
                 {
                     this.build();
                 }
+
+                
             }
         }
 
@@ -239,7 +269,31 @@ namespace Projector
             this.build();
             
         }
+        // debugging
 
+        public void registerDebugWatcher(Object debugWatcher, string varChange)
+        {
+            this.parentWatcher = debugWatcher;
+            this.parentWatcherMethod = varChange;
+            this.debugMode = true;
+        }
+
+        private void updateDebugMessage(string varName, string value)
+        {
+            if (this.parentWatcher != null && parentWatcherMethod != null)
+            {
+                Type queryWinType = this.parentWatcher.GetType();
+                MethodInfo myMethodInfo = queryWinType.GetMethod(this.parentWatcherMethod);
+                object[] mParam = new object[] { this.getLineNumber(),  varName, value };
+                myMethodInfo.Invoke(this.parentWatcher, mParam);
+            }
+            
+        }
+
+        public void updateDebugInfo(ReflectionScript child)
+        {
+            child.registerDebugWatcher(this.parentWatcher, this.parentWatcherMethod);
+        }
 
         // -------------------- methods to get Infomations about the current Situation of the script ------------
 
@@ -466,25 +520,56 @@ namespace Projector
         }
 
 
-        public void updateVarByObject(String name,Object obj)
+        private void updateExistingObject(String name, Object value)
         {
+
+            Boolean found = false;
             if (globalRenameHash.ContainsKey("&" + name))
             {
-                globalRenameHash["&" + name] = obj.ToString();
+                found = true;
+                globalRenameHash["&" + name] = value.ToString();
+                if (this.debugMode)
+                {
+                    this.updateDebugMessage("&" + name, value.ToString());
+                }
             }
+
+
+            if (objectReferences.ContainsKey(name) && this.objectStorage.ContainsKey(name))
+            {
+                found = true;
+                this.objectStorage[name] = value;
+                if (this.debugMode)
+                {
+                    this.updateDebugMessage(name, value.ToString());
+                }
+            }
+
+            if (found == false)
+            {
+                if (this.debugMode)
+                {
+                    this.addError("variable &" + name + " not existing");
+                }
+            }
+        }
+
+        public void updateVarByObject(String name,Object obj)
+        {
+
+            this.updateExistingObject(name, obj);
         }
 
 
         public void updateVarByMath(String name, RefScrMath math)
         {
-            if (globalRenameHash.ContainsKey("&" + name))
-            {
-                globalRenameHash["&" + name] = math.getResult();
-            }
+            this.updateExistingObject(name, math.getResult());
+            
         }
 
         public void updateVarByMath(String name, RefScrMath math, Hashtable varTable)
         {
+            
             if (varTable.ContainsKey("&" + name))
             {
                 varTable["&" + name] = math.getResult();
@@ -643,6 +728,12 @@ namespace Projector
 
         public void createOrUpdateStringVar(string name, string value)
         {
+
+            if (this.debugMode)
+            {
+                this.updateDebugMessage( name, value );
+            }
+
             if (this.globalRenameHash.ContainsKey(name))
             {
                 this.globalRenameHash[name] = value;
@@ -781,7 +872,21 @@ namespace Projector
                 }
                 else
                 {
-                    this.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                    if (testObj.isParentAssigned)
+                    {
+                        if (this.Parent != null)
+                        {
+                            this.Parent.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                        }
+                        else
+                        {
+                            this.addError("There is no Parent Instance");
+                        }
+                    }
+                    else
+                    {
+                        this.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                    }
                 }
                         
                  
@@ -789,6 +894,53 @@ namespace Projector
                 
         }
 
+        private void updateStringsByHashtable(ReflectionScriptDefines testObj, Hashtable hTable)
+        {
+            foreach (DictionaryEntry strVar in hTable)
+            {
+                string localVarname = "&" + testObj.name + "." + strVar.Key.ToString();
+                string strValue = "";
+                if (strVar.Value != null)
+                {
+                    strValue = strVar.Value.ToString();
+                }
+
+
+                if (!varExists(localVarname))
+                {
+                    this.createOrUpdateStringVar(localVarname, strValue);
+                }
+
+                if (this.Parent != null && this.ParentOwner != null && this.ParentOwner.namedReference != null)
+                {
+                    string parenVarName = "&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar.Key.ToString();
+                    if (!this.Parent.varExists(parenVarName))
+                    {
+                        this.Parent.createOrUpdateStringVar("&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar.Key.ToString(), strValue);
+                    }
+                }
+
+            }
+        }
+
+        public void updateMeByObject(ReflectionScriptDefines  testObj)
+        {
+            ObjectInfo obInfo = new ObjectInfo();
+            List<string> objMethods = obInfo.getObjectInfo(testObj.ReflectObject);
+            if (objMethods != null)
+            {
+                foreach (string maskStr in objMethods)
+                {
+                    this.mask.Add(maskStr);
+                }
+                if (obInfo.lastObjectInfo != null)
+                {
+                    updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Strings);
+                    updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Integers);
+                    updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Booleans);                
+                }
+            }
+        }
 
         /**
          * validate object, and executes some needed operations (parse for example) just to go deeper
@@ -921,48 +1073,14 @@ namespace Projector
                 {
                     ReflectNew reflector = new ReflectNew();
                     Object testObject = reflector.getObject(testObj,this);
+
+                    testObj.ReflectObject = testObject;
                     
                     if (!this.objectStorage.Contains(testObj.name))
                     {
                         this.objectStorage.Add(testObj.name,testObject);
                     }
-
-                    ObjectInfo obInfo = new ObjectInfo();
-                    List<string> objMethods = obInfo.getObjectInfo(testObject);
-                    if (objMethods != null)
-                    {
-                        foreach (string maskStr in objMethods)
-                        {
-                            this.mask.Add(maskStr);
-                        }
-                        if (obInfo.lastObjectInfo != null)
-                        {
-                            
-                            foreach (String strVar in obInfo.lastObjectInfo.Strings)
-                            {
-                                //globalRenameHash.Add("&" + testObj.name+ "." + strVar, "");
-                                string localVarname = "&" + testObj.name + "." + strVar;
-                                if (!varExists(localVarname))
-                                {
-                                    this.createOrUpdateStringVar(localVarname, "IN");
-                                }
-
-                                if (this.Parent != null && this.ParentOwner != null && this.ParentOwner.namedReference != null)
-                                {
-                                    string parenVarName = "&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar;
-                                    if (!this.Parent.varExists(parenVarName))
-                                    {
-                                        this.Parent.createOrUpdateStringVar("&" + this.ParentOwner.namedReference + "." + testObj.name + "." + strVar, "IN");
-                                    }
-                                }
-
-                            }
-                            
-                        }
-                    }
-
-
-
+                    this.updateMeByObject(testObj);              
                     this.parsedObjects.Add(keyForObj);
                 }
             }
@@ -987,12 +1105,23 @@ namespace Projector
                         testObj.subScript.ParentOwner = testObj;
                         testObj.subScript.setCode(fullCode);
 
+
+                        updateDebugInfo(testObj.subScript);
+                        
+
                         testObj.parameters.Add(testObj.subScript);
 
                         if (testObj.subScript.getErrorCount() > 0)
                         {
-                            this.addError("Invalid Code in " + testObj.code);
-                            this.addError(testObj.subScript.getErrors());
+                            this.addError("Invalid Code in subLogic: " + testObj.code);
+                            //this.addError(testObj.subScript.getErrors());
+                            foreach (ScriptErrors err in testObj.subScript.getAllErrors())
+                            {
+                                // add my own line number
+                                err.lineNumber += this.getLineNumber();
+                                this.addError(err);
+
+                            }
                         }
                     }
                 }
@@ -1090,6 +1219,30 @@ namespace Projector
             return retValue;
         }
 
+        public Object getObjectForParam(string param)
+        {
+            
+            string[] pars = param.Split('.');
+            if (pars.Count() > 1 && pars[0].ToLower() == "parent" && this.Parent != null)
+            {
+                string chk = "";
+                for (int i = 1; i < pars.Count(); i++)
+                {
+                    chk += pars[i];
+                }
+                return this.Parent.getObjectForParam(chk);
+            }
+
+            if (this.objectStorage.ContainsKey(param))
+            {               
+                return this.objectStorage[param];
+                
+            }
+            return param;
+
+        }
+
+
         private Object upateParamValue(Object param, string type, string defined)
         {
             Object tmpObject = param;
@@ -1097,24 +1250,22 @@ namespace Projector
             {
                 case "String":
                 case "STR":
-                    //tmpObject = this.fillUpAll(param.ToString());
-                    //if (tmpObject.ToString() == "IN")
-                    //{
-                        tmpObject = this.fillUpAll(defined);
-                    //}
+                       tmpObject = this.fillUpAll(defined);
                     break;
                 case "?":
                     if (param is string)
                     {
-                        //tmpObject = this.fillUpAll(param.ToString());
-                        //if (tmpObject.ToString() == "IN")
-                        //{
-                           tmpObject = this.fillUpAll(defined);
-                        //}
+                       tmpObject = this.fillUpAll(defined);
+                       return getObjectForParam(tmpObject.ToString());     
                     }
+                    
+                    break;
+                case "ListView":
+                    return getObjectForParam(this.fillUpAll(defined)); 
                     break;
 
             }
+            
             return tmpObject;
         }
 
@@ -1130,7 +1281,10 @@ namespace Projector
                 string type = cmdResult.scriptParameterTypes[i];
                 string defined = cmdResult.scriptParameters[i];
                 cmdResult.parameters[i] = this.upateParamValue(cmdResult.parameters[i], type, defined);
-
+                if (this.debugMode)
+                {
+                    this.updateDebugMessage("PARAM UPD:" + type, cmdResult.parameters[i].ToString());
+                }
             }
 
             /*
@@ -1217,6 +1371,10 @@ namespace Projector
                     if (this.objectStorage.ContainsKey(part))
                     {
                         cmdResult.parameters.Add(this.objectStorage[part]);
+                    }
+                    else
+                    {
+                        cmdResult.parameters.Add(getObjectForParam(part));
                     }
                 }
             }
@@ -1338,6 +1496,13 @@ namespace Projector
                                 cmdResult.setState = RefScriptExecute.STATE_RUN;
                             }
 
+                            if (definePart.Contains("EXIT"))
+                            {
+                                cmdResult.setState = RefScriptExecute.STATE_FINISHED;
+                            }
+
+
+
                             cmdResult.code = highPart;
                             cmdResult.originCode = part;
 
@@ -1379,6 +1544,7 @@ namespace Projector
                                 if (objectType == "" || this.objectReferences[part].ToString() == objectType)
                                 {
                                     referenceObject = part;
+
                                 }
                                 else
                                 {
