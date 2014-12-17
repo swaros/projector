@@ -17,13 +17,15 @@ namespace Projector
         public const int MODE_DIRECT = 0;
         public const int MODE_WORD = 1;
 
-        private RichTextBox intRtf;
+        private RichBox intRtf;
 
         public int startPosition = 0;
         public int startLine = 0;
 
         private int cursorPosition = 0;
         private int currentLine = 0;
+
+        public Boolean AllwaysFullRedraw = true;
 
         public HighlightStyle mainStyle = new HighlightStyle();
         public HighlightStyle stringStyle = new HighlightStyle();
@@ -36,13 +38,13 @@ namespace Projector
 
         public RtfColoring(RichTextBox rtf)
         {
-            this.intRtf = rtf;
+            this.intRtf = (RichBox)rtf;
             
         }
 
         public void reAssign(RichTextBox rtf)
         {
-            this.intRtf = rtf;
+            this.intRtf = (RichBox)rtf;
         }
 
         public void setMode(int mode)
@@ -106,7 +108,12 @@ namespace Projector
         {
             if (this.Mode == RtfColoring.MODE_WORD)
             {
-                int fistRunPosition = this.getFistPositionByLine(this.startLine);
+                this.intRtf.redmarker.Clear();
+                int fistRunPosition = 0;
+                if (!this.AllwaysFullRedraw)
+                {
+                    fistRunPosition = this.getFistPositionByLine(this.startLine);
+                }
 
                 if (fistRunPosition >= this.intRtf.Text.Length)
                 {
@@ -257,6 +264,9 @@ namespace Projector
                 existingLinesCharCount += this.intRtf.Lines[ln].Length + 1; // +1 for line ending
             }
 
+
+          
+
             int index = this.intRtf.GetFirstCharIndexFromLine(lineNumber);
             string line = this.intRtf.Lines[lineNumber];
 
@@ -274,6 +284,24 @@ namespace Projector
             if (end > 0)
             {
                 //this.intRtf.Select(index, end);
+                if (this.Mode == RtfColoring.MODE_WORD)
+                {
+                    Point pt = this.intRtf.GetPositionFromCharIndex(existingLinesCharCount);
+                    Point ptend = this.intRtf.GetPositionFromCharIndex(existingLinesCharCount + end);
+                    ptend.Y += (int)this.intRtf.Font.Size;
+
+                    RichBoxMarker rbMarker = new RichBoxMarker();
+
+                    rbMarker.topLeft = pt;
+                    rbMarker.BottomRight = ptend;
+                    rbMarker.ForeColor = color.ForeColor;
+                    rbMarker.firstCharIndex = existingLinesCharCount;
+                    rbMarker.lastCharIndex = existingLinesCharCount + end;
+                    this.intRtf.redmarker.Add(rbMarker);
+                }    
+                
+
+
                 this.intRtf.SelectionStart = existingLinesCharCount;
                 this.intRtf.SelectionLength = end;
                 this.intRtf.SelectionColor = color.ForeColor;

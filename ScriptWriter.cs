@@ -41,6 +41,8 @@ namespace Projector
 
         private AutoCompletion AutoComplete;
 
+        public RichBox codeBox = new RichBox();
+
         Boolean isRunning = false;
 
 
@@ -82,6 +84,16 @@ namespace Projector
         {
             
             InitializeComponent();
+
+            codeSplitContainer.Panel1.Controls.Add(codeBox);
+            codeBox.Dock = DockStyle.Fill;
+
+            codeBox.KeyDown += new KeyEventHandler(codeBox_KeyDown);
+            codeBox.KeyUp += new KeyEventHandler(codeBox_KeyUp);
+            codeBox.TextChanged += new EventHandler(codeBox_TextChanged);
+            codeBox.MouseUp += new MouseEventHandler(codeBox_MouseUp);
+            
+
             messageSplit.Panel1Collapsed = true;
             codeSplitContainer.Panel2Collapsed = true;
             statusLabel.Text = "no file";
@@ -106,13 +118,21 @@ namespace Projector
         private void updateColors()
         {
             Highlight.markLine = -1;
+            int cursorPosition = codeBox.SelectionStart;
+            this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
+
             int startLn = this.currentLineInEdit - 1;
             if (startLn < 0)
             {
                 startLn = 0;
             }
-            Highlight.startLine = this.currentLineInEdit;
+            workerLabel.Text = startLn.ToString();
+            /*
+            Highlight.startLine = startLn;
             Highlight.startPos = this.codeBox.SelectionStart;
+             */
+            Highlight.startLine = 0;
+            Highlight.startPos = 0;
             Highlight.setWordMode(switchDrawMode.Checked);
             Highlight.reDraw(true);
             workerLabel.Text = Highlight.preRuntime + " | " + Highlight.runtime + " | " + Highlight.postRuntime;

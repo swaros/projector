@@ -19,7 +19,7 @@ namespace Projector
         private Hashtable KeyWords = new Hashtable();       
 
         private RichTextBox assignedRtf;
-        private RichTextBox drawingRtf;
+        private RichBox drawingRtf;
 
         private HighlightStyle ObjectStyle = new HighlightStyle();
         private HighlightStyle CommandStyle = new HighlightStyle();
@@ -57,10 +57,10 @@ namespace Projector
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
             this.Srcipt = script;
             this.assignedRtf = rtf;
-            this.drawingRtf = new RichTextBox();
+            this.drawingRtf = new RichBox();
             drawingRtf.Rtf = assignedRtf.Rtf;
             this.RtfColors = new RtfColoring(drawingRtf);
-            
+            drawingRtf.highlighting = true;
            
 
 
@@ -129,6 +129,7 @@ namespace Projector
             watch.Start();
 
             this.drawingRtf.Rtf = this.assignedRtf.Rtf;
+            this.drawingRtf.highlighting = true;
             int startpos = this.assignedRtf.SelectionStart;
             int endPos = this.assignedRtf.SelectionLength;
             int start = this.assignedRtf.GetCharIndexFromPosition(new Point(0, 0));
@@ -202,6 +203,7 @@ namespace Projector
             foreach (ScriptErrors err in this.Srcipt.getAllErrors())
             {
                 this.RtfColors.markFullLine(err.lineNumber, ErrorStyle);
+                
             }
 
             if (this.markLine > -1)
@@ -215,8 +217,13 @@ namespace Projector
             
             watch.Restart();
             // ------------ end drawing ----------------
-
+            this.drawingRtf.highlighting = false;
             this.assignedRtf.Rtf = this.drawingRtf.Rtf;
+            if (assignedRtf is RichBox)
+            {
+                RichBox rbt = (RichBox)assignedRtf;
+                rbt.redmarker = drawingRtf.redmarker;
+            }
 
             // try to scroll last visible position
          

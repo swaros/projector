@@ -41,7 +41,6 @@
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
             this.wordListing = new System.Windows.Forms.ListBox();
-            this.codeBox = new System.Windows.Forms.RichTextBox();
             this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
             this.debugView = new System.Windows.Forms.ListView();
@@ -85,7 +84,6 @@
             this.leftTools.Panel2.SuspendLayout();
             this.leftTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).BeginInit();
-            this.codeSplitContainer.Panel1.SuspendLayout();
             this.codeSplitContainer.Panel2.SuspendLayout();
             this.codeSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).BeginInit();
@@ -168,6 +166,7 @@
             // 
             // leftTools.Panel2
             // 
+            this.leftTools.Panel2.Controls.Add(this.wordListing);
             this.leftTools.Panel2.Controls.Add(this.genericTree);
             this.leftTools.Size = new System.Drawing.Size(217, 592);
             this.leftTools.SplitterDistance = 236;
@@ -232,11 +231,6 @@
             this.codeSplitContainer.Name = "codeSplitContainer";
             this.codeSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // codeSplitContainer.Panel1
-            // 
-            this.codeSplitContainer.Panel1.Controls.Add(this.wordListing);
-            this.codeSplitContainer.Panel1.Controls.Add(this.codeBox);
-            // 
             // codeSplitContainer.Panel2
             // 
             this.codeSplitContainer.Panel2.Controls.Add(this.messageSplit);
@@ -248,28 +242,10 @@
             // 
             this.wordListing.BackColor = System.Drawing.SystemColors.Info;
             this.wordListing.FormattingEnabled = true;
-            this.wordListing.Location = new System.Drawing.Point(292, 107);
+            this.wordListing.Location = new System.Drawing.Point(32, 49);
             this.wordListing.Name = "wordListing";
             this.wordListing.Size = new System.Drawing.Size(159, 173);
             this.wordListing.TabIndex = 1;
-            // 
-            // codeBox
-            // 
-            this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeBox.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codeBox.Location = new System.Drawing.Point(0, 0);
-            this.codeBox.Name = "codeBox";
-            this.codeBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.codeBox.ShowSelectionMargin = true;
-            this.codeBox.Size = new System.Drawing.Size(764, 423);
-            this.codeBox.TabIndex = 0;
-            this.codeBox.Text = "";
-            this.codeBox.WordWrap = false;
-            this.codeBox.VScroll += new System.EventHandler(this.codeBox_VScroll);
-            this.codeBox.TextChanged += new System.EventHandler(this.codeBox_TextChanged);
-            this.codeBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.codeBox_KeyDown);
-            this.codeBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.codeBox_KeyUp);
-            this.codeBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.codeBox_MouseUp);
             // 
             // messageSplit
             // 
@@ -385,7 +361,7 @@
             this.switchDrawMode});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(245, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(214, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // loadButton
@@ -561,7 +537,7 @@
             // 
             // refreshTimer
             // 
-            this.refreshTimer.Interval = 1000;
+            this.refreshTimer.Interval = 400;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // workerLabel
@@ -608,7 +584,6 @@
             this.leftTools.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.leftTools)).EndInit();
             this.leftTools.ResumeLayout(false);
-            this.codeSplitContainer.Panel1.ResumeLayout(false);
             this.codeSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).EndInit();
             this.codeSplitContainer.ResumeLayout(false);
@@ -641,7 +616,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.SplitContainer mainSplitContainer;
         private System.Windows.Forms.SplitContainer codeSplitContainer;
-        public System.Windows.Forms.RichTextBox codeBox;
         private System.Windows.Forms.RichTextBox errorTextBox;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
         private System.Windows.Forms.ToolStripContainer toolStripContainer2;
