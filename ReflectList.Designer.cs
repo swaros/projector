@@ -31,8 +31,8 @@
             this.splitter = new System.Windows.Forms.SplitContainer();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
-            this.autoSort = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.autoSort = new System.Windows.Forms.ToolStripButton();
             this.listView = new System.Windows.Forms.ListView();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
@@ -83,6 +83,11 @@
             this.saveButton.Text = "toolStripButton1";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // autoSort
             // 
             this.autoSort.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -91,11 +96,6 @@
             this.autoSort.Name = "autoSort";
             this.autoSort.Size = new System.Drawing.Size(23, 22);
             this.autoSort.Text = "toolStripButton2";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // listView
             // 
@@ -109,6 +109,7 @@
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
+            this.listView.SelectedIndexChanged += new System.EventHandler(this.listView_SelectedIndexChanged);
             // 
             // saveFileDialog
             // 

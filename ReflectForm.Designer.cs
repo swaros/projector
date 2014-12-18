@@ -41,7 +41,7 @@
             this.MinimizeBox = false;
             this.Name = "ReflectForm";
             this.ShowIcon = false;
-            this.Text = "ReflectForm";
+            this.Text = "Window";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ReflectForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ReflectForm_FormClosed);
             this.ResumeLayout(false);

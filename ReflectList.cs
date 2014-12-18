@@ -11,6 +11,10 @@ namespace Projector
 {
     public partial class ReflectList : UserControl
     {
+
+
+        private ReflectionScript onSelectScript;
+
         public ReflectList()
         {
             InitializeComponent();
@@ -65,6 +69,18 @@ namespace Projector
             return "";
         }
 
+        public void Iterate()
+        {
+            foreach (ListViewItem lItem in this.listView.Items){
+                lItem.Selected = true;
+            }
+        }
+
+        public void OnSelectItem(ReflectionScript refScript)
+        {
+            this.onSelectScript = refScript;
+        }
+
         public void saveAsCsv(string filename)
         {
             this.exportCsvToFile(filename);
@@ -84,6 +100,15 @@ namespace Projector
             string csvContent = Worker.exportCsv(this.listView);
 
             System.IO.File.WriteAllText(filename, csvContent);
+        }
+
+        private void listView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.onSelectScript != null)
+            {
+                RefScriptExecute executer = new RefScriptExecute(this.onSelectScript, this);
+                executer.run();
+            }
         }
     }
 }

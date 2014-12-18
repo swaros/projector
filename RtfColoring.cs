@@ -108,7 +108,7 @@ namespace Projector
         {
             if (this.Mode == RtfColoring.MODE_WORD)
             {
-                this.intRtf.redmarker.Clear();
+                this.intRtf.LineMarker.Clear();
                 int fistRunPosition = 0;
                 if (!this.AllwaysFullRedraw)
                 {
@@ -253,6 +253,11 @@ namespace Projector
 
         public void markFullLine(int lineNumber, HighlightStyle color)
         {
+            this.markFullLine(lineNumber, color, false, true);
+        }
+
+        public void markFullLine(int lineNumber, HighlightStyle color, Boolean lineCaret, Boolean markText)
+        {
             if (lineNumber >= this.intRtf.Lines.Count())
             {
                 return;
@@ -284,7 +289,7 @@ namespace Projector
             if (end > 0)
             {
                 //this.intRtf.Select(index, end);
-                if (this.Mode == RtfColoring.MODE_WORD)
+                if (this.Mode == RtfColoring.MODE_WORD && lineCaret)
                 {
                     Point pt = this.intRtf.GetPositionFromCharIndex(existingLinesCharCount);
                     Point ptend = this.intRtf.GetPositionFromCharIndex(existingLinesCharCount + end);
@@ -297,16 +302,18 @@ namespace Projector
                     rbMarker.ForeColor = color.ForeColor;
                     rbMarker.firstCharIndex = existingLinesCharCount;
                     rbMarker.lastCharIndex = existingLinesCharCount + end;
-                    this.intRtf.redmarker.Add(rbMarker);
-                }    
-                
+                    this.intRtf.LineMarker.Add(rbMarker);
+                }
 
+                if (markText)
+                {
 
-                this.intRtf.SelectionStart = existingLinesCharCount;
-                this.intRtf.SelectionLength = end;
-                this.intRtf.SelectionColor = color.ForeColor;
-                this.intRtf.SelectionBackColor = color.BackColor;
-                this.intRtf.SelectionFont = color.Font;
+                    this.intRtf.SelectionStart = existingLinesCharCount;
+                    this.intRtf.SelectionLength = end;
+                    this.intRtf.SelectionColor = color.ForeColor;
+                    this.intRtf.SelectionBackColor = color.BackColor;
+                    this.intRtf.SelectionFont = color.Font;
+                }
               
             } 
             

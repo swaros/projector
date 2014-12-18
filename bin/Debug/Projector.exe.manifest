@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Projector.exe" size="1552384">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Projector.exe" size="1556992">
       <assemblyIdentity name="Projector" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>Wr3VJuOxMc/eDIhlyN6KptsYo60=</dsig:DigestValue>
+        <dsig:DigestValue>RsbppBPPrjRQTy7R8E6EXfLNGLA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

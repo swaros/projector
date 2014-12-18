@@ -202,13 +202,26 @@ namespace Projector
 
             foreach (ScriptErrors err in this.Srcipt.getAllErrors())
             {
-                this.RtfColors.markFullLine(err.lineNumber, ErrorStyle);
+                this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false);
                 
             }
 
+            // marks an line 
             if (this.markLine > -1)
             {
-                this.RtfColors.markFullLine(markLine, executionStyle);
+                this.RtfColors.markFullLine(markLine, executionStyle, true , true);
+                if (assignedRtf is RichBox)
+                {
+                    RichBox rbt = (RichBox)assignedRtf;
+                    if (rbt.selectionIsVisible())
+                    {
+                        this.assignedRtf.ScrollToCaret();
+                    }
+                }
+                else
+                {
+                    this.assignedRtf.ScrollToCaret();
+                }
             }
 
 
@@ -222,7 +235,7 @@ namespace Projector
             if (assignedRtf is RichBox)
             {
                 RichBox rbt = (RichBox)assignedRtf;
-                rbt.redmarker = drawingRtf.redmarker;
+                rbt.LineMarker = drawingRtf.LineMarker;
             }
 
             // try to scroll last visible position

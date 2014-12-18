@@ -87,7 +87,37 @@ namespace Projector
                 return this.getOriginListView(refObject, parent);
             }
 
+            if (refObject.typeOfObject == "ProfileWorker")
+            {
+                return this.getProfilWorker(refObject, parent);
+            }
+
+            if (refObject.typeOfObject == "Profil")
+            {
+                return this.getProfil(refObject, parent);
+            }
+
+            if (refObject.typeOfObject == "ReflectionDatabase")
+            {
+                return this.getDatabase(refObject, parent);
+            }
+
             return null;
+        }
+
+        private ReflectionDatabase getDatabase(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new ReflectionDatabase();
+        }
+
+        private Profil getProfil(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new Profil("default");
+        }
+
+        private ProfileWorker getProfilWorker(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new ProfileWorker();
         }
 
         private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)

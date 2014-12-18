@@ -8,7 +8,7 @@ namespace Projector
 {
     public class RefScrMath
     {
-
+       
         private RefScrMathObj mathBase;
 
         private ReflectionScript parentScript;
@@ -16,6 +16,8 @@ namespace Projector
         private Boolean castError = false;
 
         private Boolean someCalc = false;
+
+        
 
         public RefScrMath(ReflectionScript parent,string Name,string code)
         {

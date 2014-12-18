@@ -64,6 +64,16 @@ namespace Projector
             this.Close();
         }
 
+        public void setCaption(string caption)
+        {
+            this.Text = caption;
+        }
+
+        public void setEnabled(Boolean setit)
+        {
+            this.Enabled = setit;
+        }
+
         private void closeRequestAction()
         {
             if (this.onCloseScript != null)
@@ -95,13 +105,15 @@ namespace Projector
 
         private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
-           
+
+            this.Visible = false;  
         }
 
         private void ReflectForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.closeRequestAction();
+            Application.DoEvents();
+            
         }
     }
 }

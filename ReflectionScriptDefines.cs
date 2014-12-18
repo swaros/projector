@@ -14,6 +14,8 @@ namespace Projector
         public Boolean isMethod = false;
         public Boolean isLinked = false;
         public Boolean isAssignement = false;
+        public Boolean isSelfInc = false;
+        public Boolean isSelfDec = false;
         public Boolean isReflection = false;
         public Boolean isParentAssigned = false;
         public Boolean parseable = false;

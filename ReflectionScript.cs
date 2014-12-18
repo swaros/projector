@@ -148,6 +148,8 @@ namespace Projector
              * PARSE    any parameter is a reflectionScript
              * VAR      will create an Variable
              * ASSIGN   change the value of a given Object. so an Type of Object must be an Part of this (%)
+             * SELFINC  for assignements. means the value is increased by self
+             * SELFDEC  for assignements. means the value is decreased by self
              * PARENT   means an operation on the parent script.
              * WAIT     set the execution state to wait (for this script part)
              * RUN      set the execution state to continue
@@ -169,10 +171,12 @@ namespace Projector
             this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
 
             this.mask.Add("% = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + ". = ?");
+            this.mask.Add("% += ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN SELFINC" + Projector.ReflectionScript.MASK_DELIMITER + ". += ?");
 
 
             // access to parent if exists
             this.mask.Add("PARENT % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
+            this.mask.Add("PARENT % += ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT SELFINC" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . += ?");
 
             // exection controlls
             this.mask.Add("STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT" + Projector.ReflectionScript.MASK_DELIMITER + "STOP");
@@ -519,18 +523,28 @@ namespace Projector
             return this.globalRenameHash;
         }
 
-
-        private void updateExistingObject(String name, Object value)
+        public void updateExistingObject(String name, Object value)
+        {
+            this.updateExistingObject(name, value, false);
+        }
+        public void updateExistingObject(String name, Object value, Boolean selfInc)
         {
 
             Boolean found = false;
             if (globalRenameHash.ContainsKey("&" + name))
             {
                 found = true;
-                globalRenameHash["&" + name] = value.ToString();
+                if (selfInc)
+                {
+                    globalRenameHash["&" + name] += value.ToString();
+                }
+                else
+                {
+                    globalRenameHash["&" + name] = value.ToString();
+                }
                 if (this.debugMode)
                 {
-                    this.updateDebugMessage("&" + name, value.ToString());
+                    this.updateDebugMessage("&" + name, globalRenameHash["&" + name].ToString());
                 }
             }
 
@@ -538,7 +552,33 @@ namespace Projector
             if (objectReferences.ContainsKey(name) && this.objectStorage.ContainsKey(name))
             {
                 found = true;
-                this.objectStorage[name] = value;
+                if (!selfInc)
+                {
+                    this.objectStorage[name] = value;
+                }
+                else
+                {
+                    if (value is String && this.objectStorage[name] is String)
+                    {
+                        String store = (string) this.objectStorage[name];
+                        store += value;
+                        this.objectStorage[name] = value;
+                    }
+                    else if (value is int && this.objectStorage[name] is int)
+                    {
+                        int store = (int)this.objectStorage[name];
+                        store += (int)value;
+                        this.objectStorage[name] = value;
+                    }
+                    else
+                    {
+                        this.addError("this type can not be incremented");
+                        found = false;
+                    }
+                }
+
+
+
                 if (this.debugMode)
                 {
                     this.updateDebugMessage(name, value.ToString());
@@ -546,18 +586,22 @@ namespace Projector
             }
 
             if (found == false)
-            {
-                if (this.debugMode)
-                {
-                    this.addError("variable &" + name + " not existing");
-                }
+            {               
+                this.addError("variable &" + name + " not existing/writable");
             }
         }
 
-        public void updateVarByObject(String name,Object obj)
+
+        public void updateVarByObject(String name, Object obj)
+        {
+            this.updateVarByObject(name, obj, false);
+        }
+
+        public void updateVarByObject(String name,Object obj, Boolean selfInc)
         {
 
-            this.updateExistingObject(name, obj);
+            this.updateExistingObject(name, obj, selfInc);
+           
         }
 
 
@@ -766,12 +810,13 @@ namespace Projector
 
             // parse all strings so at the end code only will be in the source
             MatchCollection match = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_STRING);
-            
-            
+
+            System.Guid  guid = System.Guid.NewGuid();
+            guid.ToString();
             for (int i = 0; i < match.Count; i++)
             {
                 string str = match[i].Value;
-                string key = "%str_" + i + "%";
+                string key = "%str_" + i + "%" + guid.ToString(); ;
                 globalRenameHash.Add(key, str.Replace("\"",""));
                 globalParamRenameHash.Add(key, str);
                 code = code.Replace(str, key);
@@ -856,7 +901,7 @@ namespace Projector
                     {
                         // update for the parent script
                         if (this.Parent != null)
-                        {
+                        {                            
                             this.Parent.updateVarByMath(testObj.name, mathObj);
                         }
                         else
@@ -876,7 +921,12 @@ namespace Projector
                     {
                         if (this.Parent != null)
                         {
-                            this.Parent.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                            this.Parent.updateVarByObject(testObj.name, 
+                                    this.fillUpAll( 
+                                       tparam
+                                    ),
+                                    testObj.isSelfInc
+                                );
                         }
                         else
                         {
@@ -885,7 +935,7 @@ namespace Projector
                     }
                     else
                     {
-                        this.updateVarByObject(testObj.name, this.fillUpAll(tparam));
+                        this.updateVarByObject(testObj.name, this.fillUpAll(tparam), testObj.isSelfInc);
                     }
                 }
                         
@@ -1484,6 +1534,8 @@ namespace Projector
                             cmdResult.parseable = definePart.Contains("PARSE");
                             cmdResult.isAssignement = definePart.Contains("ASSIGN");
                             cmdResult.isVariable = definePart.Contains("VAR");
+                            cmdResult.isSelfInc = definePart.Contains("SELFINC");
+                            cmdResult.isSelfDec = definePart.Contains("SELFDEC");
                             cmdResult.isParentAssigned = definePart.Contains("PARENT");
 
                             if (definePart.Contains("WAIT"))

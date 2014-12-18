@@ -13,7 +13,56 @@ namespace Projector
 
         public Boolean highlighting = false;
 
-        public List<RichBoxMarker> redmarker = new List<RichBoxMarker>();
+        public List<RichBoxMarker> LineMarker = new List<RichBoxMarker>();
+
+
+        public Boolean selectionIsVisible()
+        {
+            return this.selectionIsVisible(0);
+        }
+
+        public Boolean selectionIsVisible(int offset)
+        {
+            int startVisibleChar = this.GetCharFromPosition(new Point(0, 0));
+
+            if (startVisibleChar > this.SelectionStart)
+            {
+                return false;
+            }
+
+
+            int lineNumber = this.GetLineFromCharIndex(startVisibleChar);
+            int currentLineNumber = this.GetLineFromCharIndex(this.SelectionStart);
+            if (lineNumber + offset > currentLineNumber)
+            {
+                return false;
+            }
+
+            
+            int maxLines = (this.ClientSize.Height / this.getLineHeight()) + 1;
+
+            if (maxLines > this.Lines.Count())
+            {
+                maxLines = this.Lines.Count()-1;
+            }
+
+            int checkInt = startVisibleChar;
+            for (int i = lineNumber; i < maxLines; i++)
+            {
+                checkInt += this.Lines[i].Length;
+                if (checkInt > this.SelectionStart)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int getLineHeight()
+        {
+            return this.FontHeight + 2;
+        }
+        
 
         protected override void WndProc(ref Message m)
         {
@@ -30,19 +79,15 @@ namespace Projector
                                              this.ClientSize.Height - 1));
                          */
                         Pen redPen = new Pen(Color.Blue);
-                        foreach (RichBoxMarker dRec in redmarker){
+                        foreach (RichBoxMarker dRec in LineMarker){
                             Point tl = this.PointToClient(dRec.topLeft);
-
+                            
                             Point mcheck = this.GetPositionFromCharIndex(dRec.firstCharIndex);
+                            Rectangle bychar = new Rectangle(1, mcheck.Y, this.ClientSize.Width - 1, this.getLineHeight());                           
+                            Brush mBrush =  new SolidBrush(Color.FromArgb(45, dRec.ForeColor.R, dRec.ForeColor.G, dRec.ForeColor.B));
 
-                            Rectangle dRecTangle = new Rectangle(tl.X, tl.Y, 10, 10);
 
-                            Rectangle oldRecTangle = new Rectangle(dRec.topLeft.X, dRec.topLeft.Y, 10, 10);
-
-                            Rectangle bychar = new Rectangle(1, mcheck.Y, this.ClientSize.Width - 1, 18);
-
-                            g.DrawRectangle(redPen, dRecTangle);
-                            g.DrawRectangle(new Pen(dRec.ForeColor), dRecTangle);
+                            g.FillRectangle(mBrush, bychar);
                             g.DrawRectangle(new Pen(dRec.ForeColor), bychar);
                         }
                     }

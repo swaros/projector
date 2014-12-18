@@ -231,6 +231,7 @@
     <Compile Include="PlacerHolder.cs" />
     <Compile Include="ProcSync.cs" />
     <Compile Include="Profil.cs" />
+    <Compile Include="ProfileWorker.cs" />
     <Compile Include="ProfilGroup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -390,12 +391,14 @@
     <Compile Include="ReflectButton.Designer.cs">
       <DependentUpon>ReflectButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReflectDatabase.cs" />
     <Compile Include="ReflectForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ReflectForm.Designer.cs">
       <DependentUpon>ReflectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReflectionDatabase.cs" />
     <Compile Include="ReflectionScript.cs" />
     <Compile Include="ReflectionScriptDefines.cs" />
     <Compile Include="ReflectionScriptHighLight.cs" />

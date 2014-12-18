@@ -92,6 +92,8 @@ namespace Projector
             codeBox.KeyUp += new KeyEventHandler(codeBox_KeyUp);
             codeBox.TextChanged += new EventHandler(codeBox_TextChanged);
             codeBox.MouseUp += new MouseEventHandler(codeBox_MouseUp);
+            codeBox.VScroll += new EventHandler(codeBox_Vscroll);
+            
             
 
             messageSplit.Panel1Collapsed = true;
@@ -136,6 +138,15 @@ namespace Projector
             Highlight.setWordMode(switchDrawMode.Checked);
             Highlight.reDraw(true);
             workerLabel.Text = Highlight.preRuntime + " | " + Highlight.runtime + " | " + Highlight.postRuntime;
+        }
+
+        private void codeBox_Vscroll(object sender, EventArgs e)
+        {
+            workerLabel.Text = "invisible";
+            if (codeBox.selectionIsVisible())
+            {
+                workerLabel.Text = "visible";
+            }
         }
 
         private void codeBox_TextChanged(object sender, EventArgs e)

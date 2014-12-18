@@ -12,5 +12,6 @@ namespace Projector
         public string code;
         public Object ValueReferenz;
         public Double Value;
+        
     }
 }
