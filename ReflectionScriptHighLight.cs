@@ -35,6 +35,8 @@ namespace Projector
 
         private HighlightStyle KeyWordStyle = new HighlightStyle();
 
+        private Hashtable LastExecutedLines = new Hashtable();
+
         private int fontDefaultSize = 10;
         private string defaultFontName = "Courier New";
 
@@ -52,7 +54,10 @@ namespace Projector
 
         private int drawMode = 0;
 
-
+        public void clearExecutions()
+        {
+            this.LastExecutedLines.Clear();
+        }
 
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
             this.Srcipt = script;
@@ -209,11 +214,52 @@ namespace Projector
             // marks an line 
             if (this.markLine > -1)
             {
-                this.RtfColors.markFullLine(markLine, executionStyle, true , true);
+                
+
+                if (!this.LastExecutedLines.ContainsKey(markLine))
+                {
+                    this.LastExecutedLines.Add(markLine, 10);
+                }
+                else
+                {
+                    this.LastExecutedLines[markLine] = 10;
+                }
+
+                Hashtable copyThat = new Hashtable();
+                foreach (DictionaryEntry lastExecs in this.LastExecutedLines)
+                {
+                    int execCount = (int) lastExecs.Value;
+                    execCount--;
+                    if (execCount > 0)
+                    {
+
+                        copyThat.Add(lastExecs.Key, execCount);
+                        if (execCount > 8)
+                        {
+                            this.RtfColors.markFullLine((int)lastExecs.Key, executionStyle, true, false);
+                        }
+                        else
+                        {
+                            HighlightStyle hStyle = new HighlightStyle();
+                            
+                            int colorValue = 255 / ((int)lastExecs.Value * 10);
+                            if (colorValue > 255)
+                            {
+                                colorValue = 255;
+                            }
+                            hStyle.ForeColor = Color.FromArgb(255, 255, colorValue);
+
+                            this.RtfColors.markFullLine((int)lastExecs.Key, hStyle, true, false);
+                        }
+
+                    }
+                }
+                LastExecutedLines = copyThat;
+
                 if (assignedRtf is RichBox)
                 {
                     RichBox rbt = (RichBox)assignedRtf;
-                    if (rbt.selectionIsVisible())
+                    if (!rbt.selectionIsVisible())
                     {
                         this.assignedRtf.ScrollToCaret();
                     }

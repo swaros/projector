@@ -13,5 +13,7 @@ namespace Projector
         public Point BottomRight;
         public int firstCharIndex = 0;
         public int lastCharIndex = 0;
+        public int displayedTimes = 1;
+        
     }
 }

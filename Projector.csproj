@@ -119,6 +119,7 @@
     <Compile Include="CretaeInsertSelect.Designer.cs">
       <DependentUpon>CretaeInsertSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseAsyncParam.cs" />
     <Compile Include="DataContent.cs" />
     <Compile Include="DateSelect.cs">
       <SubType>UserControl</SubType>
@@ -417,6 +418,7 @@
     <Compile Include="RefScrObjectStorage.cs" />
     <Compile Include="RefScrVariable.cs" />
     <Compile Include="RefSrcStates.cs" />
+    <Compile Include="RegexGroup.cs" />
     <Compile Include="RichBox.cs">
       <SubType>Component</SubType>
     </Compile>

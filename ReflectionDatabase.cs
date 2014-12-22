@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.ComponentModel;
 
 namespace Projector
 {
@@ -18,6 +19,117 @@ namespace Projector
 
         private ReflectionScript onIterationScr;
         private ReflectionScript onErrorScr;
+        private ReflectionScript onDoneScr;
+
+        private BackgroundWorker worker = new BackgroundWorker();
+
+        public ReflectionDatabase() {
+            this.initWorker();
+        }   
+
+        private void initWorker()
+        {
+            worker.DoWork +=
+                new DoWorkEventHandler(backgroundWorker1_DoWork);
+            worker.RunWorkerCompleted +=
+                new RunWorkerCompletedEventHandler(backgroundWorker1_RunWorkerCompleted);
+            worker.ProgressChanged +=
+                new ProgressChangedEventHandler(backgroundWorker1_ProgressChanged);
+
+            worker.WorkerReportsProgress = true;
+        }
+
+
+        public void startAsync(string profilName, string query)
+        {
+            Profil usedProfil = pWorker.getProfilbyName(profilName);
+            if (usedProfil != null)
+            {                
+                DatabaseAsyncParam data = new DatabaseAsyncParam();
+                data.UsedProfil = usedProfil;
+                data.FieldName = this.iterationVaribaleName;
+                data.ValueName = this.iterationVaribaleValue;
+                data.Query = query;
+                worker.RunWorkerAsync(data);
+            }
+             else
+            {
+                this.scrMysqError(" invalid profil: " + profilName);
+            }
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+            doneDb();
+            
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            DatabaseAsyncParam Param = (DatabaseAsyncParam) e.Argument;
+
+            MysqlHandler mysql = new MysqlHandler(Param.UsedProfil);
+
+            mysql.connect();
+
+            List<Hashtable> hashResult = mysql.selectAsHash(Param.Query);
+            List<string> errors = mysql.getErrorMessages();
+            if (errors.Count > 0)
+            {
+                foreach (string errMsg in errors)
+                {
+                    //this.scrMysqError(errMsg);
+                    worker.ReportProgress(0,errMsg);
+                }
+            }
+            else
+            {
+
+                foreach (Hashtable row in hashResult)
+                {
+                    foreach (DictionaryEntry dict in row)
+                    {
+                        string val;
+                        if (dict.Value == null)
+                        {
+                            val = "";
+                        }
+                        else
+                        {
+                            val = dict.Value.ToString();
+
+                        }
+                        //this.iteration(dict.Key.ToString(), val);
+                        worker.ReportProgress(1, new string[]{dict.Key.ToString(), val});
+                    }
+                }
+            }
+            mysql.disConnect();
+        }
+           
+        
+
+        
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.UserState != null)
+            {
+                if (e.ProgressPercentage == 0)
+                {
+                    string msg = (string) e.UserState;
+                    this.scrMysqError(msg);
+                }
+
+                if (e.ProgressPercentage == 1)
+                {
+                    string[] obData = (string[])e.UserState;
+                    this.iteration(obData[0], obData[1]);
+                }
+
+            }
+        }
+
 
         public void startReading(string profilName, string query)
         {
@@ -59,10 +171,11 @@ namespace Projector
                     }
                 }
                 mysql.disConnect();
+                doneDb();
             }
             else
             {
-                this.scrMysqError(" inavalid profil: " + profilName);
+                this.scrMysqError(" invalid profil: " + profilName);
             }
 
         }
@@ -89,6 +202,15 @@ namespace Projector
             }
         }
 
+        private void doneDb()
+        {
+            if (this.onDoneScr != null)
+            {
+
+                RefScriptExecute exec = new RefScriptExecute(this.onDoneScr, this);
+                exec.run();
+            }
+        }
 
         public void OnIteration(String iterationName, string iterationValue, ReflectionScript scr)
         {
@@ -101,6 +223,11 @@ namespace Projector
         {
             this.errorVariableName = messagevar;
             this.onErrorScr = scr;
+        }
+
+        public void OnDone(ReflectionScript scr)
+        {
+            this.onDoneScr = scr;
         }
 
     }

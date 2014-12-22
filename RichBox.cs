@@ -14,6 +14,7 @@ namespace Projector
         public Boolean highlighting = false;
 
         public List<RichBoxMarker> LineMarker = new List<RichBoxMarker>();
+        public List<RichBoxMarker> ExecutionMarker = new List<RichBoxMarker>();
 
 
         public Boolean selectionIsVisible()

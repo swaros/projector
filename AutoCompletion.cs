@@ -16,7 +16,12 @@ namespace Projector
         private Hashtable wordList = new Hashtable();
         RichTextBox usedTextBox;
 
+        public Boolean useWordBeforeAsGroup = true;
+
         private ListBox ownListBox;
+
+        private string lastSelectedWord;
+        private string wordBefore;  
 
         private Form parentForm;
 
@@ -62,8 +67,18 @@ namespace Projector
 
             int selPos = this.usedTextBox.SelectionStart;
             string leftTxt = this.usedTextBox.Text.Substring(0, selPos);            
-            string[] allwords = Regex.Split(leftTxt, "[ ,=+-/*]");
+            string[] allwords = Regex.Split(leftTxt, "[ \\n,=+-/*]");
             leftTxt = allwords[allwords.Length - 1];
+            this.lastSelectedWord = leftTxt;
+            if (allwords.Length > 1)
+            {
+                this.wordBefore = allwords[allwords.Length - 2];
+            }
+            else
+            {
+                this.wordBefore = null;
+            }
+
             this.setSelStart = selPos - leftTxt.Length;
             this.setSelLength = leftTxt.Length;
             return leftTxt;
@@ -108,19 +123,31 @@ namespace Projector
         public List<string> getListFromPart(string part)
         {
             List<string> result = new List<string>();
+            List<string> defaultResult = new List<string>();
             foreach (DictionaryEntry de in this.wordList)
             {
                 string keyname = de.Key.ToString().ToLower();
                 string value = de.Value.ToString();
-
-                if (keyname.Contains(part.ToLower()))
+                if (!this.useWordBeforeAsGroup || value == "default" || value == this.wordBefore || value == keyname)
                 {
-                    string subStr = keyname.Substring(0, part.Length);
-                    if (subStr.ToLower() == part.ToLower()) result.Add(de.Key.ToString());
+                    if (keyname.Contains(part.ToLower()))
+                    {
+                        string subStr = keyname.Substring(0, part.Length);
+                        if (subStr.ToLower() == part.ToLower()){
+                            if (value == "default"){
+                                defaultResult.Add(de.Key.ToString());
+                            } else {
+                                result.Add(de.Key.ToString());
+                            }
+                        }
+                    }
                 }
                 
             }
-            return result;
+            if (result.Count > 0)
+                return result;
+
+            return defaultResult;
         }
 
         // own autocomplete management

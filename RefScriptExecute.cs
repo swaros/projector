@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Projector
 {
@@ -18,6 +19,9 @@ namespace Projector
         public const int STATE_FINISHED = 10;
 
         public const string PROC_NAME = "ReflectionScript";
+
+        private Stopwatch RunTime = new Stopwatch();
+        private Hashtable WaitingTimers = new Hashtable();
 
         // wich subinstance i am?
         public int runlevel = 0;
@@ -55,8 +59,8 @@ namespace Projector
             this.parentObject = parent;
             this.currentScript = script;
             this.currentScript.CurrentExecuter = this;
-
-            this.init();
+            
+            this.init();            
         }
 
         public void setWatcher(Object watcher, String MethodName)
@@ -73,6 +77,40 @@ namespace Projector
             this.objectDefines.Add("NEW",new ReflectNew());
         }
 
+        private Boolean checkWaitingTimer(string name)
+        {
+            int maxRunTime = this.currentScript.SetupIntValue(ReflectionScript.SETUP_MAXWAIT);
+            if (maxRunTime < 1)
+            {
+                return true;
+            }
+            // existing timers
+            if (this.WaitingTimers.ContainsKey(name))
+            {
+                Stopwatch running = (Stopwatch)this.WaitingTimers[name];
+                if (running.ElapsedMilliseconds < maxRunTime)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                // new timer ...so it is true
+                Stopwatch newRunning = new Stopwatch();
+                newRunning.Start();
+                this.WaitingTimers.Add(name, newRunning);
+                return true;
+            }
+            return false;
+        }
+
+        private void removeWaitTimerIfExists(string name)
+        {
+            if (this.WaitingTimers.ContainsKey(name))
+            {
+                this.WaitingTimers.Remove(name);
+            }
+        }
 
         public Boolean run()
         {
@@ -227,7 +265,7 @@ namespace Projector
                 }
                 
             }
-
+            
 
             if (cmd == "WAITFOR")
             {
@@ -240,16 +278,27 @@ namespace Projector
 
                 if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME, procIdent) > 0)
                 {
-                    currentExecLine--;
-                    /*
-                    if (this.debugMode)
+                    // max time reached ?
+                    if (this.checkWaitingTimer(procIdent))
                     {
-                        this.currentDebugLine = scrLine;
-                        this.updateMessage(scrLine);
+                        // get back to my self
+                        currentExecLine--;
+                        Application.DoEvents();
+                        return true;
                     }
-                    */
-                    Application.DoEvents();
-                    return true;
+                    else
+                    {
+                        ScriptErrors error = new ScriptErrors();
+                        error.errorMessage = "Max Waiting Time reached. Check code or increase max waiting Time";
+                        error.lineNumber = scrLine.lineNumber;
+                        error.errorCode = Projector.RefSrcStates.ERROR_TYPE_WARNING;
+                        this.currentScript.addError(error);
+                        this.removeWaitTimerIfExists(procIdent);
+                    }
+                }
+                else
+                {
+                    this.removeWaitTimerIfExists(procIdent);
                 }
             }
 
@@ -269,6 +318,7 @@ namespace Projector
                         error.errorMessage = "Parent can be used in subscripts only ";
                         error.lineNumber = scrLine.lineNumber;
                         error.errorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
+                        this.currentScript.addError(error);
                     }
                 }
                 else
@@ -478,12 +528,12 @@ namespace Projector
 
                 if (this.currentScript.Parent != null)
                 {
-                    startLn = this.currentScript.Parent.CurrentExecuter.getCurrentExecutionLine();
+                    startLn = this.currentScript.parentLineNumber;
                 }
 
                 Type queryWinType = this.parentWatcher.GetType();
                 MethodInfo myMethodInfo = queryWinType.GetMethod(this.watcherMethod);
-                object[] mParam = new object[] { refObj, this.currentExecLine + startLn, this.runState , this.runlevel};
+                object[] mParam = new object[] { refObj, refObj.lineNumber + startLn, this.runState , this.runlevel};
                 refObj.ReflectObject = myMethodInfo.Invoke(this.parentWatcher, mParam);
             }
             Application.DoEvents();

@@ -217,7 +217,7 @@ namespace Projector
                 mNode.ImageIndex = imageNr;
                 mNode.SelectedImageIndex = mNode.ImageIndex;
                 toNode.Nodes.Add(mNode);
-                this.AutoComplete.addWord(methodmask);
+                this.AutoComplete.addWord(methodmask, parentName);
 
             }
         }
@@ -233,75 +233,95 @@ namespace Projector
                 mNode.ImageIndex = imageNr;
                 mNode.SelectedImageIndex = mNode.ImageIndex;
                 toNode.Nodes.Add(mNode);
-                this.AutoComplete.addWord(methodmask);
+                this.AutoComplete.addWord(methodmask,parentName);
 
             }
         }
 
+
+
+
         // updates the generic tree depending on actually used objects
         private void extractObjectInfos()
         {
-            genericTree.Nodes.Clear();
+            Boolean addMethods = false;
+            //genericTree.Nodes.Clear();
             foreach(RefScrObjectStorage usedObject in Projector.ObjectInfo.getAllObjects() ){
-                
-                TreeNode objectNode = new TreeNode(usedObject.originObjectName);
-                objectNode.ImageIndex = ScriptWriter.TREE_OBJECT_IMG_IDENT;
-                objectNode.SelectedImageIndex = objectNode.ImageIndex;
-                
-                TreeNode methods = new TreeNode("Methods");
-                methods.ImageIndex = 3;
-                methods.SelectedImageIndex = 3;
-
-               
-                foreach (string methodmask in usedObject.methodNames)
+                string nodeKey = usedObject.originObjectName;
+                TreeNode objectNode;
+                if (!genericTree.Nodes.ContainsKey(nodeKey))
                 {
-                    methods.Nodes.Add(methodmask);
-                    this.AutoComplete.addWord(methodmask);
-                    
+                    objectNode = new TreeNode(nodeKey);
+                    objectNode.Name = nodeKey;
+                    objectNode.ImageIndex = ScriptWriter.TREE_OBJECT_IMG_IDENT;
+                    objectNode.SelectedImageIndex = objectNode.ImageIndex;
+
+                    if (addMethods)
+                    {
+                        TreeNode methods = new TreeNode("Methods");
+                        methods.ImageIndex = 3;
+                        methods.SelectedImageIndex = 3;
+
+
+                        foreach (string methodmask in usedObject.methodNames)
+                        {
+                            methods.Nodes.Add(methodmask);
+                            //this.AutoComplete.addWord(methodmask);
+
+                        }
+                        objectNode.Nodes.Add(methods);
+                    }
+
+                    genericTree.Nodes.Add(objectNode);
                 }
-                
-                objectNode.Nodes.Add(methods);
-                genericTree.Nodes.Add(objectNode);
+                else
+                {
+                    objectNode = genericTree.Nodes[nodeKey];
+                }
 
                 List<string> instances = this.script.getCurrentObjectsByType(usedObject.originObjectName);
                 if (instances != null)
                 {
-                    TreeNode usedBy = new TreeNode("Instances");
-                    usedBy.SelectedImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT;
-                    usedBy.ImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT; ;
+                    TreeNode usedBy;
+                    if (objectNode.Nodes.ContainsKey("Instances"))
+                    {
+                        usedBy = objectNode.Nodes["Instances"];
+                    }
+                    else
+                    {
+                        usedBy = new TreeNode("Instances");
+                        usedBy.SelectedImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT;
+                        usedBy.ImageIndex = ScriptWriter.TREE_INSTANCE_IMG_IDENT;
+                        usedBy.Name = "Instances";
+                        objectNode.Nodes.Add(usedBy);    
+                    }
+
                     foreach (string instOf in instances)
                     {
                         // add methods
-                        TreeNode objInstance = new TreeNode(instOf);
-                        updateObjectTree(usedObject.methodNames, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
-                        updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
-                        updateObjectTree(usedObject.Integers, instOf, ScriptWriter.TREE_INT_IMG_IDENT, objInstance, ".");
-                        updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");
-                        /*
-                        foreach (string methodmask in usedObject.methodNames)
-                        {
-                            TreeNode mNode = new TreeNode();
-                            mNode.Text = methodmask;
-                            mNode.ToolTipText = instOf + " " + methodmask;
-                            mNode.ImageIndex = ScriptWriter.TREE_METHOD_IMG_IDENT;
-                            mNode.SelectedImageIndex = mNode.ImageIndex;
-                            objInstance.Nodes.Add(mNode);
-                            this.AutoComplete.addWord(methodmask);
+                        
 
+                        if (!usedBy.Nodes.ContainsKey(instOf))
+                        {
+                            TreeNode objInstance = new TreeNode(instOf);
+                            objInstance.Name = instOf;
+                            updateObjectTree(usedObject.methodNames, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
+                            updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
+                            updateObjectTree(usedObject.Integers, instOf, ScriptWriter.TREE_INT_IMG_IDENT, objInstance, ".");
+                            updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");
+
+                            usedBy.Nodes.Add(objInstance);    
                         }
 
-                        foreach (string strings in usedObject.Strings)
-                        {
-
-                        }
-                        */
-                        //objInstance.Nodes.Add(methods);
-                        usedBy.Nodes.Add(objInstance);
+                        
                     }
-                    objectNode.Nodes.Add(usedBy);
+                    
+                    
+                    
                 }
 
             }
+            /*
             TreeNode varibales = new TreeNode("Variables");
             varibales.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
             varibales.SelectedImageIndex = varibales.ImageIndex;
@@ -309,13 +329,18 @@ namespace Projector
             foreach (DictionaryEntry scrVars in this.script.getAllStrings())
             {
 
-                TreeNode var = new TreeNode(scrVars.Key + " " + scrVars.Value);
-                var.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
-                var.SelectedImageIndex = varibales.ImageIndex;
-                varibales.Nodes.Add(var);
+                string varText = scrVars.Key.ToString();
+                if (varText[0] != '%')
+                {
+                    TreeNode var = new TreeNode(scrVars.Key + " " + scrVars.Value);
+                    var.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
+                    var.SelectedImageIndex = varibales.ImageIndex;
+                    varibales.Nodes.Add(var);
+                    this.AutoComplete.addWord(varText);
+                }
             }
             genericTree.Nodes.Add(varibales);
-
+            */
         }
 
         private void updateLogBook()
@@ -457,7 +482,8 @@ namespace Projector
             this.logbook.Items.Add( prompt + "> (" + lineNumber + "|" + currentLine.lineNumber + ") " + objName);
 
 
-            updateColors(currentLine.lineNumber);
+             //updateColors(currentLine.lineNumber);
+            updateColors(lineNumber);
             if (State == RefScriptExecute.STATE_RUN)
             {
                 errorLabels.Text = "Currently Running " + currentLine.lineNumber;
@@ -507,7 +533,7 @@ namespace Projector
         {
             this.logbook.Items.Clear();
             this.logbook.Items.Add("START ...");
-
+            this.Highlight.clearExecutions();
             script.setCode(codeBox.Text, true);
             if (script.getErrorCount() == 0)
             {

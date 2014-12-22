@@ -34,13 +34,14 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.errorLabels = new System.Windows.Forms.ToolStripStatusLabel();
             this.errCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.workerLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.leftTools = new System.Windows.Forms.SplitContainer();
             this.logbook = new System.Windows.Forms.ListBox();
+            this.wordListing = new System.Windows.Forms.ListBox();
             this.genericTree = new System.Windows.Forms.TreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.wordListing = new System.Windows.Forms.ListBox();
             this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
             this.debugView = new System.Windows.Forms.ListView();
@@ -58,6 +59,8 @@
             this.runButton = new System.Windows.Forms.ToolStripButton();
             this.continueBtn = new System.Windows.Forms.ToolStripButton();
             this.stopScr = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.switchDrawMode = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,9 +74,6 @@
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.workerLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.switchDrawMode = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -84,6 +84,7 @@
             this.leftTools.Panel2.SuspendLayout();
             this.leftTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).BeginInit();
+            this.codeSplitContainer.Panel1.SuspendLayout();
             this.codeSplitContainer.Panel2.SuspendLayout();
             this.codeSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).BeginInit();
@@ -136,6 +137,12 @@
             this.errCount.Size = new System.Drawing.Size(22, 17);
             this.errCount.Text = "---";
             // 
+            // workerLabel
+            // 
+            this.workerLabel.Name = "workerLabel";
+            this.workerLabel.Size = new System.Drawing.Size(26, 17);
+            this.workerLabel.Text = "idle";
+            // 
             // mainSplitContainer
             // 
             this.mainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -166,7 +173,6 @@
             // 
             // leftTools.Panel2
             // 
-            this.leftTools.Panel2.Controls.Add(this.wordListing);
             this.leftTools.Panel2.Controls.Add(this.genericTree);
             this.leftTools.Size = new System.Drawing.Size(217, 592);
             this.leftTools.SplitterDistance = 236;
@@ -186,6 +192,15 @@
             this.logbook.Name = "logbook";
             this.logbook.Size = new System.Drawing.Size(217, 236);
             this.logbook.TabIndex = 0;
+            // 
+            // wordListing
+            // 
+            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
+            this.wordListing.FormattingEnabled = true;
+            this.wordListing.Location = new System.Drawing.Point(194, 99);
+            this.wordListing.Name = "wordListing";
+            this.wordListing.Size = new System.Drawing.Size(159, 173);
+            this.wordListing.TabIndex = 1;
             // 
             // genericTree
             // 
@@ -231,21 +246,16 @@
             this.codeSplitContainer.Name = "codeSplitContainer";
             this.codeSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // codeSplitContainer.Panel1
+            // 
+            this.codeSplitContainer.Panel1.Controls.Add(this.wordListing);
+            // 
             // codeSplitContainer.Panel2
             // 
             this.codeSplitContainer.Panel2.Controls.Add(this.messageSplit);
             this.codeSplitContainer.Size = new System.Drawing.Size(764, 592);
             this.codeSplitContainer.SplitterDistance = 423;
             this.codeSplitContainer.TabIndex = 0;
-            // 
-            // wordListing
-            // 
-            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
-            this.wordListing.FormattingEnabled = true;
-            this.wordListing.Location = new System.Drawing.Point(32, 49);
-            this.wordListing.Name = "wordListing";
-            this.wordListing.Size = new System.Drawing.Size(159, 173);
-            this.wordListing.TabIndex = 1;
             // 
             // messageSplit
             // 
@@ -446,6 +456,24 @@
             this.stopScr.Text = "Stop";
             this.stopScr.Click += new System.EventHandler(this.stopScr_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // switchDrawMode
+            // 
+            this.switchDrawMode.Checked = true;
+            this.switchDrawMode.CheckOnClick = true;
+            this.switchDrawMode.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.switchDrawMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.switchDrawMode.Image = global::Projector.Properties.Resources.edit_replace;
+            this.switchDrawMode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.switchDrawMode.Name = "switchDrawMode";
+            this.switchDrawMode.Size = new System.Drawing.Size(23, 22);
+            this.switchDrawMode.Text = "switch Highlighting mode";
+            this.switchDrawMode.Click += new System.EventHandler(this.switchDrawMode_Click);
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
@@ -540,30 +568,6 @@
             this.refreshTimer.Interval = 400;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
-            // workerLabel
-            // 
-            this.workerLabel.Name = "workerLabel";
-            this.workerLabel.Size = new System.Drawing.Size(26, 17);
-            this.workerLabel.Text = "idle";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // switchDrawMode
-            // 
-            this.switchDrawMode.Checked = true;
-            this.switchDrawMode.CheckOnClick = true;
-            this.switchDrawMode.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.switchDrawMode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.switchDrawMode.Image = global::Projector.Properties.Resources.edit_replace;
-            this.switchDrawMode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.switchDrawMode.Name = "switchDrawMode";
-            this.switchDrawMode.Size = new System.Drawing.Size(23, 22);
-            this.switchDrawMode.Text = "switch Highlighting mode";
-            this.switchDrawMode.Click += new System.EventHandler(this.switchDrawMode_Click);
-            // 
             // ScriptWriter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -584,6 +588,7 @@
             this.leftTools.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.leftTools)).EndInit();
             this.leftTools.ResumeLayout(false);
+            this.codeSplitContainer.Panel1.ResumeLayout(false);
             this.codeSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).EndInit();
             this.codeSplitContainer.ResumeLayout(false);
