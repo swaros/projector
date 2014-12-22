@@ -878,14 +878,14 @@ namespace Projector
             // get all subelemets by brackets {} independend from what kind of usage
             // just cut it out, add an marker for later usage
             //MatchCollection bracketMatch = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_BRACKETS);
-            List<string> bracketMatch = RegexGroup.getMatch(this.code);
+            List<string> bracketMatch = RegexGroup.getMatch(this.code,1);
             for (int i = 0; i < bracketMatch.Count; i++)
             {
                 string str = bracketMatch[i];
                 string key = "%subscr_" + i + "%";
                 //globalRenameHash.Add(key, str);
-                globalParamRenameHash.Add(key, str);
-                code = code.Replace(str, key);
+                
+                
                 int lastCut = str.LastIndexOf('}');                
                 string nCode = str.Substring(1, lastCut - 1);
                 namedSubScripts.Add(
@@ -893,7 +893,8 @@ namespace Projector
                         nCode
                     );
 
-
+                code = code.Replace("{" + nCode + "}", key);
+                globalParamRenameHash.Add(key, nCode);
             }
 
             // all content that in normal brackets, that will be used for calculations

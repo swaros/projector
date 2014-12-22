@@ -35,7 +35,7 @@ namespace Projector
                             grCap++;
                             if (level == readLevel)
                             {
-                                result.Add(grp.Value);
+                                result.Add(cap.Value);
                             }
                             
                         }
