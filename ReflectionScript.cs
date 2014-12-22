@@ -13,6 +13,7 @@ namespace Projector
     {
 
         public const string SETUP_MAXWAIT = "MAX_WAIT";
+        public const string SETUP_GLOBAL = "GLOBAL";
 
 
         private const string REGEX_BRACKETS = "({[^}]*})";
@@ -84,7 +85,7 @@ namespace Projector
         private Hashtable namedSubScripts = new Hashtable();
 
         // CONTROL: all subscripts
-        private List<ReflectionScript> subScripts = new List<ReflectionScript>();
+        private Hashtable subScripts = new Hashtable();
 
         // VARIABLES: list of entries between () brackets that used for calculations
 
@@ -183,7 +184,7 @@ namespace Projector
             this.mask.Add("% += ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN SELFINC" + Projector.ReflectionScript.MASK_DELIMITER + ". += ?");
 
             // environment change
-            this.mask.Add("SET % ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR SETUP" + Projector.ReflectionScript.MASK_DELIMITER + "SET STR INT");
+            this.mask.Add("SET % ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR SETUP");
 
 
             // access to parent if exists
@@ -206,6 +207,7 @@ namespace Projector
         private void initDefaultSetups()
         {
             this.addSetupIfNotExists(ReflectionScript.SETUP_MAXWAIT, 10000); // max wait 10 seconds for finishing threads
+            this.addSetupIfNotExists(ReflectionScript.SETUP_GLOBAL, true);
         }
 
         private void addSetupIfNotExists(string name, Object value)
@@ -241,12 +243,40 @@ namespace Projector
             return 0;
         }
 
+        public Boolean SetupBoolValue(string name)
+        {
+            if (this.Setup.ContainsKey(name))
+            {
+                if (this.Setup[name] is Boolean)
+                {
+                    return (Boolean)this.Setup[name];
+                }
+            }
+            return false;
+        }
 
+        // -------------------- end setup stuff ----------------------
 
         public List<ReflectionScriptDefines> getScript()
         {
             return this.buildedSource;
         }
+
+        public List<ReflectionScriptDefines> getFullScript()
+        {
+
+            List<ReflectionScriptDefines> res = new List<ReflectionScriptDefines>();
+            res.AddRange( this.getScript());
+            foreach (DictionaryEntry subScr in this.subScripts)
+            {
+                ReflectionScript refScr = (ReflectionScript)subScr.Value;
+                List<ReflectionScriptDefines> subSource = refScr.getFullScript();                
+                res.AddRange(subSource);
+            }
+
+            return res;
+        }
+
 
         /**
          * resets all elements to starts a 
@@ -1149,6 +1179,11 @@ namespace Projector
                           
                             globalRenameHash.Add("&" + testObj.name, varStr);
 
+                            if (this.SetupBoolValue(ReflectionScript.SETUP_GLOBAL) && this.Parent != null)
+                            {
+                                this.Parent.createOrUpdateStringVar("&" + testObj.name, varStr);
+                            }
+
                             if (type == "INT" || type == "Int32" || type == "Decimal")
                             {
                                 int intValue = 0;
@@ -1162,20 +1197,15 @@ namespace Projector
                                 {
                                     this.addError(ex.Message);
                                 }
-                                if (testObj.isSetup)
-                                {
 
-                                }
-                                else
-                                {
-                                    RefScrVariable newVar = new RefScrVariable();
-                                    newVar.Name = testObj.name;
-                                    newVar.Value = intValue;
-                                    newVar.referenceOf = null;
-                                    newVar.TypeName = "INT";
+                                RefScrVariable newVar = new RefScrVariable();
+                                newVar.Name = testObj.name;
+                                newVar.Value = intValue;
+                                newVar.referenceOf = null;
+                                newVar.TypeName = "INT";
 
-                                    this.int32Founds.Add(newVar.Name, newVar);
-                                }
+                                this.int32Founds.Add(newVar.Name, newVar);
+                                
                             }
                             
                         }
@@ -1233,18 +1263,25 @@ namespace Projector
                         testObj.subScript.parentLineNumber = this.getLineNumber();
                         testObj.subScript.setCode(fullCode);
                         
-
-
-
                         updateDebugInfo(testObj.subScript);
-                        
 
+                        if (testObj.namedReference != null) {
+                            if (this.subScripts.ContainsKey(testObj.namedReference))
+                            {
+                                System.Guid uuid = System.Guid.NewGuid();
+                                this.subScripts.Add(testObj.namedReference + uuid.ToString(), testObj.subScript);
+                            }
+                            else
+                            {
+                                this.subScripts.Add(testObj.namedReference, testObj.subScript);
+                            }
+
+                        }
                         testObj.parameters.Add(testObj.subScript);
 
                         if (testObj.subScript.getErrorCount() > 0)
                         {
                             this.addError("Invalid Code in subLogic: " + testObj.code);
-                            //this.addError(testObj.subScript.getErrors());
                             foreach (ScriptErrors err in testObj.subScript.getAllErrors())
                             {
                                 // add my own line number

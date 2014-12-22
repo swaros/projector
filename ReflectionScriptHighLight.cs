@@ -39,6 +39,7 @@ namespace Projector
 
         private int fontDefaultSize = 10;
         private string defaultFontName = "Courier New";
+        
 
         private Boolean elementsReaded = false;
 
@@ -60,6 +61,9 @@ namespace Projector
         }
 
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
+
+            rtf.BackColor = HighlightStyle.defaultColor;
+
             this.Srcipt = script;
             this.assignedRtf = rtf;
             this.drawingRtf = new RichBox();
@@ -77,8 +81,8 @@ namespace Projector
             this.VaribalesStyle.BackColor = Color.Transparent;
 
 
-            this.CommandStyle.ForeColor = Color.DarkOliveGreen;
-            this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.CommandStyle.ForeColor = Color.Blue;
+            this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
 
             this.ReferenzStyle.ForeColor = Color.DarkGoldenrod;
@@ -147,12 +151,13 @@ namespace Projector
 
             if (reNewElements == true || this.elementsReaded == false)
             {
-                this.getElements();
+                if (this.markLine < 0)
+                    this.getElements();
             }
 
             this.drawingRtf.Select(this.startPos, this.drawingRtf.TextLength);
             this.drawingRtf.SelectionColor = drawingRtf.ForeColor;
-            this.drawingRtf.SelectionBackColor = drawingRtf.BackColor;
+            this.drawingRtf.SelectionBackColor = HighlightStyle.defaultColor;
 
            
 
@@ -315,7 +320,12 @@ namespace Projector
 
         public void getElements()
         {
-            foreach (ReflectionScriptDefines scriptLine in this.Srcipt.getScript())
+            this.addKeyWord("{", ObjectStyle);
+            this.addKeyWord("}", ObjectStyle);
+
+
+
+            foreach (ReflectionScriptDefines scriptLine in this.Srcipt.getFullScript())
             {
                 if (scriptLine.namedReference != null)
                 {

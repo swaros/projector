@@ -7,10 +7,13 @@ using System.Drawing;
 
 namespace Projector
 {
-    class HighlightStyle
+    
+    public class HighlightStyle
     {
+        public static Color defaultColor = Color.White;
+
         public Color ForeColor = Color.Gray;
-        public Color BackColor = Color.White;
+        public Color BackColor = HighlightStyle.defaultColor;
         public Font Font = new Font("Courier New", 8, FontStyle.Regular);
     }
 }

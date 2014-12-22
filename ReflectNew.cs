@@ -10,7 +10,7 @@ namespace Projector
     class ReflectNew : ReflectObjectInterface
     {
 
-        private static Hashtable obReferences = new Hashtable();
+        private static Hashtable obReferences = new Hashtable();        
 
         public Object execute()
         {

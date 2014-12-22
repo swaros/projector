@@ -8,12 +8,12 @@ namespace Projector
 {
     public class RegexGroup
     {
-        public static List<string> getMatch(string input, int readLevel = 1)
+        public static List<string> getMatch(string input, int readLevel = 1, char left = '{', char right = '}')
         {
-            string pattern = "^[^{}]*" +
+            string pattern = "^[^"+ left + right +"]*" +
                           "(" +
-                          "((?'Open'{)[^{}]*)+" +
-                          "((?'Close-Open'})[^{}]*)+" +
+                          "((?'Open'"+left+")[^" + left + right + "]*)+" +
+                          "((?'Close-Open'"+right+")[^" + left + right + "]*)+" +
                           ")*" +
                           "(?(Open)(?!))$";
             
@@ -29,7 +29,6 @@ namespace Projector
                     {
                         //result.Add(grp.Value);
                         int grCap = 0;
-                        string subContent = "";
                         foreach (Capture cap in grp.Captures)
                         {
                             grCap++;
