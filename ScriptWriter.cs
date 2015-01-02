@@ -26,7 +26,7 @@ namespace Projector
 
 
         public Object execObject;
-
+        private int lastLineUpdate = -1;
         private string filename = null;
 
         private string lastSaved = "";
@@ -119,6 +119,10 @@ namespace Projector
 
         private void updateColors()
         {
+            if (!runButton.Enabled)
+            {
+                return;
+            }
             Highlight.markLine = -1;
             int cursorPosition = codeBox.SelectionStart;
             this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
@@ -483,7 +487,12 @@ namespace Projector
 
 
              //updateColors(currentLine.lineNumber);
-            updateColors(lineNumber);
+            if (lastLineUpdate != lineNumber)
+            {
+                updateColors(lineNumber);
+            }            
+            lastLineUpdate = lineNumber;
+
             if (State == RefScriptExecute.STATE_RUN)
             {
                 errorLabels.Text = "Currently Running " + currentLine.lineNumber;
@@ -510,10 +519,10 @@ namespace Projector
                 errorLabels.ToolTipText = "";
                 isRunning = false;
 
-                updateColors();
+                
                 runButton.Enabled = true;
                 continueBtn.Enabled = false;
-                
+                updateColors();
             }
 
            
@@ -531,6 +540,7 @@ namespace Projector
 
         private void executeScript()
         {
+            lastLineUpdate = -1;
             this.logbook.Items.Clear();
             this.logbook.Items.Add("START ...");
             this.Highlight.clearExecutions();
@@ -619,6 +629,7 @@ namespace Projector
                 this.filename = openFile.FileName;
                 this.assignedExternalScript = codeBox.Text;
                 this.recheckScript();
+                Highlight.loadColors();
                 this.updateColors();
                 statusLabel.Text = this.filename;
                 
@@ -792,6 +803,48 @@ namespace Projector
         private void switchDrawMode_Click(object sender, EventArgs e)
         {
             updateColors();
+        }
+
+        private void colorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Highlight.loadColors();
+            ScriptColors setupColor = new ScriptColors();
+            setupColor.objectColors.setColor(Highlight.ObjectStyle);
+            setupColor.VarColor.setColor(Highlight.VaribalesStyle);
+            setupColor.CommentColor.setColor(Highlight.CommentStyle);
+            setupColor.CommandColor.setColor(Highlight.CommandStyle);
+            setupColor.StringColor.setColor(Highlight.TextStyle);
+            setupColor.ReferenceColor.setColor(Highlight.ReferenzStyle);
+            setupColor.Varibale2.setColor(Highlight.VaribalesStyle);
+            setupColor.KeyWordColor.setColor(Highlight.KeyWordStyle);
+
+            setupColor.MainStyle.setBackColor(HighlightStyle.defaultColor);
+
+            setupColor.FontName.Text = Highlight.defaultFontName;
+            setupColor.fontSize.Value = Highlight.fontDefaultSize;
+
+            if (setupColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Highlight.ObjectStyle = setupColor.objectColors.getHighLight();
+                Highlight.TextStyle = setupColor.StringColor.getHighLight();
+                Highlight.CommentStyle = setupColor.CommentColor.getHighLight();
+                Highlight.VarStyle = setupColor.VarColor.getHighLight();
+                Highlight.ReferenzStyle = setupColor.ReferenceColor.getHighLight();
+                Highlight.VaribalesStyle = setupColor.Varibale2.getHighLight();
+                Highlight.CommandStyle = setupColor.CommandColor.getHighLight();               
+                Highlight.KeyWordStyle = setupColor.KeyWordColor.getHighLight();
+
+                Highlight.defaultFontName = setupColor.FontName.Text;
+
+                HighlightStyle.defaultColor = setupColor.MainStyle.getBackColor();
+                codeBox.BackColor = HighlightStyle.defaultColor;
+                Highlight.fontDefaultSize = (int) setupColor.fontSize.Value;
+                Highlight.resetFonts();
+
+                Highlight.saveColors();
+
+                updateColors();
+            }
         }
     }
 }

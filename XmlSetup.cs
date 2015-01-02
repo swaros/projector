@@ -77,7 +77,7 @@ namespace Projector
 
                 }
             }
-        }
+        }        
 
         public string getValue(string keyName)
         {
@@ -208,7 +208,10 @@ namespace Projector
                             {
                                 lastError = ex.Message;
                             }
-
+                            catch (ArgumentException ex)
+                            {
+                                lastError = ex.Message;
+                            }
                         }
                     }
 

@@ -21,24 +21,23 @@ namespace Projector
         private RichTextBox assignedRtf;
         private RichBox drawingRtf;
 
-        private HighlightStyle ObjectStyle = new HighlightStyle();
-        private HighlightStyle CommandStyle = new HighlightStyle();
-        private HighlightStyle ReferenzStyle = new HighlightStyle();
-        private HighlightStyle VarStyle = new HighlightStyle();
-        private HighlightStyle TextStyle = new HighlightStyle();
-        private HighlightStyle CommentStyle = new HighlightStyle();
-        private HighlightStyle ErrorStyle = new HighlightStyle();
-        private HighlightStyle VaribalesStyle = new HighlightStyle();
+        public HighlightStyle ObjectStyle = new HighlightStyle();
+        public HighlightStyle CommandStyle = new HighlightStyle();
+        public HighlightStyle ReferenzStyle = new HighlightStyle();
+        public HighlightStyle VarStyle = new HighlightStyle();
+        public HighlightStyle TextStyle = new HighlightStyle();
+        public HighlightStyle CommentStyle = new HighlightStyle();
+        public HighlightStyle ErrorStyle = new HighlightStyle();
+        public HighlightStyle VaribalesStyle = new HighlightStyle();
+        public HighlightStyle KeyWordStyle = new HighlightStyle();
+        public HighlightStyle executionStyle = new HighlightStyle();
 
-
-        private HighlightStyle executionStyle = new HighlightStyle();
-
-        private HighlightStyle KeyWordStyle = new HighlightStyle();
+        private string styleFileName = "pr_styles.xml";
 
         private Hashtable LastExecutedLines = new Hashtable();
 
-        private int fontDefaultSize = 10;
-        private string defaultFontName = "Courier New";
+        public int fontDefaultSize = 10;
+        public string defaultFontName = "Courier New";
         
 
         private Boolean elementsReaded = false;
@@ -55,14 +54,103 @@ namespace Projector
 
         private int drawMode = 0;
 
+        Color[] execColors = new Color[10];
+
         public void clearExecutions()
         {
             this.LastExecutedLines.Clear();
         }
 
+        public void resetFonts()
+        {
+       
+            this.ObjectStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.VaribalesStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.ReferenzStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.VarStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.KeyWordStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.CommentStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);       
+            this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+        }
+
+        public void loadColors()
+        {
+            XmlSetup tmpSetup = new XmlSetup();
+            //tmpSetup.setFileName("Projector_config.xml");
+            tmpSetup.setFileName(this.styleFileName);
+            tmpSetup.loadXml();
+
+            this.getSavedStyle(tmpSetup, "script_color_object", ObjectStyle);
+            this.getSavedStyle(tmpSetup, "script_color_var1", VaribalesStyle);
+            this.getSavedStyle(tmpSetup, "script_color_var2", VarStyle);
+            this.getSavedStyle(tmpSetup, "script_color_keyword", KeyWordStyle);
+            this.getSavedStyle(tmpSetup, "script_color_command", CommandStyle);
+            this.getSavedStyle(tmpSetup, "script_color_ref", ReferenzStyle);
+            this.getSavedStyle(tmpSetup, "script_color_comment", CommentStyle);
+            this.getSavedStyle(tmpSetup, "script_color_string", TextStyle);
+
+            HighlightStyle defaultStyle = new HighlightStyle();
+            defaultStyle.BackColor = HighlightStyle.defaultColor;
+            defaultStyle.Font = new Font(this.defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+
+            this.getSavedStyle(tmpSetup, "script_color_default", defaultStyle);
+
+            this.fontDefaultSize = (int) defaultStyle.Font.Size;
+            this.defaultFontName = defaultStyle.Font.Name;
+            HighlightStyle.defaultColor = defaultStyle.BackColor;
+
+        }
+
+        private void getSavedStyle(XmlSetup setup, string name, HighlightStyle toThis)
+        {
+            String val = setup.getValue(name);
+            if (val != null)
+            {
+                toThis.getStyleFromvalueString(val);
+            }
+        }
+
+        public void saveColors()
+        {
+            XmlSetup tmpSetup = new XmlSetup();
+            //tmpSetup.setFileName("Projector_config.xml");
+            tmpSetup.setFileName(this.styleFileName);
+            tmpSetup.loadXml();
+
+            tmpSetup.addSetting("script_color_object", ObjectStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_var1", VaribalesStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_var2", VarStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_keyword", KeyWordStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_command", CommandStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_ref", ReferenzStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_comment", CommentStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_string", TextStyle.toSetupValue());
+
+            HighlightStyle defaultStyle = new HighlightStyle();
+            defaultStyle.BackColor = HighlightStyle.defaultColor;
+            defaultStyle.Font = new Font(this.defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            tmpSetup.addSetting("script_color_default", defaultStyle.toSetupValue());
+
+            tmpSetup.saveXml();
+        }
+
+
         public ReflectionScriptHighLight(ReflectionScript script, RichTextBox rtf){
 
-            rtf.BackColor = HighlightStyle.defaultColor;
+
+            execColors[0] = Color.FromArgb(75, 20, 35);
+            execColors[1] = Color.FromArgb(80, 40, 45);
+            execColors[2] = Color.FromArgb(85, 60, 55);
+            execColors[3] = Color.FromArgb(90, 80, 65);
+            execColors[4] = Color.FromArgb(95, 100, 75);
+            execColors[5] = Color.FromArgb(100, 120, 85);
+            execColors[6] = Color.FromArgb(105, 140, 95);
+            execColors[7] = Color.FromArgb(115, 160, 105);
+            execColors[8] = Color.FromArgb(120, 180, 115);
+            execColors[9] = Color.FromArgb(125, 200, 125); 
 
             this.Srcipt = script;
             this.assignedRtf = rtf;
@@ -70,51 +158,42 @@ namespace Projector
             drawingRtf.Rtf = assignedRtf.Rtf;
             this.RtfColors = new RtfColoring(drawingRtf);
             drawingRtf.highlighting = true;
-           
 
-
+            loadColors();
+            rtf.BackColor = HighlightStyle.defaultColor;
             this.ObjectStyle.ForeColor = Color.DarkMagenta;
-            this.ObjectStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold );
 
             this.VaribalesStyle.ForeColor = Color.DarkGreen;
-            this.VaribalesStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
-            this.VaribalesStyle.BackColor = Color.Transparent;
+            //this.VaribalesStyle.BackColor = Color.Transparent;
 
 
             this.CommandStyle.ForeColor = Color.Blue;
-            this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
 
             this.ReferenzStyle.ForeColor = Color.DarkGoldenrod;
-            this.ReferenzStyle.Font = new Font(defaultFontName, this.fontDefaultSize , FontStyle.Bold);
 
             this.VarStyle.ForeColor = Color.DarkOrange;
-            this.VarStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
             this.KeyWordStyle.ForeColor = Color.DarkBlue;      
-            this.KeyWordStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
 
 
             this.CommentStyle.ForeColor = Color.DarkOliveGreen;
             this.CommentStyle.BackColor = Color.LightGray;
-            this.CommentStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
             this.ErrorStyle.ForeColor = Color.DarkRed;
             this.ErrorStyle.BackColor = Color.LightPink;
-            this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
 
             this.executionStyle.ForeColor = Color.LightGreen;
             this.executionStyle.BackColor = Color.DarkGreen;
-            this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+
 
             this.TextStyle.ForeColor = Color.SlateBlue;
             this.TextStyle.BackColor = Color.LightCyan;
             
-            this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
 
             this.RtfColors.stringStyle = this.TextStyle;
-            
+            this.resetFonts();
         }
 
         public void setWordMode(Boolean onoff)
@@ -125,6 +204,8 @@ namespace Projector
                 this.drawMode = RtfColoring.MODE_WORD;
             }
         }
+
+     
 
         public int reDraw(Boolean reNewElements)
         {
@@ -155,67 +236,69 @@ namespace Projector
                     this.getElements();
             }
 
-            this.drawingRtf.Select(this.startPos, this.drawingRtf.TextLength);
-            this.drawingRtf.SelectionColor = drawingRtf.ForeColor;
-            this.drawingRtf.SelectionBackColor = HighlightStyle.defaultColor;
+          
 
-           
-
-            foreach (DictionaryEntry de in this.KeyWords)
+            if (this.markLine < 0)
             {
-                string word = de.Key.ToString();
-                HighlightStyle setColor = (HighlightStyle)de.Value;
-                this.RtfColors.markWordsAll(word, setColor);
-            }
+                this.drawingRtf.Select(this.startPos, this.drawingRtf.TextLength);
+                this.drawingRtf.SelectionColor = drawingRtf.ForeColor;
+                this.drawingRtf.SelectionBackColor = HighlightStyle.defaultColor;
 
-            // must be at the end
-
-            foreach (String keyWord in Projector.RefScriptMaskMatch.KeyWords)
-            {
-
-                this.RtfColors.markTextLine(keyWord, KeyWordStyle);
-            }
-
-            //if (this.drawMode == RtfColoring.MODE_DIRECT) { };
-            string[] variables = new String[this.Srcipt.getAllStrings().Count];
-
-            int it = 0;
-            foreach (DictionaryEntry de in this.Srcipt.getAllStrings())
-            {
-                string word = de.Value.ToString();
-                string keyWord = de.Key.ToString();
-                if (this.drawMode == RtfColoring.MODE_DIRECT)
+                foreach (DictionaryEntry de in this.KeyWords)
                 {
-                    this.RtfColors.markTextLine("\"" + word + "\"", TextStyle);
+                    string word = de.Key.ToString();
+                    HighlightStyle setColor = (HighlightStyle)de.Value;
+                    this.RtfColors.markWordsAll(word, setColor);
                 }
-                
-                //this.RtfColors.markTextLine(keyWord, VaribalesStyle);
-                variables[it] = keyWord;
-                it++;
+
+                // must be at the end
+
+                foreach (String keyWord in Projector.RefScriptMaskMatch.KeyWords)
+                {
+
+                    this.RtfColors.markTextLine(keyWord, KeyWordStyle);
+                }
+
+                //if (this.drawMode == RtfColoring.MODE_DIRECT) { };
+                string[] variables = new String[this.Srcipt.getAllStrings().Count];
+
+                int it = 0;
+                foreach (DictionaryEntry de in this.Srcipt.getAllStrings())
+                {
+                    string word = de.Value.ToString();
+                    string keyWord = de.Key.ToString();
+                    if (this.drawMode == RtfColoring.MODE_DIRECT)
+                    {
+                        this.RtfColors.markTextLine("\"" + word + "\"", TextStyle);
+                    }
+
+                    //this.RtfColors.markTextLine(keyWord, VaribalesStyle);
+                    variables[it] = keyWord;
+                    it++;
+                }
+
+                watch.Stop();
+
+                this.preRuntime = watch.ElapsedMilliseconds.ToString();
+                watch.Restart();
+
+                this.RtfColors.markWordsAll(variables, VaribalesStyle);
+
+                this.RtfColors.wordMode();
+
+                // full lines works in booth modes as the same
+
+                foreach (int lino in this.Srcipt.getCommentLines())
+                {
+                    this.RtfColors.markFullLine(lino, CommentStyle);
+                }
+
+                foreach (ScriptErrors err in this.Srcipt.getAllErrors())
+                {
+                    this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false);
+
+                }
             }
-
-             watch.Stop();
-
-            this.preRuntime = watch.ElapsedMilliseconds.ToString();
-            watch.Restart();
-
-            this.RtfColors.markWordsAll(variables, VaribalesStyle);
-
-            this.RtfColors.wordMode();
-
-            // full lines works in booth modes as the same
-
-            foreach (int lino in this.Srcipt.getCommentLines())
-            {
-                this.RtfColors.markFullLine(lino, CommentStyle);
-            }
-
-            foreach (ScriptErrors err in this.Srcipt.getAllErrors())
-            {
-                this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false);
-                
-            }
-
             // marks an line 
             if (this.markLine > -1)
             {
@@ -235,6 +318,7 @@ namespace Projector
                 {
                     int execCount = (int) lastExecs.Value;
                     execCount--;
+ 
                     if (execCount > 0)
                     {
 
@@ -246,14 +330,8 @@ namespace Projector
                         else
                         {
                             HighlightStyle hStyle = new HighlightStyle();
-                            
-                            int colorValue = 255 / ((int)lastExecs.Value * 10);
-                            if (colorValue > 255)
-                            {
-                                colorValue = 255;
-                            }
-                            hStyle.ForeColor = Color.FromArgb(255, 255, colorValue);
 
+                            hStyle.ForeColor = execColors[(int)lastExecs.Value];
                             this.RtfColors.markFullLine((int)lastExecs.Key, hStyle, true, false);
                         }
 

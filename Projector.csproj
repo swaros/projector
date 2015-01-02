@@ -89,6 +89,12 @@
     <Compile Include="AutoCompletion.cs" />
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="CmdEvent.cs" />
+    <Compile Include="ColorChoose.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ColorChoose.Designer.cs">
+      <DependentUpon>ColorChoose.cs</DependentUpon>
+    </Compile>
     <Compile Include="Combined1.g3.lexer.cs" />
     <Compile Include="Combined1.g3.parser.cs" />
     <Compile Include="CommandLineParser.cs" />
@@ -247,6 +253,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ColorChoose.resx">
+      <DependentUpon>ColorChoose.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfimSync.resx">
       <DependentUpon>ConfimSync.cs</DependentUpon>
     </EmbeddedResource>
@@ -323,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReflectList.resx">
       <DependentUpon>ReflectList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptColors.resx">
+      <DependentUpon>ScriptColors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
@@ -424,6 +436,12 @@
     </Compile>
     <Compile Include="RichBoxMarker.cs" />
     <Compile Include="RtfColoring.cs" />
+    <Compile Include="ScriptColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScriptColors.Designer.cs">
+      <DependentUpon>ScriptColors.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScriptErrors.cs" />
     <Compile Include="ScriptExecuter.cs">
       <SubType>Form</SubType>

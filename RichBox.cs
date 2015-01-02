@@ -39,7 +39,6 @@ namespace Projector
                 return false;
             }
 
-            
             int maxLines = (this.ClientSize.Height / this.getLineHeight()) + 1;
 
             if (maxLines > this.Lines.Count())
@@ -50,7 +49,7 @@ namespace Projector
             int checkInt = startVisibleChar;
             for (int i = lineNumber; i < maxLines; i++)
             {
-                checkInt += this.Lines[i].Length;
+                checkInt += this.Lines[i].Length + 1;
                 if (checkInt > this.SelectionStart)
                 {
                     return true;

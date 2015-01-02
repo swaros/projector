@@ -38,10 +38,10 @@
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.leftTools = new System.Windows.Forms.SplitContainer();
             this.logbook = new System.Windows.Forms.ListBox();
-            this.wordListing = new System.Windows.Forms.ListBox();
             this.genericTree = new System.Windows.Forms.TreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.wordListing = new System.Windows.Forms.ListBox();
             this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
             this.debugView = new System.Windows.Forms.ListView();
@@ -69,6 +69,8 @@
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
@@ -193,15 +195,6 @@
             this.logbook.Size = new System.Drawing.Size(217, 236);
             this.logbook.TabIndex = 0;
             // 
-            // wordListing
-            // 
-            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
-            this.wordListing.FormattingEnabled = true;
-            this.wordListing.Location = new System.Drawing.Point(194, 99);
-            this.wordListing.Name = "wordListing";
-            this.wordListing.Size = new System.Drawing.Size(159, 173);
-            this.wordListing.TabIndex = 1;
-            // 
             // genericTree
             // 
             this.genericTree.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -256,6 +249,15 @@
             this.codeSplitContainer.Size = new System.Drawing.Size(764, 592);
             this.codeSplitContainer.SplitterDistance = 423;
             this.codeSplitContainer.TabIndex = 0;
+            // 
+            // wordListing
+            // 
+            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
+            this.wordListing.FormattingEnabled = true;
+            this.wordListing.Location = new System.Drawing.Point(194, 99);
+            this.wordListing.Name = "wordListing";
+            this.wordListing.Size = new System.Drawing.Size(159, 173);
+            this.wordListing.TabIndex = 1;
             // 
             // messageSplit
             // 
@@ -479,7 +481,8 @@
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.setupToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(985, 24);
@@ -546,6 +549,21 @@
             this.showToolbarToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.showToolbarToolStripMenuItem.Text = "&Show Toolbar";
             this.showToolbarToolStripMenuItem.Click += new System.EventHandler(this.showToolbarToolStripMenuItem_Click);
+            // 
+            // setupToolStripMenuItem
+            // 
+            this.setupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorsToolStripMenuItem});
+            this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
+            this.setupToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+            this.setupToolStripMenuItem.Text = "&Setup";
+            // 
+            // colorsToolStripMenuItem
+            // 
+            this.colorsToolStripMenuItem.Name = "colorsToolStripMenuItem";
+            this.colorsToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.colorsToolStripMenuItem.Text = "&Highlighting Style";
+            this.colorsToolStripMenuItem.Click += new System.EventHandler(this.colorsToolStripMenuItem_Click);
             // 
             // openFile
             // 
@@ -662,5 +680,7 @@
         private System.Windows.Forms.ToolStripStatusLabel workerLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton switchDrawMode;
+        private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem colorsToolStripMenuItem;
     }
 }
