@@ -27,8 +27,11 @@ namespace Projector
 
         public Boolean AllwaysFullRedraw = true;
 
+        public Boolean numberFormat = true;
+
         public HighlightStyle mainStyle = new HighlightStyle();
         public HighlightStyle stringStyle = new HighlightStyle();
+        public HighlightStyle numberStyle = new HighlightStyle();
 
         private int Mode = 1;
 
@@ -146,13 +149,30 @@ namespace Projector
                     if (stringMem.ContainsKey(colWord))
                     {
                         rWord = (string)stringMem[colWord];
-                        colorizeWord(rWord, pos + fistRunPosition, this.stringStyle);
+                        Int32 n;
+                        if (Int32.TryParse(rWord, out n))
+                        {
+                            colorizeWord(rWord, pos + fistRunPosition, this.numberStyle);
+                        }
+                        else
+                        {
+                            colorizeWord(rWord, pos + fistRunPosition, this.stringStyle);
+                        }
                     }
                     else
                     {
                         if (rWord != "")
                         {
-                            colorizeWord(rWord, pos + fistRunPosition);
+                            Int32 n;
+                            if (Int32.TryParse(rWord, out n))
+                            {
+                                colorizeWord(rWord, pos + fistRunPosition, this.numberStyle);
+                            }
+                            else
+                            {
+                                colorizeWord(rWord, pos + fistRunPosition);
+                            }
+                            
                         }
                     }
                     pos++; // for any splitchar

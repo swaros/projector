@@ -76,6 +76,7 @@
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.codeBox = new Projector.RichBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -241,6 +242,7 @@
             // 
             // codeSplitContainer.Panel1
             // 
+            this.codeSplitContainer.Panel1.Controls.Add(this.codeBox);
             this.codeSplitContainer.Panel1.Controls.Add(this.wordListing);
             // 
             // codeSplitContainer.Panel2
@@ -586,6 +588,17 @@
             this.refreshTimer.Interval = 400;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
+            // codeBox
+            // 
+            this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeBox.HideSelection = false;
+            this.codeBox.Location = new System.Drawing.Point(0, 0);
+            this.codeBox.Name = "codeBox";
+            this.codeBox.Size = new System.Drawing.Size(764, 423);
+            this.codeBox.TabIndex = 2;
+            this.codeBox.Text = "";
+            this.codeBox.WordWrap = false;
+            // 
             // ScriptWriter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -682,5 +695,6 @@
         private System.Windows.Forms.ToolStripButton switchDrawMode;
         private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorsToolStripMenuItem;
+        public RichBox codeBox;
     }
 }

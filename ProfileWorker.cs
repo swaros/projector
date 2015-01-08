@@ -12,7 +12,8 @@ namespace Projector
         //Profil profil = new Profil("default");
         List<String> knownProfiles = new List<string>();
 
-        ReflectionScript iterateScr;        
+        ReflectionScript iterateScr;
+        ReflectionScript iterateDoneScr;     
 
         public ProfileWorker()
         {
@@ -24,6 +25,11 @@ namespace Projector
             this.iterateScr = scr;
         }
 
+        public void OnDone(ReflectionScript scr)
+        {
+            this.iterateDoneScr = scr;
+        }
+
         public void startIterate()
         {
             foreach (string name in this.knownProfiles)
@@ -32,6 +38,25 @@ namespace Projector
             }
         }
 
+        public void startIterateGroup(string groupName)
+        {
+
+            XmlSetup pSetup = new XmlSetup();
+            pSetup.setFileName("profileGroups.xml");
+            pSetup.loadXml();
+            Hashtable settings = pSetup.getHashMap();
+
+
+            if (pSetup.getHashMap().Contains(groupName))
+            {
+                string[] currGrp = pSetup.getHashMap()[groupName].ToString().Split('|');
+                for (int z = 0; z < currGrp.Length; z++)
+                {
+                    this.iterate(currGrp[z]);
+                }
+
+            }
+        }
         
 
         public Profil getProfilbyName(string name)
@@ -50,11 +75,23 @@ namespace Projector
         {
             if (this.iterateScr != null)
             {
-                this.iterateScr.createOrUpdateStringVar("&ITERATION.PROFIL",str);
+                this.iterateScr.createOrUpdateStringVar("&ITERATION.PROFIL", str);
                 RefScriptExecute exec = new RefScriptExecute(this.iterateScr, this);
                 exec.run();
-                
             }
+               
+        }
+
+
+        private void iterateDone()
+        {
+
+            if (this.iterateDoneScr != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.iterateDoneScr, this);
+                exec.run();
+            }
+
         }
 
         private void init()

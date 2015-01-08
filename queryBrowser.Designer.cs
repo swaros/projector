@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup37 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup38 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup39 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(queryBrowser));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.selectedTableLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -381,16 +381,16 @@
             this.TablesAutoComplete.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.TablesAutoComplete.FullRowSelect = true;
-            listViewGroup37.Header = "Fields";
-            listViewGroup37.Name = "Fields";
-            listViewGroup38.Header = "Tables";
-            listViewGroup38.Name = "Tables";
-            listViewGroup39.Header = "Syntax";
-            listViewGroup39.Name = "Syntax";
+            listViewGroup7.Header = "Fields";
+            listViewGroup7.Name = "Fields";
+            listViewGroup8.Header = "Tables";
+            listViewGroup8.Name = "Tables";
+            listViewGroup9.Header = "Syntax";
+            listViewGroup9.Name = "Syntax";
             this.TablesAutoComplete.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup37,
-            listViewGroup38,
-            listViewGroup39});
+            listViewGroup7,
+            listViewGroup8,
+            listViewGroup9});
             this.TablesAutoComplete.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.TablesAutoComplete.Location = new System.Drawing.Point(323, 24);
             this.TablesAutoComplete.MultiSelect = false;

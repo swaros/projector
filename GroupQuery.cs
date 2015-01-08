@@ -180,7 +180,7 @@ namespace Projector
 
         private void onDone()
         {
-            if (this.onDoneScript != null && this.onDoneScript.getErrorCount() == 0)
+            if (this.onDoneScript != null)
             {
                 RefScriptExecute executer = new RefScriptExecute(this.onDoneScript, this);
                 executer.run();
@@ -574,7 +574,7 @@ namespace Projector
         {
             if (toolHighlight.Checked) highlight.parse(richTextBox1);
             if (this.canRun()) iterateOverProfiles();
-            exportEnable.Enabled = (listViewExports.Count > 0) ;
+            exportEnable.Enabled = (listViewExports != null && listViewExports.Count > 0);
         }
 
         private void richTextBox1_KeyUp(object sender, KeyEventArgs e)
@@ -823,6 +823,7 @@ namespace Projector
         private string buildScriptByMassQuery(string massSql)
         {
             string scrpt = "NEW GroupQuery MassSend" + System.Environment.NewLine;
+            scrpt += "SET MAX_WAIT 0 " + System.Environment.NewLine;
             scrpt += "MassSend setGroup " + groupBox1.Text + System.Environment.NewLine;
             scrpt += "MassSend showMe " + System.Environment.NewLine;
             string[] queryListing = massSql.Split(';');

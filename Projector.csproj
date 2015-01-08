@@ -435,6 +435,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RichBoxMarker.cs" />
+    <Compile Include="RString.cs" />
     <Compile Include="RtfColoring.cs" />
     <Compile Include="ScriptColors.cs">
       <SubType>Form</SubType>

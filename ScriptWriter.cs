@@ -41,7 +41,7 @@ namespace Projector
 
         private AutoCompletion AutoComplete;
 
-        public RichBox codeBox = new RichBox();
+        //public RichBox codeBox = new RichBox();
 
         Boolean isRunning = false;
 
@@ -84,10 +84,10 @@ namespace Projector
         {
             
             InitializeComponent();
-
+            /*
             codeSplitContainer.Panel1.Controls.Add(codeBox);
             codeBox.Dock = DockStyle.Fill;
-
+            */
             codeBox.KeyDown += new KeyEventHandler(codeBox_KeyDown);
             codeBox.KeyUp += new KeyEventHandler(codeBox_KeyUp);
             codeBox.TextChanged += new EventHandler(codeBox_TextChanged);
@@ -458,6 +458,8 @@ namespace Projector
         public void varChange(int lineNumber, string name, string val)
         {
             this.logbook.Items.Add("       Change:" + name + "  | (" + val + ") " + lineNumber);
+            if (logbook.Items.Count > 2)
+            this.logbook.TopIndex = this.logbook.Items.Count - 1;
         }
 
         public void watcher(ReflectionScriptDefines currentLine, int lineNumber, int State, int executionLevel)
@@ -484,6 +486,8 @@ namespace Projector
 
 
             this.logbook.Items.Add( prompt + "> (" + lineNumber + "|" + currentLine.lineNumber + ") " + objName);
+            if (logbook.Items.Count > 2)
+                this.logbook.TopIndex = this.logbook.Items.Count - 1;
 
 
              //updateColors(currentLine.lineNumber);
@@ -817,6 +821,7 @@ namespace Projector
             setupColor.ReferenceColor.setColor(Highlight.ReferenzStyle);
             setupColor.Varibale2.setColor(Highlight.VaribalesStyle);
             setupColor.KeyWordColor.setColor(Highlight.KeyWordStyle);
+            setupColor.NumberColor.setColor(Highlight.NumberStyle);
 
             setupColor.MainStyle.setBackColor(HighlightStyle.defaultColor);
 
@@ -833,6 +838,7 @@ namespace Projector
                 Highlight.VaribalesStyle = setupColor.Varibale2.getHighLight();
                 Highlight.CommandStyle = setupColor.CommandColor.getHighLight();               
                 Highlight.KeyWordStyle = setupColor.KeyWordColor.getHighLight();
+                Highlight.NumberStyle = setupColor.NumberColor.getHighLight();
 
                 Highlight.defaultFontName = setupColor.FontName.Text;
 

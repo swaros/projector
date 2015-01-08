@@ -102,12 +102,21 @@ namespace Projector
                 return this.getDatabase(refObject, parent);
             }
 
+            if (refObject.typeOfObject == "RString")
+            {
+                return this.getRString(refObject, parent);
+            }
             return null;
         }
 
         private ReflectionDatabase getDatabase(ReflectionScriptDefines refObject, Object parent)
         {
             return new ReflectionDatabase();
+        }
+
+        private RString getRString(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new RString();
         }
 
         private Profil getProfil(ReflectionScriptDefines refObject, Object parent)

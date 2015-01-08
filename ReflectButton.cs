@@ -50,6 +50,11 @@ namespace Projector
             this.Button.Text = label;
         }
 
+        public void autoclose(Boolean onOff)
+        {
+            autoCloseParent = onOff;
+        }
+
         public void closeForm()
         {
             if (Parent is ReflectForm)

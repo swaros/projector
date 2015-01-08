@@ -38,7 +38,10 @@ namespace Projector
         {
             this.Top = top;
         }
-
+        public String getText()
+        {
+            return this.Text;
+        }
         public void setLeft(int left)
         {
             this.Left = left;

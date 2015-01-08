@@ -31,6 +31,7 @@ namespace Projector
         public HighlightStyle VaribalesStyle = new HighlightStyle();
         public HighlightStyle KeyWordStyle = new HighlightStyle();
         public HighlightStyle executionStyle = new HighlightStyle();
+        public HighlightStyle NumberStyle = new HighlightStyle();
 
         private string styleFileName = "pr_styles.xml";
 
@@ -38,7 +39,8 @@ namespace Projector
 
         public int fontDefaultSize = 10;
         public string defaultFontName = "Courier New";
-        
+
+        public Boolean multiMarkLine = false;
 
         private Boolean elementsReaded = false;
 
@@ -74,12 +76,12 @@ namespace Projector
             this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
             this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);       
             this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.NumberStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
         }
 
         public void loadColors()
         {
             XmlSetup tmpSetup = new XmlSetup();
-            //tmpSetup.setFileName("Projector_config.xml");
             tmpSetup.setFileName(this.styleFileName);
             tmpSetup.loadXml();
 
@@ -91,6 +93,7 @@ namespace Projector
             this.getSavedStyle(tmpSetup, "script_color_ref", ReferenzStyle);
             this.getSavedStyle(tmpSetup, "script_color_comment", CommentStyle);
             this.getSavedStyle(tmpSetup, "script_color_string", TextStyle);
+            this.getSavedStyle(tmpSetup, "script_color_number", NumberStyle);
 
             HighlightStyle defaultStyle = new HighlightStyle();
             defaultStyle.BackColor = HighlightStyle.defaultColor;
@@ -101,6 +104,7 @@ namespace Projector
             this.fontDefaultSize = (int) defaultStyle.Font.Size;
             this.defaultFontName = defaultStyle.Font.Name;
             HighlightStyle.defaultColor = defaultStyle.BackColor;
+            this.RtfColors.numberStyle = this.NumberStyle;
 
         }
 
@@ -116,7 +120,6 @@ namespace Projector
         public void saveColors()
         {
             XmlSetup tmpSetup = new XmlSetup();
-            //tmpSetup.setFileName("Projector_config.xml");
             tmpSetup.setFileName(this.styleFileName);
             tmpSetup.loadXml();
 
@@ -128,6 +131,7 @@ namespace Projector
             tmpSetup.addSetting("script_color_ref", ReferenzStyle.toSetupValue());
             tmpSetup.addSetting("script_color_comment", CommentStyle.toSetupValue());
             tmpSetup.addSetting("script_color_string", TextStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_number", NumberStyle.toSetupValue());
 
             HighlightStyle defaultStyle = new HighlightStyle();
             defaultStyle.BackColor = HighlightStyle.defaultColor;
@@ -157,6 +161,7 @@ namespace Projector
             this.drawingRtf = new RichBox();
             drawingRtf.Rtf = assignedRtf.Rtf;
             this.RtfColors = new RtfColoring(drawingRtf);
+            
             drawingRtf.highlighting = true;
 
             loadColors();
@@ -190,7 +195,8 @@ namespace Projector
 
             this.TextStyle.ForeColor = Color.SlateBlue;
             this.TextStyle.BackColor = Color.LightCyan;
-            
+
+            this.NumberStyle.ForeColor = Color.DarkGoldenrod;
 
             this.RtfColors.stringStyle = this.TextStyle;
             this.resetFonts();
@@ -211,7 +217,14 @@ namespace Projector
         {
             
             this.RtfColors.setMode(this.drawMode);
-            if (this.assignedRtf.Text.Length < 1)
+            try
+            {
+                if (this.assignedRtf.Text.Length < 1)
+                {
+                    return 0;
+                }
+            }
+            catch (Exception ex)
             {
                 return 0;
             }
@@ -302,42 +315,50 @@ namespace Projector
             // marks an line 
             if (this.markLine > -1)
             {
-                
 
-                if (!this.LastExecutedLines.ContainsKey(markLine))
+                if (multiMarkLine)
                 {
-                    this.LastExecutedLines.Add(markLine, 10);
+                    if (!this.LastExecutedLines.ContainsKey(markLine))
+                    {
+                        this.LastExecutedLines.Add(markLine, 10);
+                    }
+                    else
+                    {
+                        this.LastExecutedLines[markLine] = 10;
+                    }
+
+                    Hashtable copyThat = new Hashtable();
+                    foreach (DictionaryEntry lastExecs in this.LastExecutedLines)
+                    {
+                        int execCount = (int)lastExecs.Value;
+                        execCount--;
+
+                        if (execCount > 0)
+                        {
+
+                            copyThat.Add(lastExecs.Key, execCount);
+                            if (execCount > 8)
+                            {
+                                this.RtfColors.markFullLine((int)lastExecs.Key, executionStyle, true, false);
+                            }
+                            else
+                            {
+                                HighlightStyle hStyle = new HighlightStyle();
+
+                                hStyle.ForeColor = execColors[(int)lastExecs.Value];
+                                this.RtfColors.markFullLine((int)lastExecs.Key, hStyle, true, false);
+                            }
+
+                        }
+                    }
+                    LastExecutedLines = copyThat;
+
+                    
                 }
                 else
                 {
-                    this.LastExecutedLines[markLine] = 10;
+                    this.RtfColors.markFullLine(markLine, executionStyle, true, false);
                 }
-
-                Hashtable copyThat = new Hashtable();
-                foreach (DictionaryEntry lastExecs in this.LastExecutedLines)
-                {
-                    int execCount = (int) lastExecs.Value;
-                    execCount--;
- 
-                    if (execCount > 0)
-                    {
-
-                        copyThat.Add(lastExecs.Key, execCount);
-                        if (execCount > 8)
-                        {
-                            this.RtfColors.markFullLine((int)lastExecs.Key, executionStyle, true, false);
-                        }
-                        else
-                        {
-                            HighlightStyle hStyle = new HighlightStyle();
-
-                            hStyle.ForeColor = execColors[(int)lastExecs.Value];
-                            this.RtfColors.markFullLine((int)lastExecs.Key, hStyle, true, false);
-                        }
-
-                    }
-                }
-                LastExecutedLines = copyThat;
 
                 if (assignedRtf is RichBox)
                 {
@@ -384,9 +405,12 @@ namespace Projector
             else
             {
                 int index = this.assignedRtf.GetFirstCharIndexFromLine(this.markLine);
-                this.assignedRtf.SelectionStart = index;
-                this.assignedRtf.SelectionLength = 1;
-                if (this.updateScrols) this.assignedRtf.ScrollToCaret();
+                if (index > -1)
+                {
+                    this.assignedRtf.SelectionStart = index;
+                    this.assignedRtf.SelectionLength = 1;
+                    if (this.updateScrols) this.assignedRtf.ScrollToCaret();
+                }
 
             }
 

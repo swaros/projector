@@ -35,17 +35,19 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.mainFontDlg = new System.Windows.Forms.FontDialog();
             this.Default = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.fontSize = new System.Windows.Forms.NumericUpDown();
             this.FontName = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.fontSize = new System.Windows.Forms.NumericUpDown();
-            this.button3 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.MainStyle = new Projector.ColorChoose();
+            this.KeyWordColor = new Projector.ColorChoose();
             this.Varibale2 = new Projector.ColorChoose();
             this.ReferenceColor = new Projector.ColorChoose();
             this.CommandColor = new Projector.ColorChoose();
@@ -53,8 +55,8 @@
             this.StringColor = new Projector.ColorChoose();
             this.CommentColor = new Projector.ColorChoose();
             this.VarColor = new Projector.ColorChoose();
-            this.label9 = new System.Windows.Forms.Label();
-            this.KeyWordColor = new Projector.ColorChoose();
+            this.NumberColor = new Projector.ColorChoose();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.Default.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSize)).BeginInit();
@@ -108,6 +110,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.NumberColor);
             this.groupBox1.Controls.Add(this.KeyWordColor);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.Varibale2);
@@ -126,19 +130,28 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(366, 337);
+            this.groupBox1.Size = new System.Drawing.Size(366, 393);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Text Formats";
             // 
-            // label5
+            // label9
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 224);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Command Color";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(21, 301);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(81, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Key Word Color";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(18, 105);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(67, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Soft Variblen";
             // 
             // label6
             // 
@@ -148,6 +161,15 @@
             this.label6.Size = new System.Drawing.Size(84, 13);
             this.label6.TabIndex = 11;
             this.label6.Text = "Reference Color";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(18, 224);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Command Color";
             // 
             // label7
             // 
@@ -165,12 +187,29 @@
             this.Default.Controls.Add(this.FontName);
             this.Default.Controls.Add(this.MainStyle);
             this.Default.Controls.Add(this.label7);
-            this.Default.Location = new System.Drawing.Point(12, 368);
+            this.Default.Location = new System.Drawing.Point(12, 411);
             this.Default.Name = "Default";
             this.Default.Size = new System.Drawing.Size(366, 128);
             this.Default.TabIndex = 15;
             this.Default.TabStop = false;
             this.Default.Text = "Default";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(23, 29);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(127, 23);
+            this.button3.TabIndex = 17;
+            this.button3.Text = "Default Font";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // fontSize
+            // 
+            this.fontSize.Location = new System.Drawing.Point(270, 46);
+            this.fontSize.Name = "fontSize";
+            this.fontSize.Size = new System.Drawing.Size(74, 20);
+            this.fontSize.TabIndex = 16;
             // 
             // FontName
             // 
@@ -190,38 +229,19 @@
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // fontSize
-            // 
-            this.fontSize.Location = new System.Drawing.Point(270, 46);
-            this.fontSize.Name = "fontSize";
-            this.fontSize.Size = new System.Drawing.Size(74, 20);
-            this.fontSize.TabIndex = 16;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(23, 29);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(127, 23);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Default Font";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(18, 105);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Soft Variblen";
-            // 
             // MainStyle
             // 
             this.MainStyle.Location = new System.Drawing.Point(159, 81);
             this.MainStyle.Name = "MainStyle";
             this.MainStyle.Size = new System.Drawing.Size(185, 32);
             this.MainStyle.TabIndex = 14;
+            // 
+            // KeyWordColor
+            // 
+            this.KeyWordColor.Location = new System.Drawing.Point(160, 291);
+            this.KeyWordColor.Name = "KeyWordColor";
+            this.KeyWordColor.Size = new System.Drawing.Size(185, 32);
+            this.KeyWordColor.TabIndex = 16;
             // 
             // Varibale2
             // 
@@ -272,27 +292,27 @@
             this.VarColor.Size = new System.Drawing.Size(185, 32);
             this.VarColor.TabIndex = 4;
             // 
-            // label9
+            // NumberColor
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(21, 301);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Key Word Color";
+            this.NumberColor.Location = new System.Drawing.Point(160, 329);
+            this.NumberColor.Name = "NumberColor";
+            this.NumberColor.Size = new System.Drawing.Size(185, 32);
+            this.NumberColor.TabIndex = 17;
             // 
-            // KeyWordColor
+            // label10
             // 
-            this.KeyWordColor.Location = new System.Drawing.Point(160, 291);
-            this.KeyWordColor.Name = "KeyWordColor";
-            this.KeyWordColor.Size = new System.Drawing.Size(185, 32);
-            this.KeyWordColor.TabIndex = 16;
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(21, 338);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(71, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Number Color";
             // 
             // ScriptColors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 539);
+            this.ClientSize = new System.Drawing.Size(500, 572);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.Default);
             this.Controls.Add(this.groupBox1);
@@ -338,6 +358,8 @@
         public System.Windows.Forms.NumericUpDown fontSize;
         public ColorChoose KeyWordColor;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        public ColorChoose NumberColor;
 
 
     }

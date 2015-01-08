@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace Projector
 {
-    class ReflectionDatabase
+    public class ReflectionDatabase
     {
         public string name;
 
@@ -18,8 +18,11 @@ namespace Projector
         private string errorVariableName;
 
         private ReflectionScript onIterationScr;
+        private ReflectionScript onRowIterationScr;
         private ReflectionScript onErrorScr;
         private ReflectionScript onDoneScr;
+
+        public List<Hashtable> lastResult;
 
         private BackgroundWorker worker = new BackgroundWorker();
 
@@ -85,7 +88,7 @@ namespace Projector
             }
             else
             {
-
+                this.lastResult = hashResult;
                 foreach (Hashtable row in hashResult)
                 {
                     foreach (DictionaryEntry dict in row)
@@ -130,6 +133,34 @@ namespace Projector
             }
         }
 
+        public void sendQuery(string profilName, string query)
+        {
+            Profil usedProfil = pWorker.getProfilbyName(profilName);
+            if (usedProfil != null)
+            {
+                MysqlHandler mysql = new MysqlHandler(usedProfil);
+
+                mysql.connect();
+
+                mysql.sql_select(query);
+                List<string> errors = mysql.getErrorMessages();
+                if (errors.Count > 0)
+                {
+                    foreach (string errMsg in errors)
+                    {
+                        this.scrMysqError(errMsg);
+                    }
+                }
+                mysql.disConnect();
+                doneDb();
+            }
+            else
+            {
+                this.scrMysqError(" invalid profil: " + profilName);
+            }
+
+        }
+
 
         public void startReading(string profilName, string query)
         {
@@ -154,8 +185,10 @@ namespace Projector
 
                     foreach (Hashtable row in hashResult)
                     {
+                        this.rowIteration(row);
                         foreach (DictionaryEntry dict in row)
                         {
+                            
                             string val;
                             if (dict.Value == null)
                             {
@@ -192,6 +225,29 @@ namespace Projector
             }
         }
 
+        private void rowIteration(Hashtable hashResult)
+        {
+            if (onRowIterationScr != null)
+            {
+                int number = 0;
+                foreach (DictionaryEntry row in hashResult)
+                {
+                    
+                    string headName = row.Key.ToString();
+                    string val = "";
+                    if (row.Value != null)
+                         val = row.Value.ToString();
+
+                    this.onRowIterationScr.createOrUpdateStringVar("&" + headName, val);
+                    number++;
+                    this.onRowIterationScr.createOrUpdateStringVar("&ROW." + number, val);
+                }
+                RefScriptExecute exec = new RefScriptExecute(this.onRowIterationScr, this);
+                exec.run();
+            }
+        }
+
+
         private void scrMysqError(string message)
         {
             if (this.onErrorScr != null)
@@ -200,6 +256,7 @@ namespace Projector
                 RefScriptExecute exec = new RefScriptExecute(this.onErrorScr, this);
                 exec.run();
             }
+            
         }
 
         private void doneDb()
@@ -210,6 +267,11 @@ namespace Projector
                 RefScriptExecute exec = new RefScriptExecute(this.onDoneScr, this);
                 exec.run();
             }
+        }
+
+        public void OnRow(ReflectionScript scr)
+        {
+            this.onRowIterationScr = scr;
         }
 
         public void OnIteration(String iterationName, string iterationValue, ReflectionScript scr)

@@ -20,6 +20,8 @@ namespace Projector
 
         public const string PROC_NAME = "ReflectionScript";
 
+        private string ProcID = "unset";
+
         private Stopwatch RunTime = new Stopwatch();
         private Hashtable WaitingTimers = new Hashtable();
 
@@ -53,13 +55,28 @@ namespace Projector
 
         public int startLine = 0;
         
+        public String getRunIdent()
+        {
+            if (this.ProcID != "unset")
+            {
+                return this.ProcID;
+            }
+
+            if (this.currentScript.Parent != null && this.currentScript.Parent.CurrentExecuter != null)
+            {
+                return this.currentScript.Parent.CurrentExecuter.getRunIdent();
+            }
+            System.Guid uuid = System.Guid.NewGuid();
+            return uuid.ToString();
+            
+        }
 
         public RefScriptExecute(ReflectionScript script, Object parent)
         {
             this.parentObject = parent;
             this.currentScript = script;
             this.currentScript.CurrentExecuter = this;
-            
+            this.ProcID = this.getRunIdent();
             this.init();            
         }
 
@@ -76,6 +93,8 @@ namespace Projector
         {
             this.objectDefines.Add("NEW",new ReflectNew());
         }
+
+
 
         private Boolean checkWaitingTimer(string name)
         {
@@ -125,9 +144,9 @@ namespace Projector
                 this.startLine += this.currentScript.Parent.CurrentExecuter.startLine;
             }
 
-            if (!ProcSync.isRegistered(RefScriptExecute.PROC_NAME))
+            if (!ProcSync.isRegistered(RefScriptExecute.PROC_NAME + this.ProcID))
             {
-                ProcSync.registerProc(RefScriptExecute.PROC_NAME);
+                ProcSync.registerProc(RefScriptExecute.PROC_NAME + this.ProcID);
             }
 
             this.internalError = false;
@@ -216,22 +235,42 @@ namespace Projector
             }
         }
 
+        public Object getRegisteredObject(string name)
+        {
+            if (objectReferences.ContainsKey(name))
+            {
+                return objectReferences[name];
+            }
+
+            if (this.currentScript.Parent != null)
+            {
+                string[] parts = name.Split('.');
+                if (parts.Count() > 1)
+                {
+                    string newName = "";
+                    string add = "";
+                    for (int i = 1; i < parts.Count(); i++)
+                    {
+                        newName += add + parts[i];
+                        add = ".";
+                    }
+                    return this.currentScript.Parent.CurrentExecuter.getRegisteredObject(newName);
+                }
+            }
+            return null;
+        }
+
+
+
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
             // what ever happens ..tis line is executed
             this.currentExecLine++;
-
+           
             string cmd = scrLine.code.ToUpper();
             //this.currentScript.updateParam(scrLine);
 
-            // first trigger call
-            /*
-            if (this.debugMode)
-            {
-                this.currentDebugLine = scrLine;
-                this.updateMessage(scrLine);
-            }
-            */
+
             if (cmd == "MESSAGEBOX")
             {
                 string message = "";
@@ -249,7 +288,7 @@ namespace Projector
                 {
                     procIdent += this.currentScript.fillUpAll(parStr);
                 }
-                ProcSync.addSubProc(RefScriptExecute.PROC_NAME, procIdent);
+                ProcSync.addSubProc(RefScriptExecute.PROC_NAME + this.ProcID, procIdent);
             }
 
             if (cmd == "UNREG")
@@ -259,9 +298,9 @@ namespace Projector
                 {
                     procIdent += this.currentScript.fillUpAll(parStr);
                 }
-                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME, procIdent) > 0)
+                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME + this.ProcID, procIdent) > 0)
                 {
-                    ProcSync.removeSubProc(RefScriptExecute.PROC_NAME, procIdent);
+                    ProcSync.removeSubProc(RefScriptExecute.PROC_NAME + this.ProcID, procIdent);
                 }
                 
             }
@@ -276,7 +315,7 @@ namespace Projector
                     procIdent += this.currentScript.fillUpAll(parStr);
                 }
 
-                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME, procIdent) > 0)
+                if (ProcSync.getProcCount(RefScriptExecute.PROC_NAME + this.ProcID, procIdent) > 0)
                 {
                     // max time reached ?
                     if (this.checkWaitingTimer(procIdent))
@@ -337,6 +376,10 @@ namespace Projector
             }
 
 
+            if (scrLine.isVariable && !scrLine.isSetup)
+            {
+                this.currentScript.updateParam( scrLine, true );
+            }
 
             if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
             {
@@ -360,12 +403,14 @@ namespace Projector
 
             if (scrLine.isMethod && scrLine.namedReference != null)
             {
-                if (objectReferences.ContainsKey(scrLine.namedReference))
+                Object useObject = this.getRegisteredObject(scrLine.namedReference);
+                if (useObject != null)
                 {
                     this.lastErrorCode = 0;
-                    this.currentScript.updateParam(scrLine);
-                    Object execResult = this.execMethod(objectReferences[scrLine.namedReference], scrLine);
-                    scrLine.ReflectObject = objectReferences[scrLine.namedReference]; 
+                    this.currentScript.updateParam(scrLine, true);
+
+                    Object execResult = this.execMethod(useObject, scrLine);
+                    scrLine.ReflectObject = useObject;
 
                     if (this.lastErrorCode > 0)
                     {
@@ -396,6 +441,14 @@ namespace Projector
                         }
                     }
 
+                }
+                else
+                {
+                    ScriptErrors error = new ScriptErrors();
+                    error.errorMessage = "execution Fail: " + scrLine.namedReference + " is not registered as an executable Object ";
+                    error.lineNumber = scrLine.lineNumber;
+                    error.errorCode = this.lastErrorCode;
+                    this.currentScript.addError(error);
                 }
             }
 

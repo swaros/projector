@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
+using System.Collections;
 
 namespace Projector
 {
@@ -22,6 +24,122 @@ namespace Projector
             copyListView(source,target,1, 1);
         }
 
+       
+
+        public void mergeListView(string matchOn, ListView source, ListView target)
+        {
+            // add not existing columns and find the matching index
+            Stopwatch watch = new Stopwatch();
+            int sourceMatchIndex = -1;
+            int targetMatchIndex = -1;
+            List<int> addColumns = new List<int>();
+            List<string> knownCols = new List<string>();
+            source.View = View.Details;
+
+            Hashtable sourceIndex = new Hashtable();
+            Hashtable targetIndex = new Hashtable();
+
+            for (int a = 0; a < target.Columns.Count; a++)
+            {
+                knownCols.Add(target.Columns[a].Text);
+            }
+
+            for (int a = 0; a < source.Columns.Count; a++)
+            {
+                if (!knownCols.Contains(source.Columns[a].Text))
+                {
+                    target.Columns.Add(source.Columns[a].Text);
+                    if (source.Columns[a].Text != matchOn)
+                    {
+                        addColumns.Add(a);
+                    }
+                } else
+                {
+                    if (source.Columns[a].Text == matchOn)
+                    {
+                        sourceMatchIndex = a;
+                    }
+                }
+                
+            }
+            if (sourceMatchIndex > -1)
+            {
+                for (int a = 0; a < target.Columns.Count; a++)
+                {
+                    if (target.Columns[a].Text == matchOn)
+                    {
+                        targetMatchIndex = a;
+                    }
+                }
+
+                for (int i = 0; i < target.Items.Count; i++)
+                {
+                    string sVal = target.Items[i].SubItems[targetMatchIndex].Text;
+                    if (!targetIndex.ContainsKey(sVal))
+                    {
+                        targetIndex.Add(sVal, i);
+                    }
+                }
+
+
+
+                watch.Start();
+                if (targetMatchIndex > -1)
+                {
+                    int updateCnt = 0;
+                    for (int i = 0; i < source.Items.Count; i++)
+                    {
+                        string sVal = source.Items[i].SubItems[sourceMatchIndex].Text;
+                        if (targetIndex.ContainsKey(sVal))
+                        {
+                            int hitPos = (int)targetIndex[sVal];
+                            foreach (int add in addColumns)
+                            {
+                                target.Items[hitPos].SubItems.Add(source.Items[i].SubItems[add].Text);
+
+                            }
+                            
+                            updateCnt++;
+                            if (updateCnt == 20)
+                            {
+                                target.TopItem = target.Items[hitPos];
+                            }
+                        }
+                        /*
+                        for (int r = 0; r < target.Items.Count; r++)
+                        {
+                            string tVal = target.Items[r].SubItems[targetMatchIndex].Text;
+                            if (tVal == sVal)
+                            {
+                                updateCnt++;
+                                if (updateCnt == 20)
+                                {
+                                    target.TopItem = target.Items[r];
+                                }
+                                
+                                
+                                foreach (int add in addColumns)
+                                {
+                                    target.Items[r].SubItems.Add(source.Items[i].SubItems[add].Text);
+                                    
+                                }
+                            }
+                        }*/
+                        if (updateCnt > 20)
+                        {
+                            updateCnt = 0;
+                        }
+                        if (watch.ElapsedMilliseconds > 500)
+                        {
+                            target.Update();
+                            Application.DoEvents();
+                            watch.Restart();
+                        }
+                    }
+                }
+            }
+            
+        } 
 
         public void copyListView(ListView source, ListView target,int imageIndex, int selectImageIndex)
         {
