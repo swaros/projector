@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>66</ApplicationRevision>
+    <ApplicationRevision>67</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -89,6 +89,7 @@
     <Compile Include="AutoCompletion.cs" />
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="CmdEvent.cs" />
+    <Compile Include="CodeFormater.cs" />
     <Compile Include="ColorChoose.cs">
       <SubType>UserControl</SubType>
     </Compile>

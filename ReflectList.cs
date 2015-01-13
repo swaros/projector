@@ -16,15 +16,64 @@ namespace Projector
 
 
         private ReflectionScript onSelectScript;
+        private Color defaultDisplayColor;
+        private string displayText = "No Name";
+
+        private Boolean abortCmd = false;
 
         public ReflectList()
         {
             InitializeComponent();
+            this.defaultDisplayColor = this.stateLabel.ForeColor;
+            this.Progress.Visible = false;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
             exportCsv();
+        }
+
+        public void Abort()
+        {
+            this.abortCmd = true;
+        }
+
+
+        private Boolean ifAbort() 
+        {
+            Boolean ab = this.abortCmd;
+            this.abortCmd = false;
+            return ab;
+        }
+        public void setText(string label)
+        {
+            this.displayText = label;
+            this.stateLabel.Text = label;
+            
+        }
+
+        private void resetlabel()
+        {
+            this.stateLabel.ForeColor = this.defaultDisplayColor;
+            this.stateLabel.Text = this.displayText;
+            this.Progress.Value = 0;
+            this.Progress.Visible = false;
+        }
+
+        public void setVisible(Boolean onoff)
+        {
+            this.Visible = onoff;
+        }
+
+        private void setStatusMsg(string msg)
+        {
+            this.setStatusMsg(msg, Color.Blue);
+        }
+
+        private void setStatusMsg(string msg, Color displayColor)
+        {
+            this.stateLabel.ForeColor = displayColor;
+            this.stateLabel.Text = msg;
         }
 
         public void setListView(ListView list)
@@ -47,7 +96,9 @@ namespace Projector
         public void joinFields(string left, string right, string newName, string between)
         {
             Stopwatch watch = new Stopwatch();
-             
+            this.setStatusMsg("Joining...");
+            
+
             this.listView.Columns.Add(newName);
             int newCnt = listView.Columns.Count - 2;
             int rPos = -1;
@@ -75,20 +126,29 @@ namespace Projector
                     this.listView.Items[i].SubItems.Add(newText);
                     if (watch.ElapsedMilliseconds > 1000)
                     {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
                         this.listView.TopItem = this.listView.Items[i];
                         this.listView.Update();
+                        this.setStatusMsg("Joining..." + i + "/" + this.listView.Items.Count); 
                         Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
                         watch.Restart();
                     }
                 }
             }
-
+            this.resetlabel();
         }
 
         public void mark(string fieldname, string value)
         {
             Stopwatch watch = new Stopwatch();
-
+            this.setStatusMsg("Mark:");
             int lPos = -1;
             for (int a = 0; a < listView.Columns.Count; a++)
             {
@@ -112,25 +172,35 @@ namespace Projector
                         this.listView.Items[i].Selected = true;
                         this.listView.Update();
                         Application.DoEvents();
+                        this.resetlabel();
                         return;
                     }
                     if (watch.ElapsedMilliseconds > 1000)
                     {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
                         this.listView.TopItem = this.listView.Items[i];
+                        this.setStatusMsg("Search..." + i + "/" + this.listView.Items.Count);
                         this.listView.Update();
                         Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
                         watch.Restart();
                     }
                 }
             }
-
+            this.resetlabel();
         }
 
 
         public void split(string fieldname, string splitChars)
         {
             Stopwatch watch = new Stopwatch();
-
+            this.setStatusMsg("Splitting....");
             int lPos = -1;
             for (int a = 0; a < listView.Columns.Count; a++)
             {
@@ -152,14 +222,24 @@ namespace Projector
                     this.listView.Items[i].SubItems[lPos].Text = newTexts[0];
                     if (watch.ElapsedMilliseconds > 1000)
                     {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
+                        this.setStatusMsg("Splitting..." + i + "/" + this.listView.Items.Count);
+
                         this.listView.TopItem = this.listView.Items[i];
                         this.listView.Update();
                         Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
                         watch.Restart();
                     }
                 }
             }
-
+            resetlabel();
         }
 
 
@@ -170,7 +250,30 @@ namespace Projector
 
         }
 
+        public void unionListView(ListView adList)
+        {
+            if (this.listView.Items.Count == 0)
+            {
+                this.setListView(adList);
+                return;
+            }
 
+            if (this.listView.Columns.Count == adList.Columns.Count)
+            {
+                foreach (ListViewItem adItem in adList.Items)
+                {
+                    ListViewItem cloneList = (ListViewItem) adItem.Clone();
+                    this.listView.Items.Add(cloneList);
+
+                    if (ifAbort())
+                    {
+                        resetlabel();
+                        return;
+                    }
+                }
+            }
+
+        }
 
         public void joinListView(string onJoin,ListView list)
         {
@@ -219,9 +322,32 @@ namespace Projector
 
         public void Iterate()
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            setStatusMsg("Iterating ...", Color.DarkGreen);
+            int i = 0;
+            this.Progress.Visible = true;
+            this.Progress.Maximum = this.listView.Items.Count;
+            
             foreach (ListViewItem lItem in this.listView.Items){
+                i++;
+                if (watch.ElapsedMilliseconds > 500)
+                {
+                    this.Progress.Value = i;
+                    this.setStatusMsg("Iterating..." + i + "/" + this.listView.Items.Count, Color.DarkGreen);
+                    this.listView.TopItem = lItem;
+                    this.listView.Update();
+                    Application.DoEvents();
+                    if (ifAbort())
+                    {
+                        resetlabel();
+                        return;
+                    }
+                    watch.Restart();
+                }
                 intIterate(lItem);
             }
+            resetlabel();
         }
 
         private void intIterate(ListViewItem lItem)
@@ -304,9 +430,11 @@ namespace Projector
         private void exportCsvToFile(string filename)
         {
             ListViewWorker Worker = new ListViewWorker();
+            this.setStatusMsg("Exporting to " + filename + " please wait");
             string csvContent = Worker.exportCsv(this.listView);
 
             System.IO.File.WriteAllText(filename, csvContent);
+            resetlabel();
         }
 
         private void listView_SelectedIndexChanged(object sender, EventArgs e)
@@ -318,12 +446,15 @@ namespace Projector
                     int number = 0;
                     foreach (ListViewItem.ListViewSubItem lwItem in this.listView.SelectedItems[0].SubItems)
                     {
-                        string headName = this.listView.Columns[number].Text;
-                        string[] solits = headName.Split(' ');
-                        string varName = solits[0];
-                        this.onSelectScript.createOrUpdateStringVar("&"+varName, lwItem.Text);
-                        number++;
-                        this.onSelectScript.createOrUpdateStringVar("&ROW." + number, lwItem.Text);
+                        if (number < this.listView.Columns.Count)
+                        {
+                            string headName = this.listView.Columns[number].Text;
+                            string[] solits = headName.Split(' ');
+                            string varName = solits[0];
+                            this.onSelectScript.createOrUpdateStringVar("&" + varName, lwItem.Text);
+                            number++;
+                            this.onSelectScript.createOrUpdateStringVar("&ROW." + number, lwItem.Text);
+                        }
                     }
                     RefScriptExecute executer = new RefScriptExecute(this.onSelectScript, this);
                     executer.run();

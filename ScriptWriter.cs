@@ -561,8 +561,11 @@ namespace Projector
                 executer = new RefScriptExecute(script, this.execObject);
 
                 // set me as watcher
-                executer.setWatcher(this, "watcher");
-                script.registerDebugWatcher(this, "varChange");
+                if (inspectRunToolStripMenuItem.Checked)
+                {
+                    executer.setWatcher(this, "watcher");
+                    script.registerDebugWatcher(this, "varChange");
+                }
                 isRunning = true;
                 runButton.Enabled = false;
                 Boolean succeed = executer.run();
@@ -678,6 +681,17 @@ namespace Projector
 
         private void codeBox_KeyDown(object sender, KeyEventArgs e)
         {
+
+            if (e.KeyCode == Keys.Tab)
+            {
+                //codeBox.SelectedText = "   ";
+                CodeFormater cf = new CodeFormater();
+                cf.setContent(codeBox);
+                cf.tabKey();
+                e.SuppressKeyPress = true;
+                return;
+            }            
+
             keyTrigger.Enabled = true;
             AutoComplete.keypressHandler( e );
             resetRedrawTick();

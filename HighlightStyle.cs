@@ -14,7 +14,7 @@ namespace Projector
 
         public Color ForeColor = Color.Gray;
         public Color BackColor = HighlightStyle.defaultColor;
-        public Font Font = new Font("Courier New", 8, FontStyle.Regular);
+        public Font Font = new Font("Courier New", 10, FontStyle.Regular);
 
         public String toSetupValue()
         {

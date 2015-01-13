@@ -273,10 +273,15 @@ namespace Projector
 
         public void markFullLine(int lineNumber, HighlightStyle color)
         {
-            this.markFullLine(lineNumber, color, false, true);
+            this.markFullLine(lineNumber, color, false, true, null);
         }
 
         public void markFullLine(int lineNumber, HighlightStyle color, Boolean lineCaret, Boolean markText)
+        {
+            this.markFullLine(lineNumber, color, lineCaret, markText, null);
+        }
+
+        public void markFullLine(int lineNumber, HighlightStyle color, Boolean lineCaret, Boolean markText, string DisplayText)
         {
             if (lineNumber >= this.intRtf.Lines.Count())
             {
@@ -288,9 +293,6 @@ namespace Projector
             {
                 existingLinesCharCount += this.intRtf.Lines[ln].Length + 1; // +1 for line ending
             }
-
-
-          
 
             int index = this.intRtf.GetFirstCharIndexFromLine(lineNumber);
             string line = this.intRtf.Lines[lineNumber];
@@ -322,6 +324,7 @@ namespace Projector
                     rbMarker.ForeColor = color.ForeColor;
                     rbMarker.firstCharIndex = existingLinesCharCount;
                     rbMarker.lastCharIndex = existingLinesCharCount + end;
+                    rbMarker.displayText = DisplayText;
                     this.intRtf.LineMarker.Add(rbMarker);
                 }
 
@@ -339,7 +342,10 @@ namespace Projector
             
         }
 
-        
+        public void resetMarker()
+        {
+            this.intRtf.LineMarker.Clear();
+        }
 
         public Boolean markWordInCurrentLine(string word, Color color)
         {

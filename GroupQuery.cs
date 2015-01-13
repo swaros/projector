@@ -97,6 +97,9 @@ namespace Projector
         private ReflectionScript onDoneScript;
         private ReflectionScript onDoneExportCsv;
         private ReflectionScript onCloseScript;
+        private ReflectionScript onStatusScript;
+
+        private string statusMessageVar;
 
         public void execute()
         {
@@ -106,6 +109,12 @@ namespace Projector
         private void iterateOverProfiles()
         {
             iterateOverProfiles(false);
+        }
+
+        public void OnStatusChange(string statusVar,ReflectionScript onDoneReading)
+        {
+            this.statusMessageVar = statusVar;
+            this.onStatusScript = onDoneReading;
         }
 
         public void OnDoneReading(ReflectionScript onDoneReading){
@@ -158,6 +167,19 @@ namespace Projector
         public void closeMe()
         {
             this.Close();
+        }
+
+        private void onStatusChange(string message)
+        {
+            if (this.onStatusScript != null)
+            {
+                if (this.statusMessageVar != null)
+                {
+                    this.onStatusScript.createOrUpdateStringVar("&" + this.statusMessageVar, message);
+                }
+                RefScriptExecute executer = new RefScriptExecute(this.onStatusScript, this);
+                executer.run();
+            }
         }
 
         private void onDoneCsv()
@@ -294,13 +316,14 @@ namespace Projector
 
             sqlProgress.Maximum = runningMaxEvents;
             sqlProgress.Value = runningCurrentEvents;
-
+           
             toolStrip1.Refresh();
 
             runningCurrentEvents++;
             statusLabel.Text = "Done SQL @ " + currentProfileName + "  " + runningCurrentEvents + " / " + runningMaxEvents;
             statusStrip1.Refresh();
-            
+
+            onStatusChange(statusLabel.Text);
             if (runningCurrentEvents == runningMaxEvents)
             {
                 sqlProgress.Visible = false;
@@ -417,14 +440,15 @@ namespace Projector
                     instGroup.Controls.Add(infoData);
                     instGroup.Height = 60;
                     instGroup.BackColor = Color.LightPink;
-
+                    this.onStatusChange("Error on " + infoData.Text);
                 }
                 else
                 {
 
                     if (bgWorkerObj.haseRows)
                     {
-                      
+
+                       
                         for (int i = 0; i < resultView.Columns.Count; i++)
                         {
                             resultView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -440,7 +464,7 @@ namespace Projector
                         instGroup.Controls.Add(resultView);
                         instGroup.Controls.Add(infoData);
 
-
+                        this.onStatusChange(resultView.Items.Count + " rows from " + infoData.Text);
 
                     }
                     else
@@ -454,6 +478,8 @@ namespace Projector
                         instGroup.Height = 60;
                         instGroup.BackColor = Color.LightYellow;
                         instGroup.Controls.Add(infoData);
+
+                        this.onStatusChange(" no rows reported from " + infoData.Text);
                     }
 
                 }

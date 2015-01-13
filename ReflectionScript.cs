@@ -1634,9 +1634,11 @@ namespace Projector
                 string definedType = varDefines[partPosition];
                 if (definedType == "INT" || definedType == "Int32")
                 {
+                    string replaced = this.fillUpStrings(part);
+
                     try
                     {
-                        int parInt = int.Parse(part);
+                        int parInt = int.Parse(replaced);
                         cmdResult.parameters.Add(parInt);
                     }
                     catch (Exception e)
@@ -1648,9 +1650,10 @@ namespace Projector
                 }
                 else if (definedType == "Decimal")
                 {
+                    string replaced = this.fillUpStrings(part);
                     try
                     {
-                        Decimal parInt = Decimal.Parse(part);
+                        Decimal parInt = Decimal.Parse(replaced);
                         cmdResult.parameters.Add(parInt);
                     }
                     catch (Exception e)
@@ -1666,7 +1669,8 @@ namespace Projector
                 }
                 else if (definedType == "BOOL" || definedType == "Boolean")
                 {
-                    if (part.ToUpper() == "TRUE" || part == "1")
+                    string replaced = this.fillUpStrings(part);
+                    if (replaced.ToUpper() == "TRUE" || replaced == "1")
                     {
                         cmdResult.parameters.Add(true);
                     }

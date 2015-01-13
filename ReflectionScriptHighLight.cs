@@ -308,7 +308,7 @@ namespace Projector
 
                 foreach (ScriptErrors err in this.Srcipt.getAllErrors())
                 {
-                    this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false);
+                    this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false, err.errorMessage);
 
                 }
             }
@@ -424,6 +424,8 @@ namespace Projector
         {
             this.addKeyWord("{", ObjectStyle);
             this.addKeyWord("}", ObjectStyle);
+            this.addKeyWord("true", ObjectStyle);
+            this.addKeyWord("false", ObjectStyle);
 
 
 

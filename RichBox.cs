@@ -79,16 +79,26 @@ namespace Projector
                                              this.ClientSize.Height - 1));
                          */
                         Pen redPen = new Pen(Color.Blue);
+                        Brush solidRedBrush = new SolidBrush(Color.DarkRed);
                         foreach (RichBoxMarker dRec in LineMarker){
                             Point tl = this.PointToClient(dRec.topLeft);
                             
                             Point mcheck = this.GetPositionFromCharIndex(dRec.firstCharIndex);
                             Rectangle bychar = new Rectangle(1, mcheck.Y, this.ClientSize.Width - 1, this.getLineHeight());                           
                             Brush mBrush =  new SolidBrush(Color.FromArgb(45, dRec.ForeColor.R, dRec.ForeColor.G, dRec.ForeColor.B));
-
+                            Brush SolidBrush = new SolidBrush(Color.FromArgb(dRec.ForeColor.R, dRec.ForeColor.G, dRec.ForeColor.B));
 
                             g.FillRectangle(mBrush, bychar);
                             g.DrawRectangle(new Pen(dRec.ForeColor), bychar);
+
+                            if (dRec.displayText != null)
+                            {
+
+                                StringFormat stringFormat = new StringFormat();
+                                stringFormat.Alignment = StringAlignment.Far;
+                                stringFormat.LineAlignment = StringAlignment.Center;
+                                g.DrawString(dRec.displayText, new Font("Courier New", 8, FontStyle.Regular), SolidBrush, bychar, stringFormat);
+                            }
                         }
                     }
                     

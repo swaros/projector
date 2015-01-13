@@ -33,6 +33,7 @@
             // 
             // Button
             // 
+            this.Button.AutoSize = true;
             this.Button.Location = new System.Drawing.Point(4, 4);
             this.Button.Name = "Button";
             this.Button.Size = new System.Drawing.Size(75, 23);
@@ -51,6 +52,7 @@
             this.Name = "ReflectButton";
             this.Size = new System.Drawing.Size(82, 30);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

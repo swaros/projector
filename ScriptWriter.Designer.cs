@@ -76,6 +76,7 @@
             this.keyTrigger = new System.Windows.Forms.Timer(this.components);
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.inspectRunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.codeBox = new Projector.RichBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
@@ -375,7 +376,7 @@
             this.switchDrawMode});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(214, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(245, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // loadButton
@@ -555,7 +556,8 @@
             // setupToolStripMenuItem
             // 
             this.setupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorsToolStripMenuItem});
+            this.colorsToolStripMenuItem,
+            this.inspectRunToolStripMenuItem});
             this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
             this.setupToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.setupToolStripMenuItem.Text = "&Setup";
@@ -588,14 +590,27 @@
             this.refreshTimer.Interval = 400;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
+            // inspectRunToolStripMenuItem
+            // 
+            this.inspectRunToolStripMenuItem.Checked = true;
+            this.inspectRunToolStripMenuItem.CheckOnClick = true;
+            this.inspectRunToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.inspectRunToolStripMenuItem.Name = "inspectRunToolStripMenuItem";
+            this.inspectRunToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.inspectRunToolStripMenuItem.Text = "&Inspect Run";
+            // 
             // codeBox
             // 
+            this.codeBox.AcceptsTab = true;
+            this.codeBox.AutoWordSelection = true;
             this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeBox.HideSelection = false;
             this.codeBox.Location = new System.Drawing.Point(0, 0);
             this.codeBox.Name = "codeBox";
             this.codeBox.Size = new System.Drawing.Size(764, 423);
             this.codeBox.TabIndex = 2;
+            this.codeBox.TabStop = false;
             this.codeBox.Text = "";
             this.codeBox.WordWrap = false;
             // 
@@ -696,5 +711,6 @@
         private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorsToolStripMenuItem;
         public RichBox codeBox;
+        private System.Windows.Forms.ToolStripMenuItem inspectRunToolStripMenuItem;
     }
 }

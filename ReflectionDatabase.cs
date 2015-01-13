@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Projector
 {
@@ -110,8 +111,40 @@ namespace Projector
             }
             mysql.disConnect();
         }
-           
-        
+
+        public ListView getListViewFromDb(string profilName, string query)
+        {
+            ListView resultView = new ListView();
+            Profil usedProfil = pWorker.getProfilbyName(profilName);
+            if (usedProfil != null)
+            {
+                MysqlHandler mysql = new MysqlHandler(usedProfil);
+
+                mysql.connect();
+                MySql.Data.MySqlClient.MySqlDataReader dbResult;
+                dbResult = mysql.sql_select(query);
+                if (dbResult != null && dbResult.HasRows)
+                {
+                    mysql.sql_data2ListView(dbResult, resultView);
+                }
+
+                List<string> errors = mysql.getErrorMessages();
+                if (errors.Count > 0)
+                {
+                    foreach (string errMsg in errors)
+                    {
+                        this.scrMysqError(errMsg);
+                    }
+                }
+                mysql.disConnect();
+                doneDb();
+            }
+            else
+            {
+                this.scrMysqError(" invalid profil: " + profilName);
+            }
+            return resultView;
+        }
 
         
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)

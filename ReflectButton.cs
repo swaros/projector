@@ -35,6 +35,16 @@ namespace Projector
             }
         }
 
+        public void setEnabled(Boolean onoff)
+        {
+            this.Enabled = onoff;
+        }
+
+        public void setVisible(Boolean onoff)
+        {
+            this.Visible = onoff;
+        }
+
         public void setLeft(int left)
         {
             this.Left = left;
