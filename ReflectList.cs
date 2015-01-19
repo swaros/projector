@@ -16,6 +16,8 @@ namespace Projector
 
 
         private ReflectionScript onSelectScript;
+        private ReflectionScript startIterateScript;
+        private ReflectionScript endIterateScript;
         private Color defaultDisplayColor;
         private string displayText = "No Name";
 
@@ -320,8 +322,37 @@ namespace Projector
             return "";
         }
 
+        public void OnStartIterate(ReflectionScript refl)
+        {
+            this.startIterateScript = refl;
+        }
+
+        public void OnDoneIterate(ReflectionScript refl)
+        {
+            this.endIterateScript = refl;
+        }
+
+        private void execOnDone()
+        {
+            if (this.endIterateScript != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.endIterateScript, this);
+                exec.run();
+            }
+        }
+
+        private void execOnStart()
+        {
+            if (this.startIterateScript != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.startIterateScript, this);
+                exec.run();
+            }
+        }
+
         public void Iterate()
         {
+            this.execOnStart();
             Stopwatch watch = new Stopwatch();
             watch.Start();
             setStatusMsg("Iterating ...", Color.DarkGreen);
@@ -340,6 +371,7 @@ namespace Projector
                     Application.DoEvents();
                     if (ifAbort())
                     {
+                        this.execOnDone();
                         resetlabel();
                         return;
                     }
@@ -348,6 +380,7 @@ namespace Projector
                 intIterate(lItem);
             }
             resetlabel();
+            this.execOnDone();
         }
 
         private void intIterate(ListViewItem lItem)
@@ -380,6 +413,15 @@ namespace Projector
         public void saveAsCsv(string filename)
         {
             this.exportCsvToFile(filename);
+        }
+
+        public void saveAsCsvDlg(string filename)
+        {
+            saveFileDialog.FileName = filename;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.exportCsvToFile(saveFileDialog.FileName);
+            }
         }
 
         private void exportCsv()

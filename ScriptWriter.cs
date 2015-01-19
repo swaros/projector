@@ -570,6 +570,18 @@ namespace Projector
                 runButton.Enabled = false;
                 Boolean succeed = executer.run();
 
+                if (!inspectRunToolStripMenuItem.Checked)
+                {
+                    errorLabels.Text = "Execution is done ";
+                    errorLabels.ForeColor = Color.DarkGreen;
+                    errorLabels.BackColor = Color.LightGreen;
+                    errorLabels.ToolTipText = "";
+                    isRunning = false;
+
+
+                    runButton.Enabled = true;
+                    continueBtn.Enabled = false;
+                }
 
             }
             else

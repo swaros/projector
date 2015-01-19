@@ -69,6 +69,11 @@ namespace Projector
             this.Text = caption;
         }
 
+        public String getCaption()
+        {
+            return this.Text;
+        }
+
         public void setEnabled(Boolean setit)
         {
             this.Enabled = setit;

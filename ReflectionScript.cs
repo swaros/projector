@@ -1352,19 +1352,32 @@ namespace Projector
             {
                 string cmd = testObj.code.ToUpper();
                 string keyForObj = testObj.typeOfObject + "." + testObj.name;
-                if (testObj.isObject && cmd == "NEW" && !this.parsedObjects.Contains(keyForObj))
+                if (testObj.isObject && cmd == "NEW")
                 {
-                    ReflectNew reflector = new ReflectNew();
-                    Object testObject = reflector.getObject(testObj,this);
+                    if (!this.parsedObjects.Contains(keyForObj))
+                    {
+                        ReflectNew reflector = new ReflectNew();
+                        Object testObject = reflector.getObject(testObj, this);
+                        if (testObject != null)
+                        {
+                            testObj.ReflectObject = testObject;
 
-                    testObj.ReflectObject = testObject;
-                    
 
-                        //this.objectStorage.Add(testObj.name,testObject);
-                    this.createObject(testObj.name, testObject, testObj.typeOfObject);
-                    
-                    this.updateMeByObject(testObj);              
-                    this.parsedObjects.Add(keyForObj);
+                            //this.objectStorage.Add(testObj.name,testObject);
+                            this.createObject(testObj.name, testObject, testObj.typeOfObject);
+
+                            this.updateMeByObject(testObj);
+                            this.parsedObjects.Add(keyForObj);
+                        }
+                        else
+                        {
+                            this.addError("Object " + keyForObj + " can not be created. Check Name");
+                        }
+                    }
+                    else
+                    {
+                        this.addError("Object " + keyForObj + " was already created");
+                    }
                 }
             }
 
@@ -1480,7 +1493,7 @@ namespace Projector
                     }
                     catch (Exception e)
                     {
-                        this.addError("Parameter must bee an number" + e.Message);
+                        this.addError("Parameter must be an number" + e.Message);
                         return null;
                     }
                     break;
@@ -1494,7 +1507,7 @@ namespace Projector
                     }
                     catch (Exception e)
                     {
-                        this.addError("Parameter must bee an Decimal number" + e.Message);
+                        this.addError("Parameter must be an Decimal number" + e.Message);
                         return null;
                     }
                     break;
@@ -1643,7 +1656,7 @@ namespace Projector
                     }
                     catch (Exception e)
                     {
-                        this.addError("Parameter must bee an number" + e.Message);
+                        this.addError(e.Message);
                         return null;
                     }
 
@@ -1658,7 +1671,7 @@ namespace Projector
                     }
                     catch (Exception e)
                     {
-                        this.addError("Parameter must bee an Decimal Number" + e.Message);
+                        this.addError("Parameter must be an Decimal Number" + e.Message);
                         return null;
                     }
 
@@ -1718,11 +1731,18 @@ namespace Projector
 
            // Boolean foundMatch = false;
             // look on any mask
+            int bestMatchFound = 0;
             foreach (string hash in this.mask)
             {
 
                 RefScriptMaskMatch maskMatch = new RefScriptMaskMatch(hash, this);
-                if (maskMatch.possibleMatch(words) != RefScriptMaskMatch.MATCH)
+                int bestmatch = maskMatch.possibleMatch(words);
+                if (bestMatchFound < bestmatch)
+                {
+                    bestMatchFound = bestmatch;
+                }
+
+                if (bestmatch != RefScriptMaskMatch.MATCH)
                 {                    
                     continue;
                 }
@@ -1923,8 +1943,19 @@ namespace Projector
                     return cmdResult;
                 }
             }
-
-            this.addError("Invalid Source:" + this.lines[this.currentReadLine]);
+            if (bestMatchFound == RefScriptMaskMatch.MAYBE_MATCH)
+            {
+                this.addError("not sure what this should be");
+            }
+            else if (bestMatchFound == RefScriptMaskMatch.PARTIAL_MATCH)
+            {
+                this.addError("incomplete");
+            }
+            else
+            {
+                this.addError("INVALID");
+            }
+            
 
             return null;
         }

@@ -896,7 +896,14 @@ namespace Projector
 
 
                 }
-                if (myData!=null) myData.Close();
+                try
+                {
+                    if (myData != null) myData.Close();
+                }
+                catch (Exception ex)
+                {
+                    this.lastSqlErrorMessage = ex.Message;
+                }
             }
             else
             {
