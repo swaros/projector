@@ -28,6 +28,11 @@ namespace Projector
             return false;
         }
 
+        public void showAll(Boolean setDisplay)
+        {
+            this.AllScripts = setDisplay;
+        }
+
         public List<RefScrAutoScrContainer> getAllScripts()
         {
             return this.scriptCollection;

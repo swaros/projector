@@ -25,6 +25,7 @@ namespace Projector
 
         private string scriptFile;
 
+        private Boolean displayNamedScripstOnly = false;
         private string mainScriptFolder;
 
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
@@ -83,6 +84,9 @@ namespace Projector
 
             check = tmpSetup.getSetting("scriptpath");
             if (check != null && check != "" && System.IO.Directory.Exists(check)) this.mainScriptFolder = check;
+
+            check = tmpSetup.getSetting("namedscriptsonly");
+            if (check != null && check != "") this.displayNamedScripstOnly = (int.Parse(check) == 1);
 
             groupedToolStripMenuItem.Checked = this.showGroups;
 
@@ -177,6 +181,7 @@ namespace Projector
 
             if (ProjectorForm.SCRIPT_BUTTON_MODE == buttonStyle)
             {
+                this.ScriptAutoLoader.showAll(!this.displayNamedScripstOnly);
                 if (this.ScriptAutoLoader.setPath( this.mainScriptFolder ))
                 {
                     List<RefScrAutoScrContainer> scripts = this.ScriptAutoLoader.getAllScripts();
@@ -714,6 +719,9 @@ namespace Projector
             if (showGroups) tmpSetup.addSetting("showgroup", "1");
             else tmpSetup.addSetting("showgroup", "0");
 
+            if (this.displayNamedScripstOnly) tmpSetup.addSetting("namedscriptsonly", "1");
+            else tmpSetup.addSetting("namedscriptsonly", "1");
+
             if (groupButtonsToolStripMenuItem.Checked) tmpSetup.addSetting("showgroupbuttons", "1");
             else tmpSetup.addSetting("showgroupbuttons", "0");
 
@@ -915,9 +923,13 @@ namespace Projector
             MainSetup ms = new MainSetup();
             ms.ScriptPath.setPath(this.mainScriptFolder);
             ms.ScriptPath.setInfo("Default Script Folder");
+            ms.displayNamedScript.Checked = this.displayNamedScripstOnly;
             if (ms.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 this.mainScriptFolder = ms.ScriptPath.getPath();
+                this.displayNamedScripstOnly = ms.displayNamedScript.Checked;
+
+                updateProfilSelector();
             }
         }
 

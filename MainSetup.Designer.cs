@@ -29,20 +29,24 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.OnlyNamedScripts = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ScriptPath = new Projector.PathSelector();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.displayNamedScript = new System.Windows.Forms.CheckBox();
+            this.ScriptPath = new Projector.PathSelector();
             this.tabControl1.SuspendLayout();
+            this.OnlyNamedScripts.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.OnlyNamedScripts);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -50,15 +54,16 @@
             this.tabControl1.Size = new System.Drawing.Size(424, 238);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // OnlyNamedScripts
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(338, 403);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Main Settings";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.OnlyNamedScripts.Controls.Add(this.groupBox2);
+            this.OnlyNamedScripts.Location = new System.Drawing.Point(4, 22);
+            this.OnlyNamedScripts.Name = "OnlyNamedScripts";
+            this.OnlyNamedScripts.Padding = new System.Windows.Forms.Padding(3);
+            this.OnlyNamedScripts.Size = new System.Drawing.Size(416, 212);
+            this.OnlyNamedScripts.TabIndex = 0;
+            this.OnlyNamedScripts.Text = "Main Settings";
+            this.OnlyNamedScripts.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -81,13 +86,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Pats";
             // 
-            // ScriptPath
-            // 
-            this.ScriptPath.Location = new System.Drawing.Point(17, 19);
-            this.ScriptPath.Name = "ScriptPath";
-            this.ScriptPath.Size = new System.Drawing.Size(364, 63);
-            this.ScriptPath.TabIndex = 0;
-            // 
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -108,6 +106,33 @@
             this.button2.Text = "Abort";
             this.button2.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.displayNamedScript);
+            this.groupBox2.Location = new System.Drawing.Point(9, 7);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(207, 54);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Reflection Script";
+            // 
+            // displayNamedScript
+            // 
+            this.displayNamedScript.AutoSize = true;
+            this.displayNamedScript.Location = new System.Drawing.Point(7, 20);
+            this.displayNamedScript.Name = "displayNamedScript";
+            this.displayNamedScript.Size = new System.Drawing.Size(156, 17);
+            this.displayNamedScript.TabIndex = 0;
+            this.displayNamedScript.Text = "Display Named Scripts Only";
+            this.displayNamedScript.UseVisualStyleBackColor = true;
+            // 
+            // ScriptPath
+            // 
+            this.ScriptPath.Location = new System.Drawing.Point(17, 19);
+            this.ScriptPath.Name = "ScriptPath";
+            this.ScriptPath.Size = new System.Drawing.Size(364, 63);
+            this.ScriptPath.TabIndex = 0;
+            // 
             // MainSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,8 +146,11 @@
             this.ShowIcon = false;
             this.Text = "Main Setup";
             this.tabControl1.ResumeLayout(false);
+            this.OnlyNamedScripts.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -130,11 +158,13 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox groupBox1;
         public PathSelector ScriptPath;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.TabPage OnlyNamedScripts;
+        public System.Windows.Forms.CheckBox displayNamedScript;
     }
 }

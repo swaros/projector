@@ -20,6 +20,8 @@ namespace Projector
             InitializeComponent();
             this.StartBtn.Enabled = false;
             this.EditBtn.Visible = false;
+            this.DescLabel.BackColor = Color.Transparent;
+
         }
 
         public void setScript(RefScrAutoScrContainer cont)
@@ -36,6 +38,7 @@ namespace Projector
                 this.MainLabel.Text = this.script.Label;
                 if (this.script.Description != null)
                 {
+  
                     this.DescLabel.Text = this.script.Description;
                 }
                 this.StartBtn.Enabled = true;

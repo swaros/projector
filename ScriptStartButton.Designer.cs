@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.MainLabel = new System.Windows.Forms.Label();
-            this.DescLabel = new System.Windows.Forms.Label();
             this.StartBtn = new System.Windows.Forms.Button();
             this.EditBtn = new System.Windows.Forms.Button();
+            this.DescLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // MainLabel
@@ -45,17 +45,6 @@
             this.MainLabel.Size = new System.Drawing.Size(134, 24);
             this.MainLabel.TabIndex = 0;
             this.MainLabel.Text = "Unamed Script";
-            // 
-            // DescLabel
-            // 
-            this.DescLabel.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DescLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.DescLabel.Location = new System.Drawing.Point(69, 24);
-            this.DescLabel.Name = "DescLabel";
-            this.DescLabel.Size = new System.Drawing.Size(185, 54);
-            this.DescLabel.TabIndex = 1;
-            this.DescLabel.Text = "Description";
-            this.DescLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // StartBtn
             // 
@@ -76,15 +65,29 @@
             this.EditBtn.Text = "Edit";
             this.EditBtn.UseVisualStyleBackColor = true;
             // 
+            // DescLabel
+            // 
+            this.DescLabel.AutoSize = true;
+            this.DescLabel.BackColor = System.Drawing.Color.Transparent;
+            this.DescLabel.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DescLabel.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.DescLabel.Location = new System.Drawing.Point(53, 28);
+            this.DescLabel.Name = "DescLabel";
+            this.DescLabel.Size = new System.Drawing.Size(73, 16);
+            this.DescLabel.TabIndex = 4;
+            this.DescLabel.Text = "Description";
+            this.DescLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
             // ScriptStartButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.DescLabel);
             this.Controls.Add(this.EditBtn);
             this.Controls.Add(this.StartBtn);
-            this.Controls.Add(this.DescLabel);
             this.Controls.Add(this.MainLabel);
             this.ForeColor = System.Drawing.Color.DarkSlateBlue;
             this.Name = "ScriptStartButton";
@@ -97,8 +100,8 @@
         #endregion
 
         private System.Windows.Forms.Label MainLabel;
-        private System.Windows.Forms.Label DescLabel;
         private System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.Button EditBtn;
+        private System.Windows.Forms.Label DescLabel;
     }
 }
