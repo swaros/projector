@@ -13,21 +13,28 @@ namespace Projector
     public partial class ProjectorForm : Form
     {
 
+        const int SCRIPT_BUTTON_MODE = 3;
+
         private Profil profil = new Profil("default");
         List<Button> ProfilBtn = new List<Button>();
 
         private bool showGroups = false;
 
         private int buttonStyle = 0;
-        private int maxStyle = 2;
+        private int maxStyle = 3;
 
         private string scriptFile;
+
+        private string mainScriptFolder;
+
+        RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
         public ProjectorForm()
         {
             InitializeComponent();
-
+            this.mainScriptFolder = Application.StartupPath;
             updateProfilSelector();
+            
         }
 
 
@@ -73,6 +80,9 @@ namespace Projector
 
             check = tmpSetup.getSetting("buttonstyle");
             if (check != null && check != "") this.buttonStyle = int.Parse(check);
+
+            check = tmpSetup.getSetting("scriptpath");
+            if (check != null && check != "" && System.IO.Directory.Exists(check)) this.mainScriptFolder = check;
 
             groupedToolStripMenuItem.Checked = this.showGroups;
 
@@ -164,6 +174,28 @@ namespace Projector
 
 
             flowLayout.Controls.Clear();
+
+            if (ProjectorForm.SCRIPT_BUTTON_MODE == buttonStyle)
+            {
+                if (this.ScriptAutoLoader.setPath( this.mainScriptFolder ))
+                {
+                    List<RefScrAutoScrContainer> scripts = this.ScriptAutoLoader.getAllScripts();
+
+                    foreach (RefScrAutoScrContainer script in scripts)
+                    {
+                        ScriptStartButton tmpStartBtn = new ScriptStartButton(this);
+                        tmpStartBtn.setScript(script);
+                        flowLayout.Controls.Add(tmpStartBtn);
+                        
+                    }
+
+                }
+
+                return;
+            }
+
+
+
             Hashtable assignGrp = new Hashtable();
             Hashtable currentView = new Hashtable();
             if (showGroups || chooseGroup.Text != "[ALL]")
@@ -685,6 +717,8 @@ namespace Projector
             if (groupButtonsToolStripMenuItem.Checked) tmpSetup.addSetting("showgroupbuttons", "1");
             else tmpSetup.addSetting("showgroupbuttons", "0");
 
+            tmpSetup.addSetting("scriptpath", this.mainScriptFolder);
+
             tmpSetup.saveXml();
         }
 
@@ -874,6 +908,17 @@ namespace Projector
         {
             ScriptWriter newScript = new ScriptWriter(this);
             newScript.Show();
+        }
+
+        private void mainSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainSetup ms = new MainSetup();
+            ms.ScriptPath.setPath(this.mainScriptFolder);
+            ms.ScriptPath.setInfo("Default Script Folder");
+            if (ms.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.mainScriptFolder = ms.ScriptPath.getPath();
+            }
         }
 
 

@@ -37,6 +37,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,13 +64,13 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.chooseGroup = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.scriptRunButton = new System.Windows.Forms.ToolStripButton();
             this.exportProfileDlg = new System.Windows.Forms.SaveFileDialog();
             this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveProject = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.scriptRunButton = new System.Windows.Forms.ToolStripButton();
             this.openScript = new System.Windows.Forms.OpenFileDialog();
-            this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -153,13 +154,21 @@
             this.saveProjectToolStripMenuItem.Text = "Save Project...";
             this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.backupProfilesToolStripMenuItem_Click);
             // 
+            // editScriptToolStripMenuItem
+            // 
+            this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
+            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.editScriptToolStripMenuItem.Text = "Edit Script...";
+            this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
+            // 
             // einstellungenToolStripMenuItem
             // 
             this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.profilToolStripMenuItem,
             this.setupToolStripMenuItem,
             this.exportCurrentProfilToolStripMenuItem,
-            this.groupsToolStripMenuItem});
+            this.groupsToolStripMenuItem,
+            this.mainSettingsToolStripMenuItem});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.einstellungenToolStripMenuItem.Text = "&Options";
@@ -333,7 +342,7 @@
             this.scriptRunButton});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(350, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(319, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -399,6 +408,21 @@
             this.chooseGroup.Size = new System.Drawing.Size(121, 25);
             this.chooseGroup.SelectedIndexChanged += new System.EventHandler(this.chooseGroup_SelectedIndexChanged);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // scriptRunButton
+            // 
+            this.scriptRunButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.scriptRunButton.Image = global::Projector.Properties.Resources.stock_tools_macro;
+            this.scriptRunButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.scriptRunButton.Name = "scriptRunButton";
+            this.scriptRunButton.Size = new System.Drawing.Size(23, 22);
+            this.scriptRunButton.Text = "Execute Projector Script File";
+            this.scriptRunButton.Click += new System.EventHandler(this.scriptRunButton_Click);
+            // 
             // exportProfileDlg
             // 
             this.exportProfileDlg.Filter = "Xml Profil|*.xml";
@@ -416,21 +440,6 @@
             this.saveProject.Filter = "Xml Profil|*.xmlpr";
             this.saveProject.Title = "Project Save";
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // scriptRunButton
-            // 
-            this.scriptRunButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.scriptRunButton.Image = global::Projector.Properties.Resources.stock_tools_macro;
-            this.scriptRunButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.scriptRunButton.Name = "scriptRunButton";
-            this.scriptRunButton.Size = new System.Drawing.Size(23, 22);
-            this.scriptRunButton.Text = "Execute Projector Script File";
-            this.scriptRunButton.Click += new System.EventHandler(this.scriptRunButton_Click);
-            // 
             // openScript
             // 
             this.openScript.DefaultExt = "pscr";
@@ -438,12 +447,12 @@
             this.openScript.Tag = "LoadScript";
             this.openScript.Title = "Load Script File";
             // 
-            // editScriptToolStripMenuItem
+            // mainSettingsToolStripMenuItem
             // 
-            this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
-            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.editScriptToolStripMenuItem.Text = "Edit Script...";
-            this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
+            this.mainSettingsToolStripMenuItem.Name = "mainSettingsToolStripMenuItem";
+            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
+            this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
             // 
             // ProjectorForm
             // 
@@ -523,6 +532,7 @@
         private System.Windows.Forms.ToolStripButton scriptRunButton;
         private System.Windows.Forms.OpenFileDialog openScript;
         private System.Windows.Forms.ToolStripMenuItem editScriptToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mainSettingsToolStripMenuItem;
 
 
     }

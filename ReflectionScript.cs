@@ -14,6 +14,8 @@ namespace Projector
 
         public const string SETUP_MAXWAIT = "MAX_WAIT";
         public const string SETUP_GLOBAL = "GLOBAL";
+        public const string SETUP_LABEL = "LABEL";
+        public const string SETUP_DESC = "DESCRIPTION";
 
 
         private const string REGEX_BRACKETS = "({[^}]*})";
@@ -246,6 +248,18 @@ namespace Projector
                 }
             }
             return 0;
+        }
+
+        public String SetupStringValue(string name)
+        {
+            if (this.Setup.ContainsKey(name))
+            {
+                if (this.Setup[name] is String)
+                {
+                    return this.Setup[name].ToString();
+                }
+            }
+            return null;
         }
 
         public Boolean SetupBoolValue(string name)
@@ -1273,6 +1287,11 @@ namespace Projector
                 string type = testObj.scriptParameterTypes[0];
                 string var = testObj.scriptParameters[0];
                 Object obVar = this.getParamValue(type, var);
+                if (obVar == null)
+                {
+                    obVar = this.fillUpAll(var);
+                }
+
                 this.addSetup(testObj.name, obVar);
             }
 

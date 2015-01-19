@@ -184,6 +184,12 @@
     <Compile Include="ListViewReportContainer.cs" />
     <Compile Include="ListViewWorker.cs" />
     <Compile Include="MacroFunctions.cs" />
+    <Compile Include="MainSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainSetup.Designer.cs">
+      <DependentUpon>MainSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="MdiForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,12 @@
     </Compile>
     <Compile Include="PasteListView.Designer.cs">
       <DependentUpon>PasteListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PathSelector.Designer.cs">
+      <DependentUpon>PathSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Pattern.cs" />
     <Compile Include="PatternGroup.cs" />
@@ -293,6 +305,9 @@
     <EmbeddedResource Include="LabelText.resx">
       <DependentUpon>LabelText.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainSetup.resx">
+      <DependentUpon>MainSetup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MdiForm.resx">
       <DependentUpon>MdiForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -304,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PasteListView.resx">
       <DependentUpon>PasteListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PathSelector.resx">
+      <DependentUpon>PathSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlaceholderEditForm.resx">
       <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
@@ -339,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptStartButton.resx">
+      <DependentUpon>ScriptStartButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScriptWriter.resx">
       <DependentUpon>ScriptWriter.cs</DependentUpon>
@@ -424,6 +445,8 @@
     </Compile>
     <Compile Include="ReflectNew.cs" />
     <Compile Include="ReflectObjectInterface.cs" />
+    <Compile Include="RefScrAutoScrContainer.cs" />
+    <Compile Include="RefScrAutoStart.cs" />
     <Compile Include="RefScriptExecute.cs" />
     <Compile Include="RefScriptMaskMatch.cs" />
     <Compile Include="RefScrMath.cs" />
@@ -450,6 +473,12 @@
     </Compile>
     <Compile Include="ScriptExecuter.Designer.cs">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptStartButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScriptStartButton.Designer.cs">
+      <DependentUpon>ScriptStartButton.cs</DependentUpon>
     </Compile>
     <Compile Include="ScriptWriter.cs">
       <SubType>Form</SubType>
