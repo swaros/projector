@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 
 namespace Projector
 {
@@ -40,7 +41,17 @@ namespace Projector
 
         private void parseFolder()
         {
-            string[] filePaths = Directory.GetFiles(this.path, this.extension,  SearchOption.AllDirectories);
+            string[] filePaths;
+
+            try
+            {
+                filePaths = Directory.GetFiles(this.path, this.extension);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return;
+            }
             this.scriptCollection.Clear();
             foreach (string fileName in filePaths)
             {

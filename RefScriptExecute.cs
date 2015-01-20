@@ -17,6 +17,7 @@ namespace Projector
         public const int STATE_RUN_STEPWISE = 2;
         public const int STATE_WAIT = 5;
         public const int STATE_FINISHED = 10;
+        public const int STATE_WAITFOR_SUBS = 6;
 
         public const string PROC_NAME = "ReflectionScript";
 

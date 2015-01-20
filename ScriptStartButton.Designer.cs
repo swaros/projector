@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MainLabel = new System.Windows.Forms.Label();
             this.StartBtn = new System.Windows.Forms.Button();
             this.EditBtn = new System.Windows.Forms.Button();
             this.DescLabel = new System.Windows.Forms.Label();
+            this.runTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // MainLabel
@@ -78,6 +80,11 @@
             this.DescLabel.Text = "Description";
             this.DescLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
+            // runTimer
+            // 
+            this.runTimer.Interval = 2000;
+            this.runTimer.Tick += new System.EventHandler(this.runTimer_Tick);
+            // 
             // ScriptStartButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -103,5 +110,6 @@
         private System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.Button EditBtn;
         private System.Windows.Forms.Label DescLabel;
+        private System.Windows.Forms.Timer runTimer;
     }
 }

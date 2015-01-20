@@ -49,9 +49,24 @@ namespace Projector
         {
             if (this.script != null)
             {
+                runTimer.Enabled = true;
+                this.StartBtn.Enabled = false;
                 RefScriptExecute exec = new RefScriptExecute(this.script.Script, this.parent);
                 exec.run();
 
+            }
+        }
+
+        private void runTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.script.Script.imRunning())
+            {
+                this.StartBtn.Enabled = false;
+            }
+            else
+            {
+                this.runTimer.Enabled = false;
+                this.StartBtn.Enabled = true;
             }
         }
 

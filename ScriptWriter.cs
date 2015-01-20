@@ -569,7 +569,7 @@ namespace Projector
                 isRunning = true;
                 runButton.Enabled = false;
                 Boolean succeed = executer.run();
-
+                runningCheck.Enabled = true;
                 if (!inspectRunToolStripMenuItem.Checked)
                 {
                     errorLabels.Text = "Execution is done ";
@@ -876,6 +876,19 @@ namespace Projector
                 Highlight.saveColors();
 
                 updateColors();
+            }
+        }
+
+        private void runningCheck_Tick(object sender, EventArgs e)
+        {
+            if (script.imRunning())
+            {
+                workerLabel.Text = "Still Running";
+            }
+            else
+            {
+                workerLabel.Text = "D O N E";
+                runningCheck.Enabled = false;
             }
         }
     }

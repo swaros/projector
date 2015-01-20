@@ -667,6 +667,36 @@ namespace Projector
             }
         }
 
+
+        public Boolean imRunning()
+        {
+            if (this.CurrentExecuter != null)
+            {
+                if (this.CurrentExecuter.runState != RefScriptExecute.STATE_FINISHED)
+                {
+                    return true;
+                }
+
+                // check before not valid so we are in the state FINISHED...BUT waht abeout oure subscripts?
+                Boolean somIsRunning = false;
+                foreach (DictionaryEntry scrpt in this.subScripts)
+                {
+                    ReflectionScript refScr = (ReflectionScript)scrpt.Value;
+                    if (refScr.imRunning())
+                    {
+                        somIsRunning = true;
+                    }
+                }
+                return somIsRunning;
+
+
+                
+            }
+
+            return false;
+        }
+
+
         public void updateSubScripts(ReflectionScript refScr)
         {
             foreach (DictionaryEntry Obj in this.getObjects())

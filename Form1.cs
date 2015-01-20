@@ -181,6 +181,7 @@ namespace Projector
 
             if (ProjectorForm.SCRIPT_BUTTON_MODE == buttonStyle)
             {
+                mainSlitter.Panel1Collapsed = true;
                 this.ScriptAutoLoader.showAll(!this.displayNamedScripstOnly);
                 if (this.ScriptAutoLoader.setPath( this.mainScriptFolder ))
                 {
@@ -198,7 +199,7 @@ namespace Projector
 
                 return;
             }
-
+            mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
 
 
             Hashtable assignGrp = new Hashtable();
@@ -921,7 +922,7 @@ namespace Projector
         private void mainSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MainSetup ms = new MainSetup();
-            ms.ScriptPath.setPath(this.mainScriptFolder);
+            ms.ScriptPath.setPath(this.mainScriptFolder); 
             ms.ScriptPath.setInfo("Default Script Folder");
             ms.displayNamedScript.Checked = this.displayNamedScripstOnly;
             if (ms.ShowDialog() == System.Windows.Forms.DialogResult.OK)
