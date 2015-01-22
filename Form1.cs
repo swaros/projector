@@ -14,6 +14,7 @@ namespace Projector
     {
 
         const int SCRIPT_BUTTON_MODE = 3;
+        const int STYLE_BUTTON_MODE = 2;
 
         private Profil profil = new Profil("default");
         List<Button> ProfilBtn = new List<Button>();
@@ -35,6 +36,9 @@ namespace Projector
             InitializeComponent();
             this.mainScriptFolder = Application.StartupPath;
             updateProfilSelector();
+
+            //this.BackColor = SystemColors.Control;
+           
             
         }
 
@@ -104,6 +108,21 @@ namespace Projector
 
         }
 
+        private void updateGroupButonStyle(Button template)
+        {
+            for (int i = 0; i < flowLayoutControllPanel.Controls.Count;i++ )
+            {
+                Object tmpBtn = flowLayoutControllPanel.Controls[i];
+                if (tmpBtn is Button)
+                {
+                    Button btn = (Button)tmpBtn;
+                    btn.FlatStyle = template.FlatStyle;
+                    btn.ForeColor = template.ForeColor;
+                    btn.BackColor = template.BackColor;
+                }
+            }
+        }
+
         private void drawGroupButtons()
         {
 
@@ -124,6 +143,8 @@ namespace Projector
             tmpBtnx.Width = 150;
             tmpBtnx.Height = 40;
             tmpBtnx.Tag = 0;
+
+            tmpBtnx.FlatStyle = FlatStyle.Standard;
             
             tmpBtnx.Image = Projector.Properties.Resources.layer_group_add;
             tmpBtnx.ImageAlign = ContentAlignment.MiddleLeft;
@@ -140,6 +161,7 @@ namespace Projector
                 tmpBtn.Click += new System.EventHandler(btnSelectGroup);
                 tmpBtn.Width = 150;
                 tmpBtn.Height = 40;
+                tmpBtn.FlatStyle = FlatStyle.Standard;
                 tmpBtn.Tag = select;
                 tmpBtn.Image = Projector.Properties.Resources.layer_group_add;
                 tmpBtn.ImageAlign = ContentAlignment.MiddleLeft;
@@ -156,6 +178,117 @@ namespace Projector
             Button tmpBtn = (Button)sender;
             chooseGroup.SelectedIndex = (int)tmpBtn.Tag;
 
+        }
+
+        private void setMainColors(Color fore, Color back)
+        {
+            this.BackColor = back;
+            this.ForeColor = fore;
+
+            toolStrip1.BackColor = back;
+            toolStrip1.ForeColor = fore;
+
+            toolStripContainer1.BackColor = back;
+            toolStripContainer1.ForeColor = fore;
+
+            toolStripContainer1.TopToolStripPanel.BackColor = back;
+
+
+            menuStrip1.BackColor = back;
+            menuStrip1.ForeColor = fore;
+
+            statusStrip1.BackColor = back;
+            statusStrip1.ForeColor = fore;
+
+            chooseGroup.BackColor = back;
+            chooseGroup.ForeColor = fore;
+        }
+
+        private void drawNewStyle()
+        {
+            Hashtable grp = this.getGroups();
+            XmlSetup tmpSetup = new XmlSetup();
+            tmpSetup.setFileName("Projector_profiles.xml");
+            //tmpSetup.setFileName("Projector_global.xml");
+            tmpSetup.loadXml();
+            
+            flowLayout.BackColor = Color.FromArgb(60, 60, 60);
+            flowLayout.Padding = new Padding(10);
+
+            this.setMainColors(Color.White, Color.FromArgb(80, 80, 80));
+            /*
+            if (grp.Count > 0 )
+            {
+                Label HeadLine = new Label();
+                HeadLine.ForeColor = Color.White;
+                HeadLine.BackColor = Color.FromArgb(70, 70, 70);
+                HeadLine.Font = new Font("Verdana", 24, FontStyle.Bold);
+                HeadLine.Text = chooseGroup.Text;
+                HeadLine.AutoSize = false;
+                HeadLine.Height = 46;
+                HeadLine.Width = flowLayout.Width -30;
+                flowLayout.Controls.Add(HeadLine);
+            }
+            */
+            
+            for (Int64 i = 0; i < tmpSetup.count; i++)
+            {
+                string keyname = "profil_" + (i + 1);
+                string proName = tmpSetup.getValue(keyname);
+
+                if (proName != null)
+                {
+                    if (grp.Count == 0 || grp.ContainsKey(proName))
+                    {
+                        profil.changeProfil(proName);
+                        profilSelector.DropDownItems.Add(proName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
+
+                        ProfilButton tmpPBtn = new ProfilButton(this);
+                        tmpPBtn.setName(proName);
+                        tmpPBtn.setDescription(profil.getProperty("db_host"));
+                        string colortext = profil.getProperty("set_bgcolor");
+                        if (colortext != null && colortext.Length > 0)
+                        {
+
+                            tmpPBtn.setColor(Color.FromArgb(int.Parse(colortext)));
+                            tmpPBtn.Margin = new Padding(15);
+                            
+
+                        }
+                        tmpPBtn.StartBtn.Click += new System.EventHandler(styleBtnClick);
+                        flowLayout.Controls.Add(tmpPBtn);
+                    }
+                }
+            }
+            Button tmpBtn = new Button();
+            tmpBtn.FlatStyle = FlatStyle.Flat;
+            tmpBtn.ForeColor = Color.LightGray;
+            tmpBtn.BackColor = Color.FromArgb(50,50,50 );
+            updateGroupButonStyle(tmpBtn);
+        }
+
+        private Hashtable getGroups()
+        {
+            Hashtable groups = new Hashtable();
+            XmlSetup pSetup = new XmlSetup();
+            pSetup.setFileName("profileGroups.xml");
+            pSetup.loadXml();
+
+            Hashtable settings = pSetup.getHashMap();
+
+            if (chooseGroup.Text != "[ALL]")
+            {
+                if (pSetup.getHashMap().Contains(chooseGroup.Text))
+                {
+                    string[] currGrp = pSetup.getHashMap()[chooseGroup.Text].ToString().Split('|');
+                    for (int z = 0; z < currGrp.Length; z++)
+                    {
+                        groups.Add(currGrp[z], currGrp[z]);
+                    }
+
+                }
+            }
+            return groups;
         }
 
         private void updateProfilSelector()
@@ -178,10 +311,16 @@ namespace Projector
 
 
             flowLayout.Controls.Clear();
+            
 
             if (ProjectorForm.SCRIPT_BUTTON_MODE == buttonStyle)
             {
+                toolStrip1.Visible = false;
                 mainSlitter.Panel1Collapsed = true;
+                this.setMainColors(Color.Black, Color.DarkGray);
+                flowLayout.BackColor = Color.LightGray;
+
+
                 this.ScriptAutoLoader.showAll(!this.displayNamedScripstOnly);
                 if (this.ScriptAutoLoader.setPath( this.mainScriptFolder ))
                 {
@@ -191,8 +330,7 @@ namespace Projector
                     {
                         ScriptStartButton tmpStartBtn = new ScriptStartButton(this);
                         tmpStartBtn.setScript(script);
-                        flowLayout.Controls.Add(tmpStartBtn);
-                        
+                        flowLayout.Controls.Add(tmpStartBtn);                        
                     }
 
                 }
@@ -201,6 +339,20 @@ namespace Projector
             }
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
 
+
+            if (ProjectorForm.STYLE_BUTTON_MODE == buttonStyle)
+            {
+                this.drawNewStyle();
+                return;
+            }
+
+         
+            toolStrip1.Visible = true;
+            flowLayout.BackColor = SystemColors.Control;
+            this.setMainColors(SystemColors.ControlText, SystemColors.Control);
+
+            Button tmpBtnTemplate = new Button();
+            updateGroupButonStyle(tmpBtnTemplate);
 
             Hashtable assignGrp = new Hashtable();
             Hashtable currentView = new Hashtable();
@@ -369,26 +521,7 @@ namespace Projector
 
             showProfilLabel.Text = profil.getName();
 
-            /*
-            PanelDrawing ptest = new PanelDrawing();
-            ptest.Width = 200;
-            ptest.Height = 120;
-            ptest.BackColor = Color.Aquamarine;
 
-            ptest.addValue(10);
-            ptest.addValue(20);
-            ptest.addValue(90);
-            ptest.addValue(70);
-            ptest.addValue(-30);
-            ptest.addValue(10);
-            ptest.addValue(15);
-
-            flowLayout.Controls.Add(ptest);
-            */
-            //profilSelector.DropDownItems.Add("Test", Projector.Properties.Resources.folder_closed_16,ProfilSelectExitClick);
-            //ConfigProfil testprofil = new ConfigProfil();
-
-            //testprofil.ExportToXml(@"c:\checkcheck.xml");
         }
 
         private void updateButtonsState()
@@ -482,6 +615,34 @@ namespace Projector
             toolStripButton2_Click(sender, e);
         }
 
+        public void setCurrentProfile(string name)
+        {
+            profil.changeProfil(name);
+            updateSelectedProfil();
+            ProfilInfo.Text = name + " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_schema") + "]";
+        }
+
+        private void startProfile(string name, Object sender, System.EventArgs e)
+        {
+            profil.changeProfil(name);
+
+            statusResult result = new statusResult();
+            result = checkConnection(profil);
+
+            if (result.status)
+            {
+
+                profil.changeProfil(name);
+                updateSelectedProfil();
+                ProfilInfo.Text = name + " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_schema") + "]";
+                mDIToolStripMenuItem_Click(sender, e);
+            }
+            else
+            {
+                MessageBox.Show(this, result.message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void dynBtnClick(object sender, System.EventArgs e)
         {
             Button sendBtn = (Button)sender;
@@ -490,29 +651,23 @@ namespace Projector
 
             if (showAtProperty != null)
             {
-                profil.changeProfil(showAtProperty);
-
-              
-
-                statusResult result = new statusResult();
-                result = checkConnection(profil);
-
-                if (result.status)
-                {
-
-                    profil.changeProfil(showAtProperty);
-                    updateSelectedProfil();
-                    ProfilInfo.Text = showAtProperty + " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_schema") + "]";
-                    mDIToolStripMenuItem_Click(sender, e);
-                }
-                else
-                {
-                    MessageBox.Show(this, result.message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                this.startProfile(showAtProperty, sender, e);
             }
 
         }
 
+        private void styleBtnClick(object sender, System.EventArgs e)
+        {
+            Button sendBtn = (Button)sender;
+
+            string showAtProperty = sendBtn.Name;
+
+            if (showAtProperty != null)
+            {
+                this.startProfile(showAtProperty, sender, e);
+            }
+
+        }
 
         private void ProfilSelectExitClick(object who, EventArgs e)
         {
@@ -527,6 +682,11 @@ namespace Projector
                 //mDIToolStripMenuItem_Click(who, e);
             }
 
+        }
+
+        public void callSetup()
+        {
+            setupToolStripMenuItem_Click(null, null);
         }
 
         private void setupToolStripMenuItem_Click(object sender, EventArgs e)

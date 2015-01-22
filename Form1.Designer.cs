@@ -43,6 +43,7 @@
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportCurrentProfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchButtonModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +71,6 @@
             this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveProject = new System.Windows.Forms.SaveFileDialog();
             this.openScript = new System.Windows.Forms.OpenFileDialog();
-            this.mainSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -115,34 +115,34 @@
             this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
             this.databaseWatchToolStripMenuItem.Name = "databaseWatchToolStripMenuItem";
             this.databaseWatchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.databaseWatchToolStripMenuItem.Text = "Sync Database...";
             this.databaseWatchToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // mDIToolStripMenuItem
             // 
             this.mDIToolStripMenuItem.Name = "mDIToolStripMenuItem";
-            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.mDIToolStripMenuItem.Text = "Show Database...";
             this.mDIToolStripMenuItem.Click += new System.EventHandler(this.mDIToolStripMenuItem_Click);
             // 
             // groupQueryToolStripMenuItem
             // 
             this.groupQueryToolStripMenuItem.Name = "groupQueryToolStripMenuItem";
-            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.groupQueryToolStripMenuItem.Text = "Group Query...";
             this.groupQueryToolStripMenuItem.Click += new System.EventHandler(this.groupQueryToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(203, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
             // 
             // loadProjectToolStripMenuItem
             // 
             this.loadProjectToolStripMenuItem.Image = global::Projector.Properties.Resources.folder_closed_16;
             this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
-            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.loadProjectToolStripMenuItem.Text = "Load Project...";
             this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
             // 
@@ -150,14 +150,14 @@
             // 
             this.saveProjectToolStripMenuItem.Image = global::Projector.Properties.Resources.SAVE_16;
             this.saveProjectToolStripMenuItem.Name = "saveProjectToolStripMenuItem";
-            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.saveProjectToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.saveProjectToolStripMenuItem.Text = "Save Project...";
             this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.backupProfilesToolStripMenuItem_Click);
             // 
             // editScriptToolStripMenuItem
             // 
             this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
-            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.editScriptToolStripMenuItem.Text = "Edit Script...";
             this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
             // 
@@ -203,6 +203,13 @@
             this.groupsToolStripMenuItem.Text = "Groups...";
             this.groupsToolStripMenuItem.Click += new System.EventHandler(this.groupsToolStripMenuItem_Click);
             // 
+            // mainSettingsToolStripMenuItem
+            // 
+            this.mainSettingsToolStripMenuItem.Name = "mainSettingsToolStripMenuItem";
+            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
+            this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
+            // 
             // displayToolStripMenuItem
             // 
             this.displayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -217,14 +224,15 @@
             // 
             this.groupedToolStripMenuItem.CheckOnClick = true;
             this.groupedToolStripMenuItem.Name = "groupedToolStripMenuItem";
-            this.groupedToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.groupedToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.groupedToolStripMenuItem.Text = "&Grouped";
             this.groupedToolStripMenuItem.Click += new System.EventHandler(this.groupedToolStripMenuItem_Click);
             // 
             // switchButtonModeToolStripMenuItem
             // 
             this.switchButtonModeToolStripMenuItem.Name = "switchButtonModeToolStripMenuItem";
-            this.switchButtonModeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.switchButtonModeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.switchButtonModeToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.switchButtonModeToolStripMenuItem.Text = "Switch Button Mode";
             this.switchButtonModeToolStripMenuItem.Click += new System.EventHandler(this.switchButtonModeToolStripMenuItem_Click);
             // 
@@ -234,7 +242,7 @@
             this.groupButtonsToolStripMenuItem.CheckOnClick = true;
             this.groupButtonsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.groupButtonsToolStripMenuItem.Name = "groupButtonsToolStripMenuItem";
-            this.groupButtonsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.groupButtonsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.groupButtonsToolStripMenuItem.Text = "Group Buttons";
             this.groupButtonsToolStripMenuItem.Click += new System.EventHandler(this.groupButtonsToolStripMenuItem_Click);
             // 
@@ -446,13 +454,6 @@
             this.openScript.Filter = "Projector Script|*.pscr";
             this.openScript.Tag = "LoadScript";
             this.openScript.Title = "Load Script File";
-            // 
-            // mainSettingsToolStripMenuItem
-            // 
-            this.mainSettingsToolStripMenuItem.Name = "mainSettingsToolStripMenuItem";
-            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
-            this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
             // 
             // ProjectorForm
             // 

@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>70</ApplicationRevision>
+    <ApplicationRevision>71</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -90,6 +90,7 @@
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="CmdEvent.cs" />
     <Compile Include="CodeFormater.cs" />
+    <Compile Include="ColorCalc.cs" />
     <Compile Include="ColorChoose.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -251,6 +252,12 @@
     <Compile Include="PlacerHolder.cs" />
     <Compile Include="ProcSync.cs" />
     <Compile Include="Profil.cs" />
+    <Compile Include="ProfilButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProfilButton.Designer.cs">
+      <DependentUpon>ProfilButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProfileWorker.cs" />
     <Compile Include="ProfilGroup.cs">
       <SubType>Form</SubType>
@@ -325,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PlaceholderEditForm.resx">
       <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfilButton.resx">
+      <DependentUpon>ProfilButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfilGroup.resx">
       <DependentUpon>ProfilGroup.cs</DependentUpon>
@@ -941,8 +951,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <None Include="Resources\voyager_badge.png" />
+    <None Include="Resources\music_conductor.png" />
+    <None Include="Resources\playstation-flat-icon-square-dark-32.png" />
+    <None Include="Resources\playstation-flat-icon-cross-dark-32.png" />
+    <None Include="Resources\playstation-flat-icon-triangle-dark-32.png" />
+    <None Include="Resources\playstation-flat-icon-circle-dark-32.png" />
+    <None Include="Resources\play_store-32.png" />
+    <None Include="Resources\window-system-32.png" />
     <None Include="Resources\chain_plus.png" />
     <None Include="Resources\application_side_tree.png" />
+    <None Include="Resources\communicator.png" />
     <Content Include="Resources\edit-replace.png" />
     <None Include="Resources\ui-list-box-blue.png" />
     <None Include="Resources\layer-group-add.png" />
