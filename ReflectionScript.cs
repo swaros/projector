@@ -11,11 +11,26 @@ namespace Projector
 {
     public class ReflectionScript
     {
-
+        /// <summary>
+        /// INTEGER Set the maximum time in seconds any WAITFOR will waiting
+        /// </summary>
         public const string SETUP_MAXWAIT = "MAX_WAIT";
+        /// <summary>
+        /// BOOLEAN enables parsing parent objects by parent. mofifier
+        /// </summary>
         public const string SETUP_GLOBAL = "GLOBAL";
+        /// <summary>
+        /// STRING sets the label for Script widgets
+        /// </summary>
         public const string SETUP_LABEL = "LABEL";
+        /// <summary>
+        /// STRING sets the Descrition for Script Widgets
+        /// </summary>
         public const string SETUP_DESC = "DESCRIPTION";
+        /// <summary>
+        /// BOOLEAN enable on-the-fly creation of visual objects
+        /// </summary>
+        public const string SETUP_PREVIEW = "CODE.PREVIEW";
 
 
         private const string REGEX_BRACKETS = "({[^}]*})";
@@ -131,14 +146,20 @@ namespace Projector
 
         private Boolean debugMode = false;
         
-
+        /// <summary>
+        /// Reflection script
+        /// </summary>
         public ReflectionScript()
         {
             this.init();
         }
 
         
-
+        /// <summary>
+        /// initialize basics.
+        /// creates base commands and set
+        /// base environment variables and base default settings
+        /// </summary>
         public void init()
         {
 
@@ -210,13 +231,24 @@ namespace Projector
             // just to store something
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
         }
-
+        
+        /// <summary>
+        /// creates default settings
+        /// </summary>
         private void initDefaultSetups()
         {
             this.addSetupIfNotExists(ReflectionScript.SETUP_MAXWAIT, 0); // max wait 10 seconds for finishing threads
             this.addSetupIfNotExists(ReflectionScript.SETUP_GLOBAL, true);
         }
 
+        /// <summary>
+        /// add a setup with with an key and content
+        /// if this setup not already exists.
+        /// If this setup still present, the content
+        /// will not be updated
+        /// </summary>
+        /// <param name="name">keyname for this setting</param>
+        /// <param name="value">the content for this setup</param>
         private void addSetupIfNotExists(string name, Object value)
         {
             if (this.Setup.ContainsKey(name))
@@ -227,6 +259,12 @@ namespace Projector
             this.Setup.Add(name, value);
         }
 
+        /// <summary>
+        /// add an setup if not exists
+        /// or update existing settings
+        /// </summary>
+        /// <param name="name">keyname for these setting</param>
+        /// <param name="value">value for these setting</param>
         private void addSetup(string name, Object value)
         {
             if (this.Setup.ContainsKey(name))
@@ -238,6 +276,14 @@ namespace Projector
             this.Setup.Add(name, value);
         }
 
+        /// <summary>
+        /// get a setup content as Integer.
+        /// Note: there is no casting. the content 
+        /// will be returned only if the setting
+        /// content type is Integer
+        /// </summary>
+        /// <param name="name">keyname</param>
+        /// <returns>the setting content if type is Integer</returns>
         public int SetupIntValue(string name)
         {
             if (this.Setup.ContainsKey(name))
@@ -250,6 +296,14 @@ namespace Projector
             return 0;
         }
 
+        /// <summary>
+        /// get a setup content as String.
+        /// Note: there is no casting. the content 
+        /// will be returned only if the setting
+        /// content type is String
+        /// </summary>
+        /// <param name="name">keyname</param>
+        /// <returns>the setting content if the content is string</returns>
         public String SetupStringValue(string name)
         {
             if (this.Setup.ContainsKey(name))
@@ -262,6 +316,14 @@ namespace Projector
             return null;
         }
 
+        /// <summary>
+        /// get a setup content as Boolean.
+        /// Note: there is no casting. the content 
+        /// will be returned only if the setting
+        /// content type is Boolean
+        /// </summary>
+        /// <param name="name">keyname</param>
+        /// <returns>the setting content if the content is Boolean</returns>
         public Boolean SetupBoolValue(string name)
         {
             if (this.Setup.ContainsKey(name))
@@ -270,17 +332,30 @@ namespace Projector
                 {
                     return (Boolean)this.Setup[name];
                 }
+                if (this.Setup[name] is String && this.Setup[name].ToString().ToUpper() == "TRUE")
+                {
+                    return true;
+                }
             }
             return false;
         }
 
         // -------------------- end setup stuff ----------------------
 
+        /// <summary>
+        /// returns compiled script
+        /// </summary>
+        /// <returns></returns>
         public List<ReflectionScriptDefines> getScript()
         {
             return this.buildedSource;
         }
 
+        /// <summary>
+        /// returns compiled script including
+        /// all subscripts
+        /// </summary>
+        /// <returns></returns>
         public List<ReflectionScriptDefines> getFullScript()
         {
 
@@ -297,10 +372,10 @@ namespace Projector
         }
 
 
-        /**
-         * resets all elements to starts a 
-         * clear iteration
-         */ 
+        /// <summary>
+        /// reset all local containers
+        /// and reset default values
+        /// </summary>
         private void reset()
         {
             this.commentedLines.Clear();
@@ -323,6 +398,9 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// set default values
+        /// </summary>
         private void setDefaultVars()
         {
             this.createOrUpdateStringVar("&PATH.DOCUMENTS", System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonDocuments) + System.IO.Path.DirectorySeparatorChar.ToString());
@@ -331,16 +409,21 @@ namespace Projector
         }
 
 
-        /**
-         * assign text as Code and starts the Build if the code 
-         * different from the last assigned
-         */
-
+        /// <summary>
+        /// injects Reflection script sourcecode
+        /// and start JIT if code changed
+        /// </summary>
+        /// <param name="code">Reflection Script Source Code</param>
         public void setCode(string code)
         {
             this.setCode(code, false);
         }
 
+        /// <summary>
+        /// injects Reflection script sourcecode.
+        /// </summary>
+        /// <param name="code">Reflection Script Source Code</param>
+        /// <param name="forceRebuild">Force the build</param>
         public void setCode(string code, Boolean forceRebuild)
         {
             if (this.storedCode != code)
@@ -365,6 +448,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// rebuild the Script. not needed if code is changed
+        /// because this case will automatically triggers an rebuild.
+        /// use this for changes that depends the runtime environmet
+        /// </summary>
         public void reBuild()
         {
             this.reset(); 
@@ -378,6 +466,12 @@ namespace Projector
         }
         // debugging
 
+        /// <summary>
+        /// registers a method from outside, that will be informed about any
+        /// executed step til execution
+        /// </summary>
+        /// <param name="debugWatcher">the Object that handles the message</param>
+        /// <param name="varChange">the name of the method</param>
         public void registerDebugWatcher(Object debugWatcher, string varChange)
         {
             this.parentWatcher = debugWatcher;
@@ -385,6 +479,11 @@ namespace Projector
             this.debugMode = true;
         }
 
+        /// <summary>
+        /// send debugging informations to an registered watcher
+        /// </summary>
+        /// <param name="varName">name of variable</param>
+        /// <param name="value">the value as string</param>
         private void updateDebugMessage(string varName, string value)
         {
             if (this.parentWatcher != null && parentWatcherMethod != null)
@@ -396,7 +495,11 @@ namespace Projector
             }
             
         }
-
+        /// <summary>
+        /// update current watchers to the submited
+        /// Reflection Script with the current debug watcher
+        /// </summary>
+        /// <param name="child">The Reflectionscript that have to register the watcher </param>
         public void updateDebugInfo(ReflectionScript child)
         {
             child.registerDebugWatcher(this.parentWatcher, this.parentWatcherMethod);
@@ -404,6 +507,12 @@ namespace Projector
 
         // -------------------- methods to get Infomations about the current Situation of the script ------------
 
+        /// <summary>
+        /// returns all existing Instances from the given
+        /// Objecttype
+        /// </summary>
+        /// <param name="objectType">Name of the Object (like ReflectForm)</param>
+        /// <returns>A List of all existing Objects from type of Objecttype</returns>
         public List<string> getCurrentObjectsByType(string objectType)
         {
             if (this.objectReferences.ContainsValue(objectType))
@@ -426,12 +535,14 @@ namespace Projector
         // -------------------  error handlings, methods for add and get the errors -----------------------------
 
 
-        /**
-         * return an string with all error informations.
-         * usabel if you have only one string for display
-         * errormessages
-         * 
-         */
+
+        
+        /// <summary>
+        /// return an string with all error informations.
+        /// usabel if you have only one string for display
+        /// errormessages
+        /// </summary>
+        /// <returns>All errors in one String</returns>
         public string getErrors()
         {
             string error = "";
@@ -442,10 +553,10 @@ namespace Projector
             return error;
         }
 
-        /**
-         * return full List of all Errors
-         * 
-         */ 
+        /// <summary>
+        /// returns all Errors
+        /// </summary>
+        /// <returns>all Errors as a List of Type ScriptErrors</returns>
         public List<ScriptErrors> getAllErrors()
         {
             return errorMessages;

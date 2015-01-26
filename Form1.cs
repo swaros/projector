@@ -31,11 +31,16 @@ namespace Projector
 
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
+        PConfig Setup = new PConfig();
+
         public ProjectorForm()
         {
             InitializeComponent();
             this.mainScriptFolder = Application.StartupPath;
+            Setup.loadRuntimeConfig();
             updateProfilSelector();
+
+            
 
             //this.BackColor = SystemColors.Control;
            
@@ -63,6 +68,8 @@ namespace Projector
             tmpSetup.setFileName("Projector_config.xml");
             tmpSetup.loadXml();
             string check;
+
+            string clientLeft = this.Setup.getSettingWidthDefault("client.left", "10");
 
             check = tmpSetup.getSetting("client_left");
             if (check != null && check != "" && int.Parse(check) > 0) this.Left = int.Parse(check);

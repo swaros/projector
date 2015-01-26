@@ -129,47 +129,44 @@ namespace Projector
             return new ProfileWorker();
         }
 
-        private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)
-        {
-            ReflectButton newTextBox = new ReflectButton();
-            newTextBox.Name = refObject.name;
+      
 
+        /// <summary>
+        /// add an Controll to a parent Object depending of the type of parent
+        /// </summary>
+        /// <param name="addThis">The Controll that will be added</param>
+        /// <param name="refObject">Current ReflectionScript Object</param>
+        /// <param name="parent">Parent Object</param>
+        /// <returns>The object that is added</returns>
+        private Object NewControlObject(Control addThis, ReflectionScriptDefines refObject, Object parent)
+        {
+            addThis.Name = refObject.name;
             if (parent is Form)
             {
                 Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
+                parForm.Controls.Add(addThis);
             }
-
-            return newTextBox;
+            return addThis;
         }
 
-
+        private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)
+        {
+            ReflectButton newTextBox = new ReflectButton();
+            newTextBox = (ReflectButton)NewControlObject(newTextBox, refObject, parent);
+            return newTextBox;
+        }
 
         private LabelText getLabelText(ReflectionScriptDefines refObject, Object parent)
         {
             LabelText newTextBox = new LabelText();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (LabelText)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
         private LabelInteger getLabelInt(ReflectionScriptDefines refObject, Object parent)
         {
             LabelInteger newTextBox = new LabelInteger();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (LabelInteger)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
@@ -177,28 +174,14 @@ namespace Projector
         private TextBox getTextBox(ReflectionScriptDefines refObject, Object parent)
         {
             TextBox newTextBox = new TextBox();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (TextBox)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
         private ReflectList getListView(ReflectionScriptDefines refObject, Object parent)
         {
             ReflectList newTextBox = new ReflectList();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (ReflectList)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
@@ -207,14 +190,6 @@ namespace Projector
         {
             ListView resultView = new ListView();
             resultView.Name = refObject.name;
-
-            /*
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-            */
 
             resultView.View = View.Details;                        
             resultView.FullRowSelect = true;
@@ -226,36 +201,29 @@ namespace Projector
         private NumericUpDown getNumeric(ReflectionScriptDefines refObject, Object parent)
         {
             NumericUpDown newTextBox = new NumericUpDown();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (NumericUpDown)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
         private DateSelect getDatePick(ReflectionScriptDefines refObject, Object parent)
         {
             DateSelect newTextBox = new DateSelect();
-            newTextBox.Name = refObject.name;
-
-            if (parent is Form)
-            {
-                Form parForm = (Form)parent;
-                parForm.Controls.Add(newTextBox);
-            }
-
+            newTextBox = (DateSelect)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 
         private ReflectForm getForm(ReflectionScriptDefines refObject, Object parent)
         {
-            ReflectForm newForm = new ReflectForm();
-            newForm.ScriptIdent = refObject.name;
 
+            ReflectForm newForm;
+
+            newForm = (ReflectForm)this.getExistingObject(refObject.name);
+            if (newForm == null)
+            {
+                newForm = new ReflectForm();
+            }
+            newForm.ScriptIdent = refObject.name;
+            newForm.Name = refObject.name;
             if (parent is MdiForm)
             {
                 MdiForm mdi = (MdiForm)parent;
@@ -265,7 +233,15 @@ namespace Projector
             {
                 newForm.Show();
             }
-
+            else if (parent is ReflectionScript)
+            {
+                ReflectionScript parScr = (ReflectionScript)parent;
+                if (parScr.SetupBoolValue(ReflectionScript.SETUP_PREVIEW))
+                {
+                    newForm.Show();
+                }
+            }
+            this.addObject(refObject.name,newForm);
             return newForm;
         }
 
@@ -334,6 +310,24 @@ namespace Projector
             }
 
             return browser;
+        }
+
+
+        private void addObject(string name,Object obj)
+        {
+            if (!ReflectNew.obReferences.ContainsKey(name))
+            {
+                ReflectNew.obReferences.Add(name,obj);
+            }
+        }
+
+        private Object getExistingObject(string name)
+        {
+            if (ReflectNew.obReferences.ContainsKey(name))
+            {
+                return ReflectNew.obReferences[name];
+            }
+            return null;
         }
     }
 }
