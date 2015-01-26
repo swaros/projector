@@ -13,12 +13,17 @@ namespace Projector
     class PConfig : ISerializable
     {
         private String NameSpace = "client";
-        private PConfigContent Configuration;
+        private static PConfigContent Configuration;
         private PConfigContent WalkingLive;
         private ConfigSerializer fileHandle = new ConfigSerializer();
 
         public PConfig() { }
-       
+
+        public String getNameSpace()
+        {
+            return this.NameSpace;
+        }
+
         public PConfig(SerializationInfo info, StreamingContext ctxt)
         {
 
@@ -28,10 +33,10 @@ namespace Projector
         {
             if (System.IO.File.Exists( this.getDefaultFilename() ))
             {
-                this.Configuration = fileHandle.DeSerializeObject(this.getDefaultFilename());
+                PConfig.Configuration = fileHandle.DeSerializeObject(this.getDefaultFilename());
             }
 
-            if (this.Configuration == null)
+            if (PConfig.Configuration == null)
             {
                 this.initBaseConfig();
             }
@@ -39,28 +44,28 @@ namespace Projector
         }
 
         private void initBaseConfig(){
-            this.Configuration = new PConfigContent();
-            this.Configuration.SetFlatConfig(this.NameSpace, null);
+            PConfig.Configuration = new PConfigContent();
+            PConfig.Configuration.SetFlatConfig(this.NameSpace, null);
             
         }
 
         public void saveRuntimeConfig()
         {
-            if (this.Configuration != null)
+            if (PConfig.Configuration != null)
             {
-                fileHandle.SerializeObject(this.getDefaultFilename(), this.Configuration);
+                fileHandle.SerializeObject(this.getDefaultFilename(), PConfig.Configuration);
             }
             
         }
 
         public PConfigContent getConfig()
         {
-            return this.Configuration;
+            return PConfig.Configuration;
         }
 
         public void resetReader()
         {
-            this.WalkingLive = this.Configuration;
+            this.WalkingLive = PConfig.Configuration;
 
         }
 
@@ -112,10 +117,11 @@ namespace Projector
                     this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
                     
                     string nextKey = "";
-
+                    string add = "";
                     for (int i = 1; i < keyChain.Count(); i++)
                     {
-                        nextKey += keyChain[i];
+                        nextKey += add + keyChain[i];
+                        add = ".";
                     }
                     return this.getSettingWidthDefault(nextKey, StoreValue, false);
                 }
@@ -188,9 +194,11 @@ namespace Projector
 
                     string nextKey = "";
 
+                    string add = "";
                     for (int i = 1; i < keyChain.Count(); i++)
                     {
-                        nextKey += keyChain[i];
+                        nextKey += add + keyChain[i];
+                        add = ".";
                     }
                     this.setValue(nextKey, StoreValue, false);
                 }

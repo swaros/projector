@@ -8,19 +8,49 @@ namespace Projector
 {
     public class Profil
     {
+        public const int MODE_OLD_XML = 0;
+        public const int MODE_MIXED = 1;
+        public const int MODE_PCONFIG = 2;
+
         private string name = null;
         XmlSetup setup = new XmlSetup();
+        PConfig PSetup = new PConfig();
+
+        private const string nameSpace = "client.profiles.";
+        private string pConfigPath;
+
+        private int mode = 1;
 
         public Profil(string profilName)
         {
             this.changeProfil(profilName);
         }
 
+        private Boolean isPmode()
+        {
+            return (this.mode == Profil.MODE_MIXED || this.mode == Profil.MODE_PCONFIG);
+        }
+
+        private Boolean isXmlMode()
+        {
+            return (this.mode == Profil.MODE_MIXED || this.mode == Profil.MODE_OLD_XML);
+        }
+
         public void changeProfil(string newName)
         {
+            
             this.name = newName;
-            this.setup.setFileName(this.name+"_config.xml");
-            this.loadProfileSettings();
+            if (this.isXmlMode())
+            {
+                this.setup.setFileName(this.name + "_config.xml");
+                this.loadProfileSettings();
+            }
+
+            if (this.isPmode())
+            {
+                this.pConfigPath = Profil.nameSpace + this.name;
+            }
+
         }
 
         public String getName()
@@ -36,17 +66,53 @@ namespace Projector
 
         public void getValuesFromProfil(Profil source)
         {
-            this.setup = source.setup.copyValues(this.setup);            
+            if (this.isXmlMode())
+            {
+                this.setup = source.setup.copyValues(this.setup);
+            }
+
+            if (this.isPmode())
+            {
+
+            }
+
+        }
+
+        private string getPModePath(string name)
+        {
+            return Profil.nameSpace + this.name + "." + name;
+        }
+
+        private string getPModeProperty(string name)
+        {
+            return this.PSetup.getSettingWidthDefault(this.getPModePath(name), null);
         }
 
         public string getProperty(string name)
         {
-            return this.setup.getSetting(name);
+
+            if (this.mode == Profil.MODE_MIXED)
+            {
+                this.PSetup.getSettingWidthDefault(this.getPModePath(name), this.setup.getSetting(name));
+            }
+
+
+            if (isXmlMode())
+                return this.setup.getSetting(name);
+
+            if (isPmode())
+            {
+                return this.getPModeProperty(name);
+            }
+            return "";
         }
 
         public void setProperty(string name, string value)
         {
-            this.setup.addSetting(name,value);
+            if (isXmlMode())
+                this.setup.addSetting(name,value);
+            if (isPmode())
+                this.PSetup.setValue(this.getPModePath(name), value);    
         }
 
         public void exportXml(string filename)
@@ -56,12 +122,19 @@ namespace Projector
 
         public void saveSetup()
         {
-            this.setup.saveXml();
+            if (isXmlMode())
+                this.setup.saveXml();
+            if (isPmode())
+                this.PSetup.saveRuntimeConfig();    
         }
 
         public void loadProfileSettings()
         {
-            this.setup.loadXml(); 
+            if (isXmlMode())
+                this.setup.loadXml();
+
+           
+            
         }
 
     }
