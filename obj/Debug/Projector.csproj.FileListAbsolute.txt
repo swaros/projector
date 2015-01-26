@@ -116,8 +116,7 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MainSetup.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PathSelector.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptStartButton.resources
-<<<<<<< HEAD
-=======
+
 C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.config
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csproj.ResolveComReference.cache
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.exe
@@ -225,4 +224,3 @@ C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.csproj.GenerateResour
 C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.TrustInfo.xml
 C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.exe.manifest
 C:\Users\Thomas\Source\Repos\projektor\obj\Debug\Projector.application
->>>>>>> 5936c047ece87241c7855bb96596040b6e209c8f
