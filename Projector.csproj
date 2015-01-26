@@ -243,6 +243,8 @@
     <Compile Include="PatternGroup.cs" />
     <Compile Include="PatternTypes.cs" />
     <Compile Include="PatternVarchar.cs" />
+    <Compile Include="PConfig.cs" />
+    <Compile Include="PConfigContent.cs" />
     <Compile Include="PlaceholderEditForm.cs">
       <SubType>Form</SubType>
     </Compile>

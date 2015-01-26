@@ -11,11 +11,26 @@ namespace Projector
 {
     public class ReflectionScript
     {
-
+        /// <summary>
+        /// INTEGER Set the maximum time in seconds any WAITFOR will waiting
+        /// </summary>
         public const string SETUP_MAXWAIT = "MAX_WAIT";
+        /// <summary>
+        /// BOOLEAN enables parsing parent objects by parent. mofifier
+        /// </summary>
         public const string SETUP_GLOBAL = "GLOBAL";
+        /// <summary>
+        /// STRING sets the label for Script widgets
+        /// </summary>
         public const string SETUP_LABEL = "LABEL";
+        /// <summary>
+        /// STRING sets the Descrition for Script Widgets
+        /// </summary>
         public const string SETUP_DESC = "DESCRIPTION";
+        /// <summary>
+        /// BOOLEAN enable on-the-fly creation of visual objects
+        /// </summary>
+        public const string SETUP_PREVIEW = "CODE.PREVIEW";
 
 
         private const string REGEX_BRACKETS = "({[^}]*})";
@@ -316,6 +331,10 @@ namespace Projector
                 if (this.Setup[name] is Boolean)
                 {
                     return (Boolean)this.Setup[name];
+                }
+                if (this.Setup[name] is String && this.Setup[name].ToString().ToUpper() == "TRUE")
+                {
+                    return true;
                 }
             }
             return false;

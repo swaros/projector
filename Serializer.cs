@@ -8,6 +8,37 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Projector
 {
+
+    class ConfigSerializer
+    {
+        public void SerializeObject(string filename, PConfigContent objectToSerialize)
+        {
+            Stream stream = File.Open(filename, FileMode.Create);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            bFormatter.Serialize(stream, objectToSerialize);
+            stream.Close();
+        }
+
+        public PConfigContent DeSerializeObject(string filename)
+        {
+            PConfigContent objectToSerialize;
+            Stream stream = null;
+            stream = File.Open(filename, FileMode.Open);
+            BinaryFormatter bFormatter = new BinaryFormatter();
+            if (stream != null)
+            {
+                Object tmp = bFormatter.Deserialize(stream);
+                objectToSerialize = (PConfigContent)tmp;
+                stream.Close();
+                return objectToSerialize;
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
     class Serializer
     {
         public Serializer()
