@@ -12,7 +12,7 @@ namespace Projector
     [Serializable()]
     class PConfig : ISerializable
     {
-        private String NameSpace = "projector";
+        private String NameSpace = "client";
         private PConfigContent Configuration;
         private PConfigContent WalkingLive;
         private ConfigSerializer fileHandle = new ConfigSerializer();
@@ -40,7 +40,8 @@ namespace Projector
 
         private void initBaseConfig(){
             this.Configuration = new PConfigContent();
-            this.Configuration.addGroupChild(this.NameSpace);
+            this.Configuration.SetFlatConfig(this.NameSpace, null);
+            
         }
 
         public void saveRuntimeConfig()
@@ -63,6 +64,33 @@ namespace Projector
 
         }
 
+        public int getIntSettingWidthDefault(string name, int StoreValue)
+        {
+            string strVal = this.getSettingWidthDefault(name, StoreValue.ToString());            
+            try
+            {
+                return int.Parse(strVal);
+            }
+            catch (Exception e)
+            {
+                return StoreValue;
+            }
+        }
+
+        public Boolean getBooleanSettingWidthDefault(string name, Boolean StoreValue)
+        {
+            String value = "0";
+            if (StoreValue)
+            {
+                value = "1";
+            }
+            string strVal = this.getSettingWidthDefault(name, value);
+            if (strVal == "1")
+                return true;
+            else
+                return false;
+        }
+
         public string getSettingWidthDefault(string name, string StoreValue)
         {
             return getSettingWidthDefault(name, StoreValue, true);
@@ -73,97 +101,121 @@ namespace Projector
             {
                 this.resetReader();
             }
-
-            
-           
-   
-            // add this node if not exists
-            if (this.WalkingLive.getName() == name)
-            {
-                return this.WalkingLive.getContent();
-               
-            }
-            
-
-         
+       
             string[] keyChain = name.Split('.');
             string parentKey = keyChain[0];
             if (keyChain.Count() > 1)
             {
-            
-                PConfigContent pTmp = this.WalkingLive.getChildByName(parentKey);
-                if (pTmp == null)
+                if (parentKey == this.WalkingLive.getName())
                 {
-                    this.WalkingLive.addGroupChild(parentKey);
-                    this.WalkingLive = this.WalkingLive.getChildByName(parentKey);
-                }
-                string nextKey = "";
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+                    
+                    string nextKey = "";
 
-                for (int i = 1; i < keyChain.Count(); i++)
-                {
-                    nextKey += keyChain[i];
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += keyChain[i];
+                    }
+                    return this.getSettingWidthDefault(nextKey, StoreValue, false);
                 }
-                return this.getSettingWidthDefault(nextKey, StoreValue, false);
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
             }
             else
             {
-                this.WalkingLive.SetFlatConfig(name, StoreValue);
-                return StoreValue;
-            }
-        }
-
-        public String getConfigByKey(string key)
-        {
-            string[] keyChain = key.Split('.');
-
-            string parentKey = keyChain[0]; 
-            if (keyChain.Count() > 1)
-            {
+                if (this.WalkingLive.getName() == name)
+                {
+                    string upd = this.WalkingLive.getContent();
+                    if (upd == null)
+                    {
+                        this.WalkingLive.Update(StoreValue);
+                        return StoreValue;
+                    }
+                    return upd;
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
                 
-                if (!this.WalkingLive.ChildExists())
-                {
-                    return null;
-                }
-                this.WalkingLive = this.WalkingLive.getChildByName(parentKey);
-                string nextKey = "";
-                for (int i = 1; i < keyChain.Count(); i++)
-                {
-                    nextKey += keyChain[i];
-                }
-                return this.getConfigByKey(nextKey);
-            }
-            else
-            {
-                return this.WalkingLive.getContent();
             }
         }
 
-        public PConfigContent getOriginConfigByKey(string key)
+        public void setValue(string name, Boolean StoreValue)
         {
-            string[] keyChain = key.Split('.');
+            if (StoreValue)
+                this.setValue(name, "1", true);
+            else
+                this.setValue(name, "0", true);
+        }
 
+        public void setValue(string name, int StoreValue)
+        {
+            this.setValue(name, StoreValue.ToString(), true);
+        }
+
+        public void setValue(string name, string StoreValue)
+        {
+            this.setValue(name, StoreValue, true);
+        }
+
+        public void setValue(string name, string StoreValue, Boolean resetReader)
+        {
+            if (resetReader)
+            {
+                this.resetReader();
+            }
+
+            // add this node if not exists
+            if (this.WalkingLive.getName() == name)
+            {
+                this.WalkingLive.Update(StoreValue);
+                return;
+            }
+
+            string[] keyChain = name.Split('.');
             string parentKey = keyChain[0];
             if (keyChain.Count() > 1)
             {
 
-                if (!this.WalkingLive.ChildExists())
+                if (parentKey == this.WalkingLive.getName())
                 {
-                    return null;
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+
+                    string nextKey = "";
+
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += keyChain[i];
+                    }
+                    this.setValue(nextKey, StoreValue, false);
                 }
-                this.WalkingLive = this.WalkingLive.getChildByName(parentKey);
-                string nextKey = "";
-                for (int i = 1; i < keyChain.Count(); i++)
+                else
                 {
-                    nextKey += keyChain[i];
+                    throw new Exception("There is no Setting named " + name);
                 }
-                return this.getOriginConfigByKey(nextKey);
+
             }
             else
             {
-                return this.WalkingLive;
+                if (this.WalkingLive.getName() == name)
+                {
+                    this.WalkingLive.Update(StoreValue);
+
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
             }
         }
 
+
+     
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
             //info.AddValue("bookMarks", this.bookMarks);

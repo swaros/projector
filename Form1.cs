@@ -59,18 +59,57 @@ namespace Projector
             }
         }
 
+        private void copySettings(Boolean forSaving)
+        {
+            if (forSaving)
+            {
+                this.Setup.setValue("client.left", this.Left);
+                this.Setup.setValue("client.top", this.Top);
+                this.Setup.setValue("client.width", this.Width);
+                this.Setup.setValue("client.height", this.Height);
 
+                this.Setup.setValue("client.showgroups", this.showGroups);
+
+                this.Setup.setValue("client.showgroups", mainSlitter.Panel1Collapsed);                
+                this.Setup.setValue("client.buttonstyle", this.buttonStyle);
+
+                this.Setup.setValue("client.scriptpath", System.Environment.SpecialFolder.MyDocuments.ToString());
+                this.Setup.setValue("client.namedscriptsonly", this.displayNamedScripstOnly);
+            }
+            else
+            {
+                this.Left = this.Setup.getIntSettingWidthDefault("client.left", this.Left);
+                this.Top = this.Setup.getIntSettingWidthDefault("client.top", this.Top);
+                this.Width = this.Setup.getIntSettingWidthDefault("client.width", this.Width);
+                this.Height = this.Setup.getIntSettingWidthDefault("client.height", this.Height);
+
+                this.showGroups = this.Setup.getBooleanSettingWidthDefault("client.showgroups", this.showGroups);
+
+                mainSlitter.Panel1Collapsed = this.Setup.getBooleanSettingWidthDefault("client.showgroups", mainSlitter.Panel1Collapsed);
+                groupButtonsToolStripMenuItem.Checked = !mainSlitter.Panel1Collapsed;
+
+                this.buttonStyle = this.Setup.getIntSettingWidthDefault("client.buttonstyle", this.buttonStyle);
+
+                this.mainScriptFolder = this.Setup.getSettingWidthDefault("client.scriptpath", System.Environment.SpecialFolder.MyDocuments.ToString());
+                this.displayNamedScripstOnly = this.Setup.getBooleanSettingWidthDefault("client.namedscriptsonly", this.displayNamedScripstOnly);
+                groupedToolStripMenuItem.Checked = this.showGroups;
+            }
+            
+        }
 
 
         private void initApp()
         {
+            /*
             XmlSetup tmpSetup = new XmlSetup();
             tmpSetup.setFileName("Projector_config.xml");
             tmpSetup.loadXml();
             string check;
+             */
 
-            string clientLeft = this.Setup.getSettingWidthDefault("client.left", "10");
+            this.copySettings(false);
 
+            /*
             check = tmpSetup.getSetting("client_left");
             if (check != null && check != "" && int.Parse(check) > 0) this.Left = int.Parse(check);
 
@@ -100,7 +139,7 @@ namespace Projector
             if (check != null && check != "") this.displayNamedScripstOnly = (int.Parse(check) == 1);
 
             groupedToolStripMenuItem.Checked = this.showGroups;
-
+            */
             /*
             tmpSetup.addSetting("client_left", leftPosition.ToString());
             tmpSetup.addSetting("client_top", topPosition.ToString());
@@ -114,6 +153,42 @@ namespace Projector
             drawGroupButtons();
 
         }
+
+        private void ProjectorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            /*
+            int leftPosition = this.Left;
+            int topPosition = this.Top;
+            int w = this.Width;
+            int h = this.Height;
+
+            XmlSetup tmpSetup = new XmlSetup();
+            tmpSetup.setFileName("Projector_config.xml");
+
+            tmpSetup.addSetting("client_left", leftPosition.ToString());
+            tmpSetup.addSetting("client_top", topPosition.ToString());
+            tmpSetup.addSetting("client_w", w.ToString());
+            tmpSetup.addSetting("client_h", h.ToString());
+            tmpSetup.addSetting("buttonstyle", buttonStyle.ToString());
+            if (showGroups) tmpSetup.addSetting("showgroup", "1");
+            else tmpSetup.addSetting("showgroup", "0");
+
+            if (this.displayNamedScripstOnly) tmpSetup.addSetting("namedscriptsonly", "1");
+            else tmpSetup.addSetting("namedscriptsonly", "1");
+
+            if (groupButtonsToolStripMenuItem.Checked) tmpSetup.addSetting("showgroupbuttons", "1");
+            else tmpSetup.addSetting("showgroupbuttons", "0");
+
+            tmpSetup.addSetting("scriptpath", this.mainScriptFolder);
+
+            tmpSetup.saveXml();
+            */
+
+            this.copySettings(true);
+
+            this.Setup.saveRuntimeConfig();
+        }
+
 
         private void updateGroupButonStyle(Button template)
         {
@@ -869,34 +944,7 @@ namespace Projector
             }
         }
 
-        private void ProjectorForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            int leftPosition = this.Left;
-            int topPosition = this.Top;
-            int w = this.Width;
-            int h = this.Height;
 
-            XmlSetup tmpSetup = new XmlSetup();
-            tmpSetup.setFileName("Projector_config.xml");
-
-            tmpSetup.addSetting("client_left", leftPosition.ToString());
-            tmpSetup.addSetting("client_top", topPosition.ToString());
-            tmpSetup.addSetting("client_w", w.ToString());
-            tmpSetup.addSetting("client_h", h.ToString());
-            tmpSetup.addSetting("buttonstyle", buttonStyle.ToString());
-            if (showGroups) tmpSetup.addSetting("showgroup", "1");
-            else tmpSetup.addSetting("showgroup", "0");
-
-            if (this.displayNamedScripstOnly) tmpSetup.addSetting("namedscriptsonly", "1");
-            else tmpSetup.addSetting("namedscriptsonly", "1");
-
-            if (groupButtonsToolStripMenuItem.Checked) tmpSetup.addSetting("showgroupbuttons", "1");
-            else tmpSetup.addSetting("showgroupbuttons", "0");
-
-            tmpSetup.addSetting("scriptpath", this.mainScriptFolder);
-
-            tmpSetup.saveXml();
-        }
 
         private void ProjectorForm_Shown(object sender, EventArgs e)
         {

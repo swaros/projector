@@ -109,7 +109,15 @@ namespace Projector
             return -1;
         }
 
-
+        public PConfigContent addOrGetGroupChild(String Name)
+        {
+            PConfigContent addConfig = this.getChildByName(Name);
+            if (addConfig == null)
+            {
+                return this.addGroupChild(Name);
+            }
+            return addConfig;
+        }
 
         public PConfigContent addGroupChild(String Name)
         {
@@ -120,8 +128,8 @@ namespace Projector
             if (this.getChildByName(Name) == null)
             {
                 PConfigContent addConfig = new PConfigContent();
-                this.Content.Add(addConfig);
                 addConfig.SetFlatConfig(Name, null);
+                this.Content.Add(addConfig);                
                 return addConfig;
             }
             return null;
