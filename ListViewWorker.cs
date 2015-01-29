@@ -141,6 +141,115 @@ namespace Projector
             
         } 
 
+        public void fillListView(string matchOn, ListView source, ListView target)
+        {
+            // add not existing columns and find the matching index
+            Stopwatch watch = new Stopwatch();
+            int sourceMatchIndex = -1;
+            int targetMatchIndex = -1;
+            List<int> addColumns = new List<int>();
+            List<string> knownCols = new List<string>();
+            source.View = View.Details;
+
+            Hashtable sourceIndex = new Hashtable();
+            Hashtable targetIndex = new Hashtable();
+
+            for (int a = 0; a < target.Columns.Count; a++)
+            {
+                knownCols.Add(target.Columns[a].Text);
+            }
+
+            for (int a = 0; a < source.Columns.Count; a++)
+            {
+                if (!knownCols.Contains(source.Columns[a].Text))
+                {
+                    target.Columns.Add(source.Columns[a].Text);
+                    if (source.Columns[a].Text != matchOn)
+                    {
+                        addColumns.Add(a);
+                    }
+                } else
+                {
+                    if (source.Columns[a].Text == matchOn)
+                    {
+                        sourceMatchIndex = a;
+                    }
+                }
+                
+            }
+            if (sourceMatchIndex > -1)
+            {
+                for (int a = 0; a < target.Columns.Count; a++)
+                {
+                    if (target.Columns[a].Text == matchOn)
+                    {
+                        targetMatchIndex = a;
+                    }
+                }
+
+                for (int i = 0; i < target.Items.Count; i++)
+                {
+                    string sVal = target.Items[i].SubItems[targetMatchIndex].Text;
+                    if (targetIndex.ContainsKey(sVal))
+                    {
+                        List<int> posList = (List<int>)targetIndex[sVal];
+                        posList.Add(i);
+                        targetIndex[sVal] = posList;
+                    }
+                    else
+                    {
+                        List<int> posList = new List<int>();
+                        posList.Add(i);
+                        targetIndex.Add(sVal, posList);
+                    }
+                    
+                }
+
+
+
+                watch.Start();
+                if (targetMatchIndex > -1)
+                {
+                    int updateCnt = 0;
+                    for (int i = 0; i < source.Items.Count; i++)
+                    {
+                        string sVal = source.Items[i].SubItems[sourceMatchIndex].Text;
+                        if (targetIndex.ContainsKey(sVal))
+                        {
+                            List<int> posList = (List<int>)targetIndex[sVal];
+                            foreach (int hitPos in posList)
+                            {                               
+                                foreach (int add in addColumns)
+                                {
+                                    target.Items[hitPos].SubItems.Add(source.Items[i].SubItems[add].Text);
+
+                                }
+
+                                updateCnt++;
+                                if (updateCnt == 20)
+                                {
+                                    target.TopItem = target.Items[hitPos];
+                                }
+                            }
+                        }
+
+                        if (updateCnt > 20)
+                        {
+                            updateCnt = 0;
+                        }
+                        if (watch.ElapsedMilliseconds > 500)
+                        {
+                            target.Update();
+                            Application.DoEvents();
+                            watch.Restart();
+                        }
+                    }
+                }
+            }
+            
+        } 
+
+
         public void copyListView(ListView source, ListView target,int imageIndex, int selectImageIndex)
         {
             target.Items.Clear();
@@ -342,6 +451,11 @@ namespace Projector
 
         public ListView setRowColors(ListView source, Color aRowColor, Color bRowColor)
         {
+            return this.setRowColors(source, aRowColor, bRowColor, source.ForeColor);
+        }
+
+        public ListView setRowColors(ListView source, Color aRowColor, Color bRowColor, Color TextColor)
+        {
             int c = 0;
             for (int t = 0; t < source.Items.Count; t++)
             {
@@ -349,7 +463,8 @@ namespace Projector
                 if (c > 1) c = 0;
                 if (c==0) source.Items[t].BackColor = aRowColor;
                 else source.Items[t].BackColor = bRowColor;
-                
+
+                source.Items[t].ForeColor = TextColor;
             }
             return source;
         }    

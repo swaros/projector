@@ -33,11 +33,11 @@
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.autoSort = new System.Windows.Forms.ToolStripButton();
-            this.listView = new System.Windows.Forms.ListView();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.stateLabel = new System.Windows.Forms.ToolStripLabel();
             this.Progress = new System.Windows.Forms.ToolStripProgressBar();
+            this.listView = new System.Windows.Forms.ListView();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -71,8 +71,8 @@
             this.toolStripSeparator1,
             this.autoSort,
             this.toolStripSeparator2,
-            this.stateLabel,
-            this.Progress});
+            this.Progress,
+            this.stateLabel});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(403, 25);
@@ -103,6 +103,22 @@
             this.autoSort.Size = new System.Drawing.Size(23, 22);
             this.autoSort.Text = "toolStripButton2";
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // stateLabel
+            // 
+            this.stateLabel.Name = "stateLabel";
+            this.stateLabel.Size = new System.Drawing.Size(58, 22);
+            this.stateLabel.Text = "No Name";
+            // 
+            // Progress
+            // 
+            this.Progress.Name = "Progress";
+            this.Progress.Size = new System.Drawing.Size(100, 22);
+            // 
             // listView
             // 
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,22 +137,6 @@
             // 
             this.saveFileDialog.FileName = "export.csv";
             this.saveFileDialog.Filter = "CSV|*.csv";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // stateLabel
-            // 
-            this.stateLabel.Name = "stateLabel";
-            this.stateLabel.Size = new System.Drawing.Size(58, 22);
-            this.stateLabel.Text = "No Name";
-            // 
-            // Progress
-            // 
-            this.Progress.Name = "Progress";
-            this.Progress.Size = new System.Drawing.Size(100, 22);
             // 
             // ReflectList
             // 

@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace Projector
 {
-    public partial class queryBrowser : Form
+    public partial class queryBrowser : StyleForm
     {
         public string ScriptIdent = "";
 
@@ -424,7 +424,15 @@ namespace Projector
                     
 
                 }
-                work.setRowColors(tableView, Color.LightBlue, Color.LightCyan);
+                if (this.currentStyle == null)
+                {
+                    work.setRowColors(tableView, Color.LightBlue, Color.LightCyan);
+                }
+                else
+                {
+                    work.setRowColors(tableView, this.currentStyle.itemRowA, this.currentStyle.itemRowB, this.currentStyle.itemTextColor);                    
+                }
+
                 work.autoSizeColumns(tableView, ColumnHeaderAutoResizeStyle.ColumnContent);
                 database.disConnect();
                 
@@ -868,6 +876,8 @@ namespace Projector
             fireSQL.Click += new System.EventHandler(dynRunQuery);
             maskBox.Controls.Add(fireSQL);
 
+            this.updateContent(maskBox.Controls);
+
         }
 
         private void setLimitFunc(object sender, System.EventArgs e)
@@ -897,7 +907,7 @@ namespace Projector
             addingDelBtn.Top = y;
             addingDelBtn.Width = 100;
             addingDelBtn.Text = "ignore on Where";
-            addingDelBtn.FlatStyle = FlatStyle.System;
+            //addingDelBtn.FlatStyle = FlatStyle.System;
             addingDelBtn.Click += new System.EventHandler(delWhere);
             return addingDelBtn;
         }
@@ -911,6 +921,7 @@ namespace Projector
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox();
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
         private void dynMaskInput(object sender, System.EventArgs e)
@@ -922,6 +933,7 @@ namespace Projector
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox(); 
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
 
@@ -949,6 +961,7 @@ namespace Projector
 
             string whereFieldAdd = "";
             VarCharAdd.BackColor = Color.LightSteelBlue;
+            VarCharAdd.ForeColor = Color.Black;
             string add = "";
             for (int i = 0; i < VarCharAdd.CheckedItems.Count; i++)
             {
@@ -961,6 +974,7 @@ namespace Projector
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox();
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
 
@@ -970,12 +984,14 @@ namespace Projector
             String name = VarCharAdd.Name.Replace("DYNAMIC_PROJ_", "");
             
             VarCharAdd.BackColor = Color.LightSteelBlue;
+            VarCharAdd.ForeColor = Color.Black;
 
             maskQuery.addWhere(name, VarCharAdd.Text);
             if (VarCharAdd.Text == "") maskQuery.removeWhere(name);
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox(); 
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
         private void dynNumeric(object sender, System.EventArgs e)
@@ -987,6 +1003,7 @@ namespace Projector
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox(); 
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
         private void dynWhereCompare(object sender, System.EventArgs e)
@@ -1005,6 +1022,7 @@ namespace Projector
             textBox1.Text = maskQuery.getSelect();
             parseSqlTextBox(); 
             VarCharAdd.BackColor = Color.LightGreen;
+            VarCharAdd.ForeColor = Color.Black;
         }
 
         private String helperGetSubSelect(string oldValue)
@@ -1251,8 +1269,16 @@ namespace Projector
            if (tmpObj.listView.Items.Count > 0)
            {
                worker.copyListView(tmpObj.listView, listView1, -1, 0);
-               worker.setRowColors(listView1, Color.Transparent, Color.LightYellow);
-               worker.searchAndmark("null", listView1, 0, Color.SkyBlue);
+               if (this.currentStyle == null)
+               {
+                   worker.setRowColors(listView1, Color.Transparent, Color.LightYellow);
+                   worker.searchAndmark("null", listView1, 0, Color.SkyBlue);
+               }
+               else
+               {
+                   worker.setRowColors(listView1, this.currentStyle.itemRowA, this.currentStyle.itemRowB, this.currentStyle.itemTextColor);
+                   worker.searchAndmark("null", listView1, 0, Color.SkyBlue);
+               }
                autosortColumns();
                this.executeScript(this.onFinishedScript); 
            }
@@ -2902,6 +2928,14 @@ namespace Projector
         private void MessageLabel_MouseClick(object sender, MouseEventArgs e)
         {
             closePanelMessage();
+        }
+
+        private void textBox1_MouseHover(object sender, EventArgs e)
+        {
+            if (textBox1.BackColor != Color.White)
+            {
+                textBox1.BackColor = Color.White;
+            }
         }
     }
 }

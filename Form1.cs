@@ -298,20 +298,7 @@ namespace Projector
             flowLayout.Padding = new Padding(10);
 
             this.setMainColors(Color.White, Color.FromArgb(80, 80, 80));
-            /*
-            if (grp.Count > 0 )
-            {
-                Label HeadLine = new Label();
-                HeadLine.ForeColor = Color.White;
-                HeadLine.BackColor = Color.FromArgb(70, 70, 70);
-                HeadLine.Font = new Font("Verdana", 24, FontStyle.Bold);
-                HeadLine.Text = chooseGroup.Text;
-                HeadLine.AutoSize = false;
-                HeadLine.Height = 46;
-                HeadLine.Width = flowLayout.Width -30;
-                flowLayout.Controls.Add(HeadLine);
-            }
-            */
+
             
             for (Int64 i = 0; i < tmpSetup.count; i++)
             {
@@ -894,9 +881,25 @@ namespace Projector
         {
             MdiForm mdif = new MdiForm();
             //mdif.currentProfil = profil;
+
+            
+
             if (mdif.currentProfil == null) mdif.currentProfil = new Profil("midi");
+
+           
+
             mdif.currentProfil.getValuesFromProfil(profil);
             mdif.Text = " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_host") + "/" + profil.getProperty("db_schema") + "]";
+
+            if (mdif.currentProfil.getProperty("set_bgcolor") != null && mdif.currentProfil.getProperty("set_bgcolor").Length > 2)
+            {
+                StyleFormProps profilStyle = new StyleFormProps();
+                profilStyle.MainColor = Color.FromArgb(int.Parse(mdif.currentProfil.getProperty("set_bgcolor")));
+                profilStyle.composeFlatLight();
+                mdif.setStyle(profilStyle);
+
+            }
+
             mdif.Show();
         }
 

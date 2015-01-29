@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace Projector
 {
-    public partial class MdiForm : Form
+    public partial class MdiForm : StyleForm
     {
         public Profil currentProfil;
 
@@ -81,7 +81,15 @@ namespace Projector
             qb.Name = "QueryBrowser " + windowID;
             if (currentProfil.getProperty("set_bgcolor") != null && currentProfil.getProperty("set_bgcolor").Length > 2)
             {
-                qb.BackColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+                //qb.BackColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+
+                StyleFormProps profilStyle = new StyleFormProps();
+                profilStyle.MainColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+                profilStyle.composePaper();
+                //profilStyle.BackgroundControlColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+
+                qb.setStyle(profilStyle);
+
             }
             //watcher.profil = profil;
             qb.sensorProfil = currentProfil;

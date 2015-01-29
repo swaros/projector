@@ -19,16 +19,16 @@ namespace Projector
             return val.Substring(start, lengt);   
         }
 
-        public string between(string right, string left)
+        public string between(string startStr, string endStr)
         {
             string res = "";
-            right = right.Replace('*', '"');
-            left = left.Replace('*', '"');
-            int first = val.IndexOf(right);
+            startStr = startStr.Replace('*', '"');
+            endStr = endStr.Replace('*', '"');
+            int first = val.IndexOf(startStr);
             if (first > -1)
             {
-                int offset = first + right.Length;
-                int last = val.IndexOf(left, offset, StringComparison.Ordinal);
+                int offset = first + startStr.Length;
+                int last = val.IndexOf(endStr, offset, StringComparison.Ordinal);
                 if (last > -1)
                 {
                     int len = last - offset;

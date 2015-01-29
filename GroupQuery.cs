@@ -634,8 +634,17 @@ namespace Projector
 
         private void exportCsvFiles(string filename)
         {
+            
+
             int pp = 0;
             ListViewWorker lw = new ListViewWorker();
+
+            if (listViewExports == null)
+            {
+                MessageBox.Show("No Data to export. Make sure youre Query is executed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             foreach (ListView resultView in listViewExports)
             {
                 resultView.Columns.Add("Group");

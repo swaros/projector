@@ -147,6 +147,127 @@ namespace Projector
             this.resetlabel();
         }
 
+        public void addFieldFrom(string left, string newName, string leftAdd, string rightAdd)
+        {
+            Stopwatch watch = new Stopwatch();
+            this.setStatusMsg("Joining...");
+
+
+            this.listView.Columns.Add(newName);
+            int newCnt = listView.Columns.Count - 2;
+            int lPos = -1;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == left)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+                for (int i = 0; i < this.listView.Items.Count; i++)
+                {                    
+                    string lText = this.listView.Items[i].SubItems[lPos].Text;
+                    string newText = leftAdd + lText + rightAdd;
+                    this.listView.Items[i].SubItems.Add(newText);
+                    if (watch.ElapsedMilliseconds > 1000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
+                        this.listView.TopItem = this.listView.Items[i];
+                        this.listView.Update();
+                        this.setStatusMsg("adding..." + i + "/" + this.listView.Items.Count);
+                        Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
+                        watch.Restart();
+                    }
+                }
+            }
+            this.resetlabel();
+        }
+
+        public void removeIfEqual(string left, string checkStr, Boolean alsoNotExist)
+        {
+            Stopwatch watch = new Stopwatch();
+          
+            this.setStatusMsg("Removing...");
+
+            int startCount = this.listView.Items.Count;
+            int removed = 0;
+           // this.listView.Visible = false;
+            int lPos = -1;
+            int redrawTick = 0;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == left)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+   
+                for (int i = this.listView.Items.Count-1; i >= 0; i--)
+                {
+                    if (watch.ElapsedMilliseconds > 2000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = startCount;
+                        this.Progress.Value = startCount - i;
+                        this.setStatusMsg("Deleted:" + removed + " rows left:" + this.listView.Items.Count + " check Row:" + (startCount - i));
+                        Application.DoEvents();
+                        redrawTick++;
+                        if (redrawTick > 10)
+                        {
+                            this.listView.TopItem = this.listView.Items[i];
+                            this.listView.Update();
+                            redrawTick = 0;
+                            if (ifAbort())
+                            {
+                                resetlabel();
+                                return;
+                            }
+       
+                        }
+                        watch.Restart();
+                    }
+
+                    if (listView.Items[i].SubItems.Count > lPos)
+                    {
+                        string lText = this.listView.Items[i].SubItems[lPos].Text;
+
+                        
+                        if (lText == checkStr)
+                        {
+                            this.listView.Items[i].Remove();
+                            removed++;
+                        }
+                    }
+                    else
+                    {
+                        if (alsoNotExist)
+                        {
+                            this.listView.Items[i].Remove();
+                            removed++;
+                        }
+                    }
+                }
+            }
+            this.listView.Visible = true;
+            this.resetlabel();
+        }
+
         public void mark(string fieldname, string value)
         {
             Stopwatch watch = new Stopwatch();
@@ -199,7 +320,34 @@ namespace Projector
         }
 
 
+        private string getSplitStr(String source, string splitter, int pos)
+        {
+            string[] newTexts = source.Split(splitter.ToCharArray());
+
+            if (pos < 0)
+            {
+                pos = 0;
+            }
+
+            if (pos >= newTexts.Count())
+            {
+                pos = newTexts.Count() - 1;
+            }
+
+            return newTexts[pos];
+        }
+
         public void split(string fieldname, string splitChars)
+        {
+            this.split(fieldname, splitChars, 0);
+        }
+
+        public void splitByPos(string fieldname, string splitChars, int pos)
+        {
+            this.split(fieldname, splitChars, pos);
+        }
+
+        private void split(string fieldname, string splitChars, int pos)
         {
             Stopwatch watch = new Stopwatch();
             this.setStatusMsg("Splitting....");
@@ -220,8 +368,9 @@ namespace Projector
                 {
 
                     string lText = this.listView.Items[i].SubItems[lPos].Text;
-                    string[] newTexts = lText.Split(splitChars.ToCharArray());
-                    this.listView.Items[i].SubItems[lPos].Text = newTexts[0];
+                    string spltStr = this.getSplitStr(lText, splitChars, pos);
+                    
+                    this.listView.Items[i].SubItems[lPos].Text = spltStr;
                     if (watch.ElapsedMilliseconds > 1000)
                     {
                         this.Progress.Visible = true;
@@ -244,6 +393,54 @@ namespace Projector
             resetlabel();
         }
 
+
+        public void getBetween(string fieldname, string leftStart, string  rightEnd)
+        {
+            Stopwatch watch = new Stopwatch();
+            RString RStr = new RString();
+            this.setStatusMsg("Splitting....");
+            int lPos = -1;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == fieldname)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+                for (int i = 0; i < this.listView.Items.Count; i++)
+                {
+
+                    string lText = this.listView.Items[i].SubItems[lPos].Text;
+                    RStr.setString(lText);
+                    string spltStr = RStr.between(leftStart, rightEnd);
+
+                    this.listView.Items[i].SubItems[lPos].Text = spltStr;
+                    if (watch.ElapsedMilliseconds > 1000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
+                        this.setStatusMsg("Between..." + i + "/" + this.listView.Items.Count);
+
+                        this.listView.TopItem = this.listView.Items[i];
+                        this.listView.Update();
+                        Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
+                        watch.Restart();
+                    }
+                }
+            }
+            resetlabel();
+        }
 
 
         public void firstWord(string fieldname)
@@ -286,6 +483,14 @@ namespace Projector
             }
         }
 
+        public void fillUpListView(string onJoin, ListView list)
+        {
+            if (list != null)
+            {
+                ListViewWorker Worker = new ListViewWorker();
+                Worker.fillListView (onJoin, list, this.listView);
+            }
+        }
 
         public void setTop(int val){
             this.Top = val;
