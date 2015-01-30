@@ -355,8 +355,7 @@ namespace Projector
             {
                 if (this.WalkingLive.getName() == name)
                 {
-                    this.WalkingLive.Update(StoreValue);
-
+                     this.WalkingLive.Update(StoreValue);                    
                 }
                 else
                 {

@@ -297,45 +297,40 @@ namespace Projector
 
         private void drawNewStyle()
         {
-            Hashtable grp = this.getGroups();
-            XmlSetup tmpSetup = new XmlSetup();
-            tmpSetup.setFileName("Projector_profiles.xml");
-            //tmpSetup.setFileName("Projector_global.xml");
-            tmpSetup.loadXml();
-            
+
+
+            List<string> grp = this.getGroups(chooseGroup.Text);
+           
             flowLayout.BackColor = Color.FromArgb(60, 60, 60);
             flowLayout.Padding = new Padding(10);
 
             this.setMainColors(Color.White, Color.FromArgb(80, 80, 80));
 
-            
-            for (Int64 i = 0; i < tmpSetup.count; i++)
+            Profil itProf = new Profil("Default");
+            foreach (String proName in grp)
             {
-                string keyname = "profil_" + (i + 1);
-                string proName = tmpSetup.getValue(keyname);
-
+                
                 if (proName != null)
                 {
-                    if (grp.Count == 0 || grp.ContainsKey(proName))
+                   
+                    profil.changeProfil(proName);
+                    profilSelector.DropDownItems.Add(proName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
+
+                    ProfilButton tmpPBtn = new ProfilButton(this);
+                    tmpPBtn.setName(proName);
+                    tmpPBtn.setDescription(profil.getProperty("db_host"));
+                    string colortext = profil.getProperty("set_bgcolor");
+                    if (colortext != null && colortext.Length > 0)
                     {
-                        profil.changeProfil(proName);
-                        profilSelector.DropDownItems.Add(proName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
 
-                        ProfilButton tmpPBtn = new ProfilButton(this);
-                        tmpPBtn.setName(proName);
-                        tmpPBtn.setDescription(profil.getProperty("db_host"));
-                        string colortext = profil.getProperty("set_bgcolor");
-                        if (colortext != null && colortext.Length > 0)
-                        {
-
-                            tmpPBtn.setColor(Color.FromArgb(int.Parse(colortext)));
-                            tmpPBtn.Margin = new Padding(15);
+                        tmpPBtn.setColor(Color.FromArgb(int.Parse(colortext)));
+                        tmpPBtn.Margin = new Padding(15);
                             
 
-                        }
-                        tmpPBtn.StartBtn.Click += new System.EventHandler(styleBtnClick);
-                        flowLayout.Controls.Add(tmpPBtn);
                     }
+                    tmpPBtn.StartBtn.Click += new System.EventHandler(styleBtnClick);
+                    flowLayout.Controls.Add(tmpPBtn);
+                   
                 }
             }
             Button tmpBtn = new Button();
@@ -345,48 +340,52 @@ namespace Projector
             updateGroupButonStyle(tmpBtn);
         }
 
+        private List<string> getGroups(string name)
+        {
+            if (name != "[ALL]")
+            {
+                return this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + name, new List<string>());               
+            }
+            else
+            {
+                return this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+            }
+            
+        }
+
+
         private Hashtable getGroups()
         {
             Hashtable groups = new Hashtable();
-            XmlSetup pSetup = new XmlSetup();
-            pSetup.setFileName("profileGroups.xml");
-            pSetup.loadXml();
-
-            Hashtable settings = pSetup.getHashMap();
 
             if (chooseGroup.Text != "[ALL]")
             {
-                if (pSetup.getHashMap().Contains(chooseGroup.Text))
+                List<string> pGroups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + chooseGroup.Text, new List<string>());
+                foreach (string pGrp in pGroups)
                 {
-                    string[] currGrp = pSetup.getHashMap()[chooseGroup.Text].ToString().Split('|');
-                    for (int z = 0; z < currGrp.Length; z++)
-                    {
-                        groups.Add(currGrp[z], currGrp[z]);
-                    }
-
+                    groups.Add(pGrp, pGrp);
                 }
+
+            }
+            else
+            {
+                /*
+                List<string> pGroups = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+                foreach (string pGrp in pGroups)
+                {
+                    groups.Add(pGrp, pGrp);
+                }
+                 */
             }
             return groups;
         }
 
         private void updateProfilSelector()
         {
-            XmlSetup tmpSetup = new XmlSetup();
-            tmpSetup.setFileName("Projector_profiles.xml");
-            //tmpSetup.setFileName("Projector_global.xml");
-            tmpSetup.loadXml();
+
             profilSelector.DropDownItems.Clear();
 
-            /*
-            Panel panel1 = new Panel();
-            panel1.Location = new Point(56, 72);
-            panel1.Size = new Size(264, 152);
-            
-            panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Controls.Add(panel1);
-            */
-           
-
+         
 
             flowLayout.Controls.Clear();
             
@@ -424,6 +423,12 @@ namespace Projector
                 return;
             }
 
+            // old Stuff------------------------------------------------------------
+
+            XmlSetup tmpSetup = new XmlSetup();
+            tmpSetup.setFileName("Projector_profiles.xml");
+            //tmpSetup.setFileName("Projector_global.xml");
+            tmpSetup.loadXml();
          
             toolStrip1.Visible = true;
             flowLayout.BackColor = SystemColors.Control;
@@ -860,7 +865,6 @@ namespace Projector
             {
                 sensor.BackColor = Color.FromArgb(int.Parse(profil.getProperty("set_bgcolor")));
             }
-            //sensor.sensorProfil = profil;
             sensor.sensorProfil.getValuesFromProfil(profil);
             sensor.getStartupData();
             sensor.Show();
@@ -879,8 +883,6 @@ namespace Projector
             {
                 qb.BackColor = Color.FromArgb(int.Parse(profil.getProperty("set_bgcolor")));
             }
-            //watcher.profil = profil;
-            //qb.sensorProfil = profil;
             qb.sensorProfil.getValuesFromProfil(profil);
             qb.listTables();
             qb.Show();

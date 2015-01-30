@@ -68,6 +68,11 @@ namespace Projector
 
             if (overWrite)
             {
+                if (values == null)
+                {
+                    this.Content = null;
+                    return;
+                }
                 this.Content = new List<PConfigContent>();
             }
 

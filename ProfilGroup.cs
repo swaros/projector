@@ -136,6 +136,10 @@ namespace Projector
                 // removing
                 this.currentGroups.Remove(groupId);
                 this.groupName.Items.Remove(groupId);
+
+                // also remove members
+                Config.setList(PConfig.KEY_GROUPS_MEMBERS + "." + groupId, null);
+
             }
             else
             {
