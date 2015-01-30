@@ -14,7 +14,6 @@ namespace Projector
     public partial class ProfilGroup : Form
     {
 
-
         PConfig Config = new PConfig();
 
         List<string> currentGroups;
@@ -38,7 +37,7 @@ namespace Projector
         {
             Profil dbProf = new Profil("default");
             ColorCalc cCalc = new ColorCalc();
-            string groupId = groupName.Text.ToLower();
+            string groupId = groupName.Text;
             if (this.currentGroups.Contains(groupId))
             {
                 groupName.ForeColor = Color.DarkGreen;
@@ -91,7 +90,7 @@ namespace Projector
             if (userIsContoller)
             {
                 string profilName = e.Item.Text;
-                string groupId = groupName.Text.ToLower();
+                string groupId = groupName.Text;
                 if (groupId.Length > 3)
                 {
 
@@ -130,7 +129,7 @@ namespace Projector
 
         private void manipulateBtn_Click(object sender, EventArgs e)
         {
-            string groupId = groupName.Text.ToLower();
+            string groupId = groupName.Text;
             if (this.currentGroups.Contains(groupId))
             {
                 // removing

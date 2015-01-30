@@ -47,6 +47,8 @@
             this.HeadLabel.TabIndex = 0;
             this.HeadLabel.Text = "Profil";
             this.HeadLabel.Click += new System.EventHandler(this.Description_Click);
+            this.HeadLabel.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragEnter);
+            this.HeadLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             this.HeadLabel.MouseLeave += new System.EventHandler(this.ProfilButton_MouseLeave);
             this.HeadLabel.MouseHover += new System.EventHandler(this.ProfilButton_MouseHover);
             // 
@@ -58,6 +60,7 @@
             this.colorPanel.Name = "colorPanel";
             this.colorPanel.Size = new System.Drawing.Size(10, 83);
             this.colorPanel.TabIndex = 1;
+            this.colorPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             // 
             // Description
             // 
@@ -70,6 +73,8 @@
             this.Description.Text = "Some Informations";
             this.Description.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.Description.Click += new System.EventHandler(this.Description_Click);
+            this.Description.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragEnter);
+            this.Description.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             this.Description.MouseLeave += new System.EventHandler(this.ProfilButton_MouseLeave);
             this.Description.MouseHover += new System.EventHandler(this.ProfilButton_MouseHover);
             // 
@@ -113,6 +118,7 @@
             // 
             // ProfilButton
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SteelBlue;
@@ -124,6 +130,10 @@
             this.Name = "ProfilButton";
             this.Size = new System.Drawing.Size(320, 83);
             this.Click += new System.EventHandler(this.Description_Click);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragEnter);
+            this.Enter += new System.EventHandler(this.ProfilButton_Enter);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             this.MouseLeave += new System.EventHandler(this.ProfilButton_MouseLeave);
             this.MouseHover += new System.EventHandler(this.ProfilButton_MouseHover);
             this.ResumeLayout(false);

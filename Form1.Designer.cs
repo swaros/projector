@@ -67,15 +67,15 @@
             this.chooseGroup = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.scriptRunButton = new System.Windows.Forms.ToolStripButton();
-            this.exportProfileDlg = new System.Windows.Forms.SaveFileDialog();
-            this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
-            this.saveProject = new System.Windows.Forms.SaveFileDialog();
-            this.openScript = new System.Windows.Forms.OpenFileDialog();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.style_0 = new System.Windows.Forms.ToolStripButton();
             this.style_1 = new System.Windows.Forms.ToolStripButton();
             this.style_2 = new System.Windows.Forms.ToolStripButton();
             this.style_3 = new System.Windows.Forms.ToolStripButton();
+            this.exportProfileDlg = new System.Windows.Forms.SaveFileDialog();
+            this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
+            this.saveProject = new System.Windows.Forms.SaveFileDialog();
+            this.openScript = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -247,6 +247,7 @@
             this.groupButtonsToolStripMenuItem.CheckOnClick = true;
             this.groupButtonsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.groupButtonsToolStripMenuItem.Name = "groupButtonsToolStripMenuItem";
+            this.groupButtonsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
             this.groupButtonsToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.groupButtonsToolStripMenuItem.Text = "Group Buttons";
             this.groupButtonsToolStripMenuItem.Click += new System.EventHandler(this.groupButtonsToolStripMenuItem_Click);
@@ -322,14 +323,17 @@
             // 
             // flowLayoutControllPanel
             // 
+            this.flowLayoutControllPanel.AllowDrop = true;
             this.flowLayoutControllPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutControllPanel.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutControllPanel.Name = "flowLayoutControllPanel";
             this.flowLayoutControllPanel.Size = new System.Drawing.Size(172, 365);
             this.flowLayoutControllPanel.TabIndex = 0;
+            this.flowLayoutControllPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.flowLayoutControllPanel_DragEnter);
             // 
             // flowLayout
             // 
+            this.flowLayout.AllowDrop = true;
             this.flowLayout.AutoScroll = true;
             this.flowLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -337,7 +341,10 @@
             this.flowLayout.Name = "flowLayout";
             this.flowLayout.Size = new System.Drawing.Size(509, 365);
             this.flowLayout.TabIndex = 0;
+            this.flowLayout.DragDrop += new System.Windows.Forms.DragEventHandler(this.flowLayout_DragDrop);
+            this.flowLayout.DragEnter += new System.Windows.Forms.DragEventHandler(this.flowLayout_DragEnter);
             this.flowLayout.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayout_Paint);
+            this.flowLayout.MouseDown += new System.Windows.Forms.MouseEventHandler(this.flowLayout_MouseDown);
             // 
             // toolStrip1
             // 
@@ -360,7 +367,7 @@
             this.style_3});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(509, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(478, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -441,30 +448,6 @@
             this.scriptRunButton.Text = "Execute Projector Script File";
             this.scriptRunButton.Click += new System.EventHandler(this.scriptRunButton_Click);
             // 
-            // exportProfileDlg
-            // 
-            this.exportProfileDlg.Filter = "Xml Profil|*.xml";
-            this.exportProfileDlg.Title = "Profil Export";
-            // 
-            // openProjectDlg
-            // 
-            this.openProjectDlg.DefaultExt = "xml";
-            this.openProjectDlg.FileName = "Project.xmlpr";
-            this.openProjectDlg.Filter = "Xml Profil|*.xmlpr";
-            this.openProjectDlg.Title = "Open Project";
-            // 
-            // saveProject
-            // 
-            this.saveProject.Filter = "Xml Profil|*.xmlpr";
-            this.saveProject.Title = "Project Save";
-            // 
-            // openScript
-            // 
-            this.openScript.DefaultExt = "pscr";
-            this.openScript.Filter = "Projector Script|*.pscr";
-            this.openScript.Tag = "LoadScript";
-            this.openScript.Title = "Load Script File";
-            // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
@@ -510,6 +493,30 @@
             this.style_3.Size = new System.Drawing.Size(46, 22);
             this.style_3.Text = "Scripts";
             this.style_3.Click += new System.EventHandler(this.style_3_Click);
+            // 
+            // exportProfileDlg
+            // 
+            this.exportProfileDlg.Filter = "Xml Profil|*.xml";
+            this.exportProfileDlg.Title = "Profil Export";
+            // 
+            // openProjectDlg
+            // 
+            this.openProjectDlg.DefaultExt = "xml";
+            this.openProjectDlg.FileName = "Project.xmlpr";
+            this.openProjectDlg.Filter = "Xml Profil|*.xmlpr";
+            this.openProjectDlg.Title = "Open Project";
+            // 
+            // saveProject
+            // 
+            this.saveProject.Filter = "Xml Profil|*.xmlpr";
+            this.saveProject.Title = "Project Save";
+            // 
+            // openScript
+            // 
+            this.openScript.DefaultExt = "pscr";
+            this.openScript.Filter = "Projector Script|*.pscr";
+            this.openScript.Tag = "LoadScript";
+            this.openScript.Title = "Load Script File";
             // 
             // ProjectorForm
             // 

@@ -13,6 +13,7 @@ namespace Projector
     {
         public string profilName = "NONE";
         public Color profilColor = Color.LightSteelBlue;
+        public string assignedGroup;
 
         private int startWidth = 0;
         private int startHeight = 0;
@@ -21,6 +22,10 @@ namespace Projector
         private int minHeight = 30;
 
         private Boolean growing = false;
+
+        private int defaultPercent = 70;
+        private int HighlightPercent = 10;
+        private int currentPercent = 70;
 
         private ProjectorForm myParent;
 
@@ -36,6 +41,11 @@ namespace Projector
             this.Width = minWidth;
             this.Height = minHeight;
              */
+        }
+
+        public String getName()
+        {
+            return this.profilName;
         }
 
         public void setColor(Color pCol)
@@ -54,7 +64,7 @@ namespace Projector
             ColorCalc colCalc = new ColorCalc();
             colCalc.setBaseColor(this.profilColor);
 
-            this.BackColor = colCalc.getDarker(3);
+            this.BackColor = colCalc.DarkenBy(this.defaultPercent);
             //this.BackColor = Color.FromArgb(80, 80, 80);
             this.HeadLabel.ForeColor = colCalc.getLighter(2);
             //this.HeadLabel.ForeColor = Color.FromArgb(220, 220, 220);
@@ -82,75 +92,50 @@ namespace Projector
         {
             ColorCalc colCalc = new ColorCalc();
             this.colorPanel.BackColor = Color.White;
-            colCalc.setBaseColor(this.profilColor);
-
-            this.BackColor = colCalc.getDarker(2);
-            //this.BackColor = Color.FromArgb(80, 80, 80);
+            colCalc.setBaseColor(this.profilColor); 
             this.HeadLabel.ForeColor = Color.White;
-            //this.HeadLabel.ForeColor = Color.FromArgb(220, 220, 220);
-            /*
-            this.StartBtn.BackColor = colCalc.getLighter(3);
-            this.StartBtn.ForeColor = colCalc.getDarker(3);
-            this.button1.BackColor = colCalc.getLighter(3);
-            this.button1.ForeColor = colCalc.getDarker(3);
-             *
-             */
-           // this.animTimer.Enabled = true;
-            this.growing = true;
+          
+            this.animTimer.Enabled = true;
+            this.growing = false;
         }
 
         private void ProfilButton_MouseLeave(object sender, EventArgs e)
         {
-            this.defaultColors();
-            //this.animTimer.Enabled = true;
-            this.growing = false;
+            //this.defaultColors();
+            this.animTimer.Enabled = true;
+            this.growing = true;
         }
 
         private void animTimer_Tick(object sender, EventArgs e)
         {
             if (growing)
             {
-                
-                if (this.Height < this.startHeight)
+                if (this.currentPercent < this.defaultPercent - 4)
                 {
-                    int diff = (this.startHeight - this.Height) / 2;
-                    if (diff < 1) diff = 1;
-                    this.Height+=diff;
+                    this.currentPercent+=4;
                 }
-
-                if (this.Width < this.startWidth)
-                {
-                    int diff = (this.startWidth - this.Width) / 2;
-                    if (diff < 1) diff = 1;
-                    this.Width+=diff;
-                }
-
-                if (this.Width == startWidth && this.Height == this.startHeight)
+                else
                 {
                     this.animTimer.Enabled = false;
+                    this.defaultColors();
                 }
+               
             }
             else
-            {               
-                if (this.Height > this.minHeight)
+            {
+                if (this.currentPercent > this.HighlightPercent - 15)
                 {
-                    int diff = (this.Height - this.minHeight) / 2;
-                    if (diff < 1) diff = 1;
-                    this.Height-=diff;
+                    this.currentPercent-=15;
                 }
-
-                if (this.Width < this.minWidth)
-                {
-                    int diff = (this.Width - this.minWidth) / 2;
-                    if (diff < 1) diff = 1;
-                    this.Width-=diff;
-                }
-
-                if (this.Width == minWidth && this.Height == this.minHeight)
+                else
                 {
                     this.animTimer.Enabled = false;
                 }
             }
+            ColorCalc colCalc = new ColorCalc();
+            colCalc.setBaseColor(this.profilColor);
+
+            this.BackColor = colCalc.DarkenBy(this.currentPercent);
         }
 
         private void Description_Click(object sender, EventArgs e)
@@ -162,6 +147,33 @@ namespace Projector
         {
             myParent.setCurrentProfile(this.profilName);
             myParent.callSetup();
+        }
+
+        private void colorPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.DoDragDrop(this, DragDropEffects.Move | DragDropEffects.Copy);
+        }
+
+        private void ProfilButton_Enter(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void ProfilButton_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("Projector.ProfilButton"))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void ProfilButton_DragDrop(object sender, DragEventArgs e)
+        {
+            ProfilButton groupWidth = (ProfilButton) e.Data.GetData("Projector.ProfilButton");
+            if (groupWidth != null)
+            {
+                this.myParent.joinToNewGoup(this.profilName, groupWidth.profilName);
+            }
         }
     }
 }

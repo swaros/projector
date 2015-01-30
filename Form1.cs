@@ -21,6 +21,7 @@ namespace Projector
         private Profil profil = new Profil("default");
         List<Button> ProfilBtn = new List<Button>();
 
+        private Boolean groupUnassigned = false;
         private bool showGroups = false;
 
         private int buttonStyle = 0;
@@ -35,7 +36,7 @@ namespace Projector
 
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
-        PConfig Setup = new PConfig();
+        private PConfig Setup = new PConfig();
 
         public ProjectorForm()
         {
@@ -51,6 +52,12 @@ namespace Projector
             
         }
 
+        public Boolean renameGroup(string old, string newstr)
+        {
+            GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+            return worker.renameGroup(old, newstr);
+           
+        }
 
         private void profilToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -219,14 +226,15 @@ namespace Projector
 
             flowLayoutControllPanel.Controls.Clear();
 
-            XmlSetup pSetup = new XmlSetup();
+            /*XmlSetup pSetup = new XmlSetup();
             pSetup.setFileName("profileGroups.xml");
             pSetup.loadXml();
-
-
-            Hashtable settings = pSetup.getHashMap();
+            */
+            List<String> groups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES, new List<string>()); 
+           
             chooseGroup.Items.Clear();
             chooseGroup.Items.Add("[ALL]");
+           
 
             Button tmpBtnx = new Button();
             tmpBtnx.Text = "ALL";
@@ -244,11 +252,11 @@ namespace Projector
 
             int select = 1;
 
-            foreach (DictionaryEntry de in settings)
+            foreach (string grpLabel in groups)
             {
-                chooseGroup.Items.Add(de.Key.ToString());
+                chooseGroup.Items.Add(grpLabel);
                 Button tmpBtn = new Button();
-                tmpBtn.Text = de.Key.ToString();
+                tmpBtn.Text = grpLabel;
                 tmpBtn.Click += new System.EventHandler(btnSelectGroup);
                 tmpBtn.Width = 150;
                 tmpBtn.Height = 40;
@@ -295,6 +303,165 @@ namespace Projector
             chooseGroup.ForeColor = fore;
         }
 
+        public void joinToGroup(string groupname, string profil)
+        {
+            GroupProfilWorker grp = new GroupProfilWorker(this.Setup);
+            if (grp.joinToExistingGoup(groupname, profil))
+            {
+                //drawNewStyleButtons(groupname, false);
+                if (this.flowLayout.Controls.ContainsKey(profil))
+                {
+                    this.flowLayout.Controls.RemoveByKey(profil);
+                }
+            }    
+        }
+
+
+        public void joinToNewGoup(string nameOne, string nameTwo)
+        {
+            GroupProfilWorker grp = new GroupProfilWorker(this.Setup);
+            if (grp.joinToNewGoup(nameOne, nameTwo))
+            {
+                drawNewStyleButtons();
+            }
+            
+        }
+
+        private void drawNewStyleButtons()
+        {
+            this.drawNewStyleButtons(null,true);
+        }
+
+        private ProfilGroupBox getStoredGrp(string name)
+        {
+            if (this.flowLayout.Controls.ContainsKey(name))
+            {
+                if (this.flowLayout.Controls[name] is ProfilGroupBox)
+                {
+                    return (ProfilGroupBox)this.flowLayout.Controls[name];
+                }
+            }
+            return null;
+        }
+
+
+        private void drawNewStyleButtons(string show,Boolean redraw)
+        {
+            if (redraw)
+            {
+                this.flowLayout.Controls.Clear();
+            }
+            List<string> groups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES,new List<string>());
+            List<string> assigned = new List<string>();
+            foreach (string grpName in groups)
+            {
+                ProfilGroupBox grpBtnSt = this.getStoredGrp(grpName);
+                ProfilGroupBox grpBtn;
+                if (redraw)
+                {
+                    grpBtn = new ProfilGroupBox();
+                    grpBtn.Name = grpName;
+                    grpBtn.setText(grpName);
+                    grpBtn.setParent(this);
+                }
+                else
+                {
+                    grpBtn = this.getStoredGrp(grpName);
+                }
+                if (grpBtn != null)
+                {
+                    for (int i = 1; i < grpBtn.grpFlow.Controls.Count; i++ )
+                    {
+                        grpBtn.grpFlow.Controls.RemoveAt(i);
+                    }
+                    List<string> childs = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + grpName, new List<string>());
+
+                    foreach (string childName in childs)
+                    {
+                        assigned.Add(childName);
+                        profil.changeProfil(childName);
+                        //profilSelector.DropDownItems.Add(childName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
+
+                        ProfilButton tmpPBtn = new ProfilButton(this);
+                        tmpPBtn.setName(childName);
+                        tmpPBtn.setDescription(profil.getProperty("db_host"));
+                        tmpPBtn.assignedGroup = grpName;
+                        string colortext = profil.getProperty("set_bgcolor");
+                        if (colortext != null && colortext.Length > 0)
+                        {
+
+                            tmpPBtn.setColor(Color.FromArgb(int.Parse(colortext)));
+                            tmpPBtn.Margin = new Padding(15);
+
+
+                        }
+                        tmpPBtn.StartBtn.Click += new System.EventHandler(styleBtnClick);
+                        //flowLayout.Controls.Add(tmpPBtn);
+                        grpBtn.grpFlow.Controls.Add(tmpPBtn);
+                    }
+                    if (show != null && show == grpName)
+                    {
+                        grpBtn.expand();
+                    }
+                    if (redraw)
+                        flowLayout.Controls.Add(grpBtn);
+
+
+
+                }
+            }
+            if (redraw)
+            {
+                List<string> all = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+                ProfilGroupBox grpBtnUnassigned = new ProfilGroupBox();
+                grpBtnUnassigned.setText("Unassigend");
+                grpBtnUnassigned.setParent(this);
+
+                Boolean unusedExists = false;
+                foreach (string unused in all)
+                {
+
+                    if (!assigned.Contains(unused))
+                    {
+
+                        profil.changeProfil(unused);
+                        //profilSelector.DropDownItems.Add(childName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
+
+                        ProfilButton tmpPBtn = new ProfilButton(this);
+                        tmpPBtn.setName(unused);
+                        tmpPBtn.setDescription(profil.getProperty("db_host"));
+                        string colortext = profil.getProperty("set_bgcolor");
+                        if (colortext != null && colortext.Length > 0)
+                        {
+
+                            tmpPBtn.setColor(Color.FromArgb(int.Parse(colortext)));
+                            tmpPBtn.Margin = new Padding(15);
+                           
+
+
+                        }
+                        tmpPBtn.Name = unused;
+                        tmpPBtn.StartBtn.Click += new System.EventHandler(styleBtnClick);
+                        //flowLayout.Controls.Add(tmpPBtn);
+                        if (groupUnassigned)
+                        {
+                            grpBtnUnassigned.grpFlow.Controls.Add(tmpPBtn);
+                            unusedExists = true;
+                        }
+                        else
+                        {
+                            flowLayout.Controls.Add(tmpPBtn);
+                        }
+
+                    }
+
+                }
+                if (unusedExists)
+                    flowLayout.Controls.Add(grpBtnUnassigned);
+            }
+        }
+
+
         private void drawNewStyle()
         {
 
@@ -305,6 +472,12 @@ namespace Projector
             flowLayout.Padding = new Padding(10);
 
             this.setMainColors(Color.White, Color.FromArgb(80, 80, 80));
+            if (mainSlitter.Panel1Collapsed)
+            {
+                 drawNewStyleButtons();
+                 return;
+            }
+           
 
             Profil itProf = new Profil("Default");
             foreach (String proName in grp)
@@ -705,6 +878,14 @@ namespace Projector
             ProfilInfo.Text = name + " [" + profil.getProperty("db_username") + '@' + profil.getProperty("db_schema") + "]";
         }
 
+        public void setCurrentGroup(string name)
+        {
+            if (this.chooseGroup.Items.Contains(name))
+            {
+                this.chooseGroup.Text = name;
+            }
+        }
+
         private void startProfile(string name, Object sender, System.EventArgs e)
         {
             profil.changeProfil(name);
@@ -1037,10 +1218,11 @@ namespace Projector
 
                 pSetup.saveXml();
                  */
-                drawGroupButtons();
-                updateProfilSelector();
+                
 
             }
+            drawGroupButtons();
+            updateProfilSelector();
 
         }
 
@@ -1132,6 +1314,13 @@ namespace Projector
         private void groupButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
+            this.showGroups = groupedToolStripMenuItem.Checked;
+            if (ProjectorForm.STYLE_BUTTON_MODE == buttonStyle)
+            {
+                this.flowLayout.Controls.Clear();
+                this.drawNewStyle();
+                
+            }
         }
 
         private void scriptRunButton_Click(object sender, EventArgs e)
@@ -1221,6 +1410,41 @@ namespace Projector
         {
             this.buttonStyle = 3;
             this.updateStyleButtons();
+        }
+
+        private void flowLayout_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutControllPanel_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void flowLayout_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("Projector.ProfilButton"))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void flowLayout_DragDrop(object sender, DragEventArgs e)
+        {
+            //string movedOut = e.Data.GetData(DataFormats.Text).ToString();
+            ProfilButton pButton = (ProfilButton) e.Data.GetData("Projector.ProfilButton");
+            if (pButton.assignedGroup != null)
+            {
+                GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+                if (worker.removeFromGroup(pButton.assignedGroup, pButton.profilName))
+                {
+                    this.drawNewStyleButtons(pButton.assignedGroup, true);
+                }
+            }
         }
 
 

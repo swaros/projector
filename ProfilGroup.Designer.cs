@@ -30,14 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfilGroup));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.manipulateBtn = new System.Windows.Forms.Button();
             this.groupName = new System.Windows.Forms.ComboBox();
             this.GroupedDatabases = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.manipulateBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +53,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Group";
+            // 
+            // manipulateBtn
+            // 
+            this.manipulateBtn.Image = global::Projector.Properties.Resources.add_16;
+            this.manipulateBtn.Location = new System.Drawing.Point(277, 21);
+            this.manipulateBtn.Name = "manipulateBtn";
+            this.manipulateBtn.Size = new System.Drawing.Size(38, 34);
+            this.manipulateBtn.TabIndex = 5;
+            this.manipulateBtn.UseVisualStyleBackColor = true;
+            this.manipulateBtn.Click += new System.EventHandler(this.manipulateBtn_Click);
             // 
             // groupName
             // 
@@ -112,33 +121,11 @@
             this.button1.Text = "&OK";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button2
-            // 
-            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button2.Location = new System.Drawing.Point(354, 63);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "&Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // manipulateBtn
-            // 
-            this.manipulateBtn.Image = global::Projector.Properties.Resources.add_16;
-            this.manipulateBtn.Location = new System.Drawing.Point(277, 21);
-            this.manipulateBtn.Name = "manipulateBtn";
-            this.manipulateBtn.Size = new System.Drawing.Size(38, 34);
-            this.manipulateBtn.TabIndex = 5;
-            this.manipulateBtn.UseVisualStyleBackColor = true;
-            this.manipulateBtn.Click += new System.EventHandler(this.manipulateBtn_Click);
-            // 
             // ProfilGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.button2;
             this.ClientSize = new System.Drawing.Size(455, 473);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -159,7 +146,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         public System.Windows.Forms.ComboBox groupName;
         private System.Windows.Forms.Button manipulateBtn;
     }
