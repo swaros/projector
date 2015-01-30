@@ -71,6 +71,11 @@
             this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveProject = new System.Windows.Forms.SaveFileDialog();
             this.openScript = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.style_0 = new System.Windows.Forms.ToolStripButton();
+            this.style_1 = new System.Windows.Forms.ToolStripButton();
+            this.style_2 = new System.Windows.Forms.ToolStripButton();
+            this.style_3 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -347,10 +352,15 @@
             this.toolStripButton3,
             this.chooseGroup,
             this.toolStripSeparator4,
-            this.scriptRunButton});
+            this.scriptRunButton,
+            this.toolStripSeparator5,
+            this.style_0,
+            this.style_1,
+            this.style_2,
+            this.style_3});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(319, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(509, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -455,6 +465,52 @@
             this.openScript.Tag = "LoadScript";
             this.openScript.Title = "Load Script File";
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
+            // 
+            // style_0
+            // 
+            this.style_0.CheckOnClick = true;
+            this.style_0.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.style_0.Image = ((System.Drawing.Image)(resources.GetObject("style_0.Image")));
+            this.style_0.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.style_0.Name = "style_0";
+            this.style_0.Size = new System.Drawing.Size(28, 22);
+            this.style_0.Text = "Big";
+            this.style_0.Click += new System.EventHandler(this.style_0_Click);
+            // 
+            // style_1
+            // 
+            this.style_1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.style_1.Image = ((System.Drawing.Image)(resources.GetObject("style_1.Image")));
+            this.style_1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.style_1.Name = "style_1";
+            this.style_1.Size = new System.Drawing.Size(40, 22);
+            this.style_1.Text = "Small";
+            this.style_1.Click += new System.EventHandler(this.style_1_Click);
+            // 
+            // style_2
+            // 
+            this.style_2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.style_2.Image = ((System.Drawing.Image)(resources.GetObject("style_2.Image")));
+            this.style_2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.style_2.Name = "style_2";
+            this.style_2.Size = new System.Drawing.Size(39, 22);
+            this.style_2.Text = "Black";
+            this.style_2.Click += new System.EventHandler(this.style_2_Click);
+            // 
+            // style_3
+            // 
+            this.style_3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.style_3.Image = ((System.Drawing.Image)(resources.GetObject("style_3.Image")));
+            this.style_3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.style_3.Name = "style_3";
+            this.style_3.Size = new System.Drawing.Size(46, 22);
+            this.style_3.Text = "Scripts";
+            this.style_3.Click += new System.EventHandler(this.style_3_Click);
+            // 
             // ProjectorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -534,6 +590,11 @@
         private System.Windows.Forms.OpenFileDialog openScript;
         private System.Windows.Forms.ToolStripMenuItem editScriptToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mainSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripButton style_0;
+        private System.Windows.Forms.ToolStripButton style_1;
+        private System.Windows.Forms.ToolStripButton style_2;
+        private System.Windows.Forms.ToolStripButton style_3;
 
 
     }

@@ -58,6 +58,41 @@ namespace Projector
             this.FlatContent = value;
         }
 
+        public void Update(List<string> values)
+        {
+            this.Update(values, true);
+        }
+
+        public void Update(List<string> values, Boolean overWrite)
+        {
+
+            if (overWrite)
+            {
+                this.Content = new List<PConfigContent>();
+            }
+
+            foreach (string val in values)
+            {
+                if (overWrite || this.getIndexByName(val) == -1 )
+                    this.addGroupChild(val);               
+            }
+        }
+
+        public List<String> getContentAsList()
+        {
+            if (this.ChildUsable())
+            {
+                List<String> result = new List<string>();
+                foreach (PConfigContent cont in this.Content)
+                {
+                    result.Add(cont.Name);
+                }
+                return result;
+            }
+            return null;
+        }
+
+
         public Boolean UpdateFlatChild(string childName, string value)
         {
             PConfigContent content = this.getChildByName(childName);

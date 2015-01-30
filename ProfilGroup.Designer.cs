@@ -30,18 +30,20 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfilGroup));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupName = new System.Windows.Forms.ComboBox();
             this.GroupedDatabases = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.groupName = new System.Windows.Forms.ComboBox();
+            this.manipulateBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.manipulateBtn);
             this.groupBox1.Controls.Add(this.groupName);
             this.groupBox1.Controls.Add(this.GroupedDatabases);
             this.groupBox1.Controls.Add(this.label2);
@@ -52,6 +54,16 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Group";
+            // 
+            // groupName
+            // 
+            this.groupName.FormattingEnabled = true;
+            this.groupName.Location = new System.Drawing.Point(76, 28);
+            this.groupName.Name = "groupName";
+            this.groupName.Size = new System.Drawing.Size(194, 21);
+            this.groupName.TabIndex = 4;
+            this.groupName.SelectedIndexChanged += new System.EventHandler(this.groupName_TextChanged);
+            this.groupName.TextChanged += new System.EventHandler(this.groupName_TextChanged);
             // 
             // GroupedDatabases
             // 
@@ -65,6 +77,7 @@
             this.GroupedDatabases.TabIndex = 3;
             this.GroupedDatabases.UseCompatibleStateImageBehavior = false;
             this.GroupedDatabases.View = System.Windows.Forms.View.Details;
+            this.GroupedDatabases.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.GroupedDatabases_ItemChecked);
             // 
             // columnHeader1
             // 
@@ -109,14 +122,15 @@
             this.button2.Text = "&Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // groupName
+            // manipulateBtn
             // 
-            this.groupName.FormattingEnabled = true;
-            this.groupName.Location = new System.Drawing.Point(76, 28);
-            this.groupName.Name = "groupName";
-            this.groupName.Size = new System.Drawing.Size(230, 21);
-            this.groupName.TabIndex = 4;
-            this.groupName.SelectedIndexChanged += new System.EventHandler(this.groupName_TextChanged);
+            this.manipulateBtn.Image = global::Projector.Properties.Resources.add_16;
+            this.manipulateBtn.Location = new System.Drawing.Point(277, 21);
+            this.manipulateBtn.Name = "manipulateBtn";
+            this.manipulateBtn.Size = new System.Drawing.Size(38, 34);
+            this.manipulateBtn.TabIndex = 5;
+            this.manipulateBtn.UseVisualStyleBackColor = true;
+            this.manipulateBtn.Click += new System.EventHandler(this.manipulateBtn_Click);
             // 
             // ProfilGroup
             // 
@@ -147,5 +161,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.ComboBox groupName;
+        private System.Windows.Forms.Button manipulateBtn;
     }
 }

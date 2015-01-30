@@ -15,6 +15,8 @@ namespace Projector
 
         const int SCRIPT_BUTTON_MODE = 3;
         const int STYLE_BUTTON_MODE = 2;
+        const int STYLE_BIG_QUICK_BUTTONS = 0;
+        const int STYLE_SMALL_QUICK_BUTTONS = 1;
 
         private Profil profil = new Profil("default");
         List<Button> ProfilBtn = new List<Button>();
@@ -28,6 +30,8 @@ namespace Projector
 
         private Boolean displayNamedScripstOnly = false;
         private string mainScriptFolder;
+
+        private List<string> profilGroups = new List<string>();
 
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
@@ -73,8 +77,10 @@ namespace Projector
                 this.Setup.setValue("client.showgroups", mainSlitter.Panel1Collapsed);                
                 this.Setup.setValue("client.buttonstyle", this.buttonStyle);
 
-                this.Setup.setValue("client.scriptpath", System.Environment.SpecialFolder.MyDocuments.ToString());
+                this.Setup.setValue("client.scriptpath", this.mainScriptFolder);
                 this.Setup.setValue("client.namedscriptsonly", this.displayNamedScripstOnly);
+
+                this.Setup.setList ("client.groups.names", this.profilGroups);
             }
             else
             {
@@ -90,9 +96,11 @@ namespace Projector
 
                 this.buttonStyle = this.Setup.getIntSettingWidthDefault("client.buttonstyle", this.buttonStyle);
 
-                this.mainScriptFolder = this.Setup.getSettingWidthDefault("client.scriptpath", System.Environment.SpecialFolder.MyDocuments.ToString());
+                this.mainScriptFolder = this.Setup.getSettingWidthDefault("client.scriptpath", System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
                 this.displayNamedScripstOnly = this.Setup.getBooleanSettingWidthDefault("client.namedscriptsonly", this.displayNamedScripstOnly);
                 groupedToolStripMenuItem.Checked = this.showGroups;
+
+                this.profilGroups = this.Setup.getListWidthDefault("client.groups.names", this.profilGroups);
             }
             
         }
@@ -108,6 +116,7 @@ namespace Projector
              */
 
             this.copySettings(false);
+            updateStyleButtons();
 
             /*
             check = tmpSetup.getSetting("client_left");
@@ -957,8 +966,19 @@ namespace Projector
 
         private void groupsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProfilGroup p1 = new ProfilGroup();
+            ProfilGroup p1 = new ProfilGroup(this.profilGroups);
 
+            List<String> profiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+
+            if (profiles != null)
+            {
+                foreach (string profilName in profiles)
+                {
+                    p1.GroupedDatabases.Items.Add(profilName);
+                }
+            }
+
+            /*
             XmlSetup tmpSetup = new XmlSetup();
             tmpSetup.setFileName("Projector_profiles.xml");
 
@@ -981,14 +1001,14 @@ namespace Projector
             XmlSetup pSetup = new XmlSetup();
             pSetup.setFileName("profileGroups.xml");
             pSetup.loadXml();
-
+            */
             // 
 
 
             if (p1.ShowDialog() == System.Windows.Forms.DialogResult.OK && p1.groupName.Text.Length > 1)
             {
 
-
+                /*
                 p1.groupName.Text = p1.groupName.Text.Replace(" ", "_");
                 p1.groupName.Text = p1.groupName.Text.Replace("-", "_");
                 p1.groupName.Text = p1.groupName.Text.Replace("/", "_");
@@ -1014,6 +1034,7 @@ namespace Projector
                 pSetup.addSetting(p1.groupName.Text, profilNames);
 
                 pSetup.saveXml();
+                 */
                 drawGroupButtons();
                 updateProfilSelector();
 
@@ -1150,6 +1171,54 @@ namespace Projector
 
                 updateProfilSelector();
             }
+        }
+
+        private void updateStyleButtons()
+        {
+            style_0.Checked = false;
+            style_1.Checked = false;
+            style_2.Checked = false;
+            style_3.Checked = false;
+            switch (this.buttonStyle)
+            {
+                case 0:
+                    style_0.Checked = true;
+                    break;
+                case 1:
+                    style_1.Checked = true;
+                    break;
+                case 2:
+                    style_2.Checked = true;
+                    break;
+                case 3:
+                    style_3.Checked = true;
+                    break;
+            }
+            this.updateProfilSelector();
+        }
+
+        private void style_0_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 0;
+            this.updateStyleButtons();
+        }
+
+        private void style_1_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 1;
+            this.updateStyleButtons();
+        }
+
+        private void style_2_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 2;
+            this.updateStyleButtons();
+        }
+
+        private void style_3_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 3;
+            this.updateStyleButtons();
         }
 
 

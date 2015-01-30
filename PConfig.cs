@@ -12,7 +12,32 @@ namespace Projector
     [Serializable()]
     class PConfig : ISerializable
     {
-        private String NameSpace = "client";
+        /// <summary>
+        /// the main profil key
+        /// </summary>
+        public const string KEY_MAIN = "client";
+
+        /// <summary>
+        /// the key for all the  database profiles.
+        /// </summary>
+        public const string KEY_PROFILS = PConfig.KEY_MAIN + ".profiles";
+
+        /// <summary>
+        /// the main key for groups
+        /// </summary>
+        public const string KEY_GROUPS = PConfig.KEY_MAIN + ".groups";
+
+        /// <summary>
+        /// the main key for groups names
+        /// </summary>
+        public const string KEY_GROUPS_NAMES = PConfig.KEY_MAIN + "." + PConfig.KEY_GROUPS + ".names";
+
+        /// <summary>
+        /// the main key for groups names
+        /// </summary>
+        public const string KEY_GROUPS_MEMBERS = PConfig.KEY_MAIN + "." + PConfig.KEY_GROUPS + ".members";
+
+        private String NameSpace = PConfig.KEY_MAIN;
         private static PConfigContent Configuration;
         private PConfigContent WalkingLive;
         private ConfigSerializer fileHandle = new ConfigSerializer();
@@ -150,6 +175,63 @@ namespace Projector
             }
         }
 
+        public List<String> getListWidthDefault(string name, List<String> StoreValue)
+        {
+            return this.getListWidthDefault(name, StoreValue, true);
+        }
+
+        public List<String> getListWidthDefault(string name, List<String> StoreValue, Boolean resetReader)
+        {
+            if (resetReader)
+            {
+                this.resetReader();
+            }
+
+            string[] keyChain = name.Split('.');
+            string parentKey = keyChain[0];
+            if (keyChain.Count() > 1)
+            {
+                if (parentKey == this.WalkingLive.getName())
+                {
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+
+                    string nextKey = "";
+                    string add = "";
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += add + keyChain[i];
+                        add = ".";
+                    }
+                    return this.getListWidthDefault(nextKey, StoreValue, false);
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+            }
+            else
+            {
+                if (this.WalkingLive.getName() == name)
+                {
+                    List<string> upd = this.WalkingLive.getContentAsList();
+                    if (upd == null || upd.Count() == 0)
+                    {
+                        this.WalkingLive.Update(StoreValue);
+                        return StoreValue;
+                    }
+                    return upd;
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+
+            }
+        }
+
+
+
         public void setValue(string name, Boolean StoreValue)
         {
             if (StoreValue)
@@ -167,6 +249,8 @@ namespace Projector
         {
             this.setValue(name, StoreValue, true);
         }
+
+        
 
         public void setValue(string name, string StoreValue, Boolean resetReader)
         {
@@ -222,6 +306,64 @@ namespace Projector
             }
         }
 
+        public void setList(string name, List<String> StoreValue)
+        {
+            this.setList(name, StoreValue, true);
+        }
+
+        public void setList(string name, List<String> StoreValue, Boolean resetReader)
+        {
+            if (resetReader)
+            {
+                this.resetReader();
+            }
+
+            // add this node if not exists
+            if (this.WalkingLive.getName() == name)
+            {
+                this.WalkingLive.Update(StoreValue);
+                return;
+            }
+
+            string[] keyChain = name.Split('.');
+            string parentKey = keyChain[0];
+            if (keyChain.Count() > 1)
+            {
+
+                if (parentKey == this.WalkingLive.getName())
+                {
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+
+                    string nextKey = "";
+
+                    string add = "";
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += add + keyChain[i];
+                        add = ".";
+                    }
+                    this.setList(nextKey, StoreValue, false);
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+
+            }
+            else
+            {
+                if (this.WalkingLive.getName() == name)
+                {
+                    this.WalkingLive.Update(StoreValue);
+
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+            }
+        }
 
      
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
