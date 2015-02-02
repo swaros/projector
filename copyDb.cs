@@ -54,13 +54,54 @@ namespace Projector
         public copyDb()
         {
             InitializeComponent();
+            this.setAllDatabases();
             setOptionRightNotExits();
+
+            GroupProfilWorker worker = new GroupProfilWorker(new PConfig());
+            List<string> grps= worker.getAllGroups();
+            foreach (string grpname in grps)
+            {
+                GroupBox.Items.Add(grpname);
+            }
+
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
+        private void setAllDatabases()
+        {
+            PConfig Setup = new PConfig();
+            List<string> databases = Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+            this.fillDatabaseBoxes(databases);
+        }
+
+        private void setAllGroupDbs(string grpname)
+        {
+            GroupProfilWorker worker = new GroupProfilWorker(new PConfig());
+            List<string> databases = worker.getGroupMember(grpname);
+            this.fillDatabaseBoxes(databases);
+        }
+
+        private void fillDatabaseBoxes(List<string> databases)
+        {
+
+            //GroupProfilWorker worker = new GroupProfilWorker(new PConfig());
+            this.sourceSelect.Items.Clear();
+            this.targetSelect.Items.Clear();
+            
+            foreach (string dbname in databases)
+            {
+                this.sourceSelect.Items.Add(dbname);
+                this.targetSelect.Items.Add(dbname);
+            }
+            
+        }
+
+
 
         private void addMacroCommand(string macro)
         {
@@ -2947,6 +2988,18 @@ namespace Projector
         private void fullsyncAllwasOverwriteTablesToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void GroupBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (GroupBox.Text == "")
+            {
+                this.setAllDatabases();
+            }
+            else
+            {
+                this.setAllGroupDbs(GroupBox.Text);
+            }
         }
     }
 }

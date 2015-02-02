@@ -30,8 +30,8 @@ namespace Projector
             //public List<string> singleShots;
         }
 
-        private Hashtable settings;
-        private Profil profil = new Profil("default");
+        private List<string> knownGroups;
+        private Profil profil = new Profil();
         private string currentProfileName = "";
         HighlighterMysql highlight = new HighlighterMysql();
 
@@ -40,6 +40,9 @@ namespace Projector
         int runningMaxEvents = 0;
         int runningCurrentEvents = 0;
         bool running;
+
+        
+        private GroupProfilWorker GroupSetup = new GroupProfilWorker(new PConfig());
 
         //ListViewExport lvExporter;
 
@@ -52,6 +55,12 @@ namespace Projector
         public GroupQuery()
         {
             InitializeComponent();
+            this.knownGroups = GroupSetup.getAllGroups();
+            foreach (string grpName in this.knownGroups)
+            {
+                groupSelectBox.Items.Add(grpName);
+            }
+            /*
             XmlSetup pSetup = new XmlSetup();
             pSetup.setFileName("profileGroups.xml");
             pSetup.loadXml();
@@ -64,6 +73,7 @@ namespace Projector
                 //de.Value.ToString();
                 groupSelectBox.Items.Add(de.Key.ToString());
             }
+             */
         }
 
         public void setGroup(string groupname)
@@ -615,11 +625,11 @@ namespace Projector
 
         private void groupSelectBox_TextChanged(object sender, EventArgs e)
         {
-            if (settings.Contains(groupSelectBox.Text.ToLower()))
+            if (knownGroups.Contains(groupSelectBox.Text))
             {
-                string[] profiles = settings[groupSelectBox.Text.ToLower()].ToString().Split('|');
+                List<string> profiles = GroupSetup.getGroupMember(groupSelectBox.Text);               
                 databasesListView.Items.Clear();
-                for (int i = 0; i < profiles.Length; i++)
+                for (int i = 0; i < profiles.Count; i++)
                 {
                     ListViewItem dbProfil = new ListViewItem();
                     dbProfil.Text = profiles[i];

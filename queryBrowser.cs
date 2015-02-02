@@ -876,8 +876,11 @@ namespace Projector
             fireSQL.Click += new System.EventHandler(dynRunQuery);
             maskBox.Controls.Add(fireSQL);
 
+            this.setNotTouchedBackColor(Color.LightGreen);
+            this.setNotTouchedForeColor(Color.Black);
+            
             this.updateContent(maskBox.Controls);
-
+            this.forgetUntoucedColors();
         }
 
         private void setLimitFunc(object sender, System.EventArgs e)
@@ -2912,6 +2915,12 @@ namespace Projector
             MessagePanel.Visible = false;
         }
 
+        public void showPanelErrorMessage(string message)
+        {
+            showPanelMessage(message, Color.DarkRed, Color.White);
+        }
+
+
         public void showPanelMessage(string message)
         {
             showPanelMessage(message, Color.LightYellow, Color.DarkBlue);
@@ -2920,9 +2929,11 @@ namespace Projector
         public void showPanelMessage(string message, Color backColor, Color TextColor)
         {
             MessagePanel.BackColor = backColor;
+            MessageLabel.ForeColor = TextColor;
+            MessageLabel.BackColor = backColor;
             MessagePanel.Visible = true;
             MessageLabel.Text = message;
-            MessageLabel.ForeColor = TextColor;
+            
         }
 
         private void MessageLabel_MouseClick(object sender, MouseEventArgs e)

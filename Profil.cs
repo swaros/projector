@@ -19,7 +19,13 @@ namespace Projector
         private const string nameSpace = "client.profiles.";
         private string pConfigPath;
 
-        private int mode = 1;
+        private int mode = 2;
+
+        public Profil()
+        {
+            this.name = null;
+        }
+
 
         public Profil(string profilName)
         {
@@ -63,9 +69,17 @@ namespace Projector
             this.setup.addAsXmlNode(doc, catNode);
         }
 
+        private void checkProfil()
+        {
+            if (this.name == null)
+            {
+                throw new Exception("Profil not selected");
+            }
+        }
 
         public void getValuesFromProfil(Profil source)
         {
+            this.checkProfil();
             if (this.isXmlMode())
             {
                 this.setup = source.setup.copyValues(this.setup);
@@ -73,24 +87,26 @@ namespace Projector
 
             if (this.isPmode())
             {
-
+                this.name = source.getName();
             }
 
         }
 
         private string getPModePath(string name)
         {
+            this.checkProfil();
             return Profil.nameSpace + this.name + "." + name;
         }
 
         private string getPModeProperty(string name)
         {
+            this.checkProfil();
             return this.PSetup.getSettingWidthDefault(this.getPModePath(name), null);
         }
 
         public string getProperty(string name)
         {
-
+            this.checkProfil();
             if (this.mode == Profil.MODE_MIXED)
             {
                 this.PSetup.getSettingWidthDefault(this.getPModePath(name), this.setup.getSetting(name));
@@ -109,6 +125,7 @@ namespace Projector
 
         public void setProperty(string name, string value)
         {
+            this.checkProfil();
             if (isXmlMode())
                 this.setup.addSetting(name,value);
             if (isPmode())
@@ -117,11 +134,13 @@ namespace Projector
 
         public void exportXml(string filename)
         {
+            this.checkProfil();
             this.setup.exportXml(filename);
         }
 
         public void saveSetup()
         {
+            this.checkProfil();
             if (isXmlMode())
                 this.setup.saveXml();
             if (isPmode())
@@ -130,6 +149,7 @@ namespace Projector
 
         public void loadProfileSettings()
         {
+            this.checkProfil();
             if (isXmlMode())
                 this.setup.loadXml();
 

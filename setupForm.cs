@@ -11,9 +11,13 @@ namespace Projector
 {
     public partial class setupForm : Form
     {
-        public setupForm()
+
+        private string profilName;
+
+        public setupForm(string profilname)
         {
             InitializeComponent();
+            this.profilName = profilname;
             label1.Text = Projector.Properties.Resources.mysqlUserName;
             label2.Text = Projector.Properties.Resources.mysqlPassword;
             label3.Text = Projector.Properties.Resources.mysqlHost;
@@ -88,9 +92,9 @@ namespace Projector
             }
         }
 
-        private Profil getProfil()
+        private Profil getProfil(string profilName)
         {
-            Profil testProfil = new Profil("test");
+            Profil testProfil = new Profil(profilName);
             testProfil.setProperty("db_password", password.Text);
             testProfil.setProperty("db_username", username.Text);
             testProfil.setProperty("db_host", host.Text);
@@ -103,7 +107,7 @@ namespace Projector
         {
             if (checkInput())
             {             
-                checkConnection(getProfil());
+                checkConnection(getProfil(this.profilName));
             }
         }
 
@@ -162,7 +166,7 @@ namespace Projector
         {
             if (username.Text.Length > 0 && password.Text.Length > 0  && host.Text.Length > 0)
             {
-                getDatabases(getProfil());
+                getDatabases(getProfil(this.profilName));
             }
         }
 

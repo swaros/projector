@@ -77,6 +77,20 @@ namespace Projector
             this.clickWatcher.Enabled = false;
         }
 
+        public void setProfileNewPosition(ProfilButton btn, int pos)
+        {
+            pos++; // because of the first label that not should be reordered and always stay on place one. 
+            //also  the new index is calculated by ProfilButtons only. For1 don't know here is an label on top
+            if (this.grpFlow.Controls.ContainsKey(btn.Name))
+            {
+                Object curr = this.grpFlow.Controls[btn.Name];
+                if (curr is ProfilButton)
+                {
+                    this.grpFlow.Controls.SetChildIndex(btn, pos);
+                }
+            }
+        }
+
         private void grpName_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)

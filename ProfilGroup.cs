@@ -35,7 +35,7 @@ namespace Projector
 
         private void selectExistsTables()
         {
-            Profil dbProf = new Profil("default");
+            Profil dbProf = new Profil();
             ColorCalc cCalc = new ColorCalc();
             string groupId = groupName.Text;
             if (this.currentGroups.Contains(groupId))

@@ -156,7 +156,10 @@
             this.tableCopyWorker = new System.ComponentModel.BackgroundWorker();
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.exportCsvFileDlg = new System.Windows.Forms.SaveFileDialog();
+            this.GroupBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -164,18 +167,23 @@
             this.RangeBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.limitEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.limitStart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
             this.splitContainer6.Panel1.SuspendLayout();
             this.splitContainer6.Panel2.SuspendLayout();
             this.splitContainer6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
             this.sourceMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
@@ -189,6 +197,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.GroupBox);
             this.groupBox1.Controls.Add(this.button6);
             this.groupBox1.Controls.Add(this.button5);
             this.groupBox1.Controls.Add(this.targetSelect);
@@ -197,7 +207,7 @@
             this.groupBox1.Controls.Add(this.sourceSelect);
             this.groupBox1.Location = new System.Drawing.Point(3, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(238, 71);
+            this.groupBox1.Size = new System.Drawing.Size(238, 120);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Profiles";
@@ -206,7 +216,7 @@
             // 
             this.button6.Enabled = false;
             this.button6.Image = global::Projector.Properties.Resources.icon_key;
-            this.button6.Location = new System.Drawing.Point(204, 42);
+            this.button6.Location = new System.Drawing.Point(194, 91);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(28, 23);
             this.button6.TabIndex = 9;
@@ -216,7 +226,7 @@
             // button5
             // 
             this.button5.Image = global::Projector.Properties.Resources.icon_key;
-            this.button5.Location = new System.Drawing.Point(205, 16);
+            this.button5.Location = new System.Drawing.Point(195, 65);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(27, 23);
             this.button5.TabIndex = 4;
@@ -228,7 +238,7 @@
             this.targetSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.targetSelect.Enabled = false;
             this.targetSelect.FormattingEnabled = true;
-            this.targetSelect.Location = new System.Drawing.Point(61, 42);
+            this.targetSelect.Location = new System.Drawing.Point(51, 91);
             this.targetSelect.Name = "targetSelect";
             this.targetSelect.Size = new System.Drawing.Size(137, 21);
             this.targetSelect.TabIndex = 3;
@@ -237,7 +247,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 45);
+            this.label2.Location = new System.Drawing.Point(7, 94);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(38, 13);
             this.label2.TabIndex = 2;
@@ -246,7 +256,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 19);
+            this.label1.Location = new System.Drawing.Point(7, 68);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 13);
             this.label1.TabIndex = 1;
@@ -256,7 +266,7 @@
             // 
             this.sourceSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.sourceSelect.FormattingEnabled = true;
-            this.sourceSelect.Location = new System.Drawing.Point(61, 16);
+            this.sourceSelect.Location = new System.Drawing.Point(51, 65);
             this.sourceSelect.Name = "sourceSelect";
             this.sourceSelect.Size = new System.Drawing.Size(137, 21);
             this.sourceSelect.TabIndex = 0;
@@ -1439,6 +1449,24 @@
             this.exportCsvFileDlg.Filter = "CSV Textfiles|*.csv";
             this.exportCsvFileDlg.Title = "Export";
             // 
+            // GroupBox
+            // 
+            this.GroupBox.FormattingEnabled = true;
+            this.GroupBox.Location = new System.Drawing.Point(51, 20);
+            this.GroupBox.Name = "GroupBox";
+            this.GroupBox.Size = new System.Drawing.Size(137, 21);
+            this.GroupBox.TabIndex = 10;
+            this.GroupBox.SelectedValueChanged += new System.EventHandler(this.GroupBox_SelectedValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Group";
+            // 
             // copyDb
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1454,6 +1482,7 @@
             this.groupBox1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.CompareBox2.ResumeLayout(false);
             this.RangeBox.ResumeLayout(false);
@@ -1462,20 +1491,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.limitStart)).EndInit();
             this.splitContainer6.Panel1.ResumeLayout(false);
             this.splitContainer6.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
             this.splitContainer6.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel1.PerformLayout();
             this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
             this.splitContainer4.ResumeLayout(false);
             this.sourceMenu.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel1.PerformLayout();
             this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -1620,5 +1654,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem buildCompareScriptFromSelectedTablesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullsyncAllwasOverwriteTablesToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox GroupBox;
     }
 }

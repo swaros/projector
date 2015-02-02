@@ -48,6 +48,7 @@
             this.HeadLabel.Text = "Profil";
             this.HeadLabel.Click += new System.EventHandler(this.Description_Click);
             this.HeadLabel.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragEnter);
+            this.HeadLabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HeadLabel_MouseClick);
             this.HeadLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             this.HeadLabel.MouseLeave += new System.EventHandler(this.ProfilButton_MouseLeave);
             this.HeadLabel.MouseHover += new System.EventHandler(this.ProfilButton_MouseHover);
@@ -132,7 +133,9 @@
             this.Click += new System.EventHandler(this.Description_Click);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ProfilButton_DragEnter);
+            this.DoubleClick += new System.EventHandler(this.ProfilButton_DoubleClick);
             this.Enter += new System.EventHandler(this.ProfilButton_Enter);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.HeadLabel_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.colorPanel_MouseDown);
             this.MouseLeave += new System.EventHandler(this.ProfilButton_MouseLeave);
             this.MouseHover += new System.EventHandler(this.ProfilButton_MouseHover);

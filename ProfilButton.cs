@@ -15,17 +15,18 @@ namespace Projector
         public Color profilColor = Color.LightSteelBlue;
         public string assignedGroup;
 
-        private int startWidth = 0;
-        private int startHeight = 0;
+        public Boolean Selected = false;
 
-        private int minWidth = 220;
-        private int minHeight = 30;
 
         private Boolean growing = false;
 
         private int defaultPercent = 70;
         private int HighlightPercent = 10;
         private int currentPercent = 70;
+
+        private int ForeDefaultPercent = 10;
+        private int ForeHighlightPercent = 70;
+        private int ForeCurrentPercent = 10;
 
         private ProjectorForm myParent;
 
@@ -34,13 +35,7 @@ namespace Projector
             InitializeComponent();
             this.myParent = parent;
             this.Description.Text = "";
-            /*
-            this.startHeight = this.Height;
-            this.startWidth = this.Width;
 
-            this.Width = minWidth;
-            this.Height = minHeight;
-             */
         }
 
         public String getName()
@@ -63,17 +58,19 @@ namespace Projector
             this.colorPanel.BackColor = this.profilColor;
             ColorCalc colCalc = new ColorCalc();
             colCalc.setBaseColor(this.profilColor);
-
-            this.BackColor = colCalc.DarkenBy(this.defaultPercent);
-            //this.BackColor = Color.FromArgb(80, 80, 80);
-            this.HeadLabel.ForeColor = colCalc.getLighter(2);
-            //this.HeadLabel.ForeColor = Color.FromArgb(220, 220, 220);
-            /*
-            this.StartBtn.BackColor = colCalc.getLighter(3);
-            this.StartBtn.ForeColor = colCalc.getDarker(3);
-            this.button1.BackColor = colCalc.getLighter(3);
-            this.button1.ForeColor = colCalc.getDarker(3);
-             */
+            if (this.Selected)
+            {
+                this.BackColor = colCalc.LightenBy(this.defaultPercent);
+                this.HeadLabel.ForeColor = colCalc.DarkenBy(this.ForeDefaultPercent);
+                this.Description.ForeColor = this.HeadLabel.ForeColor;
+            }
+            else
+            {
+                this.BackColor = colCalc.DarkenBy(this.defaultPercent);
+                this.HeadLabel.ForeColor = colCalc.DarkenBy(this.ForeDefaultPercent);
+                this.Description.ForeColor = this.HeadLabel.ForeColor;
+            }
+          
         }
 
         public void setDescription(string desc)
@@ -108,16 +105,25 @@ namespace Projector
 
         private void animTimer_Tick(object sender, EventArgs e)
         {
+            if (this.Selected)
+            {
+                this.defaultColors();
+                return;
+            }
+
             if (growing)
             {
                 if (this.currentPercent < this.defaultPercent - 4)
                 {
                     this.currentPercent+=4;
+                    this.ForeCurrentPercent -= 4;
                 }
                 else
                 {
                     this.animTimer.Enabled = false;
                     this.defaultColors();
+                    return;
+
                 }
                
             }
@@ -126,6 +132,7 @@ namespace Projector
                 if (this.currentPercent > this.HighlightPercent - 15)
                 {
                     this.currentPercent-=15;
+                    this.ForeCurrentPercent += 15;
                 }
                 else
                 {
@@ -136,6 +143,8 @@ namespace Projector
             colCalc.setBaseColor(this.profilColor);
 
             this.BackColor = colCalc.DarkenBy(this.currentPercent);
+            this.HeadLabel.ForeColor = colCalc.DarkenBy(this.ForeCurrentPercent);
+            this.Description.ForeColor = this.HeadLabel.ForeColor;
         }
 
         private void Description_Click(object sender, EventArgs e)
@@ -149,9 +158,27 @@ namespace Projector
             myParent.callSetup();
         }
 
+        private void changeSelect()
+        {
+            if (this.Selected)
+                this.myParent.setSelected(this);
+            else
+                this.myParent.setUnSelected(this);
+        }
+
         private void colorPanel_MouseDown(object sender, MouseEventArgs e)
         {
             this.DoDragDrop(this, DragDropEffects.Move | DragDropEffects.Copy);
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                this.Selected = true;
+                this.changeSelect();
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.Selected = !this.Selected;
+                this.changeSelect();
+            } 
         }
 
         private void ProfilButton_Enter(object sender, EventArgs e)
@@ -162,7 +189,17 @@ namespace Projector
         private void ProfilButton_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("Projector.ProfilButton"))
-                e.Effect = DragDropEffects.Copy;
+            {
+                ProfilButton groupWidth = (ProfilButton)e.Data.GetData("Projector.ProfilButton");
+                if (groupWidth != null && groupWidth.assignedGroup == null && this.assignedGroup != null)
+                    e.Effect = DragDropEffects.Copy;
+                else if (groupWidth != null && groupWidth.assignedGroup == null && this.assignedGroup == null)
+                    e.Effect = DragDropEffects.Move;
+                else if (groupWidth != null && groupWidth.assignedGroup != null && this.assignedGroup != null && groupWidth.assignedGroup == this.assignedGroup)
+                    e.Effect = DragDropEffects.Move;
+                else
+                    e.Effect = DragDropEffects.None;
+            }
             else
                 e.Effect = DragDropEffects.None;
         }
@@ -172,8 +209,29 @@ namespace Projector
             ProfilButton groupWidth = (ProfilButton) e.Data.GetData("Projector.ProfilButton");
             if (groupWidth != null)
             {
-                this.myParent.joinToNewGoup(this.profilName, groupWidth.profilName);
+                // booth have no group so make an new one
+                if (groupWidth.assignedGroup == null && this.assignedGroup == null)
+                {
+                    this.myParent.joinToNewGoup(this.profilName, groupWidth.profilName);
+                }
+
+                if (groupWidth.assignedGroup != null && this.assignedGroup != null && groupWidth.assignedGroup == this.assignedGroup)
+                {
+                    this.myParent.reOrderButtonsInGroup(this, groupWidth);
+                }
+
+
             }
+        }
+
+        private void ProfilButton_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void HeadLabel_MouseClick(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

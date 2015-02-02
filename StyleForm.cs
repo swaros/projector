@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,9 @@ namespace Projector
 
         private Boolean FlatMode = false;
 
+        private Hashtable notTouchableForeColor = new Hashtable();
+        private Hashtable notTouchableBackColor = new Hashtable();
+
         public StyleForm()
         {
             InitializeComponent();
@@ -31,6 +35,29 @@ namespace Projector
             this.updateContent(Style);
 
            
+        }
+
+        public void forgetUntoucedColors(){
+            this.notTouchableForeColor.Clear();
+            this.notTouchableBackColor.Clear();
+        }
+
+
+        private string getColorString(Color col)
+        {
+            return col.A.ToString() + ":" + col.R + ":" + col.G + ":" + col.B;
+        }
+
+        public void setNotTouchedForeColor(Color col)
+        {
+            if (!this.notTouchableForeColor.ContainsKey(getColorString(col)))
+                this.notTouchableForeColor.Add(getColorString(col), col);
+        }
+
+        public void setNotTouchedBackColor(Color col)
+        {
+            if (!this.notTouchableBackColor.ContainsKey(getColorString(col)))
+                this.notTouchableBackColor.Add(getColorString(col), col);
         }
 
         public void updateContent(Control.ControlCollection controlCollection)
@@ -50,9 +77,14 @@ namespace Projector
         private void updateContent(StyleFormProps Style, Control.ControlCollection controlCollection)
         {
             for (int i = 0; i < controlCollection.Count; i++)
-            {              
-                controlCollection[i].BackColor = Style.BackgroundControlColor;
-                controlCollection[i].ForeColor = Style.ForeGroundContentColor;
+            {
+                Boolean foreColChangeable = !this.notTouchableForeColor.ContainsKey(getColorString(controlCollection[i].ForeColor));
+                Boolean backColChangeable = !this.notTouchableBackColor.ContainsKey(getColorString(controlCollection[i].BackColor));
+
+                if (backColChangeable)
+                    controlCollection[i].BackColor = Style.BackgroundControlColor;
+                if (foreColChangeable)
+                    controlCollection[i].ForeColor = Style.ForeGroundContentColor;
 
 
                 
@@ -61,8 +93,10 @@ namespace Projector
                 {
                     Button tmpBtn = (Button)controlCollection[i];
                     tmpBtn.FlatStyle = Style.ButtonStyle;
-                    tmpBtn.BackColor = Style.ButtonBackColor;
-                    tmpBtn.ForeColor = Style.ButtonForeColor;
+                    if (backColChangeable)
+                        tmpBtn.BackColor = Style.ButtonBackColor;
+                    if (backColChangeable)
+                        tmpBtn.ForeColor = Style.ButtonForeColor;
                     if (tmpBtn.FlatStyle == FlatStyle.Flat)
                     {
                         tmpBtn.FlatAppearance.BorderColor = Style.ButtonForeColor;
@@ -73,24 +107,30 @@ namespace Projector
                 {
                     TextBoxBase tmpEl = (TextBoxBase)controlCollection[i];
                     tmpEl.BorderStyle = Style.ElBorderStyle;
-                    tmpEl.BackColor = Style.ElBackColor;
-                    tmpEl.ForeColor = Style.ELForeColor;
+                    if (backColChangeable)
+                        tmpEl.BackColor = Style.ElBackColor;
+                    if (foreColChangeable)
+                        tmpEl.ForeColor = Style.ELForeColor;
                 }
 
                 if (controlCollection[i] is ComboBox)
                 {
                     ComboBox tmpEl = (ComboBox)controlCollection[i];
                     tmpEl.FlatStyle = Style.ButtonStyle;
-                    tmpEl.BackColor = Style.ElBackColor;
-                    tmpEl.ForeColor = Style.ELForeColor;
+                    if (backColChangeable)
+                        tmpEl.BackColor = Style.ElBackColor;
+                    if (foreColChangeable)
+                        tmpEl.ForeColor = Style.ELForeColor;
                 }
 
                 if (controlCollection[i] is GroupBox)
                 {
                     GroupBox tmpEl = (GroupBox)controlCollection[i];
                     tmpEl.FlatStyle = Style.ButtonStyle;                    
-                    tmpEl.BackColor = Style.BackgroundControlColor;
-                    tmpEl.ForeColor = Style.ForeGroundContentColor;
+                    if (backColChangeable)
+                        tmpEl.BackColor = Style.BackgroundControlColor;
+                    if (foreColChangeable)
+                        tmpEl.ForeColor = Style.ForeGroundContentColor;
                     
                 }
 
@@ -98,8 +138,10 @@ namespace Projector
                 {
                     ListView tmpEl = (ListView)controlCollection[i];
                     tmpEl.BorderStyle = Style.ElBorderStyle;
-                    tmpEl.BackColor = Style.ElBackColor;
-                    tmpEl.ForeColor = Style.ELForeColor; 
+                    if (backColChangeable)
+                        tmpEl.BackColor = Style.ElBackColor;
+                    if (foreColChangeable)
+                        tmpEl.ForeColor = Style.ELForeColor; 
                     
                 }
 

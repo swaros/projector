@@ -18,7 +18,7 @@ namespace Projector
         const int STYLE_BIG_QUICK_BUTTONS = 0;
         const int STYLE_SMALL_QUICK_BUTTONS = 1;
 
-        private Profil profil = new Profil("default");
+        private Profil profil = new Profil();
         List<Button> ProfilBtn = new List<Button>();
 
         private Boolean groupUnassigned = false;
@@ -33,6 +33,8 @@ namespace Projector
         private string mainScriptFolder;
 
         private List<string> profilGroups = new List<string>();
+
+        private Hashtable SelectedProfiles = new Hashtable();
 
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
@@ -50,6 +52,22 @@ namespace Projector
             //this.BackColor = SystemColors.Control;
            
             
+        }
+
+        public void setSelected(ProfilButton btn)
+        {
+            if (!this.SelectedProfiles.ContainsKey(btn.profilName))
+            {
+                this.SelectedProfiles.Add(btn.profilName, btn);
+            }
+        }
+
+        public void setUnSelected(ProfilButton btn)
+        {
+            if (this.SelectedProfiles.ContainsKey(btn.profilName))
+            {
+                this.SelectedProfiles.Remove(btn.profilName);
+            }
         }
 
         public Boolean renameGroup(string old, string newstr)
@@ -479,7 +497,7 @@ namespace Projector
             }
            
 
-            Profil itProf = new Profil("Default");
+            Profil itProf = new Profil();
             foreach (String proName in grp)
             {
                 
@@ -597,7 +615,7 @@ namespace Projector
             }
 
             // old Stuff------------------------------------------------------------
-
+         
             XmlSetup tmpSetup = new XmlSetup();
             tmpSetup.setFileName("Projector_profiles.xml");
             //tmpSetup.setFileName("Projector_global.xml");
@@ -955,7 +973,7 @@ namespace Projector
 
         private void setupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            setupForm sForm = new setupForm();
+            setupForm sForm = new setupForm(profil.getName());
 
             sForm.Text = profil.getName();
 
@@ -1076,7 +1094,7 @@ namespace Projector
 
             
 
-            if (mdif.currentProfil == null) mdif.currentProfil = new Profil("midi");
+            if (mdif.currentProfil == null) mdif.currentProfil = new Profil(profil.getName());
 
            
 
@@ -1097,32 +1115,7 @@ namespace Projector
 
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
-            copyDb cform = new copyDb();
-            XmlSetup tmpSetup = new XmlSetup();
-            tmpSetup.setFileName("Projector_profiles.xml");
-            tmpSetup.loadXml();
-            profilSelector.DropDownItems.Clear();
-
-            cform.sourceSelect.Items.Clear();
-            cform.targetSelect.Items.Clear();
-
-            for (Int64 i = 0; i < tmpSetup.count; i++)
-            {
-                string keyname = "profil_" + (i + 1);
-                string proName = tmpSetup.getValue(keyname);
-
-                if (proName != null)
-                {
-                    // profilSelector.DropDownItems.Add(proName, Projector.Properties.Resources.folder_closed_16, ProfilSelectExitClick);
-
-                    cform.sourceSelect.Items.Add(proName);
-                    cform.targetSelect.Items.Add(proName);
-
-                }
-            }
-
-
-
+            copyDb cform = new copyDb();                     
             cform.Show();
         }
 
@@ -1133,10 +1126,7 @@ namespace Projector
 
         private void exportCurrentProfilToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (exportProfileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                profil.exportXml(exportProfileDlg.FileName);
-            }
+           
         }
 
 
@@ -1245,8 +1235,7 @@ namespace Projector
         {
             if (saveProject.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ConfigProfil exporter = new ConfigProfil();
-                exporter.ExportToXml(saveProject.FileName);
+                this.Setup.saveConfigToFile(saveProject.FileName);
 
             }
         }
@@ -1255,37 +1244,14 @@ namespace Projector
         {
             if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                ConfigProfil exporter = new ConfigProfil();
-                exporter.importFromXml(openProjectDlg.FileName);
-                initApp();
-                updateProfilSelector();
+                this.Setup.loadConfigFromFile(openProjectDlg.FileName);
+                this.updateProfilSelector();
             }
         }
 
         private void importPartsOfProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                ConfigProfil exporter = new ConfigProfil();
-                List<string> profilListing = exporter.getImportableProfiles(openProjectDlg.FileName);
-
-                if (profilListing != null && profilListing.Count > 0)
-                {
-                    ImportSettings setImport = new ImportSettings();
-
-                    for (int i = 0; i < profilListing.Count; i++)
-                    {
-                        setImport.ImportListView.Items.Add(profilListing[i]);
-                    }
-
-                    if (setImport.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-
-                    }
-
-                }
-
-            }
+            
         }
 
         private void groupedToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1433,6 +1399,11 @@ namespace Projector
                 e.Effect = DragDropEffects.None;
         }
 
+        /// <summary>
+        /// drop stuff over the empty space from flowlayout
+        /// </summary>
+        /// <param name="sender">object thats send the message</param>
+        /// <param name="e">event args</param>
         private void flowLayout_DragDrop(object sender, DragEventArgs e)
         {
             //string movedOut = e.Data.GetData(DataFormats.Text).ToString();
@@ -1442,11 +1413,54 @@ namespace Projector
                 GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
                 if (worker.removeFromGroup(pButton.assignedGroup, pButton.profilName))
                 {
+                    pButton.assignedGroup = null;
                     this.drawNewStyleButtons(pButton.assignedGroup, true);
                 }
             }
         }
 
+
+        public void reOrderButtonsInGroup(ProfilButton target, ProfilButton dropped)
+        {
+            GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+            if (target.assignedGroup != null && dropped.assignedGroup != null && target.assignedGroup == dropped.assignedGroup){
+                int newPos = worker.setPositionInGroup(dropped.assignedGroup, dropped.profilName, target.profilName);
+                if (flowLayout.Controls[target.assignedGroup] != null)
+                {
+                    if (flowLayout.Controls[target.assignedGroup] is ProfilGroupBox)
+                    {
+                        ProfilGroupBox currentGroup = (ProfilGroupBox)flowLayout.Controls[target.assignedGroup];
+                        currentGroup.setProfileNewPosition(dropped, newPos);
+                    }
+                }
+            }
+            
+
+        }
+
+        private void removeSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Setup.removeEmptyChilds = true;
+            int cnt = this.SelectedProfiles.Count;
+
+            if (MessageBox.Show("removing " + cnt + " profiles ?", "Confirm Deletes", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
+            {
+                GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+                foreach (DictionaryEntry pDic in this.SelectedProfiles)
+                {
+                    string profilName = pDic.Key.ToString();
+                    ProfilButton btn = (ProfilButton)pDic.Value;
+                    if (btn.assignedGroup != null)
+                    {
+                        worker.removeFromGroup(btn.assignedGroup, profilName);
+                    }
+                    this.Setup.RemoveChild(PConfig.KEY_PROFILS, profilName);
+                }
+                this.Setup.removeEmptyChilds = false;
+                this.SelectedProfiles.Clear();
+                this.updateProfilSelector();
+            }
+        }
 
 
 

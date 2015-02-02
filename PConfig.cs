@@ -42,6 +42,8 @@ namespace Projector
         private PConfigContent WalkingLive;
         private ConfigSerializer fileHandle = new ConfigSerializer();
 
+        public Boolean removeEmptyChilds = false;
+
         public PConfig() { }
 
         public String getNameSpace()
@@ -81,6 +83,30 @@ namespace Projector
                 fileHandle.SerializeObject(this.getDefaultFilename(), PConfig.Configuration);
             }
             
+        }
+
+        public Boolean loadConfigFromFile(string filename)
+        {
+            if (System.IO.File.Exists(filename))
+            {
+                PConfig.Configuration = fileHandle.DeSerializeObject(filename);
+                if (PConfig.Configuration == null)
+                {
+                    this.initBaseConfig();
+                }
+                this.resetReader();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void saveConfigToFile(string filename)
+        {
+            if (PConfig.Configuration != null)
+            {
+                fileHandle.SerializeObject(filename, PConfig.Configuration);
+            }
         }
 
         public PConfigContent getConfig()
@@ -355,7 +381,66 @@ namespace Projector
             {
                 if (this.WalkingLive.getName() == name)
                 {
-                     this.WalkingLive.Update(StoreValue);                    
+                    this.WalkingLive.Update(StoreValue);                    
+                    
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+            }
+        }
+
+        public void RemoveChild(string name, string childName)
+        {
+            this.RemoveChild(name, childName, true);
+        }
+        public void RemoveChild(string name,string childName, Boolean resetReader)
+        {
+            if (resetReader)
+            {
+                this.resetReader();
+            }
+
+            // add this node if not exists
+            if (this.WalkingLive.getName() == name)
+            {
+                this.WalkingLive.RemoveChild(childName);
+                return;
+            }
+
+            string[] keyChain = name.Split('.');
+            string parentKey = keyChain[0];
+            if (keyChain.Count() > 1)
+            {
+
+                if (parentKey == this.WalkingLive.getName())
+                {
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+
+                    string nextKey = "";
+
+                    string add = "";
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += add + keyChain[i];
+                        add = ".";
+                    }
+                    this.RemoveChild(nextKey, childName, false);
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+
+            }
+            else
+            {
+                if (this.WalkingLive.getName() == name)
+                {
+                    this.WalkingLive.RemoveChild(childName);
+
                 }
                 else
                 {

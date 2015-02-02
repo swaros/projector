@@ -121,7 +121,7 @@ namespace Projector
 
         private Profil getProfil(ReflectionScriptDefines refObject, Object parent)
         {
-            return new Profil("default");
+            return new Profil();
         }
 
         private ProfileWorker getProfilWorker(ReflectionScriptDefines refObject, Object parent)

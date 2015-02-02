@@ -181,6 +181,7 @@ namespace Projector
 
         public void loadXml()
         {
+            //throw new InvalidProgramException("This configuration is obsolete");
             if (File.Exists(this.fullFilename))
             {
                 XmlTextReader textReader = new XmlTextReader(this.fullFilename);

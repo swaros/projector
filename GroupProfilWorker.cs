@@ -70,6 +70,21 @@ namespace Projector
         }
 
 
+        public int setPositionInGroup(string GroupName, string profileOne, string usePositionFrom)
+        {
+            List<string> member = this.getGroupMember(GroupName);
+            if (member == null || member.Count < 2 || !member.Contains(profileOne) || !member.Contains(usePositionFrom))
+            {
+                return -1;
+            }
+            
+            int posOrgin = member.IndexOf(usePositionFrom);
+            member.Remove(profileOne);
+            member.Insert(posOrgin, profileOne);
+            this.saveGroupMember(GroupName, member);
+            return posOrgin;
+        }
+
         public Boolean renameGroup(string oldName, string newname)
         {
             if (oldName == newname)
@@ -92,7 +107,7 @@ namespace Projector
             return false;
         }
 
-        private List<string> getGroupMember(string name)
+        public List<string> getGroupMember(string name)
         {
             return this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + name, new List<string>());
         }
@@ -115,7 +130,7 @@ namespace Projector
 
         }
 
-        private List<string> getAllGroups()
+        public List<string> getAllGroups()
         {
             return this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES, new List<string>());
         }

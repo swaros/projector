@@ -100,7 +100,6 @@
     <Compile Include="Combined1.g3.lexer.cs" />
     <Compile Include="Combined1.g3.parser.cs" />
     <Compile Include="CommandLineParser.cs" />
-    <Compile Include="ConfigProfil.cs" />
     <Compile Include="ConfimSync.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +152,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GroupProfilWorker.cs" />
     <Compile Include="GroupQuery.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,6 +267,12 @@
     <Compile Include="ProfilGroup.Designer.cs">
       <DependentUpon>ProfilGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfilGroupBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProfilGroupBox.Designer.cs">
+      <DependentUpon>ProfilGroupBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProfilSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -341,6 +347,9 @@
     <EmbeddedResource Include="ProfilGroup.resx">
       <DependentUpon>ProfilGroup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProfilGroupBox.resx">
+      <DependentUpon>ProfilGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProfilSelect.resx">
       <DependentUpon>ProfilSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -390,6 +399,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StructDiffWindow.resx">
       <DependentUpon>StructDiffWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StyleForm.resx">
+      <DependentUpon>StyleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableStructForm.resx">
       <DependentUpon>TableStructForm.cs</DependentUpon>
@@ -531,6 +543,13 @@
     <Compile Include="StructDiffWindow.Designer.cs">
       <DependentUpon>StructDiffWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="StyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StyleForm.Designer.cs">
+      <DependentUpon>StyleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StyleFormProps.cs" />
     <Compile Include="TableProp.cs" />
     <Compile Include="TablePropHandler.cs" />
     <Compile Include="TableStructForm.cs">

@@ -15,6 +15,7 @@ namespace Projector
         private List<PConfigContent> Content;
         private PConfigContent parentNode;
 
+
         public PConfigContent()
         {
 
@@ -62,6 +63,21 @@ namespace Projector
         {
             this.Update(values, true);
         }
+
+        public void RemoveChild(string name)
+        {
+            
+            if (this.ChildUsable())
+            {
+                 List<string> Cont =  this.getContentAsList();
+                 if (Cont != null && Cont.Contains(name))
+                 {
+                     int index = this.getIndexByName(name);
+                     this.Content.RemoveAt(index);
+                 }
+            }
+        }
+
 
         public void Update(List<string> values, Boolean overWrite)
         {
