@@ -9,6 +9,16 @@ namespace Projector
 {
     public class StyleFormProps
     {
+        public const string STYLE_DEFAULT = "Default";
+        public const string STYLE_LIGHT_COLOR = "Color Lighten";
+        public const string STYLE_DARK_COLOR = "Color Darken";
+        public const string STYLE_NIGHT = "Night";
+        public const string STYLE_PAPER = "Paper";
+
+
+        private string currentStyle = StyleFormProps.STYLE_DEFAULT;
+        private Boolean changeStyle = false;
+
         public Color MainColor = Color.Gray;
         public Color BackgroundControlColor = SystemColors.Control;
         public Color ForeGroundContentColor = SystemColors.ControlText;
@@ -22,6 +32,76 @@ namespace Projector
         public Color itemTextColor = SystemColors.ControlText;
         public Color itemRowA = Color.LightCoral;
         public Color itemRowB = Color.White;
+
+        /// <summary>
+        /// returns all possible style identifier
+        /// </summary>
+        /// <returns></returns>
+        public static List<String> getAllStyles()
+        {
+            List<string> result = new List<string>();
+            result.Add(StyleFormProps.STYLE_DEFAULT);
+            result.Add(StyleFormProps.STYLE_LIGHT_COLOR);
+            result.Add(StyleFormProps.STYLE_DARK_COLOR);
+            result.Add(StyleFormProps.STYLE_NIGHT);
+            result.Add(StyleFormProps.STYLE_PAPER);
+            return result;
+        }
+
+        public Boolean containsChanges()
+        {
+            return this.changeStyle;
+        }
+
+
+        public void composeStyle(string name)
+        {
+            List<string> possibles = StyleFormProps.getAllStyles();
+            this.changeStyle = false;
+            if (possibles.Contains(name))
+            {
+                this.currentStyle = name;
+                this.changeStyle = true;
+                switch (name)
+                {
+                        
+                    case StyleFormProps.STYLE_DEFAULT:
+                        this.changeStyle = false;
+                        break;
+                    case StyleFormProps.STYLE_LIGHT_COLOR:
+                        this.composeFlatLight();
+                        break;
+                    case StyleFormProps.STYLE_NIGHT:
+                        this.composeNight();
+                        break;
+                    case StyleFormProps.STYLE_DARK_COLOR:
+                        this.composeFlatDark();
+                        break;
+                    case StyleFormProps.STYLE_PAPER:
+                        this.composePaper();
+                        break;
+                }
+            }
+        }
+
+
+        public void composeNight()
+        {
+  
+            this.BackgroundControlColor = Color.FromArgb(90,90,90);
+            this.ForeGroundContentColor = Color.FromArgb(57, 191, 248);
+            this.ButtonBackColor = Color.FromArgb(143,164,179);
+            this.ButtonForeColor = Color.FromArgb(225,234,240);
+            this.LineColor = Color.FromArgb(132,198,245);
+            this.ButtonStyle = FlatStyle.Flat;
+            this.ElBackColor = Color.FromArgb(120,120,120);
+            this.ELForeColor = Color.FromArgb(57, 191, 248);
+            this.ElBorderStyle = BorderStyle.FixedSingle;
+            this.itemRowA = Color.FromArgb(60, 60, 60);
+            this.itemRowB = Color.FromArgb(35,35,35);
+            this.itemTextColor = Color.FromArgb(57, 191, 248);
+
+        }
 
         public void composePaper()
         {

@@ -11,5 +11,6 @@ namespace Projector
         public String message ="undefined";
         public bool status = false;
         public int StatusKey = 0;
+        public string usedProfil;
     }
 }

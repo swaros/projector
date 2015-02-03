@@ -56,15 +56,16 @@ namespace Projector
         /**
          * init databasehandler with information from profile
          */ 
+      
         public MysqlHandler(Profil dbProfil)
         {
             this.currentProfil = dbProfil;
-            this.userName =dbProfil.getProperty("db_username");
-            this.userPassword = dbProfil.getProperty("db_password");
-            this.host = dbProfil.getProperty("db_host");
-            this.table =  dbProfil.getProperty("db_schema");
+            this.userName = dbProfil.getProperty(ProfilProps.DB_USERNAME);
+            this.userPassword = dbProfil.getProperty(ProfilProps.DB_PASSWORD);
+            this.host = dbProfil.getProperty(ProfilProps.DB_HOST);
+            this.table = dbProfil.getProperty(ProfilProps.DB_SCHEMA);
 
-            string timeOutStr = dbProfil.getProperty("db_timeout");
+            string timeOutStr = dbProfil.getProperty(ProfilProps.DB_TIMEOUT);
             if (null != timeOutStr)
             {
                 this.timeOut = long.Parse(timeOutStr);
@@ -75,6 +76,23 @@ namespace Projector
             this.connection = new MySql.Data.MySqlClient.MySqlConnection();
             
         }
+
+        public MysqlHandler(Profil dbProfil, long timeOutSet)
+        {
+            this.currentProfil = dbProfil;
+            this.userName = dbProfil.getProperty(ProfilProps.DB_USERNAME);
+            this.userPassword = dbProfil.getProperty(ProfilProps.DB_PASSWORD);
+            this.host = dbProfil.getProperty(ProfilProps.DB_HOST);
+            this.table = dbProfil.getProperty(ProfilProps.DB_SCHEMA);
+
+
+            this.timeOut = timeOutSet;
+            getConnStr();
+            this.connection = new MySql.Data.MySqlClient.MySqlConnection();
+
+        }
+
+
 
         public string getConnStr()
         {

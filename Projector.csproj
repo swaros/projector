@@ -273,6 +273,7 @@
     <Compile Include="ProfilGroupBox.Designer.cs">
       <DependentUpon>ProfilGroupBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfilProps.cs" />
     <Compile Include="ProfilSelect.cs">
       <SubType>Form</SubType>
     </Compile>

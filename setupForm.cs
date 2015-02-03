@@ -31,6 +31,13 @@ namespace Projector
             checkInput();
             tableListBox.Visible = false;
 
+            List<string> styles = StyleFormProps.getAllStyles();
+            foreach (string style in styles)
+            {
+                styleComboBox.Items.Add(style);
+                mdiStyleComboBox.Items.Add(style);
+            }
+
         }
 
         private void checkConnection(Profil testProfil)

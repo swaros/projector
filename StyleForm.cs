@@ -25,15 +25,17 @@ namespace Projector
         {
             InitializeComponent();
         }
-
+      
         public void setStyle(StyleFormProps Style)
         {
-            this.BackColor = Style.BackgroundControlColor;
-            this.ForeColor = Style.ForeGroundContentColor;
-            this.currentStyle = Style;
-            this.FlatMode = (this.currentStyle.ButtonStyle == FlatStyle.Flat) ;
-            this.updateContent(Style);
-
+            if (Style.containsChanges())
+            {
+                this.BackColor = Style.BackgroundControlColor;
+                this.ForeColor = Style.ForeGroundContentColor;
+                this.currentStyle = Style;
+                this.FlatMode = (this.currentStyle.ButtonStyle == FlatStyle.Flat);
+                this.updateContent(Style);
+            }
            
         }
 

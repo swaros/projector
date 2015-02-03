@@ -31,6 +31,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableListBox = new System.Windows.Forms.ListBox();
+            this.showDataBases = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.errorLabel = new System.Windows.Forms.Label();
             this.btnChk = new System.Windows.Forms.Button();
@@ -59,8 +61,10 @@
             this.cancelbtn = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openProfilXml = new System.Windows.Forms.OpenFileDialog();
-            this.showDataBases = new System.Windows.Forms.Button();
-            this.tableListBox = new System.Windows.Forms.ListBox();
+            this.styleComboBox = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.mdiStyleComboBox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -112,6 +116,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
+            // 
+            // tableListBox
+            // 
+            this.tableListBox.FormattingEnabled = true;
+            this.tableListBox.Location = new System.Drawing.Point(131, 134);
+            this.tableListBox.Name = "tableListBox";
+            this.tableListBox.Size = new System.Drawing.Size(187, 95);
+            this.tableListBox.TabIndex = 12;
+            this.tableListBox.SelectedIndexChanged += new System.EventHandler(this.tableListBox_SelectedIndexChanged);
+            // 
+            // showDataBases
+            // 
+            this.showDataBases.Location = new System.Drawing.Point(324, 107);
+            this.showDataBases.Name = "showDataBases";
+            this.showDataBases.Size = new System.Drawing.Size(32, 23);
+            this.showDataBases.TabIndex = 11;
+            this.showDataBases.Text = "...";
+            this.showDataBases.UseVisualStyleBackColor = true;
+            this.showDataBases.Click += new System.EventHandler(this.showDataBases_Click);
             // 
             // button1
             // 
@@ -224,6 +247,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.mdiStyleComboBox);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.styleComboBox);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.diffviewparam);
             this.groupBox2.Controls.Add(this.label8);
@@ -242,7 +269,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(20, 130);
+            this.label9.Location = new System.Drawing.Point(20, 163);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(109, 13);
             this.label9.TabIndex = 7;
@@ -250,7 +277,7 @@
             // 
             // diffviewparam
             // 
-            this.diffviewparam.Location = new System.Drawing.Point(23, 146);
+            this.diffviewparam.Location = new System.Drawing.Point(23, 179);
             this.diffviewparam.Name = "diffviewparam";
             this.diffviewparam.Size = new System.Drawing.Size(329, 20);
             this.diffviewparam.TabIndex = 6;
@@ -258,7 +285,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 182);
+            this.label8.Location = new System.Drawing.Point(20, 215);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(231, 13);
             this.label8.TabIndex = 5;
@@ -268,7 +295,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(20, 169);
+            this.label7.Location = new System.Drawing.Point(20, 202);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(30, 13);
             this.label7.TabIndex = 4;
@@ -276,7 +303,7 @@
             // 
             // diffviewsetup
             // 
-            this.diffviewsetup.Location = new System.Drawing.Point(23, 103);
+            this.diffviewsetup.Location = new System.Drawing.Point(23, 136);
             this.diffviewsetup.Name = "diffviewsetup";
             this.diffviewsetup.Size = new System.Drawing.Size(329, 20);
             this.diffviewsetup.TabIndex = 3;
@@ -284,7 +311,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(20, 87);
+            this.label6.Location = new System.Drawing.Point(20, 120);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(143, 13);
             this.label6.TabIndex = 2;
@@ -364,24 +391,41 @@
             this.openProfilXml.FileName = "openFileDialog1";
             this.openProfilXml.Filter = "Profil XML|*.xml";
             // 
-            // showDataBases
+            // styleComboBox
             // 
-            this.showDataBases.Location = new System.Drawing.Point(324, 107);
-            this.showDataBases.Name = "showDataBases";
-            this.showDataBases.Size = new System.Drawing.Size(32, 23);
-            this.showDataBases.TabIndex = 11;
-            this.showDataBases.Text = "...";
-            this.showDataBases.UseVisualStyleBackColor = true;
-            this.showDataBases.Click += new System.EventHandler(this.showDataBases_Click);
+            this.styleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.styleComboBox.FormattingEnabled = true;
+            this.styleComboBox.Location = new System.Drawing.Point(115, 55);
+            this.styleComboBox.Name = "styleComboBox";
+            this.styleComboBox.Size = new System.Drawing.Size(121, 21);
+            this.styleComboBox.TabIndex = 8;
             // 
-            // tableListBox
+            // label10
             // 
-            this.tableListBox.FormattingEnabled = true;
-            this.tableListBox.Location = new System.Drawing.Point(131, 134);
-            this.tableListBox.Name = "tableListBox";
-            this.tableListBox.Size = new System.Drawing.Size(187, 95);
-            this.tableListBox.TabIndex = 12;
-            this.tableListBox.SelectedIndexChanged += new System.EventHandler(this.tableListBox_SelectedIndexChanged);
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(23, 62);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(84, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "Used Form Style";
+            // 
+            // mdiStyleComboBox
+            // 
+            this.mdiStyleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.mdiStyleComboBox.FormattingEnabled = true;
+            this.mdiStyleComboBox.Location = new System.Drawing.Point(115, 83);
+            this.mdiStyleComboBox.Name = "mdiStyleComboBox";
+            this.mdiStyleComboBox.Size = new System.Drawing.Size(121, 21);
+            this.mdiStyleComboBox.TabIndex = 10;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(23, 83);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(81, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Used MDI Style";
             // 
             // setupForm
             // 
@@ -442,5 +486,9 @@
         public System.Windows.Forms.CheckBox constrain_setup;
         private System.Windows.Forms.Button showDataBases;
         private System.Windows.Forms.ListBox tableListBox;
+        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.ComboBox styleComboBox;
+        private System.Windows.Forms.Label label11;
+        public System.Windows.Forms.ComboBox mdiStyleComboBox;
     }
 }

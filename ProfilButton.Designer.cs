@@ -35,6 +35,7 @@
             this.StartBtn = new System.Windows.Forms.Button();
             this.animTimer = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.unFlushTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // HeadLabel
@@ -117,6 +118,11 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // unFlushTimer
+            // 
+            this.unFlushTimer.Interval = 1500;
+            this.unFlushTimer.Tick += new System.EventHandler(this.unFlushTimer_Tick);
+            // 
             // ProfilButton
             // 
             this.AllowDrop = true;
@@ -151,5 +157,6 @@
         public System.Windows.Forms.Button StartBtn;
         private System.Windows.Forms.Timer animTimer;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer unFlushTimer;
     }
 }

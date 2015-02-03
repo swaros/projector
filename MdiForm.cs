@@ -43,7 +43,6 @@ namespace Projector
             {
                 watcher.BackColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
             }
-            //watcher.profil = profil;
             watcher.watchProfil = currentProfil;
             watcher.MdiParent = this;
             watcher.Show();
@@ -79,19 +78,22 @@ namespace Projector
         {
             windowID++;
             qb.Name = "QueryBrowser " + windowID;
-            if (currentProfil.getProperty("set_bgcolor") != null && currentProfil.getProperty("set_bgcolor").Length > 2)
+            if (currentProfil.getProperty(ProfilProps.STYLE_COLOR) != null && currentProfil.getProperty(ProfilProps.STYLE_COLOR).Length > 2)
             {
-                //qb.BackColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
-
                 StyleFormProps profilStyle = new StyleFormProps();
-                profilStyle.MainColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
-                profilStyle.composePaper();
-                //profilStyle.BackgroundControlColor = Color.FromArgb(int.Parse(currentProfil.getProperty("set_bgcolor")));
+                profilStyle.MainColor = Color.FromArgb(int.Parse(currentProfil.getProperty(ProfilProps.STYLE_COLOR)));
 
+                string styleName = currentProfil.getProperty(ProfilProps.WINDOW_STYLE);
+                if (styleName == null)
+                {
+                    styleName = ProjectorForm.getMainFormStyle();
+
+                }
+
+                profilStyle.composeStyle(styleName );
                 qb.setStyle(profilStyle);
 
             }
-            //watcher.profil = profil;
             qb.sensorProfil = currentProfil;
             qb.loadPlaceHolder();
             qb.MdiParent = this;
@@ -119,14 +121,6 @@ namespace Projector
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.LayoutMdi(System.Windows.Forms.MdiLayout.Cascade);
-            /*
-            Form[] charr = this.MdiChildren;
-
-            //For each child form set the window state to Maximized 
-
-            foreach (Form chform in charr)
-                chform.WindowState = FormWindowState.Maximized;
-             */
         }
 
         private void tileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -143,8 +137,6 @@ namespace Projector
         {
             Form[] charr = this.MdiChildren;
 
-            //For each child form set the window state to Maximized 
-
             foreach (Form chform in charr)
                 chform.WindowState = FormWindowState.Maximized;
         }
@@ -153,9 +145,7 @@ namespace Projector
             listWindows(Projector.Properties.Resources.computer_16);
         }
 
-        /**
-         * walk over all windows from type queryBrowser and fires the querys
-         */ 
+
         private void updateQueryWindows()
         {
             Form[] charr = this.MdiChildren;
@@ -186,24 +176,25 @@ namespace Projector
                 if (chform.Text == "queryBrowser")
                 {
                     string varName = displayname.Replace(" ", "_");
-                    code += "New QueryBrowser " + varName.Replace(".","") + System.Environment.NewLine;
+                    string objectname = varName.Replace(".", "");
+                    code += "New queryBrowser " + objectname + System.Environment.NewLine;
 
-                    code += varName + " showTableList false " + System.Environment.NewLine;
+                    code += objectname + " showTableList false " + System.Environment.NewLine;
 
-                    code += varName + " setCoords " + chform.Left + " " + chform.Top + " " + chform.Width + " " + chform.Height + System.Environment.NewLine;
+                    code += objectname + " setCoords " + chform.Left + " " + chform.Top + " " + chform.Width + " " + chform.Height + System.Environment.NewLine;
 
                     Type queryWinType = chform.GetType();
                     MethodInfo myMethodInfo = queryWinType.GetMethod("getCurrentTable");
                     object[] mParam = new object[] { };
                     string table = (string) myMethodInfo.Invoke(chform, null);
-                    code += varName + " selectTable \"" + table + "\"" + System.Environment.NewLine;
+                    code += objectname + " selectTable \"" + table + "\"" + System.Environment.NewLine;
 
 
                     myMethodInfo = queryWinType.GetMethod("getCurrentSql");
                     string sql = (string)myMethodInfo.Invoke(chform, null);
-                    code += varName + " setSql \"" + sql + "\"" + System.Environment.NewLine;
+                    code += objectname + " setSql \"" + sql + "\"" + System.Environment.NewLine;
+                   
 
-                    
                 }
 
             }

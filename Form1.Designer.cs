@@ -68,7 +68,6 @@
             this.scriptRunButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.style_0 = new System.Windows.Forms.ToolStripButton();
-            this.style_1 = new System.Windows.Forms.ToolStripButton();
             this.style_2 = new System.Windows.Forms.ToolStripButton();
             this.style_3 = new System.Windows.Forms.ToolStripButton();
             this.exportProfileDlg = new System.Windows.Forms.SaveFileDialog();
@@ -79,6 +78,7 @@
             this.groupSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.connectionTest = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -186,7 +186,7 @@
             // 
             this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
             this.profilToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.profilToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.profilToolStripMenuItem.Text = "&Profil...";
             this.profilToolStripMenuItem.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
             // 
@@ -194,21 +194,21 @@
             // 
             this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
             this.setupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.setupToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.setupToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.setupToolStripMenuItem.Text = "Setup...";
             this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
             // 
             // groupsToolStripMenuItem
             // 
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.groupsToolStripMenuItem.Text = "Groups...";
             this.groupsToolStripMenuItem.Click += new System.EventHandler(this.groupsToolStripMenuItem_Click);
             // 
             // mainSettingsToolStripMenuItem
             // 
             this.mainSettingsToolStripMenuItem.Name = "mainSettingsToolStripMenuItem";
-            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
             this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
             // 
@@ -360,12 +360,11 @@
             this.scriptRunButton,
             this.toolStripSeparator5,
             this.style_0,
-            this.style_1,
             this.style_2,
             this.style_3});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(478, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(495, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -458,19 +457,9 @@
             this.style_0.Image = ((System.Drawing.Image)(resources.GetObject("style_0.Image")));
             this.style_0.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.style_0.Name = "style_0";
-            this.style_0.Size = new System.Drawing.Size(28, 22);
-            this.style_0.Text = "Big";
+            this.style_0.Size = new System.Drawing.Size(52, 22);
+            this.style_0.Text = "Buttons";
             this.style_0.Click += new System.EventHandler(this.style_0_Click);
-            // 
-            // style_1
-            // 
-            this.style_1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.style_1.Image = ((System.Drawing.Image)(resources.GetObject("style_1.Image")));
-            this.style_1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.style_1.Name = "style_1";
-            this.style_1.Size = new System.Drawing.Size(40, 22);
-            this.style_1.Text = "Small";
-            this.style_1.Click += new System.EventHandler(this.style_1_Click);
             // 
             // style_2
             // 
@@ -478,8 +467,8 @@
             this.style_2.Image = ((System.Drawing.Image)(resources.GetObject("style_2.Image")));
             this.style_2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.style_2.Name = "style_2";
-            this.style_2.Size = new System.Drawing.Size(39, 22);
-            this.style_2.Text = "Black";
+            this.style_2.Size = new System.Drawing.Size(72, 22);
+            this.style_2.Text = "Workbench";
             this.style_2.Click += new System.EventHandler(this.style_2_Click);
             // 
             // style_3
@@ -544,6 +533,14 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(201, 6);
+            // 
+            // connectionTest
+            // 
+            this.connectionTest.WorkerReportsProgress = true;
+            this.connectionTest.WorkerSupportsCancellation = true;
+            this.connectionTest.DoWork += new System.ComponentModel.DoWorkEventHandler(this.CconnectionTest_DoWork);
+            this.connectionTest.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.connectionTest_ProgressChanged);
+            this.connectionTest.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.connectionTest_RunWorkerCompleted);
             // 
             // ProjectorForm
             // 
@@ -625,13 +622,13 @@
         private System.Windows.Forms.ToolStripMenuItem mainSettingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton style_0;
-        private System.Windows.Forms.ToolStripButton style_1;
         private System.Windows.Forms.ToolStripButton style_2;
         private System.Windows.Forms.ToolStripButton style_3;
         private System.Windows.Forms.ToolStripMenuItem profilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem groupSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.ComponentModel.BackgroundWorker connectionTest;
 
 
     }

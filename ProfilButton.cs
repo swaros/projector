@@ -85,6 +85,17 @@ namespace Projector
             this.StartBtn.Name = name;
         }
 
+        public void flush()
+        {
+            this.unFlushTimer.Enabled = true;
+            ProfilButton_MouseHover(null, null);           
+        }
+
+        public void unflush()
+        {
+            ProfilButton_MouseLeave(null, null);
+        }
+
         private void ProfilButton_MouseHover(object sender, EventArgs e)
         {
             ColorCalc colCalc = new ColorCalc();
@@ -231,6 +242,13 @@ namespace Projector
 
         private void HeadLabel_MouseClick(object sender, MouseEventArgs e)
         {
+
+        }
+
+        private void unFlushTimer_Tick(object sender, EventArgs e)
+        {
+            this.unFlushTimer.Enabled = false;
+            this.unflush();
 
         }
     }

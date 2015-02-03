@@ -30,18 +30,24 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.OnlyNamedScripts = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.displayNamedScript = new System.Windows.Forms.CheckBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ScriptPath = new Projector.PathSelector();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.MainFormStyle = new System.Windows.Forms.ComboBox();
+            this.MainMDIStyle = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.OnlyNamedScripts.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -56,6 +62,7 @@
             // 
             // OnlyNamedScripts
             // 
+            this.OnlyNamedScripts.Controls.Add(this.groupBox3);
             this.OnlyNamedScripts.Controls.Add(this.groupBox2);
             this.OnlyNamedScripts.Location = new System.Drawing.Point(4, 22);
             this.OnlyNamedScripts.Name = "OnlyNamedScripts";
@@ -64,6 +71,26 @@
             this.OnlyNamedScripts.TabIndex = 0;
             this.OnlyNamedScripts.Text = "Main Settings";
             this.OnlyNamedScripts.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.displayNamedScript);
+            this.groupBox2.Location = new System.Drawing.Point(9, 113);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(207, 54);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Reflection Script";
+            // 
+            // displayNamedScript
+            // 
+            this.displayNamedScript.AutoSize = true;
+            this.displayNamedScript.Location = new System.Drawing.Point(7, 20);
+            this.displayNamedScript.Name = "displayNamedScript";
+            this.displayNamedScript.Size = new System.Drawing.Size(156, 17);
+            this.displayNamedScript.TabIndex = 0;
+            this.displayNamedScript.Text = "Display Named Scripts Only";
+            this.displayNamedScript.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -86,6 +113,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Pats";
             // 
+            // ScriptPath
+            // 
+            this.ScriptPath.Location = new System.Drawing.Point(17, 19);
+            this.ScriptPath.Name = "ScriptPath";
+            this.ScriptPath.Size = new System.Drawing.Size(364, 63);
+            this.ScriptPath.TabIndex = 0;
+            // 
             // button1
             // 
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -106,32 +140,54 @@
             this.button2.Text = "Abort";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupBox3
             // 
-            this.groupBox2.Controls.Add(this.displayNamedScript);
-            this.groupBox2.Location = new System.Drawing.Point(9, 7);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(207, 54);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Reflection Script";
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.MainMDIStyle);
+            this.groupBox3.Controls.Add(this.MainFormStyle);
+            this.groupBox3.Location = new System.Drawing.Point(9, 16);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(264, 91);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Styles";
             // 
-            // displayNamedScript
+            // MainFormStyle
             // 
-            this.displayNamedScript.AutoSize = true;
-            this.displayNamedScript.Location = new System.Drawing.Point(7, 20);
-            this.displayNamedScript.Name = "displayNamedScript";
-            this.displayNamedScript.Size = new System.Drawing.Size(156, 17);
-            this.displayNamedScript.TabIndex = 0;
-            this.displayNamedScript.Text = "Display Named Scripts Only";
-            this.displayNamedScript.UseVisualStyleBackColor = true;
+            this.MainFormStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MainFormStyle.FormattingEnabled = true;
+            this.MainFormStyle.Location = new System.Drawing.Point(108, 14);
+            this.MainFormStyle.Name = "MainFormStyle";
+            this.MainFormStyle.Size = new System.Drawing.Size(132, 21);
+            this.MainFormStyle.TabIndex = 0;
             // 
-            // ScriptPath
+            // MainMDIStyle
             // 
-            this.ScriptPath.Location = new System.Drawing.Point(17, 19);
-            this.ScriptPath.Name = "ScriptPath";
-            this.ScriptPath.Size = new System.Drawing.Size(364, 63);
-            this.ScriptPath.TabIndex = 0;
+            this.MainMDIStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MainMDIStyle.FormattingEnabled = true;
+            this.MainMDIStyle.Location = new System.Drawing.Point(108, 42);
+            this.MainMDIStyle.Name = "MainMDIStyle";
+            this.MainMDIStyle.Size = new System.Drawing.Size(132, 21);
+            this.MainMDIStyle.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Default Form Style";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Default MDI Style";
             // 
             // MainSetup
             // 
@@ -147,10 +203,12 @@
             this.Text = "Main Setup";
             this.tabControl1.ResumeLayout(false);
             this.OnlyNamedScripts.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -166,5 +224,10 @@
         private System.Windows.Forms.GroupBox groupBox2;
         public System.Windows.Forms.TabPage OnlyNamedScripts;
         public System.Windows.Forms.CheckBox displayNamedScript;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.ComboBox MainMDIStyle;
+        public System.Windows.Forms.ComboBox MainFormStyle;
     }
 }
