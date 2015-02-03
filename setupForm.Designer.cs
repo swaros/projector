@@ -65,6 +65,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.mdiStyleComboBox = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.nameOfProfil = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,7 +80,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(12, 48);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(416, 285);
@@ -427,11 +429,29 @@
             this.label11.TabIndex = 11;
             this.label11.Text = "Used MDI Style";
             // 
+            // nameOfProfil
+            // 
+            this.nameOfProfil.Location = new System.Drawing.Point(133, 16);
+            this.nameOfProfil.Name = "nameOfProfil";
+            this.nameOfProfil.Size = new System.Drawing.Size(276, 20);
+            this.nameOfProfil.TabIndex = 3;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(19, 19);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(59, 13);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Profil name";
+            // 
             // setupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 313);
+            this.ClientSize = new System.Drawing.Size(567, 363);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.nameOfProfil);
             this.Controls.Add(this.cancelbtn);
             this.Controls.Add(this.okbtn);
             this.Controls.Add(this.tabControl1);
@@ -448,6 +468,7 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -490,5 +511,7 @@
         public System.Windows.Forms.ComboBox styleComboBox;
         private System.Windows.Forms.Label label11;
         public System.Windows.Forms.ComboBox mdiStyleComboBox;
+        public System.Windows.Forms.TextBox nameOfProfil;
+        private System.Windows.Forms.Label label12;
     }
 }

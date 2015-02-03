@@ -11,14 +11,19 @@ namespace Projector
 {
     public partial class ProfilSelect : Form
     {
-        XmlSetup profiles = new XmlSetup();
+       
         public string selectedProfil = null;
+
+        private PConfig Setup;
+        List<string> existingProfiles;
 
         public ProfilSelect()
         {
             InitializeComponent();
-            profiles.setFileName("Projector_profiles.xml");
+            this.Setup = new PConfig();
             this.transLate();
+            
+            this.existingProfiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
             this.loadProfiles();
         }
 
@@ -35,44 +40,32 @@ namespace Projector
 
         private void addProfile()
         {
-            string keyName = "profil_" + (profiles.count + 1);
-            if (profileName.Text.Length > 1)
+            if (!this.existingProfiles.Contains(profileName.Text))
             {
-                profiles.addSetting(keyName, profileName.Text);
-                profiles.saveXml();
-                if (profiles.lastError.Length > 0)
-                {
-                    MessageBox.Show("Error: " + profiles.lastError, Projector.Properties.Resources.ProfileErrorOnSaveMessage, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    profiles.loadXml();
-                    profiles.lastError = "";
-                }
-                refreshList(profiles);
+                Profil addProfil = new Profil(profileName.Text);
+
             }
+           
         }
 
-        private void refreshList(XmlSetup profiles)
+        private void refreshList()
         {
             listViewProfiles.Items.Clear();
-            for (Int64 i = 0; i < profiles.count; i++)
+            foreach (string profil in this.existingProfiles)
             {
-                string keyname = "profil_" + (i + 1);
-                string proName = profiles.getValue(keyname);
-
-                ListViewItem tmp = new ListViewItem(proName);
-                tmp.SubItems.Add(keyname);
+                
+                ListViewItem tmp = new ListViewItem(profil);
+                tmp.SubItems.Add(profil);
                 tmp.ImageIndex = 1;
 
-                if (proName != null) listViewProfiles.Items.Add(tmp);
+                listViewProfiles.Items.Add(tmp);
             }
         }
 
 
         private void loadProfiles()
-        {
-            
-            profiles.loadXml();
-            refreshList(profiles);
-
+        {                        
+            refreshList();
         }
 
         private void button1_Click(object sender, EventArgs e)

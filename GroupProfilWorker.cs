@@ -69,6 +69,49 @@ namespace Projector
             return false;
         }
 
+        public void removeFromAllGroups(string profilName)
+        {
+            List<string> groups = this.getAllGroups();
+            foreach (string group in groups)
+            {
+                this.removeFromGroup(group, profilName);
+            }
+        }
+
+        public Boolean updateGroupMember(string groupname, string profilNameOld, string profilNameNew)
+        {
+            List<string> member = getGroupMember(groupname);
+            if (member.Contains(profilNameOld) && !member.Contains(profilNameNew))
+            {
+                member.Remove(profilNameOld);
+                member.Add(profilNameNew);
+                this.saveGroupMember(groupname, member);
+
+                return true;
+            }
+            return false;
+        }
+
+        public void updateMemberInallGroups(string profilName, string newName)
+        {
+            List<string> groups = this.getAllGroups();
+            foreach (string group in groups)
+            {
+                this.updateGroupMember(group, profilName, newName);
+            }
+        }
+
+        public Boolean renameProfil(string oldName, string newName)
+        {
+            List<string> profiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+            if (profiles.Contains(oldName) && !profiles.Contains(newName))
+            {
+                this.Setup.setName(PConfig.KEY_PROFILS + "." + oldName, newName);
+                this.updateMemberInallGroups(oldName, newName);
+            }
+            return false;
+        }
+
 
         public int setPositionInGroup(string GroupName, string profileOne, string usePositionFrom)
         {

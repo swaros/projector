@@ -39,12 +39,10 @@
             this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchButtonModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -79,6 +77,9 @@
             this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.connectionTest = new System.ComponentModel.BackgroundWorker();
+            this.addProfil = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.enableGroupView = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -174,21 +175,12 @@
             // einstellungenToolStripMenuItem
             // 
             this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.profilToolStripMenuItem,
             this.setupToolStripMenuItem,
             this.groupsToolStripMenuItem,
             this.mainSettingsToolStripMenuItem});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.einstellungenToolStripMenuItem.Text = "&Options";
-            // 
-            // profilToolStripMenuItem
-            // 
-            this.profilToolStripMenuItem.Name = "profilToolStripMenuItem";
-            this.profilToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.profilToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.profilToolStripMenuItem.Text = "&Profil...";
-            this.profilToolStripMenuItem.Click += new System.EventHandler(this.profilToolStripMenuItem_Click);
             // 
             // setupToolStripMenuItem
             // 
@@ -215,20 +207,11 @@
             // displayToolStripMenuItem
             // 
             this.displayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.groupedToolStripMenuItem,
             this.switchButtonModeToolStripMenuItem,
             this.groupButtonsToolStripMenuItem});
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
             this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.displayToolStripMenuItem.Text = "&Display";
-            // 
-            // groupedToolStripMenuItem
-            // 
-            this.groupedToolStripMenuItem.CheckOnClick = true;
-            this.groupedToolStripMenuItem.Name = "groupedToolStripMenuItem";
-            this.groupedToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
-            this.groupedToolStripMenuItem.Text = "&Grouped";
-            this.groupedToolStripMenuItem.Click += new System.EventHandler(this.groupedToolStripMenuItem_Click);
             // 
             // switchButtonModeToolStripMenuItem
             // 
@@ -350,6 +333,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showProfilLabel,
             this.toolStripSeparator1,
+            this.enableGroupView,
             this.profilSelector,
             this.toolStripSeparator2,
             this.toolStripButton2,
@@ -361,10 +345,12 @@
             this.toolStripSeparator5,
             this.style_0,
             this.style_2,
-            this.style_3});
+            this.style_3,
+            this.toolStripSeparator7,
+            this.addProfil});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(495, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(578, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -542,6 +528,31 @@
             this.connectionTest.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.connectionTest_ProgressChanged);
             this.connectionTest.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.connectionTest_RunWorkerCompleted);
             // 
+            // addProfil
+            // 
+            this.addProfil.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfil.Image = global::Projector.Properties.Resources.add_16;
+            this.addProfil.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfil.Name = "addProfil";
+            this.addProfil.Size = new System.Drawing.Size(23, 22);
+            this.addProfil.Text = "Add a New Profil";
+            this.addProfil.Click += new System.EventHandler(this.addProfil_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // enableGroupView
+            // 
+            this.enableGroupView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.enableGroupView.Image = global::Projector.Properties.Resources.application_side_tree;
+            this.enableGroupView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.enableGroupView.Name = "enableGroupView";
+            this.enableGroupView.Size = new System.Drawing.Size(23, 22);
+            this.enableGroupView.Text = "Show Grouppanel (CTRL + SHIFT + G)";
+            this.enableGroupView.Click += new System.EventHandler(this.enableGroupView_Click);
+            // 
             // ProjectorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -582,7 +593,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem startToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem einstellungenToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profilToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem databaseWatchToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -609,7 +619,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem displayToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem groupedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem switchButtonModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox chooseGroup;
         private System.Windows.Forms.SplitContainer mainSlitter;
@@ -629,6 +638,9 @@
         private System.Windows.Forms.ToolStripMenuItem removeSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.ComponentModel.BackgroundWorker connectionTest;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton addProfil;
+        private System.Windows.Forms.ToolStripButton enableGroupView;
 
 
     }

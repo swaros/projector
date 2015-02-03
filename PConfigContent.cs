@@ -54,6 +54,11 @@ namespace Projector
             return this.Content != null;
         }
 
+        public void changeName(string name)
+        {
+            this.Name = name;
+        }
+
         public void Update(string value)
         {
             this.FlatContent = value;

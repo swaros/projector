@@ -332,6 +332,67 @@ namespace Projector
             }
         }
 
+        public void setName(string name, string newName)
+        {
+            this.setName(name, newName, true);
+        }
+
+        public void setName(string name, string newName, Boolean resetReader)
+        {
+            if (resetReader)
+            {
+                this.resetReader();
+            }
+
+            // add this node if not exists
+            if (this.WalkingLive.getName() == name)
+            {
+                this.WalkingLive.changeName(newName);
+                return;
+            }
+
+            string[] keyChain = name.Split('.');
+            string parentKey = keyChain[0];
+            if (keyChain.Count() > 1)
+            {
+
+                if (parentKey == this.WalkingLive.getName())
+                {
+                    string nextStepKey = keyChain[1];
+                    this.WalkingLive = this.WalkingLive.addOrGetGroupChild(nextStepKey);
+
+                    string nextKey = "";
+
+                    string add = "";
+                    for (int i = 1; i < keyChain.Count(); i++)
+                    {
+                        nextKey += add + keyChain[i];
+                        add = ".";
+                    }
+                    this.setName(nextKey, newName, false);
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+
+            }
+            else
+            {
+                if (this.WalkingLive.getName() == name)
+                {
+                    this.WalkingLive.changeName(newName);
+
+                }
+                else
+                {
+                    throw new Exception("There is no Setting named " + name);
+                }
+            }
+        }
+
+
+
         public void setList(string name, List<String> StoreValue)
         {
             this.setList(name, StoreValue, true);

@@ -98,6 +98,7 @@ namespace Projector
         /// <param name="e"></param>
         private void profilToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             ProfilSelect pro = new ProfilSelect();
             if (pro.ShowDialog() == DialogResult.OK)
             {
@@ -151,7 +152,7 @@ namespace Projector
 
                 this.mainScriptFolder = this.Setup.getSettingWidthDefault("client.scriptpath", System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
                 this.displayNamedScripstOnly = this.Setup.getBooleanSettingWidthDefault("client.namedscriptsonly", this.displayNamedScripstOnly);
-                groupedToolStripMenuItem.Checked = this.showGroups;
+               
 
                 this.mainMDIStyle = this.Setup.getSettingWidthDefault("client.style.mainmdi", this.mainMDIStyle);
                 ProjectorForm.mainFormStyle = this.Setup.getSettingWidthDefault("client.style.mainform", ProjectorForm.mainFormStyle);
@@ -933,7 +934,7 @@ namespace Projector
             setupForm sForm = new setupForm(profil.getName());
 
             sForm.Text = profil.getName();
-
+            sForm.nameOfProfil.Text = profil.getName();
             sForm.host.Text = profil.getProperty("db_host");
             sForm.username.Text = profil.getProperty("db_username");
             sForm.password.Text = profil.getProperty("db_password");
@@ -966,6 +967,15 @@ namespace Projector
                     profil.setProperty("foreign_key_check", "1");
                 else
                     profil.setProperty("foreign_key_check", "0");
+
+                // if the name is changed, chage the profil
+                if (sForm.nameOfProfil.Text != profil.getName())
+                {
+                    GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+                    worker.renameProfil(profil.getName(), sForm.nameOfProfil.Text);
+
+                }
+
                 profil.saveSetup();
                 updateProfilSelector();
             }
@@ -1115,6 +1125,7 @@ namespace Projector
                     p1.GroupedDatabases.Items.Add(profilName);
                 }
             }
+            p1.ShowDialog();
             drawGroupButtons();
             updateProfilSelector();
 
@@ -1169,7 +1180,7 @@ namespace Projector
 
         private void groupedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            showGroups = groupedToolStripMenuItem.Checked;
+            showGroups = groupButtonsToolStripMenuItem.Checked;
             updateProfilSelector();
         }
 
@@ -1195,7 +1206,7 @@ namespace Projector
         private void groupButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
-            this.showGroups = groupedToolStripMenuItem.Checked;
+            this.showGroups = groupButtonsToolStripMenuItem.Checked;
             if (ProjectorForm.STYLE_BUTTON_MODE == buttonStyle)
             {
                 this.flowLayout.Controls.Clear();
@@ -1316,8 +1327,13 @@ namespace Projector
 
         private void flowLayout_DragEnter(object sender, DragEventArgs e)
         {
+
             if (e.Data.GetDataPresent("Projector.ProfilButton"))
+            {
+                ProfilButton pButton = (ProfilButton)e.Data.GetData("Projector.ProfilButton");
+                
                 e.Effect = DragDropEffects.Copy;
+            }
             else
                 e.Effect = DragDropEffects.None;
         }
@@ -1331,13 +1347,22 @@ namespace Projector
         {
             //string movedOut = e.Data.GetData(DataFormats.Text).ToString();
             ProfilButton pButton = (ProfilButton)e.Data.GetData("Projector.ProfilButton");
-            if (pButton.assignedGroup != null)
+            
+
+            if (Control.ModifierKeys == Keys.Shift)
             {
-                GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
-                if (worker.removeFromGroup(pButton.assignedGroup, pButton.profilName))
+                this.CloneProfil(pButton.profilName);
+            }
+            else
+            {
+                if (pButton.assignedGroup != null)
                 {
-                    pButton.assignedGroup = null;
-                    this.drawNewStyleButtons(pButton.assignedGroup, true);
+                    GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+                    if (worker.removeFromGroup(pButton.assignedGroup, pButton.profilName))
+                    {
+                        pButton.assignedGroup = null;
+                        this.drawNewStyleButtons(pButton.assignedGroup, true);
+                    }
                 }
             }
 
@@ -1411,7 +1436,7 @@ namespace Projector
                 if (upBtn != null)
                 {
 
-                    if (upBtn.Top + upBtn.Height > ClientSize.Height || upBtn.Top + upBtn.Height < 0)
+                    if (upBtn.Top + upBtn.Height > ClientSize.Height || upBtn.Top < 0)
                     {
                         flowLayout.ScrollControlIntoView(upBtn);
                     }
@@ -1433,6 +1458,74 @@ namespace Projector
         private void connectionTest_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripButton3.Enabled = true;
+        }
+
+        private Profil addNewProfil(string name)
+        {
+            List<string> currentProfiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+            string newName = name;
+            int nr = 1;
+            while (currentProfiles.Contains(newName))
+            {
+                nr++;
+                newName = name + " v.(" + nr + ")";
+            }
+
+            Profil addedProfil = new Profil(newName);
+            return addedProfil;
+
+        }
+
+        private void CloneProfil(string sourceProfilName)
+        {
+            /*
+            List<string> currentProfiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+            if (currentProfiles.Contains(sourceProfilName))
+            {
+                Profil source = new Profil(sourceProfilName);
+                source.changeProfil(sourceProfilName);
+                string[] sep = "v.,".Split(',');
+                string[] stripAutoText = sourceProfilName.Split(sep,StringSplitOptions.None);
+                string newName = stripAutoText[0];
+                Profil added = addNewProfil(newName);
+                
+                
+                added.setProperty(ProfilProps.DB_NAME, source.getProperty(ProfilProps.DB_NAME));
+                added.setProperty(ProfilProps.DB_HOST, source.getProperty(ProfilProps.DB_HOST));
+                added.setProperty(ProfilProps.DB_SCHEMA, source.getProperty(ProfilProps.DB_SCHEMA));
+                added.setProperty(ProfilProps.DB_USERNAME, source.getProperty(ProfilProps.DB_USERNAME));
+                added.setProperty(ProfilProps.MDI_STYLE, source.getProperty(ProfilProps.MDI_STYLE));
+                added.setProperty(ProfilProps.STYLE_COLOR, source.getProperty(ProfilProps.STYLE_COLOR));
+                added.setProperty(ProfilProps.WINDOW_STYLE, source.getProperty(ProfilProps.WINDOW_STYLE));
+                added.setProperty(ProfilProps.MDI_STYLE, source.getProperty(ProfilProps.MDI_STYLE));
+
+                added.changeProfil(newName);
+                
+                this.setCurrentProfile(newName);
+                setupToolStripMenuItem_Click(null, null);
+            }*/
+        }
+
+        private void addProfil_Click(object sender, EventArgs e)
+        {
+            UserTextInput userInput = new UserTextInput();
+            userInput.textinfo.Text = "New Profile";
+            userInput.groupBox.Text = "Set Name for the New Profile";
+            if (userInput.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Profil addedProfil = this.addNewProfil(userInput.textinfo.Text);
+                this.setCurrentProfile(addedProfil.getName());
+                setupToolStripMenuItem_Click(sender, e);
+
+            }
+
+        }
+
+        private void enableGroupView_Click(object sender, EventArgs e)
+        {
+            groupButtonsToolStripMenuItem.Checked = !groupButtonsToolStripMenuItem.Checked;
+            enableGroupView.Checked = groupButtonsToolStripMenuItem.Checked;
+            groupButtonsToolStripMenuItem_Click(sender, e);
         }
 
 
