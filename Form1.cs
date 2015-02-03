@@ -133,6 +133,7 @@ namespace Projector
                 this.Setup.setValue("client.style.mainmdi", this.mainMDIStyle);
 
                 this.Setup.setList("client.groups.names", this.profilGroups);
+                this.Setup.setValue("client.maximized", this.WindowState == FormWindowState.Maximized);
             }
             else
             {
@@ -156,6 +157,13 @@ namespace Projector
                 ProjectorForm.mainFormStyle = this.Setup.getSettingWidthDefault("client.style.mainform", ProjectorForm.mainFormStyle);
 
                 this.profilGroups = this.Setup.getListWidthDefault("client.groups.names", this.profilGroups);
+
+                bool maximized = this.Setup.getBooleanSettingWidthDefault("client.maximized", this.WindowState == FormWindowState.Maximized);
+
+                if (maximized && this.WindowState != FormWindowState.Maximized)
+                {
+                    this.WindowState = FormWindowState.Maximized;
+                }
             }
 
         }
@@ -690,7 +698,7 @@ namespace Projector
 
             if (ProjectorForm.SCRIPT_BUTTON_MODE == buttonStyle)
             {
-                toolStrip1.Visible = false;
+                //toolStrip1.Visible = false;
                 mainSlitter.Panel1Collapsed = true;
                 this.setMainColors(Color.Black, Color.DarkGray);
                 flowLayout.BackColor = Color.LightGray;
@@ -1198,13 +1206,12 @@ namespace Projector
 
         private void scriptRunButton_Click(object sender, EventArgs e)
         {
-            if (this.scriptFile == null)
+
+            if (this.openScript.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (this.openScript.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    this.scriptFile = this.openScript.FileName;
-                }
+                this.scriptFile = this.openScript.FileName;
             }
+
 
             if (this.scriptFile != null)
             {
@@ -1333,6 +1340,7 @@ namespace Projector
                     this.drawNewStyleButtons(pButton.assignedGroup, true);
                 }
             }
+
         }
 
 
@@ -1359,23 +1367,25 @@ namespace Projector
         {
             this.Setup.removeEmptyChilds = true;
             int cnt = this.SelectedProfiles.Count;
-
-            if (MessageBox.Show("removing " + cnt + " profiles ?", "Confirm Deletes", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
+            if (cnt > 0)
             {
-                GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
-                foreach (DictionaryEntry pDic in this.SelectedProfiles)
+                if (MessageBox.Show("removing " + cnt + " profiles ? This Action can't be revertet. Maybe you should save this Project first as Backup", "Confirm Deletes", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
                 {
-                    string profilName = pDic.Key.ToString();
-                    ProfilButton btn = (ProfilButton)pDic.Value;
-                    if (btn.assignedGroup != null)
+                    GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
+                    foreach (DictionaryEntry pDic in this.SelectedProfiles)
                     {
-                        worker.removeFromGroup(btn.assignedGroup, profilName);
+                        string profilName = pDic.Key.ToString();
+                        ProfilButton btn = (ProfilButton)pDic.Value;
+                        if (btn.assignedGroup != null)
+                        {
+                            worker.removeFromGroup(btn.assignedGroup, profilName);
+                        }
+                        this.Setup.RemoveChild(PConfig.KEY_PROFILS, profilName);
                     }
-                    this.Setup.RemoveChild(PConfig.KEY_PROFILS, profilName);
+                    this.Setup.removeEmptyChilds = false;
+                    this.SelectedProfiles.Clear();
+                    this.updateProfilSelector();
                 }
-                this.Setup.removeEmptyChilds = false;
-                this.SelectedProfiles.Clear();
-                this.updateProfilSelector();
             }
         }
 

@@ -14,6 +14,7 @@ namespace Projector
         public const string STYLE_DARK_COLOR = "Color Darken";
         public const string STYLE_NIGHT = "Night";
         public const string STYLE_PAPER = "Paper";
+        public const string STYLE_PAPER_BLUE = "Paper Blue";
 
 
         private string currentStyle = StyleFormProps.STYLE_DEFAULT;
@@ -45,6 +46,7 @@ namespace Projector
             result.Add(StyleFormProps.STYLE_DARK_COLOR);
             result.Add(StyleFormProps.STYLE_NIGHT);
             result.Add(StyleFormProps.STYLE_PAPER);
+            result.Add(StyleFormProps.STYLE_PAPER_BLUE);
             return result;
         }
 
@@ -80,6 +82,9 @@ namespace Projector
                     case StyleFormProps.STYLE_PAPER:
                         this.composePaper();
                         break;
+                    case StyleFormProps.STYLE_PAPER_BLUE:
+                        this.composePaperWhite();
+                        break;
                 }
             }
         }
@@ -100,6 +105,24 @@ namespace Projector
             this.itemRowA = Color.FromArgb(60, 60, 60);
             this.itemRowB = Color.FromArgb(35,35,35);
             this.itemTextColor = Color.FromArgb(57, 191, 248);
+
+        }
+
+        public void composePaperWhite()
+        {
+
+            this.BackgroundControlColor = Color.White;
+            this.ForeGroundContentColor = Color.FromArgb(24, 65, 94);
+            this.ButtonBackColor = Color.White;
+            this.ButtonForeColor = Color.Black;
+            this.LineColor = Color.FromArgb(132, 198, 245);
+            this.ButtonStyle = FlatStyle.Popup;
+            this.ElBackColor = Color.FromArgb(230, 244, 255);
+            this.ELForeColor = Color.FromArgb(34, 112, 168);
+            this.ElBorderStyle = BorderStyle.FixedSingle;
+            this.itemRowA = Color.FromArgb(230, 233, 235);
+            this.itemRowB = Color.FromArgb(218, 229, 237);
+            this.itemTextColor = Color.FromArgb(17, 98, 156);
 
         }
 
