@@ -19,22 +19,43 @@ namespace Projector
         public const int STATE_FINISHED = 10;
         public const int STATE_WAITFOR_SUBS = 6;
 
+        /// <summary>
+        /// static name as ID Prey-key for global procIDent
+        /// </summary>
         public const string PROC_NAME = "ReflectionScript";
 
+        /// <summary>
+        /// at runtime generated Proc-key added to PROC_NAME ti identify the process.
+        /// all childs have to use the same id
+        /// </summary>
         private string ProcID = "unset";
 
+        /// <summary>
+        /// watch to get the runtime
+        /// </summary>
         private Stopwatch RunTime = new Stopwatch();
         private Hashtable WaitingTimers = new Hashtable();
-
-        // wich subinstance i am?
+        
+        /// <summary>
+        /// the level of executers. Root is always 0
+        /// </summary>
         public int runlevel = 0;
 
+        /// <summary>
+        /// the current state of the current scop (see const STATE_xxx)
+        /// </summary>
         public int runState = 0;
 
+        /// <summary>
+        /// current assigned script
+        /// </summary>
         private ReflectionScript currentScript;
 
-        private Hashtable objectDefines = new Hashtable();
 
+        private Hashtable objectDefines = new Hashtable();
+        /// <summary>
+        /// storage for all created objectes til run
+        /// </summary>
         private Hashtable objectReferences = new Hashtable();
 
         private Object parentObject;
@@ -49,9 +70,21 @@ namespace Projector
         public Object parentWatcher;
         public string watcherMethod;
 
+        /// <summary>
+        /// one time flag to force an abort of execution
+        /// </summary>
+        private Boolean forceAbort = false;
 
-        // debugging stuff
+
+
+        /// <summary>
+        /// the current executed script line stored for debugging
+        /// </summary>
         private ReflectionScriptDefines currentDebugLine;
+
+        /// <summary>
+        /// the current executed line
+        /// </summary>
         private int currentExecLine = 0;
 
         public int startLine = 0;
@@ -305,7 +338,55 @@ namespace Projector
                 }
                 
             }
-            
+
+            if (cmd == "EXEC")
+            {
+                List<string> execPars = new List<string>();
+                string externalScript = "";
+                foreach (string parStr in scrLine.scriptParameters)
+                {
+                    if (externalScript == "")
+                    {
+                        externalScript = this.currentScript.fillUpAll(parStr);                       
+                    }
+                    else
+                    {
+                        execPars.Add(this.currentScript.fillUpAll(parStr));
+                    }
+                    
+                }
+
+                
+                PConfig seting = new PConfig();
+                string scrPath = seting.getSettingWidthDefault("client.scriptpath", System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
+                string scrFileName = scrPath + System.IO.Path.DirectorySeparatorChar.ToString() + externalScript;
+                if (System.IO.File.Exists(scrFileName))
+                {
+                    
+                    string code = System.IO.File.ReadAllText(scrFileName);
+                    ReflectionScript exScrpt = new ReflectionScript();
+                    exScrpt.setCode(code);
+                    exScrpt.addSetupIfNotExists(ReflectionScript.SETUP_PREVIEW, true);
+                    RefScriptExecute subExec = new RefScriptExecute(exScrpt, this.parentObject);
+                    int ppp=0;
+                    foreach (string parToExec in execPars)
+                    {
+                        ppp++;
+                        exScrpt.createOrUpdateStringVar("&PARAM." + ppp, parToExec);
+                    }
+                    subExec.run();
+
+                }
+                else
+                {
+                    ScriptErrors error = new ScriptErrors();
+                    error.errorMessage = "script not found:" + scrFileName;
+                    error.lineNumber = scrLine.lineNumber;
+                    error.errorCode = Projector.RefSrcStates.ERROR_TYPE_WARNING;
+                    this.currentScript.addError(error);
+                }
+
+            }
 
             if (cmd == "WAITFOR")
             {

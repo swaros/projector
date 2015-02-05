@@ -32,13 +32,21 @@ namespace Projector
         /// </summary>
         public const string SETUP_PREVIEW = "CODE.PREVIEW";
 
-
+        /// <summary>
+        /// brackets to get code DEPRECATED
+        /// </summary>
         private const string REGEX_BRACKETS = "({[^}]*})";
         private const string REGEX_CALC_BRACKETS = @"(\([^\)]*\))";
        // private const string REGEX_CALC_BRACKETS = "((.+)\\)/U";
         private const string REGEX_STRING = "\"([^\"]*)\"";
 
         public const string MASK_DELIMITER = "#";
+
+        /// <summary>
+        /// the token for the script in the current scope and all assigned subscripts
+        /// used as key for all created objects
+        /// </summary>
+        private String scopeToken;
 
         public string name = "this";
 
@@ -195,6 +203,7 @@ namespace Projector
             //base commands
             this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
             this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
+            this.mask.Add("EXEC ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");    
 
             // hard coded native stufff
             this.mask.Add("MESSAGEBOX ?" + Projector.ReflectionScript.MASK_DELIMITER);
@@ -249,7 +258,7 @@ namespace Projector
         /// </summary>
         /// <param name="name">keyname for this setting</param>
         /// <param name="value">the content for this setup</param>
-        private void addSetupIfNotExists(string name, Object value)
+        public void addSetupIfNotExists(string name, Object value)
         {
             if (this.Setup.ContainsKey(name))
             {                
@@ -428,11 +437,13 @@ namespace Projector
         {
             if (this.storedCode != code)
             {
+                System.Guid guid = System.Guid.NewGuid();
+                this.scopeToken = guid.ToString();
                 this.reset();
                 this.code = code;
                 // just to find out if the not the same code again will be set
                 this.storedCode = code;
-
+                
                 if (this.Parent != null)
                 {
                     this.Parent.updateSubScripts(this);
@@ -464,6 +475,12 @@ namespace Projector
             this.build();
             
         }
+
+        public void updateScopeTocken(string token)
+        {
+            this.scopeToken = token;
+        }
+
         // debugging
 
         /// <summary>
@@ -1990,6 +2007,7 @@ namespace Projector
                             cmdResult.isSelfDec = definePart.Contains("SELFDEC");
                             cmdResult.isSetup = definePart.Contains("SETUP");
                             cmdResult.isParentAssigned = definePart.Contains("PARENT");
+                            cmdResult.codeToken = this.scopeToken;
 
                             if (definePart.Contains("WAIT"))
                             {

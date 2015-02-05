@@ -19,6 +19,10 @@ namespace Projector
 
         private ReflectionScript onCloseScript;
 
+        private ReflectionScript OnMessageScript;
+
+        private string messageVarname;
+
         public ReflectForm()
         {
             InitializeComponent();
@@ -32,6 +36,31 @@ namespace Projector
                 RefScriptExecute executer = new RefScriptExecute(this.Script,this);
                 executer.run();
             }
+        }
+
+        public void Message(string name,string message)
+        {
+            if (this.OnMessageScript != null)
+            {
+                this.OnMessageScript.createOrUpdateStringVar("&" + name, message);
+                RefScriptExecute executer = new RefScriptExecute(this.OnMessageScript, this);
+                executer.run();
+            }
+
+            foreach (Control element in this.Controls)
+            {
+                if (element is PrConsole)
+                {
+                    PrConsole console = (PrConsole)element;
+                    console.addMessage(message);
+                }
+            }
+
+        }
+
+        public void OnMessage(ReflectionScript script)
+        {
+            this.OnMessageScript = script;
         }
 
         public void OnCloseForm(ReflectionScript script)

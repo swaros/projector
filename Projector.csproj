@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>72</ApplicationRevision>
+    <ApplicationRevision>74</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -252,6 +252,12 @@
       <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PlacerHolder.cs" />
+    <Compile Include="PrConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PrConsole.Designer.cs">
+      <DependentUpon>PrConsole.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProcSync.cs" />
     <Compile Include="Profil.cs" />
     <Compile Include="ProfilButton.cs">
@@ -341,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PlaceholderEditForm.resx">
       <DependentUpon>PlaceholderEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrConsole.resx">
+      <DependentUpon>PrConsole.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfilButton.resx">
       <DependentUpon>ProfilButton.cs</DependentUpon>

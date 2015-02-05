@@ -12,37 +12,96 @@ namespace Projector
 {
     public partial class ProjectorForm : Form
     {
-
+        /// <summary>
+        /// show Page for Scripts in defined scriptfolder
+        /// </summary>
         const int SCRIPT_BUTTON_MODE = 3;
+        /// <summary>
+        /// show Profil Workbench
+        /// </summary>
         const int STYLE_BUTTON_MODE = 2;
+        /// <summary>
+        /// show Big Startbuttons 
+        /// </summary>
         const int STYLE_BIG_QUICK_BUTTONS = 0;
+
+        /// <summary>
+        /// DEPRECATED
+        /// </summary>
         const int STYLE_SMALL_QUICK_BUTTONS = 1;
 
+        /// <summary>
+        /// Current Profil
+        /// </summary>
         private Profil profil = new Profil();
-        List<Button> ProfilBtn = new List<Button>();
-
+        /// <summary>
+        /// if true, all unassigned Profils will be grouped in 
+        /// an Group named "unassigned". only on Workbench mode
+        /// </summary>
         private Boolean groupUnassigned = false;
-        private bool showGroups = false;
 
+
+        /// <summary>
+        /// the current Mode for the Style
+        /// </summary>
         private int buttonStyle = 0;
+
+        /// <summary>
+        /// max possible Styles for buttonmode
+        /// </summary>
         private int maxStyle = 3;
 
+        /// <summary>
+        /// current loaded scriptfile (used by the quickrun button)
+        /// </summary>
         private string scriptFile;
 
+        /// <summary>
+        /// setting for Scriptfolder View so only scripts that have an label will be desolayed
+        /// </summary>
         private Boolean displayNamedScripstOnly = false;
+
+        /// <summary>
+        /// contains the name of the folder that contains the Reflector Scripts. also used for Scriptcommand EXEC
+        /// </summary>
         private string mainScriptFolder;
 
+        /// <summary>
+        /// cache for all Groups. also used for saving
+        /// </summary>
         private List<string> profilGroups = new List<string>();
 
+        /// <summary>
+        /// contains all selected Profiles on Workbench
+        /// </summary>
         private Hashtable SelectedProfiles = new Hashtable();
 
+        /// <summary>
+        /// Handler for Reflection Scripts. manages which script can be displayed and how
+        /// </summary>
         RefScrAutoStart ScriptAutoLoader = new RefScrAutoStart();
 
+        /// <summary>
+        /// default Style setting for any Child that don't have own settings.
+        /// forms only.
+        /// </summary>
         private static string mainFormStyle = StyleFormProps.STYLE_DEFAULT;
+
+        /// <summary>
+        /// default Style setting for any Child that don't have own settings.
+        /// MDI only and there is only on and this one created by this form, so this setting 
+        /// don't needed as static
+        /// </summary>
         private string mainMDIStyle = StyleFormProps.STYLE_DEFAULT;
 
+        /// <summary>
+        /// Main Configuration Handler
+        /// </summary>
         private PConfig Setup = new PConfig();
 
+        /// <summary>
+        /// Main Projector Form.
+        /// </summary>
         public ProjectorForm()
         {
             InitializeComponent();
@@ -120,9 +179,7 @@ namespace Projector
                 this.Setup.setValue("client.left", this.Left);
                 this.Setup.setValue("client.top", this.Top);
                 this.Setup.setValue("client.width", this.Width);
-                this.Setup.setValue("client.height", this.Height);
-
-                this.Setup.setValue("client.showgroups", this.showGroups);
+                this.Setup.setValue("client.height", this.Height);              
 
                 this.Setup.setValue("client.showgroups", mainSlitter.Panel1Collapsed);
                 this.Setup.setValue("client.buttonstyle", this.buttonStyle);
@@ -143,7 +200,7 @@ namespace Projector
                 this.Width = this.Setup.getIntSettingWidthDefault("client.width", this.Width);
                 this.Height = this.Setup.getIntSettingWidthDefault("client.height", this.Height);
 
-                this.showGroups = this.Setup.getBooleanSettingWidthDefault("client.showgroups", this.showGroups);
+                
 
                 mainSlitter.Panel1Collapsed = this.Setup.getBooleanSettingWidthDefault("client.showgroups", mainSlitter.Panel1Collapsed);
                 groupButtonsToolStripMenuItem.Checked = !mainSlitter.Panel1Collapsed;
@@ -214,6 +271,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Returns the Main Defined Style for all
+        /// Child Forms, that don't have own style settings
+        /// </summary>
+        /// <returns></returns>
         public static string getMainFormStyle()
         {
             return ProjectorForm.mainFormStyle;
@@ -518,7 +580,7 @@ namespace Projector
         }
 
         /// <summary>
-        /// drawing method for Buttonstyle 3
+        /// drawing method Workbench
         /// </summary>
         private void drawNewStyle()
         {
@@ -583,7 +645,9 @@ namespace Projector
             updateGroupButonStyle(tmpBtnTemplate);
         }
 
-
+        /// <summary>
+        /// Drawing method for Button Style
+        /// </summary>
         private void DrawQuickButtonStyle()
         {
             this.resetDefaultWindowsStyle();
@@ -738,50 +802,6 @@ namespace Projector
 
         }
 
-        private void updateButtonsState()
-        {
-            List<string> names = new List<string>();
-            for (int i = 0; i < ProfilBtn.Count; i++)
-            {
-                string showAtProperty = ProfilBtn[i].Text;
-                profil.changeProfil(showAtProperty);
-
-                statusResult result = new statusResult();
-                result = checkConnection(profil);
-
-                names.Add(showAtProperty);
-
-                ProfilBtn[i].Image = Projector.Properties.Resources.database_check;
-                ProfilBtn[i].Update();
-                if (result.status)
-                {
-                    ProfilBtn[i].Image = Projector.Properties.Resources.dbplus;
-
-
-                    MysqlHandler TestConnect = new MysqlHandler(profil);
-                    TestConnect.connect();
-                    MySql.Data.MySqlClient.MySqlDataReader data = TestConnect.sql_select("SELECT version()");
-                    data.Read();
-                    ProfilBtn[i].Text += " " + data.GetString(0);
-                    TestConnect.disConnect();
-
-                }
-                else
-                {
-                    ProfilBtn[i].Image = Projector.Properties.Resources.database4_2;
-                    ProfilBtn[i].ForeColor = Color.Red;
-                }
-
-                ProfilBtn[i].Update();
-
-            }
-            MessageBox.Show("Close this message to return to the Original Display State. Now you can see the mysql Server Version");
-            for (int i = 0; i < ProfilBtn.Count; i++)
-            {
-                ProfilBtn[i].Text = names[i];
-            }
-
-        }
 
         /// <summary>
         /// Updates the Form elements depending on the choosen Prifil
@@ -883,6 +903,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Click handler for QuickButtons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dynBtnClick(object sender, System.EventArgs e)
         {
             Button sendBtn = (Button)sender;
@@ -896,6 +921,11 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Clickhandler for ProfilButtons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void styleBtnClick(object sender, System.EventArgs e)
         {
             Button sendBtn = (Button)sender;
@@ -909,6 +939,11 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Click Handler for Profil-List in the Toolbar
+        /// </summary>
+        /// <param name="who"></param>
+        /// <param name="e"></param>
         private void ProfilSelectExitClick(object who, EventArgs e)
         {
             System.Windows.Forms.ToolStripDropDownItem check = (System.Windows.Forms.ToolStripDropDownItem)who;
@@ -924,11 +959,20 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Wrapper for external access the Setup Form
+        /// </summary>
         public void callSetup()
         {
             setupToolStripMenuItem_Click(null, null);
         }
 
+        /// <summary>
+        /// Click handler menu Setup.
+        /// Creates and show the Setup Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void setupToolStripMenuItem_Click(object sender, EventArgs e)
         {
             setupForm sForm = new setupForm(profil.getName());
@@ -981,7 +1025,11 @@ namespace Projector
             }
         }
 
-
+        /// <summary>
+        /// Checks a Connection by the given Profil
+        /// </summary>
+        /// <param name="testPro">The Profi that will be checked</param>
+        /// <returns>Container that contains Test Result</returns>
         private statusResult checkConnection(Profil testPro)
         {
             statusResult result = new statusResult();
@@ -1019,35 +1067,11 @@ namespace Projector
 
         }
 
-
-        private void databaseWatchToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void startWatcher_Click(object sender, EventArgs e)
-        {
-            databaseWatchToolStripMenuItem_Click(sender, e);
-        }
-
-        private void sensorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MysqlSensor sensor = new MysqlSensor();
-            if (profil.getProperty(ProfilProps.STYLE_COLOR) != null && profil.getProperty(ProfilProps.STYLE_COLOR).Length > 2)
-            {
-                sensor.BackColor = Color.FromArgb(int.Parse(profil.getProperty(ProfilProps.STYLE_COLOR)));
-            }
-            sensor.sensorProfil.getValuesFromProfil(profil);
-            sensor.getStartupData();
-            sensor.Show();
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            sensorToolStripMenuItem_Click(sender, e);
-
-        }
-
+        /// <summary>
+        /// Handler for Menu Item Show Database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void querysToolStripMenuItem_Click(object sender, EventArgs e)
         {
             queryBrowser qb = new queryBrowser();
@@ -1060,6 +1084,11 @@ namespace Projector
             qb.Show();
         }
 
+        /// <summary>
+        /// Handler to start the MDI Window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mDIToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MdiForm mdif = new MdiForm();
@@ -1088,30 +1117,47 @@ namespace Projector
             mdif.Show();
         }
 
+        /// <summary>
+        /// Handler to start Database Sync Tool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             copyDb cform = new copyDb();
             cform.Show();
         }
 
+        /// <summary>
+        /// Handler for clicking the Profil label that
+        /// forces an reload of all profiles
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void showProfilLabel_Click(object sender, EventArgs e)
         {
             updateProfilSelector();
         }
 
-        private void exportCurrentProfilToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
-
+        /// <summary>
+        /// Event handler atfter Form was Created and Activated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProjectorForm_Shown(object sender, EventArgs e)
         {
             initApp();
             updateProfilSelector();
         }
 
+        /// <summary>
+        /// Handler by clicking Menu "Groups...".
+        /// Creates and displays the Group Setup Form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void groupsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProfilGroup p1 = new ProfilGroup(this.profilGroups);
@@ -1131,14 +1177,23 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Handler for menuitem GroupQuery
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void groupQueryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GroupQuery gq = new GroupQuery();
-
             gq.Show();
 
         }
 
+        /// <summary>
+        /// Handler for the Connection Testing ToolBar-Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toolStripButton3_Click(object sender, EventArgs e)
         {
             toolStripButton3.Enabled = false;
@@ -1155,6 +1210,11 @@ namespace Projector
             
         }
 
+        /// <summary>
+        /// Handler for Menu "Save Project"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void backupProfilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveProject.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -1164,6 +1224,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Handler for menu "Open Project"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -1173,17 +1238,12 @@ namespace Projector
             }
         }
 
-        private void importPartsOfProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showGroups = groupButtonsToolStripMenuItem.Checked;
-            updateProfilSelector();
-        }
-
+       
+        /// <summary>
+        /// handler for menu Item "Change Button Mode"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void switchButtonModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             buttonStyle++;
@@ -1193,20 +1253,35 @@ namespace Projector
             updateProfilSelector();
         }
 
+        /// <summary>
+        /// Handler for Group DropDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chooseGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             updateProfilSelector();
         }
 
+        /// <summary>
+        /// On Paint Event ...not used atm
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void flowLayout_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// handler for Toolbar Button "show Groups"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void groupButtonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             mainSlitter.Panel1Collapsed = !groupButtonsToolStripMenuItem.Checked;
-            this.showGroups = groupButtonsToolStripMenuItem.Checked;
+            
             if (ProjectorForm.STYLE_BUTTON_MODE == buttonStyle)
             {
                 this.flowLayout.Controls.Clear();
@@ -1215,6 +1290,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Handler for script Run Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void scriptRunButton_Click(object sender, EventArgs e)
         {
 
@@ -1234,12 +1314,22 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Handler for the menu "Edit Script"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void editScriptToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ScriptWriter newScript = new ScriptWriter(this);
             newScript.Show();
         }
 
+        /// <summary>
+        /// Handler for the menu "main Setup"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mainSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MainSetup ms = new MainSetup();
@@ -1267,6 +1357,9 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// method to update the Buttonstate depending on the used ButtonStyle
+        /// </summary>
         private void updateStyleButtons()
         {
             style_0.Checked = false;
@@ -1288,24 +1381,41 @@ namespace Projector
             this.updateProfilSelector();
         }
 
+        /// <summary>
+        /// A Toolbar Button to switch the style was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void style_0_Click(object sender, EventArgs e)
         {
             this.buttonStyle = 0;
             this.updateStyleButtons();
         }
-
+        /// <summary>
+        /// A Toolbar Button to switch the style was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void style_1_Click(object sender, EventArgs e)
         {
             this.buttonStyle = 1;
             this.updateStyleButtons();
         }
-
+        /// <summary>
+        /// A Toolbar Button to switch the style was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void style_2_Click(object sender, EventArgs e)
         {
             this.buttonStyle = 2;
             this.updateStyleButtons();
         }
-
+        /// <summary>
+        /// A Toolbar Button to switch the style was clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void style_3_Click(object sender, EventArgs e)
         {
             this.buttonStyle = 3;
@@ -1316,7 +1426,11 @@ namespace Projector
         {
 
         }
-
+        /// <summary>
+        /// handle state of drag and Drop actions on the group Button panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void flowLayoutControllPanel_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
@@ -1325,6 +1439,11 @@ namespace Projector
                 e.Effect = DragDropEffects.None;
         }
 
+        /// <summary>
+        /// Handles state od drag and Drop on the main Panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void flowLayout_DragEnter(object sender, DragEventArgs e)
         {
 
@@ -1368,7 +1487,11 @@ namespace Projector
 
         }
 
-
+        /// <summary>
+        /// Reorders the sortorder on Profils on workbench if they are grouped together
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="dropped"></param>
         public void reOrderButtonsInGroup(ProfilButton target, ProfilButton dropped)
         {
             GroupProfilWorker worker = new GroupProfilWorker(this.Setup);
@@ -1388,6 +1511,12 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Handler for menuItem §remove selected Profiles"
+        /// also riggered by pressing DEL on keyboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void removeSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Setup.removeEmptyChilds = true;
@@ -1414,6 +1543,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Backround Process for checking connections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CconnectionTest_DoWork(object sender, DoWorkEventArgs e)
         {
             List<string> profiles = (List<string>) e.Argument;
@@ -1427,6 +1561,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// Backround Process for checking connections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void connectionTest_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             statusResult state = (statusResult)e.UserState;
@@ -1454,12 +1593,23 @@ namespace Projector
                 }
             }
         }
-
+        /// <summary>
+        /// Backround Process for checking connections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void connectionTest_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripButton3.Enabled = true;
         }
 
+        /// <summary>
+        /// Returns a new Profil and check the name.
+        /// if the name allready used, a new one will be crated
+        /// until it is a unique name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private Profil addNewProfil(string name)
         {
             List<string> currentProfiles = this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
@@ -1505,7 +1655,13 @@ namespace Projector
                 setupToolStripMenuItem_Click(null, null);
             }*/
         }
-
+        /// <summary>
+        /// Handler for Toolbar Button "Add New Profile"
+        /// Adding an new Profil after a name was inserted.
+        /// then the setup will be triggered
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private void addProfil_Click(object sender, EventArgs e)
         {
             UserTextInput userInput = new UserTextInput();
@@ -1521,6 +1677,11 @@ namespace Projector
 
         }
 
+        /// <summary>
+        /// Handler fpr toolbar button to show the Grous Panel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void enableGroupView_Click(object sender, EventArgs e)
         {
             groupButtonsToolStripMenuItem.Checked = !groupButtonsToolStripMenuItem.Checked;

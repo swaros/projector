@@ -19,6 +19,24 @@ namespace Projector
             return val.Substring(start, lengt);   
         }
 
+        public void splitAndIterate(string source, string splitBy, string nameOfVar, ReflectionScript script)
+        {
+            if (script != null)
+            {
+                
+                string[] parts = source.Split(splitBy.ToCharArray());
+
+                foreach (string part in parts)
+                {
+                    RefScriptExecute exec = new RefScriptExecute(script, this);
+                    script.createOrUpdateStringVar("&" + nameOfVar, part);
+                    exec.run();
+                }
+
+            }
+        }
+
+
         public string between(string startStr, string endStr)
         {
             string res = "";

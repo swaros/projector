@@ -31,6 +31,7 @@ namespace Projector
         public int lineNumber = 0;
         public int lineCount = 1;
         public int setState = 0;
+        public String codeToken = "UNSET";
 
         public ReflectionScript subScript;
 

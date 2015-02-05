@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Projector
 {
+    /// <summary>
+    /// Keys for the Important Settings in profiles
+    /// </summary>
     class ProfilProps
     {
         /// <summary>

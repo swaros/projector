@@ -678,8 +678,7 @@ namespace Projector
         {
             ListViewWorker Worker = new ListViewWorker();
             this.setStatusMsg("Exporting to " + filename + " please wait");
-            string csvContent = Worker.exportCsv(this.listView);
-
+            string csvContent = Worker.exportCsv(this.listView);            
             System.IO.File.WriteAllText(filename, csvContent);
             resetlabel();
         }

@@ -106,6 +106,11 @@ namespace Projector
             {
                 return this.getRString(refObject, parent);
             }
+
+            if (refObject.typeOfObject == "PrConsole")
+            {
+                return this.getConsole(refObject, parent);
+            }
             return null;
         }
 
@@ -148,6 +153,14 @@ namespace Projector
             }
             return addThis;
         }
+
+        private PrConsole getConsole(ReflectionScriptDefines refObject, Object parent)
+        {
+            PrConsole newTextBox = new PrConsole();
+            newTextBox = (PrConsole)NewControlObject(newTextBox, refObject, parent);
+            return newTextBox;
+        }
+
 
         private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)
         {
@@ -217,7 +230,7 @@ namespace Projector
 
             ReflectForm newForm;
 
-            newForm = (ReflectForm)this.getExistingObject(refObject.name);
+            newForm = (ReflectForm)this.getExistingObject(refObject.name + refObject.codeToken);
             if (newForm == null)
             {
                 newForm = new ReflectForm();
@@ -231,24 +244,43 @@ namespace Projector
             }
             else if (parent is Form)
             {
-                newForm.Show();
+                this.showRForm(newForm, refObject.name);
             }
             else if (parent is ReflectionScript)
             {
                 ReflectionScript parScr = (ReflectionScript)parent;
                 if (parScr.SetupBoolValue(ReflectionScript.SETUP_PREVIEW))
                 {
-                    newForm.Show();
+                    this.showRForm(newForm, refObject.name);
                 }
             }
-            this.addObject(refObject.name,newForm);
+            else
+            {
+                this.showRForm(newForm, refObject.name);
+            }
+            this.addObject(refObject.name + refObject.codeToken, newForm);
             return newForm;
         }
+
+        private void showRForm(ReflectForm newForm, string name)
+        {
+            try
+            {
+                newForm.Show();
+            }
+            catch (ObjectDisposedException ex)
+            {
+                newForm = new ReflectForm();
+                newForm.ScriptIdent = name;
+                newForm.Name = name;
+            }
+        }
+
 
         private GroupQuery getGroupQuery(ReflectionScriptDefines refObject, Object parent)
         {
 
-            if (ReflectNew.obReferences.ContainsKey(refObject.name))
+            if (ReflectNew.obReferences.ContainsKey(refObject.name + refObject.codeToken))
             {
                 Object hValue = obReferences[refObject.name];
                 if(hValue is GroupQuery){
@@ -264,7 +296,7 @@ namespace Projector
                     }
                     catch (ObjectDisposedException disposed)
                     {
-                        ReflectNew.obReferences.Remove(refObject.name);
+                        ReflectNew.obReferences.Remove(refObject.name + refObject.codeToken);
                     }
                     
                 }
@@ -280,9 +312,9 @@ namespace Projector
             }
             //grQuery.Show();
 
-            if (!ReflectNew.obReferences.ContainsKey(refObject.name))
+            if (!ReflectNew.obReferences.ContainsKey(refObject.name + refObject.codeToken))
             {
-                ReflectNew.obReferences.Add(refObject.name, grQuery);
+                ReflectNew.obReferences.Add(refObject.name + refObject.codeToken, grQuery);
             }
             return grQuery;
         }
