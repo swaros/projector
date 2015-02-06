@@ -524,14 +524,14 @@
             this.loadToolStripMenuItem.Image = global::Projector.Properties.Resources.folder_open_16;
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.loadToolStripMenuItem.Text = "&Load...";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.saveToolStripMenuItem.Text = "&Save As...";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
@@ -540,7 +540,7 @@
             this.saveToolStripMenuItem1.Image = global::Projector.Properties.Resources.SAVE_16;
             this.saveToolStripMenuItem1.Name = "saveToolStripMenuItem1";
             this.saveToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(151, 22);
+            this.saveToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.saveToolStripMenuItem1.Text = "Save";
             this.saveToolStripMenuItem1.Click += new System.EventHandler(this.saveToolStripMenuItem1_Click);
             // 
@@ -549,7 +549,7 @@
             this.runToolStripMenuItem.Image = global::Projector.Properties.Resources.stock_tools_macro;
             this.runToolStripMenuItem.Name = "runToolStripMenuItem";
             this.runToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.runToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.runToolStripMenuItem.Text = "Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
@@ -587,9 +587,7 @@
             // 
             // inspectRunToolStripMenuItem
             // 
-            this.inspectRunToolStripMenuItem.Checked = true;
             this.inspectRunToolStripMenuItem.CheckOnClick = true;
-            this.inspectRunToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.inspectRunToolStripMenuItem.Name = "inspectRunToolStripMenuItem";
             this.inspectRunToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.inspectRunToolStripMenuItem.Text = "&Inspect Run";
