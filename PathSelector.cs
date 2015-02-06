@@ -14,7 +14,6 @@ namespace Projector
         private string path = "";
         private string lastPath = "";
 
-        private Boolean isValid = false;
 
         public PathSelector()
         {

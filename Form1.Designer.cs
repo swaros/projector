@@ -28,15 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectorForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.databaseWatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.databaseWatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.editScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.einstellungenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +47,9 @@
             this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchButtonModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.ProfilInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionState = new System.Windows.Forms.ToolStripStatusLabel();
@@ -56,6 +61,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.showProfilLabel = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.enableGroupView = new System.Windows.Forms.ToolStripButton();
             this.profilSelector = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -68,18 +74,15 @@
             this.style_0 = new System.Windows.Forms.ToolStripButton();
             this.style_2 = new System.Windows.Forms.ToolStripButton();
             this.style_3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.addProfil = new System.Windows.Forms.ToolStripButton();
             this.exportProfileDlg = new System.Windows.Forms.SaveFileDialog();
             this.openProjectDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveProject = new System.Windows.Forms.SaveFileDialog();
             this.openScript = new System.Windows.Forms.OpenFileDialog();
-            this.profilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.connectionTest = new System.ComponentModel.BackgroundWorker();
-            this.addProfil = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.enableGroupView = new System.Windows.Forms.ToolStripButton();
+            this.ScriptDawTimer = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -121,34 +124,6 @@
             this.startToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
             this.startToolStripMenuItem.Text = "&Project";
             // 
-            // databaseWatchToolStripMenuItem
-            // 
-            this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
-            this.databaseWatchToolStripMenuItem.Name = "databaseWatchToolStripMenuItem";
-            this.databaseWatchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
-            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.databaseWatchToolStripMenuItem.Text = "Sync Database...";
-            this.databaseWatchToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // mDIToolStripMenuItem
-            // 
-            this.mDIToolStripMenuItem.Name = "mDIToolStripMenuItem";
-            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.mDIToolStripMenuItem.Text = "Show Database...";
-            this.mDIToolStripMenuItem.Click += new System.EventHandler(this.mDIToolStripMenuItem_Click);
-            // 
-            // groupQueryToolStripMenuItem
-            // 
-            this.groupQueryToolStripMenuItem.Name = "groupQueryToolStripMenuItem";
-            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
-            this.groupQueryToolStripMenuItem.Text = "Group Query...";
-            this.groupQueryToolStripMenuItem.Click += new System.EventHandler(this.groupQueryToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
-            // 
             // loadProjectToolStripMenuItem
             // 
             this.loadProjectToolStripMenuItem.Image = global::Projector.Properties.Resources.folder_closed_16;
@@ -165,6 +140,39 @@
             this.saveProjectToolStripMenuItem.Text = "Save Project...";
             this.saveProjectToolStripMenuItem.Click += new System.EventHandler(this.backupProfilesToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(201, 6);
+            // 
+            // mDIToolStripMenuItem
+            // 
+            this.mDIToolStripMenuItem.Name = "mDIToolStripMenuItem";
+            this.mDIToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.mDIToolStripMenuItem.Text = "Show Database...";
+            this.mDIToolStripMenuItem.Click += new System.EventHandler(this.mDIToolStripMenuItem_Click);
+            // 
+            // groupQueryToolStripMenuItem
+            // 
+            this.groupQueryToolStripMenuItem.Name = "groupQueryToolStripMenuItem";
+            this.groupQueryToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.groupQueryToolStripMenuItem.Text = "Group Query...";
+            this.groupQueryToolStripMenuItem.Click += new System.EventHandler(this.groupQueryToolStripMenuItem_Click);
+            // 
+            // databaseWatchToolStripMenuItem
+            // 
+            this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
+            this.databaseWatchToolStripMenuItem.Name = "databaseWatchToolStripMenuItem";
+            this.databaseWatchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
+            this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.databaseWatchToolStripMenuItem.Text = "Sync Database...";
+            this.databaseWatchToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(201, 6);
+            // 
             // editScriptToolStripMenuItem
             // 
             this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
@@ -177,6 +185,7 @@
             this.einstellungenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.setupToolStripMenuItem,
             this.groupsToolStripMenuItem,
+            this.toolStripSeparator8,
             this.mainSettingsToolStripMenuItem});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -186,21 +195,21 @@
             // 
             this.setupToolStripMenuItem.Name = "setupToolStripMenuItem";
             this.setupToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.setupToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.setupToolStripMenuItem.Text = "Setup...";
+            this.setupToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.setupToolStripMenuItem.Text = "Profil Setup...";
             this.setupToolStripMenuItem.Click += new System.EventHandler(this.setupToolStripMenuItem_Click);
             // 
             // groupsToolStripMenuItem
             // 
             this.groupsToolStripMenuItem.Name = "groupsToolStripMenuItem";
-            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.groupsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.groupsToolStripMenuItem.Text = "Groups...";
             this.groupsToolStripMenuItem.Click += new System.EventHandler(this.groupsToolStripMenuItem_Click);
             // 
             // mainSettingsToolStripMenuItem
             // 
             this.mainSettingsToolStripMenuItem.Name = "mainSettingsToolStripMenuItem";
-            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
             this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
             // 
@@ -232,6 +241,30 @@
             this.groupButtonsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             this.groupButtonsToolStripMenuItem.Text = "Group Buttons";
             this.groupButtonsToolStripMenuItem.Click += new System.EventHandler(this.groupButtonsToolStripMenuItem_Click);
+            // 
+            // profilesToolStripMenuItem
+            // 
+            this.profilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.groupSelectedToolStripMenuItem,
+            this.removeSelectedToolStripMenuItem});
+            this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
+            this.profilesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.profilesToolStripMenuItem.Text = "Pro&files";
+            // 
+            // groupSelectedToolStripMenuItem
+            // 
+            this.groupSelectedToolStripMenuItem.Name = "groupSelectedToolStripMenuItem";
+            this.groupSelectedToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.groupSelectedToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.groupSelectedToolStripMenuItem.Text = "Group Selected";
+            // 
+            // removeSelectedToolStripMenuItem
+            // 
+            this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
+            this.removeSelectedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
+            this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -316,7 +349,6 @@
             // 
             this.flowLayout.AllowDrop = true;
             this.flowLayout.AutoScroll = true;
-            this.flowLayout.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout.Location = new System.Drawing.Point(0, 0);
             this.flowLayout.Name = "flowLayout";
@@ -350,7 +382,7 @@
             this.addProfil});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(578, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(547, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -364,6 +396,16 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // enableGroupView
+            // 
+            this.enableGroupView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.enableGroupView.Image = global::Projector.Properties.Resources.application_side_tree;
+            this.enableGroupView.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.enableGroupView.Name = "enableGroupView";
+            this.enableGroupView.Size = new System.Drawing.Size(23, 22);
+            this.enableGroupView.Text = "Show Grouppanel (CTRL + SHIFT + G)";
+            this.enableGroupView.Click += new System.EventHandler(this.enableGroupView_Click);
             // 
             // profilSelector
             // 
@@ -467,6 +509,21 @@
             this.style_3.Text = "Scripts";
             this.style_3.Click += new System.EventHandler(this.style_3_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // addProfil
+            // 
+            this.addProfil.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.addProfil.Image = global::Projector.Properties.Resources.add_16;
+            this.addProfil.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.addProfil.Name = "addProfil";
+            this.addProfil.Size = new System.Drawing.Size(23, 22);
+            this.addProfil.Text = "Add a New Profil";
+            this.addProfil.Click += new System.EventHandler(this.addProfil_Click);
+            // 
             // exportProfileDlg
             // 
             this.exportProfileDlg.Filter = "Xml Profil|*.xml";
@@ -491,35 +548,6 @@
             this.openScript.Tag = "LoadScript";
             this.openScript.Title = "Load Script File";
             // 
-            // profilesToolStripMenuItem
-            // 
-            this.profilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.groupSelectedToolStripMenuItem,
-            this.removeSelectedToolStripMenuItem});
-            this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
-            this.profilesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this.profilesToolStripMenuItem.Text = "Pro&files";
-            // 
-            // groupSelectedToolStripMenuItem
-            // 
-            this.groupSelectedToolStripMenuItem.Name = "groupSelectedToolStripMenuItem";
-            this.groupSelectedToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.groupSelectedToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.groupSelectedToolStripMenuItem.Text = "Group Selected";
-            // 
-            // removeSelectedToolStripMenuItem
-            // 
-            this.removeSelectedToolStripMenuItem.Name = "removeSelectedToolStripMenuItem";
-            this.removeSelectedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.removeSelectedToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.removeSelectedToolStripMenuItem.Text = "Remove Selected";
-            this.removeSelectedToolStripMenuItem.Click += new System.EventHandler(this.removeSelectedToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(201, 6);
-            // 
             // connectionTest
             // 
             this.connectionTest.WorkerReportsProgress = true;
@@ -528,30 +556,15 @@
             this.connectionTest.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.connectionTest_ProgressChanged);
             this.connectionTest.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.connectionTest_RunWorkerCompleted);
             // 
-            // addProfil
+            // ScriptDawTimer
             // 
-            this.addProfil.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.addProfil.Image = global::Projector.Properties.Resources.add_16;
-            this.addProfil.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.addProfil.Name = "addProfil";
-            this.addProfil.Size = new System.Drawing.Size(23, 22);
-            this.addProfil.Text = "Add a New Profil";
-            this.addProfil.Click += new System.EventHandler(this.addProfil_Click);
+            this.ScriptDawTimer.Interval = 250;
+            this.ScriptDawTimer.Tick += new System.EventHandler(this.ScriptDawTimer_Tick);
             // 
-            // toolStripSeparator7
+            // toolStripSeparator8
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // enableGroupView
-            // 
-            this.enableGroupView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.enableGroupView.Image = global::Projector.Properties.Resources.application_side_tree;
-            this.enableGroupView.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.enableGroupView.Name = "enableGroupView";
-            this.enableGroupView.Size = new System.Drawing.Size(23, 22);
-            this.enableGroupView.Text = "Show Grouppanel (CTRL + SHIFT + G)";
-            this.enableGroupView.Click += new System.EventHandler(this.enableGroupView_Click);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(181, 6);
             // 
             // ProjectorForm
             // 
@@ -641,6 +654,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton addProfil;
         private System.Windows.Forms.ToolStripButton enableGroupView;
+        private System.Windows.Forms.Timer ScriptDawTimer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 
 
     }

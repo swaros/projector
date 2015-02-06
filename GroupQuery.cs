@@ -39,7 +39,6 @@ namespace Projector
         // helper for async
         int runningMaxEvents = 0;
         int runningCurrentEvents = 0;
-        bool running;
 
         
         private GroupProfilWorker GroupSetup = new GroupProfilWorker(new PConfig());

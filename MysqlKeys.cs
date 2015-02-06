@@ -9,7 +9,7 @@ namespace Projector
 
     class MysqlKeys
     {
-        public string Table;
+        //public string Table;
         /*public bool nonUnique;
         public string keyName;
         public int seqInSequence;

@@ -119,7 +119,7 @@ namespace Projector
         {
             
             ICollection keyColl = settings.Keys;
-            XmlNode myRoot, myNode;
+            XmlNode myNode;
             XmlAttribute myAttribute;
             foreach (DictionaryEntry de in this.settings)
             {

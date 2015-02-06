@@ -182,7 +182,6 @@
       <DependentUpon>LabelText.cs</DependentUpon>
     </Compile>
     <Compile Include="ListviewForWorker.cs" />
-    <Compile Include="ListViewReportContainer.cs" />
     <Compile Include="ListViewWorker.cs" />
     <Compile Include="MacroFunctions.cs" />
     <Compile Include="MainSetup.cs">
@@ -200,7 +199,6 @@
     <Compile Include="MysqlCreateStruct.cs" />
     <Compile Include="MysqlCreateStructContainer.cs" />
     <Compile Include="MysqlExplain.cs" />
-    <Compile Include="MysqlFleet.cs" />
     <Compile Include="MysqlHandler.cs" />
     <Compile Include="MysqlIndexType.cs" />
     <Compile Include="MysqlKeys.cs" />
@@ -460,7 +458,6 @@
     <Compile Include="ReflectButton.Designer.cs">
       <DependentUpon>ReflectButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReflectDatabase.cs" />
     <Compile Include="ReflectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -982,6 +979,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <None Include="Resources\orange_01.png" />
+    <None Include="Resources\metall_bg.png" />
+    <None Include="Resources\folder_601.png" />
+    <None Include="Resources\folder_60.png" />
+    <None Include="Resources\folder_1.png" />
+    <None Include="Resources\folder_2.png" />
+    <None Include="Resources\folder_3.png" />
+    <None Include="Resources\folder_4.png" />
+    <None Include="Resources\folder_5.png" />
     <None Include="Resources\voyager_badge.png" />
     <None Include="Resources\music_conductor.png" />
     <None Include="Resources\playstation-flat-icon-square-dark-32.png" />
@@ -993,6 +999,18 @@
     <None Include="Resources\chain_plus.png" />
     <None Include="Resources\application_side_tree.png" />
     <None Include="Resources\communicator.png" />
+    <None Include="Resources\a_folder_4.png" />
+    <None Include="Resources\a_folder_3.png" />
+    <None Include="Resources\a_folder_2.png" />
+    <None Include="Resources\a_folder_1.png" />
+    <None Include="Resources\bg_01.png" />
+    <Content Include="Resources\bg_02.gif" />
+    <None Include="Resources\bg_021.gif" />
+    <None Include="Resources\bg_03.gif" />
+    <None Include="Resources\bg_04.gif" />
+    <None Include="Resources\bg_05.gif" />
+    <None Include="Resources\bg_06.gif" />
+    <None Include="Resources\bg_07.gif" />
     <Content Include="Resources\edit-replace.png" />
     <None Include="Resources\ui-list-box-blue.png" />
     <None Include="Resources\layer-group-add.png" />

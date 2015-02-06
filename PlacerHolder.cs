@@ -13,7 +13,6 @@ namespace Projector
     class PlacerHolder : ISerializable
     {
         Hashtable placeHolder = new Hashtable();
-        Boolean allProfiles = false;
         List<string> forProfiles = new List<string>();
 
         public int Count()

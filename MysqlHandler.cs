@@ -25,7 +25,6 @@ namespace Projector
         List<MysqlStruct> structList = null;
         List<string> errorMessages = new List<string>();
 
-        private string versionInfo = "NONE";
 
         public string lastSqlErrorMessage = "";
         public int lastErrorCode = 0; 

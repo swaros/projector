@@ -31,10 +31,10 @@
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.nameChange = new System.Windows.Forms.TextBox();
             this.grpName = new System.Windows.Forms.Label();
             this.grpFlow = new System.Windows.Forms.FlowLayoutPanel();
             this.OpenLabel = new System.Windows.Forms.Label();
-            this.nameChange = new System.Windows.Forms.TextBox();
             this.clickWatcher = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             this.grpFlow.SuspendLayout();
@@ -59,18 +59,28 @@
             this.panel2.Size = new System.Drawing.Size(200, 67);
             this.panel2.TabIndex = 1;
             // 
+            // nameChange
+            // 
+            this.nameChange.Location = new System.Drawing.Point(7, 25);
+            this.nameChange.Name = "nameChange";
+            this.nameChange.Size = new System.Drawing.Size(190, 20);
+            this.nameChange.TabIndex = 1;
+            this.nameChange.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nameChange_KeyDown);
+            // 
             // grpName
             // 
             this.grpName.AllowDrop = true;
             this.grpName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpName.ForeColor = System.Drawing.Color.White;
+            this.grpName.Image = global::Projector.Properties.Resources.folder_601;
+            this.grpName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.grpName.Location = new System.Drawing.Point(0, 0);
             this.grpName.Name = "grpName";
             this.grpName.Size = new System.Drawing.Size(200, 67);
             this.grpName.TabIndex = 0;
             this.grpName.Text = "Unnamed";
-            this.grpName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.grpName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.grpName.Click += new System.EventHandler(this.grpName_Click);
             this.grpName.DragDrop += new System.Windows.Forms.DragEventHandler(this.grpFlow_DragDrop);
             this.grpName.DragEnter += new System.Windows.Forms.DragEventHandler(this.grpFlow_DragEnter);
@@ -92,23 +102,17 @@
             // 
             // OpenLabel
             // 
-            this.OpenLabel.AutoSize = true;
             this.OpenLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OpenLabel.ForeColor = System.Drawing.Color.White;
+            this.OpenLabel.Image = global::Projector.Properties.Resources.folder_601;
+            this.OpenLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OpenLabel.Location = new System.Drawing.Point(3, 0);
             this.OpenLabel.Name = "OpenLabel";
-            this.OpenLabel.Size = new System.Drawing.Size(66, 24);
+            this.OpenLabel.Size = new System.Drawing.Size(307, 64);
             this.OpenLabel.TabIndex = 0;
             this.OpenLabel.Text = "label1";
+            this.OpenLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.OpenLabel.Click += new System.EventHandler(this.OpenLabel_Click);
-            // 
-            // nameChange
-            // 
-            this.nameChange.Location = new System.Drawing.Point(7, 25);
-            this.nameChange.Name = "nameChange";
-            this.nameChange.Size = new System.Drawing.Size(190, 20);
-            this.nameChange.TabIndex = 1;
-            this.nameChange.KeyDown += new System.Windows.Forms.KeyEventHandler(this.nameChange_KeyDown);
             // 
             // clickWatcher
             // 
@@ -131,7 +135,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.grpFlow.ResumeLayout(false);
-            this.grpFlow.PerformLayout();
             this.ResumeLayout(false);
 
         }

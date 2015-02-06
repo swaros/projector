@@ -30,6 +30,13 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.OnlyNamedScripts = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.bgSelect = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.MainMDIStyle = new System.Windows.Forms.ComboBox();
+            this.MainFormStyle = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.displayNamedScript = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -37,17 +44,12 @@
             this.ScriptPath = new Projector.PathSelector();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.MainFormStyle = new System.Windows.Forms.ComboBox();
-            this.MainMDIStyle = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.OnlyNamedScripts.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -71,6 +73,84 @@
             this.OnlyNamedScripts.TabIndex = 0;
             this.OnlyNamedScripts.Text = "Main Settings";
             this.OnlyNamedScripts.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.bgSelect);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.MainMDIStyle);
+            this.groupBox3.Controls.Add(this.MainFormStyle);
+            this.groupBox3.Location = new System.Drawing.Point(9, 16);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(401, 91);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Styles";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(265, 14);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Worbench Background";
+            // 
+            // bgSelect
+            // 
+            this.bgSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bgSelect.FormattingEnabled = true;
+            this.bgSelect.Items.AddRange(new object[] {
+            "Plain (no Image)",
+            "Substance",
+            "Plates",
+            "Grid",
+            "Stripes",
+            "Metall",
+            "Metall Grid",
+            "Metall Grid (Darker)"});
+            this.bgSelect.Location = new System.Drawing.Point(265, 42);
+            this.bgSelect.Name = "bgSelect";
+            this.bgSelect.Size = new System.Drawing.Size(121, 21);
+            this.bgSelect.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(4, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Default MDI Style";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(4, 19);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Default Form Style";
+            // 
+            // MainMDIStyle
+            // 
+            this.MainMDIStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MainMDIStyle.FormattingEnabled = true;
+            this.MainMDIStyle.Location = new System.Drawing.Point(108, 42);
+            this.MainMDIStyle.Name = "MainMDIStyle";
+            this.MainMDIStyle.Size = new System.Drawing.Size(132, 21);
+            this.MainMDIStyle.TabIndex = 1;
+            // 
+            // MainFormStyle
+            // 
+            this.MainFormStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MainFormStyle.FormattingEnabled = true;
+            this.MainFormStyle.Location = new System.Drawing.Point(108, 14);
+            this.MainFormStyle.Name = "MainFormStyle";
+            this.MainFormStyle.Size = new System.Drawing.Size(132, 21);
+            this.MainFormStyle.TabIndex = 0;
             // 
             // groupBox2
             // 
@@ -140,55 +220,6 @@
             this.button2.Text = "Abort";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.label1);
-            this.groupBox3.Controls.Add(this.MainMDIStyle);
-            this.groupBox3.Controls.Add(this.MainFormStyle);
-            this.groupBox3.Location = new System.Drawing.Point(9, 16);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(264, 91);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Styles";
-            // 
-            // MainFormStyle
-            // 
-            this.MainFormStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainFormStyle.FormattingEnabled = true;
-            this.MainFormStyle.Location = new System.Drawing.Point(108, 14);
-            this.MainFormStyle.Name = "MainFormStyle";
-            this.MainFormStyle.Size = new System.Drawing.Size(132, 21);
-            this.MainFormStyle.TabIndex = 0;
-            // 
-            // MainMDIStyle
-            // 
-            this.MainMDIStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MainMDIStyle.FormattingEnabled = true;
-            this.MainMDIStyle.Location = new System.Drawing.Point(108, 42);
-            this.MainMDIStyle.Name = "MainMDIStyle";
-            this.MainMDIStyle.Size = new System.Drawing.Size(132, 21);
-            this.MainMDIStyle.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Default Form Style";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Default MDI Style";
-            // 
             // MainSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,12 +234,12 @@
             this.Text = "Main Setup";
             this.tabControl1.ResumeLayout(false);
             this.OnlyNamedScripts.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -229,5 +260,7 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox MainMDIStyle;
         public System.Windows.Forms.ComboBox MainFormStyle;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.ComboBox bgSelect;
     }
 }

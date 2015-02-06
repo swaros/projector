@@ -100,6 +100,14 @@ namespace Projector
         private PConfig Setup = new PConfig();
 
         /// <summary>
+        /// Current backgroundimage for Workbench view.
+        /// set null for non image
+        /// </summary>
+        Image bgImage;
+
+        private int WorbenchBackGroundImage = 0;
+
+        /// <summary>
         /// Main Projector Form.
         /// </summary>
         public ProjectorForm()
@@ -107,6 +115,8 @@ namespace Projector
             InitializeComponent();
             this.mainScriptFolder = Application.StartupPath;
             Setup.loadRuntimeConfig();
+            bgImage = Projector.Properties.Resources.bg_07;
+            //bgImage = Projector.Properties.Resources.bg_03;
             updateProfilSelector();
 
 
@@ -192,6 +202,9 @@ namespace Projector
 
                 this.Setup.setList("client.groups.names", this.profilGroups);
                 this.Setup.setValue("client.maximized", this.WindowState == FormWindowState.Maximized);
+                this.Setup.setValue("client.workbench.bgimage", this.WorbenchBackGroundImage);    
+                
+                
             }
             else
             {
@@ -218,6 +231,8 @@ namespace Projector
 
                 bool maximized = this.Setup.getBooleanSettingWidthDefault("client.maximized", this.WindowState == FormWindowState.Maximized);
 
+                this.WorbenchBackGroundImage = this.Setup.getIntSettingWidthDefault("client.workbench.bgimage", this.WorbenchBackGroundImage);
+                this.setBgImage();
                 if (maximized && this.WindowState != FormWindowState.Maximized)
                 {
                     this.WindowState = FormWindowState.Maximized;
@@ -271,6 +286,18 @@ namespace Projector
             }
         }
 
+        public void HoldLayout()
+        {
+            flowLayout.Visible = false;
+            flowLayout.SuspendLayout();
+        }
+
+        public void RedrawLayout()
+        {
+            this.flowLayout.ResumeLayout();
+            this.flowLayout.Visible = true;
+        }
+
         /// <summary>
         /// Returns the Main Defined Style for all
         /// Child Forms, that don't have own style settings
@@ -288,6 +315,7 @@ namespace Projector
         {
 
             flowLayoutControllPanel.Controls.Clear();
+            
             List<String> groups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES, new List<string>());
 
             chooseGroup.Items.Clear();
@@ -328,6 +356,8 @@ namespace Projector
                 select++;
             }
             chooseGroup.SelectedIndex = 0;
+            
+
         }
 
         /// <summary>
@@ -465,8 +495,10 @@ namespace Projector
         /// <param name="redraw">Full update (deletes all and redcreate it)</param>
         private void drawNewStyleButtons(string show, Boolean redraw)
         {
+            
             if (redraw)
             {
+                
                 this.flowLayout.Controls.Clear();
             }
             List<string> groups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES, new List<string>());
@@ -577,6 +609,8 @@ namespace Projector
                 if (unusedExists)
                     flowLayout.Controls.Add(grpBtnUnassigned);
             }
+            flowLayout.BackgroundImage = bgImage;
+            this.RedrawLayout();
         }
 
         /// <summary>
@@ -584,16 +618,17 @@ namespace Projector
         /// </summary>
         private void drawNewStyle()
         {
-
+            this.HoldLayout();
             List<string> grp = this.getGroupMembers(chooseGroup.Text);
 
             flowLayout.BackColor = Color.FromArgb(60, 60, 60);
             flowLayout.Padding = new Padding(10);
-
+            flowLayout.BackgroundImage = null;
             this.setMainColors(Color.White, Color.FromArgb(80, 80, 80));
             if (mainSlitter.Panel1Collapsed)
             {
                 drawNewStyleButtons();
+                
                 return;
             }
 
@@ -630,6 +665,8 @@ namespace Projector
             tmpBtn.ForeColor = Color.LightGray;
             tmpBtn.BackColor = Color.FromArgb(50, 50, 50);
             updateGroupButonStyle(tmpBtn);
+            flowLayout.BackgroundImage = bgImage;
+            this.RedrawLayout();
         }
 
         /// <summary>
@@ -699,7 +736,7 @@ namespace Projector
 
             showProfilLabel.Text = profil.getName();
 
-
+            
         }
 
 
@@ -750,6 +787,88 @@ namespace Projector
             }
             return groups;
         }
+        /// <summary>
+        /// Tick handler until reading the script folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ScriptDawTimer_Tick(object sender, EventArgs e)
+        {
+            if (!this.ScriptAutoLoader.ImWorking())
+            {
+                flowLayout.Controls.Clear();
+                this.ScriptDawTimer.Enabled = false;
+                this.DrawScriptView();
+            }
+            else
+            {
+                if (flowLayout.Controls["SCRBTN"] == null)
+                {
+                    Button SCRBTN = new Button();
+                    SCRBTN.Name = "SCRBTN";
+                    SCRBTN.Image = Projector.Properties.Resources.folder_1;
+                    SCRBTN.FlatStyle = FlatStyle.Flat;
+                    SCRBTN.Width = flowLayout.Width - 60;
+                    SCRBTN.Height = flowLayout.Height - 60;
+                    //SCRBTN.BackColor = Color.White;
+                    SCRBTN.Enabled = true;
+                    SCRBTN.FlatAppearance.BorderColor = flowLayout.BackColor;
+                    SCRBTN.TextImageRelation = TextImageRelation.ImageAboveText;
+                    SCRBTN.Text = "Reading Script Fils in " + this.mainScriptFolder;
+                    this.flowLayout.Controls.Add(SCRBTN);
+                    SCRBTN.Tag = "A";
+                }
+
+                Button FlashBtn = (Button)flowLayout.Controls["SCRBTN"];
+                if (FlashBtn.Tag.ToString() == "A")
+                {
+                    FlashBtn.Tag = "B";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_2;
+                }
+                else if (FlashBtn.Tag.ToString() == "B")
+                {
+                    FlashBtn.Tag = "C";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_3;
+                }
+                else if (FlashBtn.Tag.ToString() == "C")
+                {
+                    FlashBtn.Tag = "D";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_4;
+                }
+                else if (FlashBtn.Tag.ToString() == "D")
+                {
+                    FlashBtn.Tag = "E";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_3;
+                }
+                else if (FlashBtn.Tag.ToString() == "E")
+                {
+                    FlashBtn.Tag = "F";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_2;
+                }
+                else
+                {
+                    FlashBtn.Tag = "A";
+                    FlashBtn.Image = Projector.Properties.Resources.folder_1;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Draws the Script workbench
+        /// </summary>
+        private void DrawScriptView()
+        {
+            List<RefScrAutoScrContainer> scripts = this.ScriptAutoLoader.getAllScripts();
+
+            foreach (RefScrAutoScrContainer script in scripts)
+            {
+                ScriptStartButton tmpStartBtn = new ScriptStartButton(this);
+                tmpStartBtn.setScript(script);
+                flowLayout.Controls.Add(tmpStartBtn);
+            }
+        }
+
 
         /// <summary>
         /// Main Method to redaw all profiles an assigned Elements
@@ -758,6 +877,7 @@ namespace Projector
         {
 
             profilSelector.DropDownItems.Clear();
+            flowLayout.BackgroundImage = null;
             flowLayout.Controls.Clear();
             this.SelectedProfiles.Clear();
 
@@ -772,14 +892,7 @@ namespace Projector
                 this.ScriptAutoLoader.showAll(!this.displayNamedScripstOnly);
                 if (this.ScriptAutoLoader.setPath(this.mainScriptFolder))
                 {
-                    List<RefScrAutoScrContainer> scripts = this.ScriptAutoLoader.getAllScripts();
-
-                    foreach (RefScrAutoScrContainer script in scripts)
-                    {
-                        ScriptStartButton tmpStartBtn = new ScriptStartButton(this);
-                        tmpStartBtn.setScript(script);
-                        flowLayout.Controls.Add(tmpStartBtn);
-                    }
+                    this.ScriptDawTimer.Enabled = true;
 
                 }
 
@@ -1326,6 +1439,38 @@ namespace Projector
         }
 
         /// <summary>
+        /// sets the backgroundimage for the worbench view
+        /// depending on the index 
+        /// </summary>
+        private void setBgImage()
+        {
+            switch (this.WorbenchBackGroundImage){
+                case 0:
+                    bgImage = null;    
+                    break;
+                case 1:
+                    bgImage = Projector.Properties.Resources.bg_02;
+                    break;
+                case 2:
+                    bgImage = Projector.Properties.Resources.bg_03;
+                    break;
+                case 3:
+                    bgImage = Projector.Properties.Resources.bg_04;
+                    break;
+                case 4:
+                    bgImage = Projector.Properties.Resources.bg_05;
+                    break;
+                case 5:
+                    bgImage = Projector.Properties.Resources.bg_06;
+                    break;
+                case 6:
+                    bgImage = Projector.Properties.Resources.bg_07;
+                    break;
+            }
+        }
+
+
+        /// <summary>
         /// Handler for the menu "main Setup"
         /// </summary>
         /// <param name="sender"></param>
@@ -1336,7 +1481,7 @@ namespace Projector
             ms.ScriptPath.setPath(this.mainScriptFolder);
             ms.ScriptPath.setInfo("Default Script Folder");
             ms.displayNamedScript.Checked = this.displayNamedScripstOnly;
-
+            ms.bgSelect.SelectedIndex = this.WorbenchBackGroundImage;
             List<string> styles = StyleFormProps.getAllStyles();
             foreach (string style in styles)
             {
@@ -1353,6 +1498,8 @@ namespace Projector
                 this.displayNamedScripstOnly = ms.displayNamedScript.Checked;
                 ProjectorForm.mainFormStyle = ms.MainFormStyle.Text;
                 this.mainMDIStyle = ms.MainMDIStyle.Text;
+                this.WorbenchBackGroundImage = ms.bgSelect.SelectedIndex;
+                this.setBgImage();
                 updateProfilSelector();
             }
         }
@@ -1688,6 +1835,8 @@ namespace Projector
             enableGroupView.Checked = groupButtonsToolStripMenuItem.Checked;
             groupButtonsToolStripMenuItem_Click(sender, e);
         }
+
+       
 
 
 

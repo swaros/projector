@@ -9,7 +9,6 @@ namespace Projector
     {
         private string name;
         private List<MysqlCreateStruct> refers = new List<MysqlCreateStruct>();
-        private int indexType;
 
         public MysqlIndexType(string keyName)
         {

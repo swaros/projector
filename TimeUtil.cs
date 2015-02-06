@@ -6,8 +6,7 @@ using System.Text;
 namespace Projector
 {
     class TimeUtil
-    {
-        DateTime currentTime = new DateTime();
+    {        
         private long timeMs = 0;
 
         public void setTimer()

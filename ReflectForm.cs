@@ -21,7 +21,6 @@ namespace Projector
 
         private ReflectionScript OnMessageScript;
 
-        private string messageVarname;
 
         public ReflectForm()
         {

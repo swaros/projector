@@ -54,8 +54,10 @@ namespace Projector
 
         private void OpenLabel_Click(object sender, EventArgs e)
         {
+            this.parent.HoldLayout();
             this.grpFlow.Visible = false;
             this.Dock = DockStyle.None;
+            this.parent.RedrawLayout();
         }
 
         private void grpName_DoubleClick(object sender, EventArgs e)
@@ -70,11 +72,13 @@ namespace Projector
 
         public void expand()
         {
+            this.parent.HoldLayout();
             this.grpFlow.Visible = true;
             this.Dock = DockStyle.Fill;
             this.grpFlow.Dock = DockStyle.Fill;
             this.grpFlow.AutoSize = true;
             this.clickWatcher.Enabled = false;
+            this.parent.RedrawLayout();
         }
 
         public void setProfileNewPosition(ProfilButton btn, int pos)

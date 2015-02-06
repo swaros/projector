@@ -15,7 +15,6 @@ namespace Projector
 
         private Boolean castError = false;
 
-        private Boolean someCalc = false;
 
         
 

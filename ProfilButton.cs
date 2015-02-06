@@ -25,7 +25,6 @@ namespace Projector
         private int currentPercent = 70;
 
         private int ForeDefaultPercent = 10;
-        private int ForeHighlightPercent = 70;
         private int ForeCurrentPercent = 10;
 
         private ProjectorForm myParent;

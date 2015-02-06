@@ -28,8 +28,6 @@ namespace Projector
 
         private String sql;
 
-        private int keyOptimizedLevel = 0;
-
         List<string> tables = new List<string>();
 
         public struct ExplainResult
@@ -37,7 +35,6 @@ namespace Projector
             public bool isNull;
             public int id;
             public String Table;
-            public String SelectType;
             public String Type;
             public String PossibleKeys;
             public String Key;

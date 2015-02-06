@@ -17,6 +17,6 @@ namespace Projector
         public bool isPacked;
         public bool nullPossible;
         public string indexType;
-        public string comment;
+
     }
 }

@@ -11,7 +11,6 @@ namespace Projector
         private List<MysqlIndexType> crIndizies = new List<MysqlIndexType>();
         private string tableName;
         private string engine;
-        private string comment;
 
         public Boolean temporary = false;
 

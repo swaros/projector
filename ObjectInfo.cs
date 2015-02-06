@@ -7,13 +7,25 @@ using System.Collections;
 
 namespace Projector
 {
+    /// <summary>
+    /// Class to get all Infomations of Objects, an manage the infomation
+    /// </summary>
     public class ObjectInfo
     {
-
+        /// <summary>
+        /// The last Object Information that we got
+        /// </summary>
         public RefScrObjectStorage lastObjectInfo;
 
+        /// <summary>
+        /// all Methods from this Object
+        /// </summary>
         private static Hashtable knownOjectMethods = new Hashtable();
 
+        /// <summary>
+        /// Store ObjectInfo if not exists
+        /// </summary>
+        /// <param name="objectToStore">The ObjectStorage that should be stored</param>
         private void storeObjectInfo(RefScrObjectStorage objectToStore)
         {
             if (!Projector.ObjectInfo.knownOjectMethods.ContainsKey(objectToStore.originObjectName))
@@ -22,7 +34,11 @@ namespace Projector
             }
         }
 
-
+        /// <summary>
+        /// get ObjectInfo if there are stored
+        /// </summary>
+        /// <param name="name">the Name of the Type like queryBrowser</param>
+        /// <returns></returns>
         public static RefScrObjectStorage getObjectInfo(string name)
         {
             if (Projector.ObjectInfo.knownOjectMethods.ContainsKey(name))
@@ -33,6 +49,10 @@ namespace Projector
             return null;
         }
 
+        /// <summary>
+        /// return a list of all stored object infomation
+        /// </summary>
+        /// <returns>Stored Object Information</returns>
         public static List<RefScrObjectStorage> getAllObjects()
         {            
             List<RefScrObjectStorage> returnList = new List<RefScrObjectStorage>();
@@ -43,22 +63,28 @@ namespace Projector
             return returnList;
         }
 
+        /// <summary>
+        /// Get a simple version of the Real 
+        /// SystemType
+        /// </summary>
+        /// <param name="typeStr">Original System Type</param>
+        /// <returns>Basic Type name</returns>
         private String getReturnValue(string typeStr)
         {
             switch (typeStr)
             {
                 case "System.Void":
                     return "";
-                    break;
+
                 case "System.Boolean":
                     return "Boolean";
-                    break;
+
                 case "System.String":
                     return "STR";
-                    break;
+
                 case "System.Int32":
                     return "INT";
-                    break;
+
                 default:
                     string[] parts = typeStr.Split('.');
                     int cnt = parts.Count()-1;
@@ -72,6 +98,14 @@ namespace Projector
             return "";
         }
 
+        /// <summary>
+        /// Updates the current collected Infomation in objStore about
+        /// the current State.
+        /// usefull after some changes happens
+        /// </summary>
+        /// <param name="execObject">the object that are executable</param>
+        /// <param name="executeableObj"></param>
+        /// <param name="objStore"></param>
         private void updatePropInfos(Object execObject, Type executeableObj, RefScrObjectStorage objStore)
         {
             PropertyInfo[] propInfo = executeableObj.GetProperties();

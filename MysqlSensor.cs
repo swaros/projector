@@ -19,7 +19,6 @@ namespace Projector
         
         private bool isRunning = false;
 
-        private int lastHitX =0;
 
        
 

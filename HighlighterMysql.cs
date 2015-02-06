@@ -23,7 +23,6 @@ namespace Projector
         public bool useTimer = true;
         public long maxRepeatTime = 10000000;
 
-        private bool async = false;
 
         private string lastCompiledSource = "";
 
