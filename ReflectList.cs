@@ -11,6 +11,11 @@ using System.Diagnostics;
 
 namespace Projector
 {
+    /// <summary>
+    /// List Controll usable for reflectionscripts.
+    /// 
+    /// 
+    /// </summary>
     public partial class ReflectList : UserControl
     {
 
@@ -18,6 +23,8 @@ namespace Projector
         private ReflectionScript onSelectScript;
         private ReflectionScript startIterateScript;
         private ReflectionScript endIterateScript;
+        private ReflectionScript OnErrorScript;
+        private String errorScriptVar;
         private Color defaultDisplayColor;
         private string displayText = "No Name";
 
@@ -537,6 +544,22 @@ namespace Projector
             this.endIterateScript = refl;
         }
 
+        public void OnError(string errorVar, ReflectionScript refl)
+        {
+            this.errorScriptVar = errorVar;
+            this.OnErrorScript = refl;
+        }
+
+        private void execOnError(string message)
+        {
+            if (this.OnErrorScript != null)
+            {
+                this.OnErrorScript.createOrUpdateStringVar("&" + this.errorScriptVar, message);
+                RefScriptExecute exec = new RefScriptExecute(this.OnErrorScript, this);
+                exec.run();
+            }
+        }
+
         private void execOnDone()
         {
             if (this.endIterateScript != null)
@@ -708,12 +731,27 @@ namespace Projector
             }
         }
 
+        public void readCsv(string filename)
+        {
+            this.openCsvFile(filename);
+        }
+
+        public void readCsvDlg(string filename)
+        {
+            fileLoader_Click(null, null);
+        }
+
         private void openCsvFile(string filename)
         {
             CsvReader reader = new CsvReader();
             if (reader.loadFile(filename))
             {
                 this.setListView (this.getListViewFromCsv(reader));
+            }
+            else
+            {
+                foreach (string msg in reader.getErrors())
+                    this.execOnError(msg);
             }
         }
 

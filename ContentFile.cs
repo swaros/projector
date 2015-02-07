@@ -88,6 +88,15 @@ namespace Projector
         }
 
         /// <summary>
+        /// sets the delimiter char
+        /// </summary>
+        /// <param name="delimter"></param>
+        public void setDelimiter(string delimter)
+        {
+            this.splitChars = delimter;
+        }
+
+        /// <summary>
         /// returns hashtable with seperated text
         /// </summary>
         /// <returns>strings in Hashtable. key is line Number, value the row as List of string </returns>
@@ -148,7 +157,6 @@ namespace Projector
                 {
                     string str = match[x].Value;
                     string key = "STR" + i + "T" + x+"T";
-                    //str = str.Replace("\"", "");
                     rename.Add(key, str);
                     code = code.Replace(str, key);
                 }
