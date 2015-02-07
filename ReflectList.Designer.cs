@@ -34,10 +34,12 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.autoSort = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.stateLabel = new System.Windows.Forms.ToolStripLabel();
             this.Progress = new System.Windows.Forms.ToolStripProgressBar();
+            this.stateLabel = new System.Windows.Forms.ToolStripLabel();
             this.listView = new System.Windows.Forms.ListView();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.fileLoader = new System.Windows.Forms.ToolStripButton();
+            this.openFilesDlg = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -68,6 +70,7 @@
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveButton,
+            this.fileLoader,
             this.toolStripSeparator1,
             this.autoSort,
             this.toolStripSeparator2,
@@ -108,16 +111,16 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // Progress
+            // 
+            this.Progress.Name = "Progress";
+            this.Progress.Size = new System.Drawing.Size(100, 22);
+            // 
             // stateLabel
             // 
             this.stateLabel.Name = "stateLabel";
             this.stateLabel.Size = new System.Drawing.Size(58, 22);
             this.stateLabel.Text = "No Name";
-            // 
-            // Progress
-            // 
-            this.Progress.Name = "Progress";
-            this.Progress.Size = new System.Drawing.Size(100, 22);
             // 
             // listView
             // 
@@ -137,6 +140,22 @@
             // 
             this.saveFileDialog.FileName = "export.csv";
             this.saveFileDialog.Filter = "CSV|*.csv";
+            // 
+            // fileLoader
+            // 
+            this.fileLoader.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.fileLoader.Image = global::Projector.Properties.Resources.folder_open_16;
+            this.fileLoader.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileLoader.Name = "fileLoader";
+            this.fileLoader.Size = new System.Drawing.Size(23, 22);
+            this.fileLoader.Text = "toolStripButton1";
+            this.fileLoader.Click += new System.EventHandler(this.fileLoader_Click);
+            // 
+            // openFilesDlg
+            // 
+            this.openFilesDlg.DefaultExt = "csv";
+            this.openFilesDlg.Filter = "csv Text|*.csv";
+            this.openFilesDlg.Title = "Open Data Content";
             // 
             // ReflectList
             // 
@@ -168,5 +187,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel stateLabel;
         private System.Windows.Forms.ToolStripProgressBar Progress;
+        private System.Windows.Forms.ToolStripButton fileLoader;
+        private System.Windows.Forms.OpenFileDialog openFilesDlg;
     }
 }

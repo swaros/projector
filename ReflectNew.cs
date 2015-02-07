@@ -231,6 +231,7 @@ namespace Projector
             ReflectForm newForm;
 
             newForm = (ReflectForm)this.getExistingObject(refObject.name + refObject.codeToken);
+            string objToken = refObject.name + refObject.codeToken;
             if (newForm == null)
             {
                 newForm = new ReflectForm();
@@ -244,25 +245,25 @@ namespace Projector
             }
             else if (parent is Form)
             {
-                this.showRForm(newForm, refObject.name);
+                this.showRForm(newForm, refObject.name, objToken);
             }
             else if (parent is ReflectionScript)
             {
                 ReflectionScript parScr = (ReflectionScript)parent;
                 if (parScr.SetupBoolValue(ReflectionScript.SETUP_PREVIEW))
                 {
-                    this.showRForm(newForm, refObject.name);
+                    this.showRForm(newForm, refObject.name, objToken);
                 }
             }
             else
             {
-                this.showRForm(newForm, refObject.name);
+                this.showRForm(newForm, refObject.name, objToken);
             }
             this.addObject(refObject.name + refObject.codeToken, newForm);
             return newForm;
         }
 
-        private void showRForm(ReflectForm newForm, string name)
+        private void showRForm(ReflectForm newForm, string name, string keyName)
         {
             try
             {
@@ -273,6 +274,8 @@ namespace Projector
                 newForm = new ReflectForm();
                 newForm.ScriptIdent = name;
                 newForm.Name = name;
+                newForm.Show();
+                this.addObject(keyName, newForm, true);
             }
         }
 
@@ -344,9 +347,19 @@ namespace Projector
             return browser;
         }
 
-
-        private void addObject(string name,Object obj)
+        private void addObject(string name, Object obj)
         {
+            this.addObject(name, obj, false);
+        }
+
+        private void addObject(string name,Object obj, Boolean ForceUpdate)
+        {
+
+            if (ForceUpdate && ReflectNew.obReferences.ContainsKey(name))
+            {
+                ReflectNew.obReferences.Remove(name);
+            }
+
             if (!ReflectNew.obReferences.ContainsKey(name))
             {
                 ReflectNew.obReferences.Add(name,obj);

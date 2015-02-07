@@ -707,5 +707,61 @@ namespace Projector
                 }
             }
         }
+
+        private void openCsvFile(string filename)
+        {
+            CsvReader reader = new CsvReader();
+            if (reader.loadFile(filename))
+            {
+                this.setListView (this.getListViewFromCsv(reader));
+            }
+        }
+
+        private ListView getListViewFromCsv(CsvReader csv){
+            ListView tmpList = new ListView();
+
+            List<string> header = csv.getHeader();
+            foreach (string headText in header)
+            {
+                tmpList.Columns.Add(headText);
+            }
+
+            int rowCnt = csv.getRowCount();
+            int colCnt = csv.getColumnCount();
+
+            for (int getRow = 0; getRow <= rowCnt; getRow++){
+                ListViewItem addThis = new ListViewItem();
+
+                for (int getCol = 0; getCol <= colCnt; getCol++)
+                {
+                    CsvContent getData = csv.getContent(getRow, getCol);
+                    string addval = "";
+                    if (getData != null)
+                        addval = getData.Text;
+                    if (getCol == 0)
+                    {
+
+                        addThis.Text = addval;
+                    }
+                    else
+                    {
+                        addThis.SubItems.Add(addval);
+                    }
+
+                }
+                tmpList.Items.Add(addThis);
+            }
+
+            return tmpList;
+        }
+
+
+        private void fileLoader_Click(object sender, EventArgs e)
+        {
+            if (openFilesDlg.ShowDialog() == DialogResult.OK)
+            {
+                openCsvFile(openFilesDlg.FileName);
+            }
+        }
     }
 }
