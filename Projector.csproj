@@ -223,6 +223,8 @@
     <Compile Include="NumberFlow.cs" />
     <Compile Include="ObjectCloner.cs" />
     <Compile Include="ObjectInfo.cs" />
+    <Compile Include="ObjectStorage.cs" />
+    <Compile Include="ObjectStorageContainer.cs" />
     <Compile Include="PanelDrawing.cs">
       <SubType>Component</SubType>
     </Compile>

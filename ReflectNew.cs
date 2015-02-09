@@ -10,18 +10,20 @@ namespace Projector
     class ReflectNew : ReflectObjectInterface
     {
 
-        private static Hashtable obReferences = new Hashtable();        
+        private Boolean useObjectStorage = true;
+
+        private Hashtable obReferences = new Hashtable();        
 
         public Object execute()
         {
             return null;
         }
 
-        public static void removeMe(Form refObject)
+        public void removeMe(Form refObject)
         {
-            if (ReflectNew.obReferences.ContainsKey(refObject.Name))
+            if (this.obReferences.ContainsKey(refObject.Name))
             {                
-                ReflectNew.obReferences.Remove(refObject.Name);                
+                this.obReferences.Remove(refObject.Name);                
             }
 
         }
@@ -230,14 +232,14 @@ namespace Projector
 
             ReflectForm newForm;
 
-            newForm = (ReflectForm)this.getExistingObject(refObject.name + refObject.codeToken);
-            string objToken = refObject.name + refObject.codeToken;
+            newForm = (ReflectForm)this.getExistingObject(refObject.name);
+            string objToken = refObject.name;
             if (newForm == null)
             {
                 newForm = new ReflectForm();
             }
             newForm.ScriptIdent = refObject.name;
-            newForm.Name = refObject.name;
+            newForm.Name = objToken;
             if (parent is MdiForm)
             {
                 MdiForm mdi = (MdiForm)parent;
@@ -245,25 +247,25 @@ namespace Projector
             }
             else if (parent is Form)
             {
-                this.showRForm(newForm, refObject.name, objToken);
+                this.showRForm(newForm, refObject.name);
             }
             else if (parent is ReflectionScript)
             {
                 ReflectionScript parScr = (ReflectionScript)parent;
                 if (parScr.SetupBoolValue(ReflectionScript.SETUP_PREVIEW))
                 {
-                    this.showRForm(newForm, refObject.name, objToken);
+                    this.showRForm(newForm, refObject.name);
                 }
             }
             else
             {
-                this.showRForm(newForm, refObject.name, objToken);
+                this.showRForm(newForm, refObject.name);
             }
-            this.addObject(refObject.name + refObject.codeToken, newForm);
+            this.addObject(refObject.name, newForm);
             return newForm;
         }
 
-        private void showRForm(ReflectForm newForm, string name, string keyName)
+        private void showRForm(ReflectForm newForm, string name)
         {
             try
             {
@@ -275,7 +277,7 @@ namespace Projector
                 newForm.ScriptIdent = name;
                 newForm.Name = name;
                 newForm.Show();
-                this.addObject(keyName, newForm, true);
+                this.addObject(name, newForm, true);
             }
         }
 
@@ -283,7 +285,7 @@ namespace Projector
         private GroupQuery getGroupQuery(ReflectionScriptDefines refObject, Object parent)
         {
 
-            if (ReflectNew.obReferences.ContainsKey(refObject.name + refObject.codeToken))
+            if (this.obReferences.ContainsKey(refObject.name))
             {
                 Object hValue = obReferences[refObject.name];
                 if(hValue is GroupQuery){
@@ -299,7 +301,7 @@ namespace Projector
                     }
                     catch (ObjectDisposedException disposed)
                     {
-                        ReflectNew.obReferences.Remove(refObject.name + refObject.codeToken);
+                        this.obReferences.Remove(refObject.name);
                     }
                     
                 }
@@ -315,9 +317,9 @@ namespace Projector
             }
             //grQuery.Show();
 
-            if (!ReflectNew.obReferences.ContainsKey(refObject.name + refObject.codeToken))
+            if (!this.obReferences.ContainsKey(refObject.name))
             {
-                ReflectNew.obReferences.Add(refObject.name + refObject.codeToken, grQuery);
+                this.obReferences.Add(refObject.name, grQuery);
             }
             return grQuery;
         }
@@ -354,23 +356,25 @@ namespace Projector
 
         private void addObject(string name,Object obj, Boolean ForceUpdate)
         {
-
-            if (ForceUpdate && ReflectNew.obReferences.ContainsKey(name))
+            if (this.useObjectStorage)
             {
-                ReflectNew.obReferences.Remove(name);
-            }
+                if (ForceUpdate && this.obReferences.ContainsKey(name))
+                {
+                    this.obReferences.Remove(name);
+                }
 
-            if (!ReflectNew.obReferences.ContainsKey(name))
-            {
-                ReflectNew.obReferences.Add(name,obj);
+                if (!this.obReferences.ContainsKey(name))
+                {
+                    this.obReferences.Add(name, obj);
+                }
             }
         }
 
         private Object getExistingObject(string name)
         {
-            if (ReflectNew.obReferences.ContainsKey(name))
+            if (this.obReferences.ContainsKey(name))
             {
-                return ReflectNew.obReferences[name];
+                return this.obReferences[name];
             }
             return null;
         }

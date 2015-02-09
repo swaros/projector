@@ -41,7 +41,6 @@
             this.genericTree = new System.Windows.Forms.TreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.codeBox = new Projector.RichBox();
             this.wordListing = new System.Windows.Forms.ListBox();
             this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
@@ -79,6 +78,12 @@
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.runningCheck = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.debugToolStrip = new System.Windows.Forms.ToolStrip();
+            this.ProcessList = new System.Windows.Forms.ToolStripComboBox();
+            this.execKiller = new System.Windows.Forms.ToolStripButton();
+            this.refreshProcBtn = new System.Windows.Forms.ToolStripButton();
+            this.codeBox = new Projector.RichBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -105,6 +110,7 @@
             this.toolStripContainer2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.debugToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -254,21 +260,6 @@
             this.codeSplitContainer.SplitterDistance = 423;
             this.codeSplitContainer.TabIndex = 0;
             // 
-            // codeBox
-            // 
-            this.codeBox.AcceptsTab = true;
-            this.codeBox.AutoWordSelection = true;
-            this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codeBox.HideSelection = false;
-            this.codeBox.Location = new System.Drawing.Point(0, 0);
-            this.codeBox.Name = "codeBox";
-            this.codeBox.Size = new System.Drawing.Size(764, 423);
-            this.codeBox.TabIndex = 2;
-            this.codeBox.TabStop = false;
-            this.codeBox.Text = "";
-            this.codeBox.WordWrap = false;
-            // 
             // wordListing
             // 
             this.wordListing.BackColor = System.Drawing.SystemColors.Info;
@@ -374,6 +365,7 @@
             // toolStripContainer2.TopToolStripPanel
             // 
             this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.debugToolStrip);
             // 
             // toolStrip1
             // 
@@ -389,10 +381,11 @@
             this.continueBtn,
             this.stopScr,
             this.toolStripSeparator3,
-            this.switchDrawMode});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.switchDrawMode,
+            this.toolStripSeparator4});
+            this.toolStrip1.Location = new System.Drawing.Point(11, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(214, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(220, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // loadButton
@@ -618,6 +611,64 @@
             this.runningCheck.Interval = 1000;
             this.runningCheck.Tick += new System.EventHandler(this.runningCheck_Tick);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // debugToolStrip
+            // 
+            this.debugToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.debugToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ProcessList,
+            this.execKiller,
+            this.refreshProcBtn});
+            this.debugToolStrip.Location = new System.Drawing.Point(235, 0);
+            this.debugToolStrip.Name = "debugToolStrip";
+            this.debugToolStrip.Size = new System.Drawing.Size(212, 25);
+            this.debugToolStrip.TabIndex = 1;
+            // 
+            // ProcessList
+            // 
+            this.ProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ProcessList.Name = "ProcessList";
+            this.ProcessList.Size = new System.Drawing.Size(121, 25);
+            // 
+            // execKiller
+            // 
+            this.execKiller.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.execKiller.Image = global::Projector.Properties.Resources.delete_16;
+            this.execKiller.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.execKiller.Name = "execKiller";
+            this.execKiller.Size = new System.Drawing.Size(23, 22);
+            this.execKiller.Text = "Kill Process";
+            this.execKiller.Click += new System.EventHandler(this.execKiller_Click);
+            // 
+            // refreshProcBtn
+            // 
+            this.refreshProcBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshProcBtn.Image = global::Projector.Properties.Resources.reload3;
+            this.refreshProcBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshProcBtn.Name = "refreshProcBtn";
+            this.refreshProcBtn.Size = new System.Drawing.Size(23, 22);
+            this.refreshProcBtn.Text = "Refresh Process List";
+            this.refreshProcBtn.Click += new System.EventHandler(this.refreshProcBtn_Click);
+            // 
+            // codeBox
+            // 
+            this.codeBox.AcceptsTab = true;
+            this.codeBox.AutoWordSelection = true;
+            this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codeBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codeBox.HideSelection = false;
+            this.codeBox.Location = new System.Drawing.Point(0, 0);
+            this.codeBox.Name = "codeBox";
+            this.codeBox.Size = new System.Drawing.Size(764, 423);
+            this.codeBox.TabIndex = 2;
+            this.codeBox.TabStop = false;
+            this.codeBox.Text = "";
+            this.codeBox.WordWrap = false;
+            // 
             // ScriptWriter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -662,6 +713,8 @@
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.debugToolStrip.ResumeLayout(false);
+            this.debugToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -717,5 +770,10 @@
         public RichBox codeBox;
         private System.Windows.Forms.ToolStripMenuItem inspectRunToolStripMenuItem;
         private System.Windows.Forms.Timer runningCheck;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStrip debugToolStrip;
+        private System.Windows.Forms.ToolStripComboBox ProcessList;
+        private System.Windows.Forms.ToolStripButton execKiller;
+        private System.Windows.Forms.ToolStripButton refreshProcBtn;
     }
 }

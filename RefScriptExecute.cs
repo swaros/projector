@@ -128,7 +128,31 @@ namespace Projector
             this.objectDefines.Add("NEW",new ReflectNew());
         }
 
+        public void StopNow()
+        {
+            // first abort all childs
+            this.forceAbort = true;
+            this.Stop();
+            this.clearing();
 
+        }
+
+        public Boolean aborting()
+        {
+            return this.forceAbort;
+        }
+
+        private void clearing()
+        {
+            ProcSync.removeMainProc(RefScriptExecute.PROC_NAME + this.ProcID);
+            /*
+            foreach (DictionaryEntry existingObjects in this.objectReferences)
+            {
+                Object obj = (object)existingObjects.Value;
+                
+            }
+            */
+        }
 
         private Boolean checkWaitingTimer(string name)
         {
@@ -269,6 +293,34 @@ namespace Projector
             }
         }
 
+        public Object getObjectFromRoot(string name)
+        {
+            if (this.currentScript.Parent != null)
+            {
+                return this.currentScript.Parent.CurrentExecuter.getObjectFromRoot(name);
+            }
+            if (objectReferences.ContainsKey(name))
+            {
+                return objectReferences[name];
+            }
+            return null;
+        }
+
+        public Object findObject(string name)
+        {
+            if (objectReferences.ContainsKey(name))
+            {
+                return objectReferences[name];
+            }
+            if (this.currentScript.Parent != null)
+            {
+                return this.currentScript.Parent.CurrentExecuter.findObject(name);
+            }
+           
+            return null;
+        }
+
+
         public Object getRegisteredObject(string name)
         {
             if (objectReferences.ContainsKey(name))
@@ -281,14 +333,25 @@ namespace Projector
                 string[] parts = name.Split('.');
                 if (parts.Count() > 1)
                 {
-                    string newName = "";
-                    string add = "";
-                    for (int i = 1; i < parts.Count(); i++)
+                    if (parts[0] == "this")
                     {
-                        newName += add + parts[i];
-                        add = ".";
+                        return this.getObjectFromRoot(parts[1]);
                     }
-                    return this.currentScript.Parent.CurrentExecuter.getRegisteredObject(newName);
+                    else
+                    {
+                        string newName = "";
+                        string add = "";
+                        for (int i = 1; i < parts.Count(); i++)
+                        {
+                            newName += add + parts[i];
+                            add = ".";
+                        }
+                        return this.currentScript.Parent.CurrentExecuter.getRegisteredObject(newName);
+                    }
+                }
+                else
+                {
+                    return this.findObject(name);
                 }
             }
             return null;
@@ -298,9 +361,24 @@ namespace Projector
 
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
+          
             // what ever happens ..tis line is executed
             this.currentExecLine++;
-           
+
+            if (this.forceAbort)
+            {
+                return true;
+            }
+
+            if (this.currentScript.Parent != null && this.currentScript.Parent.CurrentExecuter != null)
+            {
+                if (this.currentScript.Parent.CurrentExecuter.aborting())
+                {
+                    return true;
+                }
+            }
+
+
             string cmd = scrLine.code.ToUpper();
             //this.currentScript.updateParam(scrLine);
 
@@ -464,7 +542,7 @@ namespace Projector
             }
 
             if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
-            {
+            {              
                 scrLine.Referenz = objectDefines[cmd];
                 this.execReflectObject(scrLine);
                 if (scrLine.ReflectObject == null)
@@ -480,12 +558,15 @@ namespace Projector
                     return false;
                 }
                 this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
-
+                
             }
 
             if (scrLine.isMethod && scrLine.namedReference != null)
             {
+                
                 Object useObject = this.getRegisteredObject(scrLine.namedReference);
+                //Object useObject = scrLine.ReflectObject;
+                //Object useObject = this.currentScript.getRegisteredObject(scrLine.namedReference);
                 if (useObject != null)
                 {
                     this.lastErrorCode = 0;
@@ -566,7 +647,6 @@ namespace Projector
         private Boolean execSingleLine()
         {
             List<ReflectionScriptDefines> src = this.currentScript.getScript();
-
             if (src.Count > this.currentExecLine)
             {
                 return this.execLine(src[this.currentExecLine]);

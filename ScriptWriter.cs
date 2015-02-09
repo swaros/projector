@@ -827,7 +827,7 @@ namespace Projector
         private void stopScr_Click(object sender, EventArgs e)
         {
             ProcSync.Reset(RefScriptExecute.PROC_NAME);
-            executer.Stop();
+            executer.StopNow();
         }
 
         private void switchDrawMode_Click(object sender, EventArgs e)
@@ -879,10 +879,20 @@ namespace Projector
             }
         }
 
+        private void getRunningProcesses()
+        {
+            this.ProcessList.Items.Clear();
+            foreach (string procName in ProcSync.getAllMainProcs())
+            {
+                this.ProcessList.Items.Add(procName);
+            }
+        }
+
         private void runningCheck_Tick(object sender, EventArgs e)
         {
             if (script.imRunning())
             {
+                this.getRunningProcesses();
                 workerLabel.Text = "Still Running";
             }
             else
@@ -890,6 +900,25 @@ namespace Projector
                 workerLabel.Text = "D O N E";
                 runningCheck.Enabled = false;
             }
+        }
+
+        private void refreshProcBtn_Click(object sender, EventArgs e)
+        {
+            getRunningProcesses();
+        }
+
+        private void execKiller_Click(object sender, EventArgs e)
+        {
+            if (this.ProcessList.Text != "")
+            {
+                string id = this.ProcessList.Text;
+                if (ProcSync.isRegistered(id))
+                {
+                    ProcSync.removeMainProc(id);
+
+                }
+            }
+            getRunningProcesses();
         }
     }
 }

@@ -248,6 +248,7 @@ namespace Projector
         {
             this.addSetupIfNotExists(ReflectionScript.SETUP_MAXWAIT, 0); // max wait 10 seconds for finishing threads
             this.addSetupIfNotExists(ReflectionScript.SETUP_GLOBAL, true);
+            
         }
 
         /// <summary>
@@ -816,12 +817,25 @@ namespace Projector
                     }
                 }
                 return somIsRunning;
+            }
+            return false;
+        }
 
+        public void StopAll()
+        {
+            if (this.CurrentExecuter != null)
+            {
+                // check before not valid so we are in the state FINISHED...BUT waht abeout oure subscripts?
+                foreach (DictionaryEntry scrpt in this.subScripts)
+                {
+                    ReflectionScript refScr = (ReflectionScript)scrpt.Value;
+                    refScr.StopAll();
+                   
+                }
 
+                this.CurrentExecuter.StopNow();
                 
             }
-
-            return false;
         }
 
 
@@ -834,16 +848,30 @@ namespace Projector
                 if (this.objectReferences.ContainsKey(name))
                 {
                     string type = this.objectReferences[name].ToString();
-
-                    if (refScr.objectExists("parent." + name))
+                    
+                    List<string> aliases = new List<string>();
+                    aliases.Add("parent.");
+                    aliases.Add("");
+                    /*
+                    if (this.Parent == null)
                     {
-                        refScr.updateExistingObject("parent." + name, obj);
+                        aliases.Add(this.name + ".");
                     }
                     else
                     {
-                        refScr.createObject("parent." + name, obj, type);
+                        aliases.Add("");
+                    }*/
+                    foreach (string addName in aliases)
+                    {
+                        if (refScr.objectExists(addName + name))
+                        {
+                            refScr.updateExistingObject(addName + name, obj);
+                        }
+                        else
+                        {
+                            refScr.createObject(addName + name, obj, type);
+                        }
                     }
-
                     refScr.updateMeByObject(obj);
 
                 }               
@@ -861,6 +889,16 @@ namespace Projector
                 objectReferences.Add(name, type);
             }
         }
+        
+        public Object getRegisteredObject(string name)
+        {
+            if (this.objectStorage.ContainsKey(name))
+            {
+                return (object)this.objectStorage[name];
+            }
+            return null;
+        }
+
 
         public void updateExistingObject(String name, Object value, Boolean selfInc)
         {
@@ -1388,10 +1426,20 @@ namespace Projector
                 this.addError("No name defined for Object " + testObj.code);
             }
 
-            if (testObj.isMethod && testObj.namedReference == null)
+            if (testObj.isMethod)
             {
-                this.addError("this method is invalid because of a unknown Reference" + testObj.code);
+                if (testObj.namedReference == null)
+                {
+                    this.addError("this method is invalid because of a unknown Reference" + testObj.code);
+                }
+                else
+                {
+                    testObj.ReflectObject = this.getRegisteredObject(testObj.namedReference);
+                }
+                
             }
+
+
 
 
             if (testObj.isAssignement && testObj.name != null)
@@ -1430,7 +1478,20 @@ namespace Projector
                         
                  
                     }
-                }                
+                }
+                else
+                {
+                    // no plain varibale found
+                    if (this.objectExists(testObj.name))
+                    {
+
+                    }
+                    else
+                    {
+                        this.addError("Referenz Object not exists " + testObj.name);
+                    }
+                    
+                }             
 
                 if (testObj.isMethod)
                 {
@@ -1541,7 +1602,8 @@ namespace Projector
 
 
                             //this.objectStorage.Add(testObj.name,testObject);
-                            this.createObject(testObj.name, testObject, testObj.typeOfObject);
+                            //this.createObject(testObj.name, testObject, testObj.typeOfObject);
+                            this.createObject(testObj.name, testObj.ReflectObject, testObj.typeOfObject);
 
                             this.updateMeByObject(testObj);
                             this.parsedObjects.Add(keyForObj);
@@ -1653,18 +1715,19 @@ namespace Projector
         }
 
 
-        private Object getParamValue(string type, string part)
+        private Object getParamValue(string type, string partOrigin)
         {
             Object retValue = null;
+            string part = this.fillUpAll(partOrigin);
             switch (type)
             {
                 case "String": case "STR":
-                    retValue = this.fillUpAll(part);
+                    retValue = part;
                     break;
                 case "INT": case "Int32":
                     try
                     {
-                        string tmpStr = this.fillUpAll(part);
+                        string tmpStr = part;
                         int parInt = int.Parse(tmpStr);
                         retValue = parInt;
                     }
@@ -1678,7 +1741,7 @@ namespace Projector
                 
                     try
                     {
-                        string tmpStr = this.fillUpAll(part);
+                        string tmpStr = part;
                         Decimal parInt = Decimal.Parse(tmpStr);
                         retValue = parInt;
                     }
@@ -1705,10 +1768,7 @@ namespace Projector
                     retValue = tmpSript;
                     break;
                 default :
-                    if (this.objectStorage.ContainsKey(part))
-                    {
-                        retValue = this.objectStorage[part];
-                    }
+                    retValue = this.getObjectForParam(part);
                     break;
             }
             return retValue;
@@ -1718,14 +1778,27 @@ namespace Projector
         {
             
             string[] pars = param.Split('.');
-            if (pars.Count() > 1 && pars[0].ToLower() == "parent" && this.Parent != null)
+            if (pars.Count() > 1)
             {
-                string chk = "";
-                for (int i = 1; i < pars.Count(); i++)
+                if (pars[0].ToLower() == "parent" && this.Parent != null)
                 {
-                    chk += pars[i];
+                    string chk = "";
+                    for (int i = 1; i < pars.Count(); i++)
+                    {
+                        chk += pars[i];
+                    }
+                    return this.Parent.getObjectForParam(chk);
                 }
-                return this.Parent.getObjectForParam(chk);
+
+                if (pars[0].ToLower() == "root" && this.Parent != null)
+                {
+                    string chk = "";
+                    for (int i = 1; i < pars.Count(); i++)
+                    {
+                        chk += pars[i];
+                    }
+                    return this.Parent.getObjectForParam(chk);
+                }
             }
 
             if (this.objectStorage.ContainsKey(param))

@@ -146,7 +146,7 @@ namespace Projector
         {
             this.closeRequestAction();
             Application.DoEvents();
-            ReflectNew.removeMe(this);
+            
         }
     }
 }

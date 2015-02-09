@@ -6,9 +6,18 @@ using System.Text;
 namespace Projector
 {
     public class ReflectionScriptDefines
-    {        
+    {    
+        /// <summary>
+        /// contains the command as uppercase 
+        /// </summary>
         public string code;
+        /// <summary>
+        /// this is the written code part
+        /// </summary>
         public string originCode;
+        /// <summary>
+        /// flag for Objects
+        /// </summary>
         public Boolean isObject = false;
         public Boolean isVariable = false;
         public Boolean isMethod = false;

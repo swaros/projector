@@ -12,6 +12,15 @@ namespace Projector
 
         public static int ProcCount = 0;
 
+        public static List<string> getAllMainProcs(){
+            List<string> localProcs = new List<string>();
+            foreach (DictionaryEntry proc in ProcSync.procs)
+            {
+                localProcs.Add(proc.Key.ToString());
+            }
+            return localProcs;
+        }
+
         public static void Reset()
         {
             ProcSync.procs.Clear();
@@ -53,6 +62,17 @@ namespace Projector
             ProcSync.procs[main] = runnings;
             ProcSync.ProcCount++;
 
+            return true;
+        }
+
+        public static Boolean removeMainProc(string main)
+        {
+            if (!ProcSync.procs.ContainsKey(main))
+            {
+                return false;
+            }
+
+            ProcSync.procs.Remove(main);
             return true;
         }
 

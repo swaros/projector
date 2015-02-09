@@ -961,7 +961,7 @@ namespace Projector
         private void GroupQuery_FormClosed(object sender, FormClosedEventArgs e)
         {
             onCloseFomrmScr();
-            ReflectNew.removeMe(this);
+            
         }
 
         public ListView getResultAsListView()

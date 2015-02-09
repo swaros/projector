@@ -201,7 +201,7 @@ namespace Projector
         private void doAutoInsert(string newText)
         {
             int insertPos = this.getSelectionStart();
-
+            
             this.usedTextBox.Text = this.usedTextBox.Text.Remove(insertPos, this.getSelectionLength());
             this.usedTextBox.Text = this.usedTextBox.Text.Insert(insertPos, newText);            
             this.ownListBox.Text = "";
