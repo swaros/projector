@@ -32,6 +32,7 @@ namespace Projector
         public HighlightStyle KeyWordStyle = new HighlightStyle();
         public HighlightStyle executionStyle = new HighlightStyle();
         public HighlightStyle NumberStyle = new HighlightStyle();
+        public HighlightStyle InProgressStyle = new HighlightStyle();
 
         private string styleFileName = "pr_styles.xml";
 
@@ -74,6 +75,7 @@ namespace Projector
             this.KeyWordStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
             this.CommentStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
             this.ErrorStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
+            this.InProgressStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
             this.executionStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);       
             this.TextStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
             this.NumberStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
@@ -187,6 +189,11 @@ namespace Projector
 
             this.ErrorStyle.ForeColor = Color.DarkRed;
             this.ErrorStyle.BackColor = Color.LightPink;
+
+
+            this.InProgressStyle.ForeColor = Color.OrangeRed;
+            this.InProgressStyle.BackColor = Color.Yellow;
+
 
 
             this.executionStyle.ForeColor = Color.LightGreen;
@@ -308,7 +315,15 @@ namespace Projector
 
                 foreach (ScriptErrors err in this.Srcipt.getAllErrors())
                 {
-                    this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false, err.errorMessage);
+                    if (err.wordPosition < 1)
+                    {
+                        this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false, err.errorMessage);
+                    }
+                    else
+                    {
+                        this.RtfColors.markFullLine(err.lineNumber, InProgressStyle, true, false, err.errorMessage,err.wordPosition);
+                    }
+                    
 
                 }
             }

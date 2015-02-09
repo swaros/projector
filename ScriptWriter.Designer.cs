@@ -41,14 +41,33 @@
             this.genericTree = new System.Windows.Forms.TreeView();
             this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.codeSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.wordListing = new System.Windows.Forms.ListBox();
+            this.codingBox = new Projector.RichBox();
+            this.sourceControll = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.messageSplit = new System.Windows.Forms.SplitContainer();
             this.errorTextBox = new System.Windows.Forms.RichTextBox();
             this.debugView = new System.Windows.Forms.ListView();
             this.lineHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.messageHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.debugViewPanel = new System.Windows.Forms.SplitContainer();
+            this.ObjectListing = new System.Windows.Forms.ListView();
+            this.ObjectID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ObjectInfo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ObjectState = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.varWatchList = new System.Windows.Forms.ListView();
+            this.watchName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.watchValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.WatcherMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addwatchMenuEntry = new System.Windows.Forms.ToolStripMenuItem();
+            this.wordListing = new System.Windows.Forms.ListBox();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
+            this.debugToolStrip = new System.Windows.Forms.ToolStrip();
+            this.ProcessList = new System.Windows.Forms.ToolStripComboBox();
+            this.execKiller = new System.Windows.Forms.ToolStripButton();
+            this.refreshProcBtn = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.loadButton = new System.Windows.Forms.ToolStripButton();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
@@ -61,6 +80,7 @@
             this.stopScr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.switchDrawMode = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,12 +98,6 @@
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.messageToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.runningCheck = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.debugToolStrip = new System.Windows.Forms.ToolStrip();
-            this.ProcessList = new System.Windows.Forms.ToolStripComboBox();
-            this.execKiller = new System.Windows.Forms.ToolStripButton();
-            this.refreshProcBtn = new System.Windows.Forms.ToolStripButton();
-            this.codeBox = new Projector.RichBox();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
             this.mainSplitContainer.Panel1.SuspendLayout();
@@ -97,10 +111,18 @@
             this.codeSplitContainer.Panel1.SuspendLayout();
             this.codeSplitContainer.Panel2.SuspendLayout();
             this.codeSplitContainer.SuspendLayout();
+            this.sourceControll.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).BeginInit();
             this.messageSplit.Panel1.SuspendLayout();
             this.messageSplit.Panel2.SuspendLayout();
             this.messageSplit.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.debugViewPanel)).BeginInit();
+            this.debugViewPanel.Panel2.SuspendLayout();
+            this.debugViewPanel.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.WatcherMenu.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -108,9 +130,9 @@
             this.toolStripContainer2.ContentPanel.SuspendLayout();
             this.toolStripContainer2.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
+            this.debugToolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.debugToolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -186,7 +208,7 @@
             // 
             this.leftTools.Panel2.Controls.Add(this.genericTree);
             this.leftTools.Size = new System.Drawing.Size(217, 592);
-            this.leftTools.SplitterDistance = 236;
+            this.leftTools.SplitterDistance = 234;
             this.leftTools.TabIndex = 0;
             // 
             // logbook
@@ -201,7 +223,7 @@
             "idle..."});
             this.logbook.Location = new System.Drawing.Point(0, 0);
             this.logbook.Name = "logbook";
-            this.logbook.Size = new System.Drawing.Size(217, 236);
+            this.logbook.Size = new System.Drawing.Size(217, 234);
             this.logbook.TabIndex = 0;
             // 
             // genericTree
@@ -212,7 +234,7 @@
             this.genericTree.Location = new System.Drawing.Point(0, 0);
             this.genericTree.Name = "genericTree";
             this.genericTree.SelectedImageIndex = 0;
-            this.genericTree.Size = new System.Drawing.Size(217, 352);
+            this.genericTree.Size = new System.Drawing.Size(217, 354);
             this.genericTree.TabIndex = 0;
             this.genericTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.genericTree_AfterSelect);
             this.genericTree.DoubleClick += new System.EventHandler(this.genericTree_DoubleClick);
@@ -250,29 +272,52 @@
             // 
             // codeSplitContainer.Panel1
             // 
-            this.codeSplitContainer.Panel1.Controls.Add(this.codeBox);
-            this.codeSplitContainer.Panel1.Controls.Add(this.wordListing);
+            this.codeSplitContainer.Panel1.Controls.Add(this.codingBox);
             // 
             // codeSplitContainer.Panel2
             // 
-            this.codeSplitContainer.Panel2.Controls.Add(this.messageSplit);
+            this.codeSplitContainer.Panel2.Controls.Add(this.sourceControll);
             this.codeSplitContainer.Size = new System.Drawing.Size(764, 592);
-            this.codeSplitContainer.SplitterDistance = 423;
+            this.codeSplitContainer.SplitterDistance = 421;
             this.codeSplitContainer.TabIndex = 0;
             // 
-            // wordListing
+            // codingBox
             // 
-            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
-            this.wordListing.FormattingEnabled = true;
-            this.wordListing.Location = new System.Drawing.Point(194, 99);
-            this.wordListing.Name = "wordListing";
-            this.wordListing.Size = new System.Drawing.Size(159, 173);
-            this.wordListing.TabIndex = 1;
+            this.codingBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.codingBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.codingBox.Location = new System.Drawing.Point(0, 0);
+            this.codingBox.Name = "codingBox";
+            this.codingBox.Size = new System.Drawing.Size(764, 421);
+            this.codingBox.TabIndex = 0;
+            this.codingBox.Text = "";
+            // 
+            // sourceControll
+            // 
+            this.sourceControll.Controls.Add(this.tabPage1);
+            this.sourceControll.Controls.Add(this.tabPage2);
+            this.sourceControll.Controls.Add(this.tabPage3);
+            this.sourceControll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sourceControll.Location = new System.Drawing.Point(0, 0);
+            this.sourceControll.Name = "sourceControll";
+            this.sourceControll.SelectedIndex = 0;
+            this.sourceControll.Size = new System.Drawing.Size(764, 167);
+            this.sourceControll.TabIndex = 2;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.messageSplit);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(756, 141);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Root";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // messageSplit
             // 
             this.messageSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.messageSplit.Location = new System.Drawing.Point(0, 0);
+            this.messageSplit.Location = new System.Drawing.Point(3, 3);
             this.messageSplit.Name = "messageSplit";
             // 
             // messageSplit.Panel1
@@ -282,8 +327,8 @@
             // messageSplit.Panel2
             // 
             this.messageSplit.Panel2.Controls.Add(this.debugView);
-            this.messageSplit.Size = new System.Drawing.Size(764, 165);
-            this.messageSplit.SplitterDistance = 253;
+            this.messageSplit.Size = new System.Drawing.Size(750, 135);
+            this.messageSplit.SplitterDistance = 247;
             this.messageSplit.TabIndex = 1;
             // 
             // errorTextBox
@@ -294,7 +339,7 @@
             this.errorTextBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.errorTextBox.Location = new System.Drawing.Point(0, 0);
             this.errorTextBox.Name = "errorTextBox";
-            this.errorTextBox.Size = new System.Drawing.Size(253, 165);
+            this.errorTextBox.Size = new System.Drawing.Size(247, 135);
             this.errorTextBox.TabIndex = 0;
             this.errorTextBox.Text = "";
             this.errorTextBox.WordWrap = false;
@@ -310,7 +355,7 @@
             this.debugView.GridLines = true;
             this.debugView.Location = new System.Drawing.Point(0, 0);
             this.debugView.Name = "debugView";
-            this.debugView.Size = new System.Drawing.Size(507, 165);
+            this.debugView.Size = new System.Drawing.Size(499, 135);
             this.debugView.TabIndex = 0;
             this.debugView.UseCompatibleStateImageBehavior = false;
             this.debugView.View = System.Windows.Forms.View.Details;
@@ -324,6 +369,121 @@
             // 
             this.messageHeader.Text = "Message";
             this.messageHeader.Width = 600;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.debugViewPanel);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(756, 141);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Objects";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // debugViewPanel
+            // 
+            this.debugViewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.debugViewPanel.Location = new System.Drawing.Point(3, 3);
+            this.debugViewPanel.Name = "debugViewPanel";
+            // 
+            // debugViewPanel.Panel2
+            // 
+            this.debugViewPanel.Panel2.Controls.Add(this.ObjectListing);
+            this.debugViewPanel.Size = new System.Drawing.Size(750, 135);
+            this.debugViewPanel.SplitterDistance = 119;
+            this.debugViewPanel.TabIndex = 0;
+            // 
+            // ObjectListing
+            // 
+            this.ObjectListing.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ObjectID,
+            this.ObjectInfo,
+            this.ObjectState});
+            this.ObjectListing.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ObjectListing.FullRowSelect = true;
+            this.ObjectListing.GridLines = true;
+            this.ObjectListing.HideSelection = false;
+            this.ObjectListing.Location = new System.Drawing.Point(0, 0);
+            this.ObjectListing.Name = "ObjectListing";
+            this.ObjectListing.Size = new System.Drawing.Size(627, 135);
+            this.ObjectListing.TabIndex = 0;
+            this.ObjectListing.UseCompatibleStateImageBehavior = false;
+            this.ObjectListing.View = System.Windows.Forms.View.Details;
+            // 
+            // ObjectID
+            // 
+            this.ObjectID.Text = "Object Id";
+            // 
+            // ObjectInfo
+            // 
+            this.ObjectInfo.Text = "Object Info";
+            this.ObjectInfo.Width = 328;
+            // 
+            // ObjectState
+            // 
+            this.ObjectState.Text = "ObjectState";
+            this.ObjectState.Width = 134;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.varWatchList);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(756, 141);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Watch";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // varWatchList
+            // 
+            this.varWatchList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.watchName,
+            this.watchValue});
+            this.varWatchList.ContextMenuStrip = this.WatcherMenu;
+            this.varWatchList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.varWatchList.FullRowSelect = true;
+            this.varWatchList.GridLines = true;
+            this.varWatchList.LabelEdit = true;
+            this.varWatchList.Location = new System.Drawing.Point(3, 3);
+            this.varWatchList.Name = "varWatchList";
+            this.varWatchList.Size = new System.Drawing.Size(750, 135);
+            this.varWatchList.TabIndex = 0;
+            this.varWatchList.UseCompatibleStateImageBehavior = false;
+            this.varWatchList.View = System.Windows.Forms.View.Details;
+            // 
+            // watchName
+            // 
+            this.watchName.Text = "Watcher";
+            this.watchName.Width = 159;
+            // 
+            // watchValue
+            // 
+            this.watchValue.Text = "Value";
+            // 
+            // WatcherMenu
+            // 
+            this.WatcherMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addwatchMenuEntry});
+            this.WatcherMenu.Name = "WatcherMenu";
+            this.WatcherMenu.Size = new System.Drawing.Size(134, 26);
+            // 
+            // addwatchMenuEntry
+            // 
+            this.addwatchMenuEntry.Name = "addwatchMenuEntry";
+            this.addwatchMenuEntry.Size = new System.Drawing.Size(133, 22);
+            this.addwatchMenuEntry.Text = "Add Watch";
+            this.addwatchMenuEntry.Click += new System.EventHandler(this.addwatchMenuEntry_Click);
+            // 
+            // wordListing
+            // 
+            this.wordListing.BackColor = System.Drawing.SystemColors.Info;
+            this.wordListing.FormattingEnabled = true;
+            this.wordListing.Location = new System.Drawing.Point(194, 99);
+            this.wordListing.Name = "wordListing";
+            this.wordListing.Size = new System.Drawing.Size(159, 173);
+            this.wordListing.TabIndex = 1;
             // 
             // toolStripContainer1
             // 
@@ -364,8 +524,46 @@
             // 
             // toolStripContainer2.TopToolStripPanel
             // 
-            this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
             this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.debugToolStrip);
+            this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // debugToolStrip
+            // 
+            this.debugToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.debugToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ProcessList,
+            this.execKiller,
+            this.refreshProcBtn});
+            this.debugToolStrip.Location = new System.Drawing.Point(223, 0);
+            this.debugToolStrip.Name = "debugToolStrip";
+            this.debugToolStrip.Size = new System.Drawing.Size(181, 25);
+            this.debugToolStrip.TabIndex = 1;
+            // 
+            // ProcessList
+            // 
+            this.ProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ProcessList.Name = "ProcessList";
+            this.ProcessList.Size = new System.Drawing.Size(121, 25);
+            // 
+            // execKiller
+            // 
+            this.execKiller.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.execKiller.Image = global::Projector.Properties.Resources.delete_16;
+            this.execKiller.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.execKiller.Name = "execKiller";
+            this.execKiller.Size = new System.Drawing.Size(23, 22);
+            this.execKiller.Text = "Kill Process";
+            this.execKiller.Click += new System.EventHandler(this.execKiller_Click);
+            // 
+            // refreshProcBtn
+            // 
+            this.refreshProcBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.refreshProcBtn.Image = global::Projector.Properties.Resources.reload3;
+            this.refreshProcBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.refreshProcBtn.Name = "refreshProcBtn";
+            this.refreshProcBtn.Size = new System.Drawing.Size(23, 22);
+            this.refreshProcBtn.Text = "Refresh Process List";
+            this.refreshProcBtn.Click += new System.EventHandler(this.refreshProcBtn_Click);
             // 
             // toolStrip1
             // 
@@ -383,7 +581,7 @@
             this.toolStripSeparator3,
             this.switchDrawMode,
             this.toolStripSeparator4});
-            this.toolStrip1.Location = new System.Drawing.Point(11, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(220, 25);
             this.toolStrip1.TabIndex = 0;
@@ -487,6 +685,11 @@
             this.switchDrawMode.Size = new System.Drawing.Size(23, 22);
             this.switchDrawMode.Text = "switch Highlighting mode";
             this.switchDrawMode.Click += new System.EventHandler(this.switchDrawMode_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // menuStrip1
             // 
@@ -611,64 +814,6 @@
             this.runningCheck.Interval = 1000;
             this.runningCheck.Tick += new System.EventHandler(this.runningCheck_Tick);
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
-            // debugToolStrip
-            // 
-            this.debugToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.debugToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ProcessList,
-            this.execKiller,
-            this.refreshProcBtn});
-            this.debugToolStrip.Location = new System.Drawing.Point(235, 0);
-            this.debugToolStrip.Name = "debugToolStrip";
-            this.debugToolStrip.Size = new System.Drawing.Size(212, 25);
-            this.debugToolStrip.TabIndex = 1;
-            // 
-            // ProcessList
-            // 
-            this.ProcessList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ProcessList.Name = "ProcessList";
-            this.ProcessList.Size = new System.Drawing.Size(121, 25);
-            // 
-            // execKiller
-            // 
-            this.execKiller.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.execKiller.Image = global::Projector.Properties.Resources.delete_16;
-            this.execKiller.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.execKiller.Name = "execKiller";
-            this.execKiller.Size = new System.Drawing.Size(23, 22);
-            this.execKiller.Text = "Kill Process";
-            this.execKiller.Click += new System.EventHandler(this.execKiller_Click);
-            // 
-            // refreshProcBtn
-            // 
-            this.refreshProcBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshProcBtn.Image = global::Projector.Properties.Resources.reload3;
-            this.refreshProcBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.refreshProcBtn.Name = "refreshProcBtn";
-            this.refreshProcBtn.Size = new System.Drawing.Size(23, 22);
-            this.refreshProcBtn.Text = "Refresh Process List";
-            this.refreshProcBtn.Click += new System.EventHandler(this.refreshProcBtn_Click);
-            // 
-            // codeBox
-            // 
-            this.codeBox.AcceptsTab = true;
-            this.codeBox.AutoWordSelection = true;
-            this.codeBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.codeBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.codeBox.HideSelection = false;
-            this.codeBox.Location = new System.Drawing.Point(0, 0);
-            this.codeBox.Name = "codeBox";
-            this.codeBox.Size = new System.Drawing.Size(764, 423);
-            this.codeBox.TabIndex = 2;
-            this.codeBox.TabStop = false;
-            this.codeBox.Text = "";
-            this.codeBox.WordWrap = false;
-            // 
             // ScriptWriter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -693,10 +838,18 @@
             this.codeSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.codeSplitContainer)).EndInit();
             this.codeSplitContainer.ResumeLayout(false);
+            this.sourceControll.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.messageSplit.Panel1.ResumeLayout(false);
             this.messageSplit.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.messageSplit)).EndInit();
             this.messageSplit.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.debugViewPanel.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.debugViewPanel)).EndInit();
+            this.debugViewPanel.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.WatcherMenu.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -709,12 +862,12 @@
             this.toolStripContainer2.TopToolStripPanel.PerformLayout();
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
+            this.debugToolStrip.ResumeLayout(false);
+            this.debugToolStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.debugToolStrip.ResumeLayout(false);
-            this.debugToolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -775,5 +928,20 @@
         private System.Windows.Forms.ToolStripComboBox ProcessList;
         private System.Windows.Forms.ToolStripButton execKiller;
         private System.Windows.Forms.ToolStripButton refreshProcBtn;
+        private System.Windows.Forms.TabControl sourceControll;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private RichBox codingBox;
+        private System.Windows.Forms.SplitContainer debugViewPanel;
+        private System.Windows.Forms.ListView ObjectListing;
+        private System.Windows.Forms.ColumnHeader ObjectID;
+        private System.Windows.Forms.ColumnHeader ObjectInfo;
+        private System.Windows.Forms.ColumnHeader ObjectState;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ListView varWatchList;
+        private System.Windows.Forms.ColumnHeader watchName;
+        private System.Windows.Forms.ColumnHeader watchValue;
+        private System.Windows.Forms.ContextMenuStrip WatcherMenu;
+        private System.Windows.Forms.ToolStripMenuItem addwatchMenuEntry;
     }
 }

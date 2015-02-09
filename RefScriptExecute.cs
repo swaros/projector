@@ -293,6 +293,12 @@ namespace Projector
             }
         }
 
+        public Hashtable getRuntimeObjects()
+        {
+            return this.objectReferences;
+        }
+
+
         public Object getObjectFromRoot(string name)
         {
             if (this.currentScript.Parent != null)
@@ -557,7 +563,23 @@ namespace Projector
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
                     return false;
                 }
-                this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
+                if (!this.objectReferences.ContainsKey(scrLine.name))
+                {
+                    this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
+                }
+                else
+                {
+                    ScriptErrors error = new ScriptErrors();
+                    error.errorMessage = "object " + scrLine.typeOfObject + " allready added. Check Script";
+                    error.lineNumber = scrLine.lineNumber;
+                    error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
+
+                    this.currentScript.addError(error);
+
+                    lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
+                    return false;
+                }
+                
                 
             }
 

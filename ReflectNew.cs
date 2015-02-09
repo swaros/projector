@@ -28,6 +28,10 @@ namespace Projector
 
         }
 
+        public Hashtable getStoredObjects()
+        {
+            return this.obReferences;
+        }
 
         public Object getObject(ReflectionScriptDefines refObject, Object parent)
         {

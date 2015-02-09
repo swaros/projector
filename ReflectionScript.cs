@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Reflection;
+using System.Windows.Forms;
 
 
 namespace Projector
@@ -153,6 +154,7 @@ namespace Projector
         private string parentWatcherMethod;
 
         private Boolean debugMode = false;
+
         
         /// <summary>
         /// Reflection script
@@ -533,19 +535,26 @@ namespace Projector
         /// <returns>A List of all existing Objects from type of Objecttype</returns>
         public List<string> getCurrentObjectsByType(string objectType)
         {
+            List<string> usedBy = new List<string>();
             if (this.objectReferences.ContainsValue(objectType))
             {
-                List<string> usedBy = new List<string>();
+               
                 foreach (DictionaryEntry de in this.objectReferences)
                 {
                     if (de.Value != null && de.Value.ToString() == objectType)
                     {
                         usedBy.Add(de.Key.ToString());
                     }
-                }
-                return usedBy;
+                }              
             }
-            return null;
+            foreach (DictionaryEntry scrpt in this.subScripts)
+            {
+                ReflectionScript refScr = (ReflectionScript)scrpt.Value;
+                List<string> subUsed = refScr.getCurrentObjectsByType(objectType);
+                usedBy.AddRange(subUsed);
+            }
+
+            return usedBy;
         }
 
 
@@ -771,6 +780,49 @@ namespace Projector
             return this.objectStorage;
         }
 
+        public Hashtable getRuntimeObjects(Boolean alsoIfNotRunning)
+        {
+            Hashtable result = new Hashtable();
+            if (this.CurrentExecuter != null)
+            {
+                foreach (DictionaryEntry tmpRes in this.CurrentExecuter.getRuntimeObjects())
+                {
+                    result.Add(tmpRes.Key, tmpRes.Value);
+                }
+
+            }
+            else
+            {
+                if (alsoIfNotRunning)
+                {
+                    foreach (DictionaryEntry tmpRes in this.getObjects())
+                    {
+                        result.Add(tmpRes.Key, tmpRes.Value);
+                    }
+                }
+            }
+            if (result == null)
+            {
+                result = new Hashtable();
+            }
+
+            foreach (DictionaryEntry scrpt in this.subScripts)
+            {
+                ReflectionScript refScr = (ReflectionScript)scrpt.Value;
+                Hashtable subResult = refScr.getRuntimeObjects(alsoIfNotRunning);
+
+                foreach (DictionaryEntry subInfo in subResult)
+                {
+                    if (!result.ContainsKey(subInfo.Key))
+                        result.Add(subInfo.Key, subInfo.Value);
+                }
+            }
+
+
+            return result;
+        }
+
+
         public void updateSubScripts()
         {
             foreach (DictionaryEntry Obj in this.getObjects())
@@ -796,12 +848,45 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// checks if an form still visible
+        /// so this means the script is still running
+        /// </summary>
+        /// <returns>true if a form is visible</returns>
+        private Boolean testOnOpenForms()
+        {
+            Hashtable allObjects = this.getRuntimeObjects(false);
+            if (allObjects == null)
+            {
+                return false;
+            }
+
+            foreach (DictionaryEntry runObj in allObjects)
+            {
+                if (runObj.Value is Form)
+                {
+                    Form testForm = (Form)runObj.Value;
+                    if (testForm.Visible)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
 
         public Boolean imRunning()
         {
             if (this.CurrentExecuter != null)
             {
                 if (this.CurrentExecuter.runState != RefScriptExecute.STATE_FINISHED)
+                {
+                    return true;
+                }
+
+                // next check if a form still visible
+                if (this.testOnOpenForms())
                 {
                     return true;
                 }
@@ -927,7 +1012,11 @@ namespace Projector
                 found = true;
                 if (!selfInc)
                 {
-                    this.objectStorage[name] = value;                   
+                    this.objectStorage[name] = value;
+                    if (this.debugMode)
+                    {
+                        this.updateDebugMessage("&" + name, value.ToString());
+                    }
                 }
                 else
                 {
@@ -1863,7 +1952,7 @@ namespace Projector
 
                 if (this.debugMode && cmdResult.parameters[i] != null)
                 {
-                    this.updateDebugMessage("PARAM UPD:" + type, cmdResult.parameters[i].ToString());
+                    this.updateDebugMessage(cmdResult.name + i + type, cmdResult.parameters[i].ToString());
                 }
             }
 
@@ -1982,6 +2071,9 @@ namespace Projector
            // Boolean foundMatch = false;
             // look on any mask
             int bestMatchFound = 0;
+            string bestMatchMask = "";
+            int matchingWordCount = 0;
+            string missingNextWord = "";
             foreach (string hash in this.mask)
             {
 
@@ -1990,6 +2082,9 @@ namespace Projector
                 if (bestMatchFound < bestmatch)
                 {
                     bestMatchFound = bestmatch;
+                    bestMatchMask = hash;
+                    matchingWordCount = maskMatch.matchingUntil;
+                    missingNextWord = maskMatch.lastMatchDefinition;
                 }
 
                 if (bestmatch != RefScriptMaskMatch.MATCH)
@@ -2196,15 +2291,24 @@ namespace Projector
             }
             if (bestMatchFound == RefScriptMaskMatch.MAYBE_MATCH)
             {
-                this.addError("not sure what this should be");
+                this.addError("not sure what this should be (" + bestMatchMask + ")" + matchingWordCount);
             }
             else if (bestMatchFound == RefScriptMaskMatch.PARTIAL_MATCH)
             {
-                this.addError("incomplete");
+                //this.addError("incomplete (" + bestMatchMask + ")" + matchingWordCount + "  " + missingNextWord);
+
+                ScriptErrors maskError = new ScriptErrors();
+                maskError.errorMessage = "Incomplete Source";
+                maskError.wordPosition = matchingWordCount;
+                maskError.lineNumber = this.getLineNumber();
+                maskError.errorType = ScriptErrors.TYPO_ERROR;
+                maskError.internalMessage = bestMatchMask;
+                this.addError(maskError);
+
             }
             else
             {
-                this.addError("INVALID");
+                this.addError("INVALID ");
             }
             
 

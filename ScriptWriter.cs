@@ -41,10 +41,11 @@ namespace Projector
 
         private AutoCompletion AutoComplete;
 
-        //public RichBox codeBox = new RichBox();
+        //public RichBox codingBox = new RichBox();
 
         Boolean isRunning = false;
 
+        private Boolean showObjectListing = true;
 
         private RtfColoring colorize;
 
@@ -67,10 +68,10 @@ namespace Projector
             initStuff(targetObject);
             if (scriptText != null)
             {
-                codeBox.Text = scriptText;
+                codingBox.Text = scriptText;
             }
             
-            script.setCode(codeBox.Text);            
+            script.setCode(codingBox.Text);            
 
         }
 
@@ -85,16 +86,17 @@ namespace Projector
             
             InitializeComponent();
             /*
-            codeSplitContainer.Panel1.Controls.Add(codeBox);
-            codeBox.Dock = DockStyle.Fill;
+            codeSplitContainer.Panel1.Controls.Add(codingBox);
+            codingBox.Dock = DockStyle.Fill;
             */
-            codeBox.KeyDown += new KeyEventHandler(codeBox_KeyDown);
-            codeBox.KeyUp += new KeyEventHandler(codeBox_KeyUp);
-            codeBox.TextChanged += new EventHandler(codeBox_TextChanged);
-            codeBox.MouseUp += new MouseEventHandler(codeBox_MouseUp);
-            codeBox.VScroll += new EventHandler(codeBox_Vscroll);
-            
-            
+            codingBox.KeyDown += new KeyEventHandler(codingBox_KeyDown);
+            codingBox.KeyUp += new KeyEventHandler(codingBox_KeyUp);
+            codingBox.TextChanged += new EventHandler(codingBox_TextChanged);
+            codingBox.MouseUp += new MouseEventHandler(codingBox_MouseUp);
+            codingBox.VScroll += new EventHandler(codingBox_Vscroll);
+            codingBox.TabStop = false;
+            codingBox.AcceptsTab = true;
+            codingBox.WordWrap = false;
 
             messageSplit.Panel1Collapsed = true;
             codeSplitContainer.Panel2Collapsed = true;
@@ -102,10 +104,10 @@ namespace Projector
             mainSplitContainer.Panel1Collapsed = true;
             debugView.Columns[1].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
             this.execObject = targetObject;
-            script.setCode(codeBox.Text);
-            colorize = new RtfColoring(codeBox);
-            Highlight = new ReflectionScriptHighLight(script, codeBox);
-            this.AutoComplete = new AutoCompletion(codeBox);
+            script.setCode(codingBox.Text);
+            colorize = new RtfColoring(codingBox);
+            Highlight = new ReflectionScriptHighLight(script, codingBox);
+            this.AutoComplete = new AutoCompletion(codingBox);
             this.AutoComplete.assignListBox(wordListing);
         }
 
@@ -124,8 +126,8 @@ namespace Projector
                 return;
             }
             Highlight.markLine = -1;
-            int cursorPosition = codeBox.SelectionStart;
-            this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
+            int cursorPosition = codingBox.SelectionStart;
+            this.currentLineInEdit = codingBox.GetLineFromCharIndex(cursorPosition);
 
             int startLn = this.currentLineInEdit - 1;
             if (startLn < 0)
@@ -135,7 +137,7 @@ namespace Projector
             workerLabel.Text = startLn.ToString();
             /*
             Highlight.startLine = startLn;
-            Highlight.startPos = this.codeBox.SelectionStart;
+            Highlight.startPos = this.codingBox.SelectionStart;
              */
             Highlight.startLine = 0;
             Highlight.startPos = 0;
@@ -144,18 +146,18 @@ namespace Projector
             workerLabel.Text = Highlight.preRuntime + " | " + Highlight.runtime + " | " + Highlight.postRuntime;
         }
 
-        private void codeBox_Vscroll(object sender, EventArgs e)
+        private void codingBox_Vscroll(object sender, EventArgs e)
         {
             workerLabel.Text = "invisible";
-            if (codeBox.selectionIsVisible())
+            if (codingBox.selectionIsVisible())
             {
                 workerLabel.Text = "visible";
             }
         }
 
-        private void codeBox_TextChanged(object sender, EventArgs e)
+        private void codingBox_TextChanged(object sender, EventArgs e)
         {
-            //script.setCode(codeBox.Text);
+            //script.setCode(codingBox.Text);
             //errorTextBox.Text = script.getErrors();
             if (!isRunning)
             {
@@ -165,11 +167,13 @@ namespace Projector
             
         }
 
-        private void codeBox_KeyUp(object sender, KeyEventArgs e)
+        private void codingBox_KeyUp(object sender, KeyEventArgs e)
         {
             keyTrigger.Enabled = false;
+
             //            refreshTimer.Enabled = true;
             //this.recheckScript();
+            
             this.AutoComplete.setSelection(e);
         }
 
@@ -177,14 +181,17 @@ namespace Projector
         {
             if (!codeSplitContainer.Panel2Collapsed && !isRunning)
             {
-                int cursorPosition = codeBox.SelectionStart;
-                this.currentLineInEdit = codeBox.GetLineFromCharIndex(cursorPosition);
+                int cursorPosition = codingBox.SelectionStart;
+                this.currentLineInEdit = codingBox.GetLineFromCharIndex(cursorPosition);
                 if (this.currentLineInEdit < debugView.Items.Count)
                 {
                     debugView.TopItem = debugView.Items[this.currentLineInEdit];
                 }
             }
         }
+
+
+
 
         private void recheckScript()
         {
@@ -193,12 +200,12 @@ namespace Projector
                 return;
             }
 
-            script.setCode(codeBox.Text);
+            script.setCode(codingBox.Text);
             if (script.getErrorCount() == 0)
             {
                 errCount.Text = "no errors";
                 errCount.ForeColor = Color.DarkGreen;
-                this.assignedExternalScript = codeBox.Text;
+                this.assignedExternalScript = codingBox.Text;
             }
             else
             {
@@ -242,7 +249,43 @@ namespace Projector
             }
         }
 
+        private void getScriptObjects()
+        {
+            ObjectListing.Items.Clear();
+            Hashtable scriptObjects = this.script.getRuntimeObjects(true);
+            if (scriptObjects != null)
+            {
+                foreach (DictionaryEntry obInfo in scriptObjects)
+                {
+                    ListViewItem addItem = new ListViewItem();
+                    System.Type obType = obInfo.Value.GetType();
 
+                    addItem.Text = obInfo.Key.ToString();
+                    addItem.SubItems.Add(obType.FullName);
+                    string stateInfo = "";
+                    if (obInfo.Value is Form)
+                    {
+                        Form checkForm = (Form)obInfo.Value;
+
+                        stateInfo += "(" + checkForm.Width + "x" + checkForm.Height + ")";
+
+                        if (checkForm.Visible)
+                        {
+                            stateInfo += "VISIBLE";
+                        }
+                        else
+                        {
+                            stateInfo += "Invisible";
+                        }
+                    }
+
+                    addItem.SubItems.Add(stateInfo);
+
+                    // finally add this
+                    ObjectListing.Items.Add(addItem);
+                }
+            }
+        }
 
 
         // updates the generic tree depending on actually used objects
@@ -325,6 +368,8 @@ namespace Projector
                 }
 
             }
+
+            getScriptObjects();
             /*
             TreeNode varibales = new TreeNode("Variables");
             varibales.ImageIndex = ScriptWriter.TREE_STRING_IMG_IDENT;
@@ -457,13 +502,37 @@ namespace Projector
 
         public void varChange(int lineNumber, string name, string val)
         {
+            if (this.varWatchList.Items.Count > 0)
+            {
+                for (int i = 0; i < this.varWatchList.Items.Count; i++)
+                {
+                    if (this.varWatchList.Items[i].Text == name)
+                    {
+                        if (this.varWatchList.Items[i].SubItems.Count < 2)
+                        {
+                            this.varWatchList.Items[i].SubItems.Add(val);
+                        }
+                        else
+                        {
+                            this.varWatchList.Items[i].SubItems[1].Text = val;
+                        }
+                    }
+                }
+            }
+            /*
             this.logbook.Items.Add("       Change:" + name + "  | (" + val + ") " + lineNumber);
             if (logbook.Items.Count > 2)
             this.logbook.TopIndex = this.logbook.Items.Count - 1;
+             * */
         }
 
         public void watcher(ReflectionScriptDefines currentLine, int lineNumber, int State, int executionLevel)
         {
+            if (this.showObjectListing)
+            {
+                getScriptObjects();
+            }
+
             string objName = currentLine.name;
             if (objName == null)
             {
@@ -548,7 +617,7 @@ namespace Projector
             this.logbook.Items.Clear();
             this.logbook.Items.Add("START ...");
             this.Highlight.clearExecutions();
-            script.setCode(codeBox.Text, true);
+            script.setCode(codingBox.Text, true);
             if (script.getErrorCount() == 0)
             {
 
@@ -611,8 +680,8 @@ namespace Projector
         {
             if (this.filename != null && this.filename != "" && System.IO.File.Exists(this.filename))
             {
-                System.IO.File.WriteAllText(this.filename, codeBox.Text);
-                this.lastSaved = codeBox.Text;
+                System.IO.File.WriteAllText(this.filename, codingBox.Text);
+                this.lastSaved = codingBox.Text;
                 return true;
             }
             else
@@ -624,7 +693,7 @@ namespace Projector
 
         private Boolean checkChanges()
         {
-            return (lastSaved != codeBox.Text);
+            return (lastSaved != codingBox.Text);
         }
 
         private void checkBeforeOpen()
@@ -643,10 +712,10 @@ namespace Projector
 
             if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                codeBox.Text = System.IO.File.ReadAllText(openFile.FileName);
-                this.lastSaved = codeBox.Text;
+                codingBox.Text = System.IO.File.ReadAllText(openFile.FileName);
+                this.lastSaved = codingBox.Text;
                 this.filename = openFile.FileName;
-                this.assignedExternalScript = codeBox.Text;
+                this.assignedExternalScript = codingBox.Text;
                 this.recheckScript();
                 Highlight.loadColors();
                 this.updateColors();
@@ -661,8 +730,8 @@ namespace Projector
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 this.filename = saveFileDialog.FileName;
-                this.lastSaved = codeBox.Text;
-                System.IO.File.WriteAllText(saveFileDialog.FileName, codeBox.Text);
+                this.lastSaved = codingBox.Text;
+                System.IO.File.WriteAllText(saveFileDialog.FileName, codingBox.Text);
                 statusLabel.Text = this.filename;
                 
             }
@@ -673,7 +742,7 @@ namespace Projector
             this.saveChanges();
         }
 
-        private void codeBox_VScroll(object sender, EventArgs e)
+        private void codingBox_VScroll(object sender, EventArgs e)
         {
             refreshTimer.Enabled = false;
             refitElements();
@@ -691,18 +760,18 @@ namespace Projector
             refreshTimer.Enabled = true;
         }
 
-        private void codeBox_KeyDown(object sender, KeyEventArgs e)
+        private void codingBox_KeyDown(object sender, KeyEventArgs e)
         {
 
             if (e.KeyCode == Keys.Tab)
             {
-                //codeBox.SelectedText = "   ";
+                //codingBox.SelectedText = "   ";
                 CodeFormater cf = new CodeFormater();
-                cf.setContent(codeBox);
+                cf.setContent(codingBox);
                 cf.tabKey();
                 e.SuppressKeyPress = true;
                 return;
-            }            
+            }
 
             keyTrigger.Enabled = true;
             AutoComplete.keypressHandler( e );
@@ -731,7 +800,7 @@ namespace Projector
             }
         }
 
-        private void codeBox_MouseUp(object sender, MouseEventArgs e)
+        private void codingBox_MouseUp(object sender, MouseEventArgs e)
         {
             refitElements();
         }
@@ -804,13 +873,13 @@ namespace Projector
                     || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_INT_IMG_IDENT)
                     )
                 {
-                    //codeBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
-                    int startPos = codeBox.SelectionStart;
-                    int sellength = codeBox.SelectionLength;
-                    codeBox.Text = codeBox.Text.Remove(startPos, sellength);
-                    codeBox.Text = codeBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
-                    //codeBox.Text = "";
-                    codeBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
+                    //codingBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
+                    int startPos = codingBox.SelectionStart;
+                    int sellength = codingBox.SelectionLength;
+                    codingBox.Text = codingBox.Text.Remove(startPos, sellength);
+                    codingBox.Text = codingBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
+                    //codingBox.Text = "";
+                    codingBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
 
                 }
             }
@@ -869,7 +938,7 @@ namespace Projector
                 Highlight.defaultFontName = setupColor.FontName.Text;
 
                 HighlightStyle.defaultColor = setupColor.MainStyle.getBackColor();
-                codeBox.BackColor = HighlightStyle.defaultColor;
+                codingBox.BackColor = HighlightStyle.defaultColor;
                 Highlight.fontDefaultSize = (int) setupColor.fontSize.Value;
                 Highlight.resetFonts();
 
@@ -900,6 +969,7 @@ namespace Projector
                 workerLabel.Text = "D O N E";
                 runningCheck.Enabled = false;
             }
+            this.getScriptObjects();
         }
 
         private void refreshProcBtn_Click(object sender, EventArgs e)
@@ -919,6 +989,17 @@ namespace Projector
                 }
             }
             getRunningProcesses();
+        }
+
+        private void addwatchMenuEntry_Click(object sender, EventArgs e)
+        {
+            UserTextInput addWatchVar = new UserTextInput();
+            addWatchVar.textinfo.Text = "";
+            addWatchVar.groupBox.Text = "Add Variable to watch...";
+            if (addWatchVar.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                varWatchList.Items.Add(addWatchVar.textinfo.Text);
+            }
         }
     }
 }

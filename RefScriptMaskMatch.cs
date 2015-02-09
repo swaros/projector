@@ -39,6 +39,14 @@ namespace Projector
             this.buildElements();
         }
 
+        /// <summary>
+        /// how many words matching before ends in success
+        /// or fail
+        /// </summary>
+        public int matchingUntil = 0;
+
+        public String lastMatchDefinition = "";
+
         public int possibleMatch(string[] words)
         {
 
@@ -74,7 +82,7 @@ namespace Projector
              * 
              * 
              */
-
+            this.matchingUntil = 0;
             foreach (string testWord in words)
             {
                 String compareMask = this.maskPart[wordPosition];
@@ -106,13 +114,16 @@ namespace Projector
                             Hit = possibleObjects.Contains(testWord);
                         }
                     }
-                    
+
                 }
-
-
+                
                 if (Hit == false)
                 {
                     return false;
+                }
+                else
+                {
+                    this.matchingUntil++;
                 }
                 wordPosition++;
             }
@@ -122,6 +133,7 @@ namespace Projector
         private void buildElements()
         {
             mainParts = this.sourceStr.Split(Projector.ReflectionScript.MASK_DELIMITER[0]);
+            this.lastMatchDefinition = mainParts[0];
             maskPart = mainParts[0].Split(' ');
             definePart = mainParts[1].Split(' ');
             varDefines = null;

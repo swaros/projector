@@ -84,7 +84,7 @@ namespace Projector
                             Point tl = this.PointToClient(dRec.topLeft);
                             
                             Point mcheck = this.GetPositionFromCharIndex(dRec.firstCharIndex);
-                            Rectangle bychar = new Rectangle(1, mcheck.Y, this.ClientSize.Width - 1, this.getLineHeight());                           
+                            Rectangle bychar = new Rectangle(mcheck.X, mcheck.Y, this.ClientSize.Width - 1 - mcheck.X, this.getLineHeight());                           
                             Brush mBrush =  new SolidBrush(Color.FromArgb(45, dRec.ForeColor.R, dRec.ForeColor.G, dRec.ForeColor.B));
                             Brush SolidBrush = new SolidBrush(Color.FromArgb(dRec.ForeColor.R, dRec.ForeColor.G, dRec.ForeColor.B));
 
