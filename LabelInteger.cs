@@ -31,6 +31,11 @@ namespace Projector
             this.numericUpDown.Value = value;
         }
 
+        public int getInt()
+        {
+            return (int)this.numericUpDown.Value;
+        }
+
         public void setTop(int top)
         {
             this.Top = top;
