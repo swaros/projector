@@ -917,6 +917,7 @@ namespace Projector
             setupColor.Varibale2.setColor(Highlight.VaribalesStyle);
             setupColor.KeyWordColor.setColor(Highlight.KeyWordStyle);
             setupColor.NumberColor.setColor(Highlight.NumberStyle);
+            setupColor.ObjectRefColor.setColor(Highlight.ObjectStyleReferenz);
 
             setupColor.MainStyle.setBackColor(HighlightStyle.defaultColor);
 
@@ -934,6 +935,7 @@ namespace Projector
                 Highlight.CommandStyle = setupColor.CommandColor.getHighLight();               
                 Highlight.KeyWordStyle = setupColor.KeyWordColor.getHighLight();
                 Highlight.NumberStyle = setupColor.NumberColor.getHighLight();
+                Highlight.ObjectStyleReferenz = setupColor.ObjectRefColor.getHighLight();
 
                 Highlight.defaultFontName = setupColor.FontName.Text;
 

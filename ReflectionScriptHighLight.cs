@@ -124,8 +124,13 @@ namespace Projector
 
         public void saveColors()
         {
+            this.saveColors(this.styleFileName);
+        }
+
+        public void saveColors(string fileName)
+        {
             XmlSetup tmpSetup = new XmlSetup();
-            tmpSetup.setFileName(this.styleFileName);
+            tmpSetup.setFileName(fileName);
             tmpSetup.loadXml();
 
             tmpSetup.addSetting("script_color_object", ObjectStyle.toSetupValue());

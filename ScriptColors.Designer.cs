@@ -35,6 +35,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -47,6 +48,7 @@
             this.FontName = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.MainStyle = new Projector.ColorChoose();
+            this.NumberColor = new Projector.ColorChoose();
             this.KeyWordColor = new Projector.ColorChoose();
             this.Varibale2 = new Projector.ColorChoose();
             this.ReferenceColor = new Projector.ColorChoose();
@@ -55,8 +57,8 @@
             this.StringColor = new Projector.ColorChoose();
             this.CommentColor = new Projector.ColorChoose();
             this.VarColor = new Projector.ColorChoose();
-            this.NumberColor = new Projector.ColorChoose();
-            this.label10 = new System.Windows.Forms.Label();
+            this.ObjectRefColor = new Projector.ColorChoose();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.Default.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fontSize)).BeginInit();
@@ -110,6 +112,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.ObjectRefColor);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.NumberColor);
             this.groupBox1.Controls.Add(this.KeyWordColor);
@@ -130,10 +134,19 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(366, 393);
+            this.groupBox1.Size = new System.Drawing.Size(366, 404);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Text Formats";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(21, 338);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(71, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Number Color";
             // 
             // label9
             // 
@@ -187,7 +200,7 @@
             this.Default.Controls.Add(this.FontName);
             this.Default.Controls.Add(this.MainStyle);
             this.Default.Controls.Add(this.label7);
-            this.Default.Location = new System.Drawing.Point(12, 411);
+            this.Default.Location = new System.Drawing.Point(12, 422);
             this.Default.Name = "Default";
             this.Default.Size = new System.Drawing.Size(366, 128);
             this.Default.TabIndex = 15;
@@ -235,6 +248,13 @@
             this.MainStyle.Name = "MainStyle";
             this.MainStyle.Size = new System.Drawing.Size(185, 32);
             this.MainStyle.TabIndex = 14;
+            // 
+            // NumberColor
+            // 
+            this.NumberColor.Location = new System.Drawing.Point(160, 329);
+            this.NumberColor.Name = "NumberColor";
+            this.NumberColor.Size = new System.Drawing.Size(185, 32);
+            this.NumberColor.TabIndex = 17;
             // 
             // KeyWordColor
             // 
@@ -292,21 +312,21 @@
             this.VarColor.Size = new System.Drawing.Size(185, 32);
             this.VarColor.TabIndex = 4;
             // 
-            // NumberColor
+            // ObjectRefColor
             // 
-            this.NumberColor.Location = new System.Drawing.Point(160, 329);
-            this.NumberColor.Name = "NumberColor";
-            this.NumberColor.Size = new System.Drawing.Size(185, 32);
-            this.NumberColor.TabIndex = 17;
+            this.ObjectRefColor.Location = new System.Drawing.Point(159, 367);
+            this.ObjectRefColor.Name = "ObjectRefColor";
+            this.ObjectRefColor.Size = new System.Drawing.Size(185, 32);
+            this.ObjectRefColor.TabIndex = 19;
             // 
-            // label10
+            // label11
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(21, 338);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(71, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Number Color";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(20, 375);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Object Reference";
             // 
             // ScriptColors
             // 
@@ -319,6 +339,8 @@
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ScriptColors";
             this.Text = "ScriptColors";
             this.groupBox1.ResumeLayout(false);
@@ -360,6 +382,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         public ColorChoose NumberColor;
+        private System.Windows.Forms.Label label11;
+        public ColorChoose ObjectRefColor;
 
 
     }
