@@ -208,7 +208,7 @@ namespace Projector
             }
 
             this.internalError = false;
-            if (this.currentScript.getErrorCount() == 0)
+            if (this.currentScript.getNotRuntimeErrorCount() == 0)
             {
                 this.runState = RefScriptExecute.STATE_RUN;
                 Boolean runSucceed = this.exec();
@@ -221,7 +221,7 @@ namespace Projector
         public void setDebuRun()
         {
             this.internalError = false;
-            if (this.currentScript.getErrorCount() == 0)
+            if (this.currentScript.getNotRuntimeErrorCount() == 0)
             {
                 this.currentExecLine = 0;               
             }            
@@ -466,6 +466,7 @@ namespace Projector
                     ScriptErrors error = new ScriptErrors();
                     error.errorMessage = "script not found:" + scrFileName;
                     error.lineNumber = scrLine.lineNumber;
+                    error.runtimeError = true;
                     error.errorCode = Projector.RefSrcStates.ERROR_TYPE_WARNING;
                     this.currentScript.addError(error);
                 }
@@ -496,6 +497,7 @@ namespace Projector
                         ScriptErrors error = new ScriptErrors();
                         error.errorMessage = "Max Waiting Time reached. Check code or increase max waiting Time";
                         error.lineNumber = scrLine.lineNumber;
+                        error.runtimeError = true;
                         error.errorCode = Projector.RefSrcStates.ERROR_TYPE_WARNING;
                         this.currentScript.addError(error);
                         this.removeWaitTimerIfExists(procIdent);
@@ -522,6 +524,7 @@ namespace Projector
                         ScriptErrors error = new ScriptErrors();
                         error.errorMessage = "Parent can be used in subscripts only ";
                         error.lineNumber = scrLine.lineNumber;
+                        error.runtimeError = true;
                         error.errorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
                         this.currentScript.addError(error);
                     }
@@ -557,7 +560,7 @@ namespace Projector
                     error.errorMessage = "object " + scrLine.typeOfObject + " not createable";
                     error.lineNumber = scrLine.lineNumber;
                     error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
-
+                    error.runtimeError = true;
                     this.currentScript.addError(error);
 
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
@@ -573,7 +576,7 @@ namespace Projector
                     error.errorMessage = "object " + scrLine.typeOfObject + " allready added. Check Script";
                     error.lineNumber = scrLine.lineNumber;
                     error.errorCode = Projector.RefSrcStates.EXEC_ERROR_NONOBJECT;
-
+                    error.runtimeError = true;
                     this.currentScript.addError(error);
 
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
@@ -602,6 +605,7 @@ namespace Projector
                         ScriptErrors error = new ScriptErrors();
                         error.errorMessage = "object " + scrLine.typeOfObject + " reports an error on execution " + this.lastErrorCode + this.lastErrorMessage;
                         error.lineNumber = scrLine.lineNumber;
+                        error.runtimeError = true;
                         error.errorCode = this.lastErrorCode;
                         this.currentScript.addError(error);
                     }
@@ -633,6 +637,7 @@ namespace Projector
                     error.errorMessage = "execution Fail: " + scrLine.namedReference + " is not registered as an executable Object ";
                     error.lineNumber = scrLine.lineNumber;
                     error.errorCode = this.lastErrorCode;
+                    error.runtimeError = true;
                     this.currentScript.addError(error);
                 }
             }

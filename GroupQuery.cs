@@ -193,7 +193,7 @@ namespace Projector
 
         private void onDoneCsv()
         {
-            if (this.onDoneExportCsv!= null && this.onDoneExportCsv.getErrorCount() == 0)
+            if (this.onDoneExportCsv!= null)
             {
                 RefScriptExecute executer = new RefScriptExecute(this.onDoneExportCsv, this);
                 executer.run();

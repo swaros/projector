@@ -128,7 +128,7 @@ namespace Projector
 
                 }
 
-                if (this.onCloseScript.getErrorCount() == 0)
+                if (this.onCloseScript.getNotRuntimeErrorCount() == 0)
                 {
                     RefScriptExecute executer = new RefScriptExecute(this.onCloseScript, this);
                     executer.run();

@@ -66,7 +66,7 @@ namespace Projector
                 RefScrAutoScrContainer addMe = new RefScrAutoScrContainer();
                 addMe.Script = new ReflectionScript();
                 addMe.Script.setCode(content);
-                if (addMe.Script.getErrorCount() == 0)
+                if (addMe.Script.getNotRuntimeErrorCount() == 0)
                 {
                     addMe.Label = addMe.Script.SetupStringValue(ReflectionScript.SETUP_LABEL);
                     addMe.Description = addMe.Script.SetupStringValue(ReflectionScript.SETUP_DESC);

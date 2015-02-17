@@ -657,7 +657,7 @@ namespace Projector
             {
                 string errorMessages = script.getErrors();
 
-                errorLabels.Text = script.getErrorCount() + "parsing errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
+                errorLabels.Text = script.getNotRuntimeErrorCount() + "parsing errors: " + script.getErrors().Replace("\n", "").Substring(0, 20);
                 errorLabels.ForeColor = Color.Red;
                 errorLabels.BackColor = Color.LightGoldenrodYellow;
                 errorLabels.ToolTipText = script.getErrors();

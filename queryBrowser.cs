@@ -238,7 +238,7 @@ namespace Projector
 
         private void executeScript(ReflectionScript scrExec)
         {
-            if (scrExec != null && scrExec.getErrorCount() == 0)
+            if (scrExec != null)
             {
                 RefScriptExecute executer = new RefScriptExecute(scrExec, this);
                 executer.run();

@@ -378,7 +378,7 @@ namespace Projector
             {
                 ReflectionScript script = new ReflectionScript();
                 script.setCode(this.scriptText);
-                if (script.getErrorCount() == 0)
+                if (script.getNotRuntimeErrorCount() == 0)
                 {
                     RefScriptExecute executer = new RefScriptExecute(script, this);
                     executer.run();

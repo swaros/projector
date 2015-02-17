@@ -49,6 +49,9 @@ namespace Projector
         /// </summary>
         private String scopeToken;
 
+        /// <summary>
+        /// name for this script
+        /// </summary>
         public string name = "this";
 
         public int parentLineNumber = 0;
@@ -589,39 +592,39 @@ namespace Projector
             return errorMessages;
         }
 
-
+        /// <summary>
+        /// Add an default parsing Error just by message
+        /// </summary>
+        /// <param name="Errormessage">The message for the user</param>
         private void addError(String Errormessage)
         {
             ScriptErrors error = new ScriptErrors();
             error.errorCode = 0;
             error.errorMessage = Errormessage;
+            error.runtimeError = false;
             error.lineNumber = this.getLineNumber();
             this.errorMessages.Add(error);
         }
 
-        /**
-         * add an error in to the backlog
-         */
+        /// <summary>
+        /// Add an Error by an ErrorMessage and an ErrorCode
+        /// </summary>
+        /// <param name="Errormessage">The Message for the User</param>
+        /// <param name="ErrorCode">The Code of Error. 0 for unknown</param>
         private void addError(String Errormessage, int ErrorCode)
         {
             ScriptErrors error = new ScriptErrors();
             error.errorCode = ErrorCode;
             error.errorMessage = Errormessage;
-            error.lineNumber = this.getLineNumber();            
+            error.lineNumber = this.getLineNumber();
+            error.runtimeError = false;
             this.errorMessages.Add(error);
         }
 
-        /**
-         * returns the amount of errors
-         */
-        public int getErrorCount()
-        {
-            return this.errorMessages.Count();
-        }
-
-        /**
-         * add an error
-         */ 
+        /// <summary>
+        /// Add an Error by ScriptError, so the Error have to full defined
+        /// </summary>
+        /// <param name="error">The Error Object</param>
         public void addError(ScriptErrors error)
         {
             if (Parent != null)
@@ -638,6 +641,37 @@ namespace Projector
             this.errorMessages.Add(error);
         }
 
+        /// <summary>
+        /// returns the Full count of all Errors
+        /// </summary>
+        /// <returns></returns>
+    
+        public int getErrorCount()
+        {
+            return this.errorMessages.Count();
+        }
+
+        /// <summary>
+        /// Returns count of all Errors they are NOT
+        /// Runtime errors.
+        /// </summary>
+        /// <returns></returns>
+        public int getNotRuntimeErrorCount()
+        {
+            int errCount = 0;
+
+            foreach (ScriptErrors err in this.errorMessages)
+            {
+                if (!err.runtimeError)
+                {
+                    errCount++;
+                }
+            }
+
+            return errCount;
+        }
+
+        // -------------------------------- end of error handling --------------------------------------
 
         /**
          * return a list of linenumbers 
@@ -1758,7 +1792,7 @@ namespace Projector
 
                        
 
-                        if (testObj.subScript.getErrorCount() > 0)
+                        if (testObj.subScript.getNotRuntimeErrorCount() > 0)
                         {
                             //this.addError("Invalid Code in subLogic: " + testObj.code);
                             foreach (ScriptErrors err in testObj.subScript.getAllErrors())

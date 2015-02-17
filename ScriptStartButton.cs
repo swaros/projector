@@ -33,7 +33,7 @@ namespace Projector
 
         private void updateMe()
         {
-            if (this.script.Script.getErrorCount() == 0)
+            if (this.script.Script.getNotRuntimeErrorCount() == 0)
             {
                 this.MainLabel.Text = this.script.Label;
                 if (this.script.Description != null)
