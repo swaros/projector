@@ -173,7 +173,7 @@ namespace Projector
 
             //            refreshTimer.Enabled = true;
             //this.recheckScript();
-            
+
             this.AutoComplete.setSelection(e);
         }
 

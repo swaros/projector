@@ -88,6 +88,7 @@
     <Compile Include="BookmarkManager.cs" />
     <Compile Include="CmdEvent.cs" />
     <Compile Include="CodeFormater.cs" />
+    <Compile Include="CodeStringPrepaerator.cs" />
     <Compile Include="ColorCalc.cs" />
     <Compile Include="ColorChoose.cs">
       <SubType>UserControl</SubType>

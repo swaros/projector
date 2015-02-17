@@ -22,6 +22,7 @@ namespace Projector
         private RichBox drawingRtf;
 
         public HighlightStyle ObjectStyle = new HighlightStyle();
+        public HighlightStyle ObjectStyleReferenz = new HighlightStyle();
         public HighlightStyle CommandStyle = new HighlightStyle();
         public HighlightStyle ReferenzStyle = new HighlightStyle();
         public HighlightStyle VarStyle = new HighlightStyle();
@@ -68,6 +69,7 @@ namespace Projector
         {
        
             this.ObjectStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
+            this.ObjectStyleReferenz.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
             this.VaribalesStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
             this.CommandStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Regular);
             this.ReferenzStyle.Font = new Font(defaultFontName, this.fontDefaultSize, FontStyle.Bold);
@@ -88,6 +90,7 @@ namespace Projector
             tmpSetup.loadXml();
 
             this.getSavedStyle(tmpSetup, "script_color_object", ObjectStyle);
+            this.getSavedStyle(tmpSetup, "script_color_object_ref", ObjectStyleReferenz);
             this.getSavedStyle(tmpSetup, "script_color_var1", VaribalesStyle);
             this.getSavedStyle(tmpSetup, "script_color_var2", VarStyle);
             this.getSavedStyle(tmpSetup, "script_color_keyword", KeyWordStyle);
@@ -126,6 +129,7 @@ namespace Projector
             tmpSetup.loadXml();
 
             tmpSetup.addSetting("script_color_object", ObjectStyle.toSetupValue());
+            tmpSetup.addSetting("script_color_object_ref", ObjectStyleReferenz.toSetupValue());
             tmpSetup.addSetting("script_color_var1", VaribalesStyle.toSetupValue());
             tmpSetup.addSetting("script_color_var2", VarStyle.toSetupValue());
             tmpSetup.addSetting("script_color_keyword", KeyWordStyle.toSetupValue());
@@ -169,6 +173,8 @@ namespace Projector
             loadColors();
             rtf.BackColor = HighlightStyle.defaultColor;
             this.ObjectStyle.ForeColor = Color.DarkMagenta;
+
+            this.ObjectStyleReferenz.ForeColor = Color.SteelBlue;
 
             this.VaribalesStyle.ForeColor = Color.DarkGreen;
             //this.VaribalesStyle.BackColor = Color.Transparent;
@@ -272,13 +278,11 @@ namespace Projector
                 }
 
                 // must be at the end
-
                 foreach (String keyWord in Projector.RefScriptMaskMatch.KeyWords)
                 {
-
                     this.RtfColors.markTextLine(keyWord, KeyWordStyle);
                 }
-
+               
                 //if (this.drawMode == RtfColoring.MODE_DIRECT) { };
                 string[] variables = new String[this.Srcipt.getAllStrings().Count];
 
@@ -439,6 +443,11 @@ namespace Projector
         {
             this.addKeyWord("{", ObjectStyle);
             this.addKeyWord("}", ObjectStyle);
+            this.addKeyWord("(", ObjectStyle);
+            this.addKeyWord(")", ObjectStyle);
+            this.addKeyWord("=", ObjectStyle);
+            this.addKeyWord("+", ObjectStyle);
+            this.addKeyWord("-", ObjectStyle);            
             this.addKeyWord("true", ObjectStyle);
             this.addKeyWord("false", ObjectStyle);
 
@@ -464,6 +473,11 @@ namespace Projector
                 if (scriptLine.isVariable == true && scriptLine.name != null)
                 {
                     this.addKeyWord(scriptLine.name, VarStyle);
+                }
+
+                if (scriptLine.isObject == true && scriptLine.ReflectObject != null)
+                {
+                    this.addKeyWord(scriptLine.name, ObjectStyleReferenz);
                 }
             }
             /*

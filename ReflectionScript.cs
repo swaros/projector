@@ -835,8 +835,21 @@ namespace Projector
 
         public Hashtable getAllStrings()
         {
-            return this.globalRenameHash;
-        }
+            Hashtable fullStrings = this.globalRenameHash;
+            foreach (DictionaryEntry subScr in this.subScripts)
+            {
+                ReflectionScript refScr = (ReflectionScript)subScr.Value;
+                foreach (DictionaryEntry subVars in refScr.getAllStrings())
+                {
+                    if (!fullStrings.ContainsKey(subVars.Key))
+                    {
+                        fullStrings.Add(subVars.Key, subVars.Value);
+                    }
+                }
+            }
+            return fullStrings;
+            //return this.globalRenameHash;
+        }        
 
         public void updateExistingObject(String name, Object value)
         {
@@ -1366,6 +1379,9 @@ namespace Projector
             {
                 return false;
             }
+            
+            
+
             //Match match = Regex.Match(this.code, @"'([^']*)");
 
             // parse all strings so at the end code only will be in the source
