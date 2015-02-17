@@ -317,11 +317,11 @@ namespace Projector
                 {
                     if (err.wordPosition < 1)
                     {
-                        this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false, err.errorMessage);
+                        this.RtfColors.markFullLine(err.lineNumber, ErrorStyle, true, false, err.errorMessage + " @" + err.lineNumber);
                     }
                     else
                     {
-                        this.RtfColors.markFullLine(err.lineNumber, InProgressStyle, true, false, err.errorMessage,err.wordPosition);
+                        this.RtfColors.markFullLine(err.lineNumber, InProgressStyle, true, false, err.errorMessage + " @" + err.lineNumber, err.wordPosition);
                     }
                     
 

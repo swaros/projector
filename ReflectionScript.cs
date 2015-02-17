@@ -589,7 +589,24 @@ namespace Projector
         /// <returns>all Errors as a List of Type ScriptErrors</returns>
         public List<ScriptErrors> getAllErrors()
         {
-            return errorMessages;
+            List<ScriptErrors> returnList = this.errorMessages;
+            /*
+            foreach (DictionaryEntry subScrDic in this.subScripts)
+            {
+                ReflectionScript subScr = (ReflectionScript)subScrDic.Value;
+                int parentOffset = subScr.parentLineNumber;
+                List<ScriptErrors> subErrors = subScr.getAllErrors();
+                foreach (ScriptErrors subErr in subErrors)
+                {
+                    ScriptErrors errCopy = subErr;
+                    errCopy.lineNumber += parentOffset;
+                    returnList.Add(errCopy);
+                    
+                }
+                //returnList.AddRange(subComments);
+            }
+            */
+            return returnList;
         }
 
         /// <summary>
@@ -627,11 +644,12 @@ namespace Projector
         /// <param name="error">The Error Object</param>
         public void addError(ScriptErrors error)
         {
+            /*
             if (Parent != null)
             {
                 Parent.addError(error);
             }
-
+            */
 
             if (this.errorLines.Contains(error.lineNumber))
             {
@@ -673,13 +691,34 @@ namespace Projector
 
         // -------------------------------- end of error handling --------------------------------------
 
-        /**
-         * return a list of linenumbers 
-         * that are comments only         
-         */
+       /// <summary>
+       /// returns an List of linenumbers that contains just comments
+       /// </summary>
+       /// <returns>List of Line Numbers</returns>
         public List<int> getCommentLines()
         {
-            return this.commentedLines;
+            List<int> returnList = this.commentedLines;
+            
+            foreach (DictionaryEntry subScrDic in this.subScripts)
+            {
+                ReflectionScript subScr = (ReflectionScript)subScrDic.Value;
+                int parentOffset = subScr.parentLineNumber;
+                List<int> subComments = subScr.getCommentLines();
+                int offsets = 0;
+                foreach (int subLnr in subComments)
+                {
+                    returnList.Add(subLnr + parentOffset);
+                    offsets = subScr.getLineOffset();
+                }
+                //returnList.AddRange(subComments);
+            }
+
+            return returnList;
+        }
+
+        public int getLineOffset()
+        {
+            return this.lineOffset;
         }
 
         /**
@@ -910,6 +949,12 @@ namespace Projector
             return false;
         }
 
+        /// <summary>
+        /// Checks if any process running.
+        /// Checks the states and open Forms.
+        /// Running Threads not collected
+        /// </summary>
+        /// <returns></returns>
         public Boolean imRunning()
         {
             if (this.CurrentExecuter != null)
@@ -1775,6 +1820,7 @@ namespace Projector
                         testObj.subScript.setCode(fullCode);
                         
                         updateDebugInfo(testObj.subScript);
+                        this.lineOffset += testObj.subScript.getLineOffset();
 
                         if (testObj.namedReference != null) {
                             if (this.subScripts.ContainsKey(testObj.namedReference))
@@ -1791,15 +1837,16 @@ namespace Projector
                         testObj.parameters.Add(testObj.subScript);
 
                        
-
                         if (testObj.subScript.getNotRuntimeErrorCount() > 0)
                         {
                             //this.addError("Invalid Code in subLogic: " + testObj.code);
+                          
                             foreach (ScriptErrors err in testObj.subScript.getAllErrors())
                             {
                                 // add my own line number
-                                err.lineNumber += this.getLineNumber();
-                                this.addError(err);
+                                ScriptErrors copyErr = err;
+                                copyErr.lineNumber += testObj.lineNumber;
+                                this.addError(copyErr);
 
                             }
                         }
