@@ -189,7 +189,7 @@
             // mainSplitContainer.Panel2
             // 
             this.mainSplitContainer.Panel2.Controls.Add(this.codeSplitContainer);
-            this.mainSplitContainer.Size = new System.Drawing.Size(985, 592);
+            this.mainSplitContainer.Size = new System.Drawing.Size(985, 567);
             this.mainSplitContainer.SplitterDistance = 217;
             this.mainSplitContainer.TabIndex = 2;
             // 
@@ -207,8 +207,8 @@
             // leftTools.Panel2
             // 
             this.leftTools.Panel2.Controls.Add(this.genericTree);
-            this.leftTools.Size = new System.Drawing.Size(217, 592);
-            this.leftTools.SplitterDistance = 234;
+            this.leftTools.Size = new System.Drawing.Size(217, 567);
+            this.leftTools.SplitterDistance = 224;
             this.leftTools.TabIndex = 0;
             // 
             // logbook
@@ -223,7 +223,7 @@
             "idle..."});
             this.logbook.Location = new System.Drawing.Point(0, 0);
             this.logbook.Name = "logbook";
-            this.logbook.Size = new System.Drawing.Size(217, 234);
+            this.logbook.Size = new System.Drawing.Size(217, 224);
             this.logbook.TabIndex = 0;
             // 
             // genericTree
@@ -234,7 +234,7 @@
             this.genericTree.Location = new System.Drawing.Point(0, 0);
             this.genericTree.Name = "genericTree";
             this.genericTree.SelectedImageIndex = 0;
-            this.genericTree.Size = new System.Drawing.Size(217, 354);
+            this.genericTree.Size = new System.Drawing.Size(217, 339);
             this.genericTree.TabIndex = 0;
             this.genericTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.genericTree_AfterSelect);
             this.genericTree.DoubleClick += new System.EventHandler(this.genericTree_DoubleClick);
@@ -277,8 +277,8 @@
             // codeSplitContainer.Panel2
             // 
             this.codeSplitContainer.Panel2.Controls.Add(this.sourceControll);
-            this.codeSplitContainer.Size = new System.Drawing.Size(764, 592);
-            this.codeSplitContainer.SplitterDistance = 421;
+            this.codeSplitContainer.Size = new System.Drawing.Size(764, 567);
+            this.codeSplitContainer.SplitterDistance = 403;
             this.codeSplitContainer.TabIndex = 0;
             // 
             // codingBox
@@ -287,7 +287,7 @@
             this.codingBox.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codingBox.Location = new System.Drawing.Point(0, 0);
             this.codingBox.Name = "codingBox";
-            this.codingBox.Size = new System.Drawing.Size(764, 421);
+            this.codingBox.Size = new System.Drawing.Size(764, 403);
             this.codingBox.TabIndex = 0;
             this.codingBox.Text = "";
             // 
@@ -300,7 +300,7 @@
             this.sourceControll.Location = new System.Drawing.Point(0, 0);
             this.sourceControll.Name = "sourceControll";
             this.sourceControll.SelectedIndex = 0;
-            this.sourceControll.Size = new System.Drawing.Size(764, 167);
+            this.sourceControll.Size = new System.Drawing.Size(764, 160);
             this.sourceControll.TabIndex = 2;
             // 
             // tabPage1
@@ -309,7 +309,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(756, 141);
+            this.tabPage1.Size = new System.Drawing.Size(756, 134);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Root";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -327,7 +327,7 @@
             // messageSplit.Panel2
             // 
             this.messageSplit.Panel2.Controls.Add(this.debugView);
-            this.messageSplit.Size = new System.Drawing.Size(750, 135);
+            this.messageSplit.Size = new System.Drawing.Size(750, 128);
             this.messageSplit.SplitterDistance = 247;
             this.messageSplit.TabIndex = 1;
             // 
@@ -339,7 +339,7 @@
             this.errorTextBox.ForeColor = System.Drawing.SystemColors.InfoText;
             this.errorTextBox.Location = new System.Drawing.Point(0, 0);
             this.errorTextBox.Name = "errorTextBox";
-            this.errorTextBox.Size = new System.Drawing.Size(247, 135);
+            this.errorTextBox.Size = new System.Drawing.Size(247, 128);
             this.errorTextBox.TabIndex = 0;
             this.errorTextBox.Text = "";
             this.errorTextBox.WordWrap = false;
@@ -355,7 +355,7 @@
             this.debugView.GridLines = true;
             this.debugView.Location = new System.Drawing.Point(0, 0);
             this.debugView.Name = "debugView";
-            this.debugView.Size = new System.Drawing.Size(499, 135);
+            this.debugView.Size = new System.Drawing.Size(499, 128);
             this.debugView.TabIndex = 0;
             this.debugView.UseCompatibleStateImageBehavior = false;
             this.debugView.View = System.Windows.Forms.View.Details;
@@ -376,7 +376,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(756, 141);
+            this.tabPage2.Size = new System.Drawing.Size(756, 134);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Objects";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -390,7 +390,7 @@
             // debugViewPanel.Panel2
             // 
             this.debugViewPanel.Panel2.Controls.Add(this.ObjectListing);
-            this.debugViewPanel.Size = new System.Drawing.Size(750, 135);
+            this.debugViewPanel.Size = new System.Drawing.Size(750, 128);
             this.debugViewPanel.SplitterDistance = 119;
             this.debugViewPanel.TabIndex = 0;
             // 
@@ -406,7 +406,7 @@
             this.ObjectListing.HideSelection = false;
             this.ObjectListing.Location = new System.Drawing.Point(0, 0);
             this.ObjectListing.Name = "ObjectListing";
-            this.ObjectListing.Size = new System.Drawing.Size(627, 135);
+            this.ObjectListing.Size = new System.Drawing.Size(627, 128);
             this.ObjectListing.TabIndex = 0;
             this.ObjectListing.UseCompatibleStateImageBehavior = false;
             this.ObjectListing.View = System.Windows.Forms.View.Details;
@@ -431,7 +431,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(756, 141);
+            this.tabPage3.Size = new System.Drawing.Size(756, 134);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Watch";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -448,7 +448,7 @@
             this.varWatchList.LabelEdit = true;
             this.varWatchList.Location = new System.Drawing.Point(3, 3);
             this.varWatchList.Name = "varWatchList";
-            this.varWatchList.Size = new System.Drawing.Size(750, 135);
+            this.varWatchList.Size = new System.Drawing.Size(750, 128);
             this.varWatchList.TabIndex = 0;
             this.varWatchList.UseCompatibleStateImageBehavior = false;
             this.varWatchList.View = System.Windows.Forms.View.Details;
@@ -514,7 +514,7 @@
             // toolStripContainer2.ContentPanel
             // 
             this.toolStripContainer2.ContentPanel.Controls.Add(this.mainSplitContainer);
-            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(985, 592);
+            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(985, 567);
             this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer2.Name = "toolStripContainer2";
@@ -524,8 +524,8 @@
             // 
             // toolStripContainer2.TopToolStripPanel
             // 
-            this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.debugToolStrip);
             this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer2.TopToolStripPanel.Controls.Add(this.debugToolStrip);
             // 
             // debugToolStrip
             // 
@@ -534,7 +534,7 @@
             this.ProcessList,
             this.execKiller,
             this.refreshProcBtn});
-            this.debugToolStrip.Location = new System.Drawing.Point(223, 0);
+            this.debugToolStrip.Location = new System.Drawing.Point(3, 0);
             this.debugToolStrip.Name = "debugToolStrip";
             this.debugToolStrip.Size = new System.Drawing.Size(181, 25);
             this.debugToolStrip.TabIndex = 1;
@@ -581,9 +581,9 @@
             this.toolStripSeparator3,
             this.switchDrawMode,
             this.toolStripSeparator4});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(3, 25);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(220, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(251, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // loadButton
@@ -620,6 +620,7 @@
             this.showDebug.Name = "showDebug";
             this.showDebug.Size = new System.Drawing.Size(23, 22);
             this.showDebug.Text = "toolStripButton1";
+            this.showDebug.ToolTipText = "Enable Bottom View";
             this.showDebug.Click += new System.EventHandler(this.showDebug_Click);
             // 
             // navigatorBtn
@@ -630,6 +631,7 @@
             this.navigatorBtn.Name = "navigatorBtn";
             this.navigatorBtn.Size = new System.Drawing.Size(23, 22);
             this.navigatorBtn.Text = "toolStripButton1";
+            this.navigatorBtn.ToolTipText = "Show Sidebar";
             this.navigatorBtn.Click += new System.EventHandler(this.navigatorBtn_Click);
             // 
             // toolStripSeparator2
@@ -645,6 +647,7 @@
             this.runButton.Name = "runButton";
             this.runButton.Size = new System.Drawing.Size(23, 22);
             this.runButton.Text = "runButton";
+            this.runButton.ToolTipText = "Run Script";
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
             // continueBtn

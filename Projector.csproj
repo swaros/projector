@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>76</ApplicationRevision>
+    <ApplicationRevision>77</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -490,6 +490,7 @@
     <Compile Include="RefScrVariable.cs" />
     <Compile Include="RefSrcStates.cs" />
     <Compile Include="RegexGroup.cs" />
+    <Compile Include="ResultList.cs" />
     <Compile Include="RichBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -983,6 +984,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <None Include="Resources\server_add.png" />
+    <None Include="Resources\palette.png" />
+    <None Include="Resources\layout_sidebar.png" />
     <None Include="Resources\orange_01.png" />
     <None Include="Resources\metall_bg.png" />
     <None Include="Resources\folder_601.png" />
@@ -1015,6 +1019,21 @@
     <None Include="Resources\bg_05.gif" />
     <None Include="Resources\bg_06.gif" />
     <None Include="Resources\bg_07.gif" />
+    <None Include="Resources\database_add.png" />
+    <None Include="Resources\database_connect.png" />
+    <None Include="Resources\database_delete.png" />
+    <None Include="Resources\database_edit.png" />
+    <None Include="Resources\database_error.png" />
+    <None Include="Resources\database_gear.png" />
+    <None Include="Resources\database_go.png" />
+    <None Include="Resources\database_key.png" />
+    <None Include="Resources\database_lightning.png" />
+    <None Include="Resources\database_link.png" />
+    <None Include="Resources\database_refresh.png" />
+    <None Include="Resources\database_save.png" />
+    <None Include="Resources\database_server.png" />
+    <None Include="Resources\dns.png" />
+    <None Include="Resources\drill.png" />
     <Content Include="Resources\edit-replace.png" />
     <None Include="Resources\ui-list-box-blue.png" />
     <None Include="Resources\layer-group-add.png" />

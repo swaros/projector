@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Projector")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Bigpoint GmbH")]
+[assembly: AssemblyCompany("Thomas Ziegler")]
 [assembly: AssemblyProduct("Projector")]
-[assembly: AssemblyCopyright("Copyright © Bigpoint GmbH 2009")]
+[assembly: AssemblyCopyright("Copyright © Thomas Ziegler")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

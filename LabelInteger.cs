@@ -26,6 +26,11 @@ namespace Projector
             this.TextLabel.Text = name;
         }
 
+        public void setMaxValue(int max)
+        {
+            this.numericUpDown.Maximum = max;
+        }
+
         public void setValue(Decimal value)
         {
             this.numericUpDown.Value = value;

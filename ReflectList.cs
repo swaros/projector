@@ -28,6 +28,8 @@ namespace Projector
         private Color defaultDisplayColor;
         private string displayText = "No Name";
 
+        int columnAutoSizeMode = 0;
+
         private Boolean abortCmd = false;
 
         public ReflectList()
@@ -91,6 +93,47 @@ namespace Projector
             {
                 ListViewWorker Worker = new ListViewWorker();
                 Worker.copyListView(list, this.listView);
+            }
+        }
+
+        public void setResultList(ResultList rList)
+        {
+            this.listView.Clear();
+            // add header first
+            foreach (string header in rList.getColumns())
+            {
+                this.listView.Columns.Add(header);
+            }
+
+            // adding content
+            for (int rowNr = 0; rowNr < rList.getRowCount(); rowNr++)
+            {
+                ListViewItem lwAdd = new ListViewItem(rList.getRowStringList(rowNr));
+                this.listView.Items.Add(lwAdd);                 
+            }
+        }
+
+
+
+        private void autosortColumns()
+        {
+            for (int i = 0; i < listView.Columns.Count; i++)
+            {
+                switch (columnAutoSizeMode)
+                {
+                    case 0:
+                        listView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        break;
+
+                    case 1:
+                        listView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize);
+                        break;
+
+                    default:
+                        listView.Columns[i].AutoResize(ColumnHeaderAutoResizeStyle.None);
+                        break;
+
+                }
             }
         }
 
@@ -800,6 +843,18 @@ namespace Projector
             {
                 openCsvFile(openFilesDlg.FileName);
             }
+        }
+
+        public void AutoArangeColumn()
+        {
+            autoSort_Click(null, null);
+        }
+
+        private void autoSort_Click(object sender, EventArgs e)
+        {
+            columnAutoSizeMode++;
+            if (columnAutoSizeMode > 1) columnAutoSizeMode = 0;
+            autosortColumns();
         }
     }
 }

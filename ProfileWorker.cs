@@ -59,12 +59,29 @@ namespace Projector
             GroupProfilWorker worker = new GroupProfilWorker(new PConfig());
             List<string> grps = worker.getGroupMember(groupName);
 
-            foreach (string groupname in grps)
+            foreach (string membername in grps)
             {                
-                this.iterate(groupName);                
+                this.iterate(membername);                
             }
         }
-        
+
+        public ResultList getGroupMemberAsResultList(string groupName, string name)
+        {
+            GroupProfilWorker worker = new GroupProfilWorker(new PConfig());
+            List<string> grps = worker.getGroupMember(groupName);
+
+            ResultList result = new ResultList();
+            result.AddColumn(name);
+            
+            foreach (string membername in grps)
+            {
+                int rowIndex = result.AddRow();
+                result.setValue(name, rowIndex, membername);
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// returns a Profile by the given name
         /// </summary>

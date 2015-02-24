@@ -22,6 +22,7 @@ namespace Projector
         private ReflectionScript onRowIterationScr;
         private ReflectionScript onErrorScr;
         private ReflectionScript onDoneScr;
+        private ReflectionScript onEmptyScr;
 
         public List<Hashtable> lastResult;
 
@@ -215,25 +216,31 @@ namespace Projector
                 }
                 else
                 {
-
-                    foreach (Hashtable row in hashResult)
+                    if (hashResult.Count > 0)
                     {
-                        this.rowIteration(row);
-                        foreach (DictionaryEntry dict in row)
+                        foreach (Hashtable row in hashResult)
                         {
-                            
-                            string val;
-                            if (dict.Value == null)
+                            this.rowIteration(row);
+                            foreach (DictionaryEntry dict in row)
                             {
-                                val = "";
-                            }
-                            else
-                            {
-                                val = dict.Value.ToString();
 
+                                string val;
+                                if (dict.Value == null)
+                                {
+                                    val = "";
+                                }
+                                else
+                                {
+                                    val = dict.Value.ToString();
+
+                                }
+                                this.iteration(dict.Key.ToString(), val);
                             }
-                            this.iteration(dict.Key.ToString(), val);
                         }
+                    }
+                    else
+                    {
+                        this.onEmpty();
                     }
                 }
                 mysql.disConnect();
@@ -301,6 +308,22 @@ namespace Projector
                 exec.run();
             }
         }
+
+        private void onEmpty()
+        {
+            if (this.onEmptyScr != null)
+            {
+
+                RefScriptExecute exec = new RefScriptExecute(this.onEmptyScr, this);
+                exec.run();
+            }
+        }
+
+        public void OnEmptyResult(ReflectionScript scr)
+        {
+            this.onEmptyScr = scr;
+        }
+
 
         public void OnRow(ReflectionScript scr)
         {

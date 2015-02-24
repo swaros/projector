@@ -590,22 +590,6 @@ namespace Projector
         public List<ScriptErrors> getAllErrors()
         {
             List<ScriptErrors> returnList = this.errorMessages;
-            /*
-            foreach (DictionaryEntry subScrDic in this.subScripts)
-            {
-                ReflectionScript subScr = (ReflectionScript)subScrDic.Value;
-                int parentOffset = subScr.parentLineNumber;
-                List<ScriptErrors> subErrors = subScr.getAllErrors();
-                foreach (ScriptErrors subErr in subErrors)
-                {
-                    ScriptErrors errCopy = subErr;
-                    errCopy.lineNumber += parentOffset;
-                    returnList.Add(errCopy);
-                    
-                }
-                //returnList.AddRange(subComments);
-            }
-            */
             return returnList;
         }
 
@@ -644,13 +628,6 @@ namespace Projector
         /// <param name="error">The Error Object</param>
         public void addError(ScriptErrors error)
         {
-            /*
-            if (Parent != null)
-            {
-                Parent.addError(error);
-            }
-            */
-
             if (this.errorLines.Contains(error.lineNumber))
             {
                 return;
@@ -689,7 +666,7 @@ namespace Projector
             return errCount;
         }
 
-        // -------------------------------- end of error handling --------------------------------------
+        // -------------------------------- end of error handling --------------------------------------       
 
        /// <summary>
        /// returns an List of linenumbers that contains just comments
@@ -710,27 +687,38 @@ namespace Projector
                     returnList.Add(subLnr + parentOffset);
                     offsets = subScr.getLineOffset();
                 }
-                //returnList.AddRange(subComments);
             }
 
             return returnList;
         }
 
+        /// <summary>
+        /// get the numbers of lines that used by strings or subscripts
+        /// and not counted as lines of code
+        /// </summary>
+        /// <returns>the number of lines that used for multilines</returns>
         public int getLineOffset()
         {
             return this.lineOffset;
         }
 
-        /**
-         * return the current line number.
-         * includes offest calculation
-         * for linebreaking code
-         */
+       /// <summary>
+       /// get the current Line Number including 
+       /// offset
+       /// </summary>
+       /// <returns></returns>
         private int getLineNumber()
         {
             return this.currentReadLine + this.lineOffset;
         }
 
+        /// <summary>
+        /// Replaces all variables and return the
+        /// Result as String. That includes all maths, codelines and
+        /// Strings
+        /// </summary>
+        /// <param name="source">string including placeholders</param>
+        /// <returns>string with replaced placeholders</returns>
         public String fillUpAll(string source)
         {
             return 
@@ -741,59 +729,67 @@ namespace Projector
                 );
         }
 
+        /// <summary>
+        /// Fills all Placeholder and returns the 
+        /// content
+        /// </summary>
+        /// <param name="source">string with placeholders</param>
+        /// <returns>string with replaced placeholders</returns>
         public String fillUpStrings(string source)
         {
             string myStrings = this.fillUpStrings(source, "", "");            
             return myStrings;
         }
 
+        /// <summary>
+        /// Fills all PlaceHolder and Returns
+        /// the Content
+        /// </summary>
+        /// <param name="source">String wuth Placeholder</param>
+        /// <param name="pre">String that will be added before</param>
+        /// <param name="post">String that will be added at the end</param>
+        /// <returns>String with replaced Placeholders and the Pre and Poststring</returns>
         public String fillUpStrings(string source, String pre, String post)
         {
             return this.fillUpVars(source, this.globalRenameHash, pre, post);
         }
-
+        
+        /// <summary>
+        /// Returns the full Code of code with placeholders
+        /// or an Placeholder himself
+        /// </summary>
+        /// <param name="source">Placeholder or Code with placeholders</param>
+        /// <returns>Full Code</returns>
         public String fillUpCodeLines(string source)
         {
             return this.fillUpVars(source, this.namedSubScripts);
         }
 
+        /// <summary>
+        /// Fiill all Placeholder for content in brackets
+        /// </summary>
+        /// <param name="source">Code with placeholder</param>
+        /// <returns>Code with Brackets and content in brackets</returns>
         public String fillUpMaths(string source)
         {
             return this.fillUpVars(source, this.calcingBracketsResults);
         }
 
+        /// <summary>
+        /// Fill up Placeholder by the given Hashtable
+        /// as source for key and value. The key will be the
+        /// name of the Placeholder that will be replaced by the 
+        /// value.
+        /// This Method works recusiv
+        /// </summary>
+        /// <param name="source">Source with placeholder</param>
+        /// <param name="useThis">Hashtable that contans the keys and values</param>
+        /// <returns>return filled source</returns>
         public String fillUpVars(string source, Hashtable useThis)
         {
            return this.fillUpVars(source, useThis, "", "");
         }
 
-
-        // check if the variable exists from the given object
-
-        public Boolean varExists(string name)
-        {
-            return this.globalRenameHash.ContainsKey("&"+name);
-        }
-
-        public Boolean varExists(ReflectionScriptDefines refObj)
-        {
-            if (refObj.isParentAssigned)
-            {
-                if (Parent != null)
-                {
-                    return this.Parent.varExists(refObj.name);
-                }
-                else
-                {
-                    this.addError("There is no Parent. use PARENT in subscript only");
-                    return false;
-                }
-            }
-            else
-            {
-                return this.varExists(refObj.name);
-            }
-        }
 
         /**
          * fills up all placeHolder
@@ -849,8 +845,33 @@ namespace Projector
             }
             return fullStrings;
             //return this.globalRenameHash;
-        }        
+        }
+        // check if the variable exists from the given object
 
+        public Boolean varExists(string name)
+        {
+            return this.globalRenameHash.ContainsKey("&" + name);
+        }
+
+        public Boolean varExists(ReflectionScriptDefines refObj)
+        {
+            if (refObj.isParentAssigned)
+            {
+                if (Parent != null)
+                {
+                    return this.Parent.varExists(refObj.name);
+                }
+                else
+                {
+                    this.addError("There is no Parent. use PARENT in subscript only");
+                    return false;
+                }
+            }
+            else
+            {
+                return this.varExists(refObj.name);
+            }
+        }
         public void updateExistingObject(String name, Object value)
         {
             this.updateExistingObject(name, value, false);
@@ -1139,6 +1160,10 @@ namespace Projector
                         if (refScr.objectExists("parent." + name))
                         {
                             refScr.updateExistingObject("parent." + name, this.objectStorage[name]);
+                        }
+                        if (refScr.objectExists( name))
+                        {
+                            refScr.updateExistingObject( name, this.objectStorage[name]);
                         }
                     }
                 }
@@ -2014,7 +2039,7 @@ namespace Projector
                     }
                     
                     break;
-                case "ListView":
+                case "ListView": case "ResultList":
                     return getObjectForParam(this.fillUpAll(defined)); 
                     break;
 

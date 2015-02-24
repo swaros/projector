@@ -491,9 +491,139 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap database_add {
+            get {
+                object obj = ResourceManager.GetObject("database_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap database_check {
             get {
                 object obj = ResourceManager.GetObject("database_check", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_connect {
+            get {
+                object obj = ResourceManager.GetObject("database_connect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_delete {
+            get {
+                object obj = ResourceManager.GetObject("database_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_edit {
+            get {
+                object obj = ResourceManager.GetObject("database_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_error {
+            get {
+                object obj = ResourceManager.GetObject("database_error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_gear {
+            get {
+                object obj = ResourceManager.GetObject("database_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_go {
+            get {
+                object obj = ResourceManager.GetObject("database_go", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_key {
+            get {
+                object obj = ResourceManager.GetObject("database_key", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_lightning {
+            get {
+                object obj = ResourceManager.GetObject("database_lightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_link {
+            get {
+                object obj = ResourceManager.GetObject("database_link", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_refresh {
+            get {
+                object obj = ResourceManager.GetObject("database_refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_save {
+            get {
+                object obj = ResourceManager.GetObject("database_save", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap database_server {
+            get {
+                object obj = ResourceManager.GetObject("database_server", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -700,6 +830,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap dns {
+            get {
+                object obj = ResourceManager.GetObject("dns", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap documents_16 {
             get {
                 object obj = ResourceManager.GetObject("documents_16", resourceCulture);
@@ -723,6 +863,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap documents_32 {
             get {
                 object obj = ResourceManager.GetObject("documents_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap drill {
+            get {
+                object obj = ResourceManager.GetObject("drill", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1088,6 +1238,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap layout_sidebar {
+            get {
+                object obj = ResourceManager.GetObject("layout_sidebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lock_unlock {
             get {
                 object obj = ResourceManager.GetObject("lock_unlock", resourceCulture);
@@ -1264,6 +1424,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap padlock_closed {
             get {
                 object obj = ResourceManager.GetObject("padlock_closed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap palette {
+            get {
+                object obj = ResourceManager.GetObject("palette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1609,6 +1779,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap server {
             get {
                 object obj = ResourceManager.GetObject("server", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap server_add {
+            get {
+                object obj = ResourceManager.GetObject("server_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -117,6 +117,11 @@ namespace Projector
             {
                 return this.getConsole(refObject, parent);
             }
+
+            if (refObject.typeOfObject == "ResultList")
+            {
+                return this.getResultList(refObject, parent);
+            }
             return null;
         }
 
@@ -140,6 +145,10 @@ namespace Projector
             return new ProfileWorker();
         }
 
+        private ResultList getResultList(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new ResultList();
+        }
       
 
         /// <summary>

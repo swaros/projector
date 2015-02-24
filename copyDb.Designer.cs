@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(copyDb));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.GroupBox = new System.Windows.Forms.ComboBox();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.targetSelect = new System.Windows.Forms.ComboBox();
@@ -156,8 +158,6 @@
             this.tableCopyWorker = new System.ComponentModel.BackgroundWorker();
             this.saveExportFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.exportCsvFileDlg = new System.Windows.Forms.SaveFileDialog();
-            this.GroupBox = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -211,6 +211,25 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Profiles";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(36, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Group";
+            // 
+            // GroupBox
+            // 
+            this.GroupBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.GroupBox.FormattingEnabled = true;
+            this.GroupBox.Location = new System.Drawing.Point(51, 20);
+            this.GroupBox.Name = "GroupBox";
+            this.GroupBox.Size = new System.Drawing.Size(137, 21);
+            this.GroupBox.TabIndex = 10;
+            this.GroupBox.SelectedValueChanged += new System.EventHandler(this.GroupBox_SelectedValueChanged);
             // 
             // button6
             // 
@@ -419,7 +438,7 @@
             // 
             // button1
             // 
-            this.button1.Image = global::Projector.Properties.Resources.applications_16;
+            this.button1.Image = global::Projector.Properties.Resources.view_refresh;
             this.button1.Location = new System.Drawing.Point(556, 45);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(49, 41);
@@ -1045,7 +1064,7 @@
             this.fullsyncAllwasOverwriteTablesToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // optionAutoProp
             // 
@@ -1448,24 +1467,6 @@
             this.exportCsvFileDlg.DefaultExt = "csv";
             this.exportCsvFileDlg.Filter = "CSV Textfiles|*.csv";
             this.exportCsvFileDlg.Title = "Export";
-            // 
-            // GroupBox
-            // 
-            this.GroupBox.FormattingEnabled = true;
-            this.GroupBox.Location = new System.Drawing.Point(51, 20);
-            this.GroupBox.Name = "GroupBox";
-            this.GroupBox.Size = new System.Drawing.Size(137, 21);
-            this.GroupBox.TabIndex = 10;
-            this.GroupBox.SelectedValueChanged += new System.EventHandler(this.GroupBox_SelectedValueChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(36, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Group";
             // 
             // copyDb
             // 

@@ -115,6 +115,39 @@
             this.renameTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dbPic = new System.Windows.Forms.ImageList(this.components);
             this.toolStripContainer2 = new System.Windows.Forms.ToolStripContainer();
+            this.dialogToolStrip = new System.Windows.Forms.ToolStrip();
+            this.DialogOKBtn = new System.Windows.Forms.ToolStripButton();
+            this.dialogCancelBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.TableNameView = new System.Windows.Forms.ToolStripLabel();
+            this.reloadtoolBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.bookmarkList = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.sqlHighlighting = new System.Windows.Forms.ToolStripButton();
+            this.placeholderReplace = new System.Windows.Forms.ToolStripButton();
+            this.explainEnabled = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
+            this.csvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.leftJoinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rowEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.showGrouplabelInTableListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.leftJoinToolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -132,42 +165,10 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.leftJoinTarget = new System.Windows.Forms.ToolStripComboBox();
             this.leftJoinRunBtn = new System.Windows.Forms.ToolStripButton();
-            this.dialogToolStrip = new System.Windows.Forms.ToolStrip();
-            this.DialogOKBtn = new System.Windows.Forms.ToolStripButton();
-            this.dialogCancelBtn = new System.Windows.Forms.ToolStripButton();
             this.rowOptTtoolStrip = new System.Windows.Forms.ToolStrip();
             this.rowOptions = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.TableNameView = new System.Windows.Forms.ToolStripLabel();
-            this.reloadtoolBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.bookmarkList = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.sqlHighlighting = new System.Windows.Forms.ToolStripButton();
-            this.placeholderReplace = new System.Windows.Forms.ToolStripButton();
-            this.explainEnabled = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSplitButton1 = new System.Windows.Forms.ToolStripSplitButton();
-            this.csvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.leftJoinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rowEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-            this.showGrouplabelInTableListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.mysqlWorker = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
@@ -176,6 +177,7 @@
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.RightToolStripPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
@@ -207,10 +209,10 @@
             this.values.SuspendLayout();
             this.tableContextMenu.SuspendLayout();
             this.toolStripContainer2.SuspendLayout();
-            this.leftJoinToolStrip.SuspendLayout();
             this.dialogToolStrip.SuspendLayout();
-            this.rowOptTtoolStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.leftJoinToolStrip.SuspendLayout();
+            this.rowOptTtoolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -268,13 +270,14 @@
             this.toolStripContainer1.ContentPanel.AutoScroll = true;
             this.toolStripContainer1.ContentPanel.Controls.Add(this.splitContainer3);
             this.toolStripContainer1.ContentPanel.Controls.Add(this.toolStripContainer2);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1145, 469);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(1081, 494);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer1.Name = "toolStripContainer1";
             // 
             // toolStripContainer1.RightToolStripPanel
             // 
+            this.toolStripContainer1.RightToolStripPanel.Controls.Add(this.dialogToolStrip);
             this.toolStripContainer1.RightToolStripPanel.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStripContainer1.Size = new System.Drawing.Size(1145, 543);
             this.toolStripContainer1.TabIndex = 1;
@@ -283,9 +286,8 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.leftJoinToolStrip);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.dialogToolStrip);
-            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.rowOptTtoolStrip);
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.rowOptTtoolStrip);
             // 
             // splitContainer3
             // 
@@ -302,8 +304,8 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.searchTableTextBox);
             this.splitContainer3.Panel2.Controls.Add(this.tableView);
-            this.splitContainer3.Size = new System.Drawing.Size(1145, 469);
-            this.splitContainer3.SplitterDistance = 910;
+            this.splitContainer3.Size = new System.Drawing.Size(1081, 494);
+            this.splitContainer3.SplitterDistance = 846;
             this.splitContainer3.TabIndex = 1;
             // 
             // tabControl1
@@ -316,7 +318,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(910, 469);
+            this.tabControl1.Size = new System.Drawing.Size(846, 494);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -326,7 +328,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(902, 443);
+            this.tabPage1.Size = new System.Drawing.Size(838, 468);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "DB";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -350,7 +352,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.editBox);
             this.splitContainer1.Panel2.Controls.Add(this.cellEditField);
             this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(896, 437);
+            this.splitContainer1.Size = new System.Drawing.Size(832, 462);
             this.splitContainer1.SplitterDistance = 124;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -369,8 +371,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.button1);
-            this.splitContainer2.Size = new System.Drawing.Size(896, 124);
-            this.splitContainer2.SplitterDistance = 812;
+            this.splitContainer2.Size = new System.Drawing.Size(832, 124);
+            this.splitContainer2.SplitterDistance = 748;
             this.splitContainer2.TabIndex = 2;
             // 
             // TablesAutoComplete
@@ -419,7 +421,7 @@
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(812, 124);
+            this.textBox1.Size = new System.Drawing.Size(748, 124);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "";
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown_1);
@@ -492,11 +494,11 @@
             // 
             // button1
             // 
-            this.button1.BackgroundImage = global::Projector.Properties.Resources.applications_32;
+            this.button1.BackgroundImage = global::Projector.Properties.Resources.view_refresh;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Location = new System.Drawing.Point(3, 3);
+            this.button1.Location = new System.Drawing.Point(5, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(43, 41);
+            this.button1.Size = new System.Drawing.Size(55, 41);
             this.button1.TabIndex = 1;
             this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button1.UseVisualStyleBackColor = true;
@@ -507,9 +509,9 @@
             this.MessagePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MessagePanel.Controls.Add(this.MessageLabel);
             this.MessagePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.MessagePanel.Location = new System.Drawing.Point(0, 237);
+            this.MessagePanel.Location = new System.Drawing.Point(0, 262);
             this.MessagePanel.Name = "MessagePanel";
-            this.MessagePanel.Size = new System.Drawing.Size(896, 72);
+            this.MessagePanel.Size = new System.Drawing.Size(832, 72);
             this.MessagePanel.TabIndex = 3;
             // 
             // MessageLabel
@@ -517,7 +519,7 @@
             this.MessageLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MessageLabel.Location = new System.Drawing.Point(0, 0);
             this.MessageLabel.Name = "MessageLabel";
-            this.MessageLabel.Size = new System.Drawing.Size(894, 70);
+            this.MessageLabel.Size = new System.Drawing.Size(830, 70);
             this.MessageLabel.TabIndex = 0;
             this.MessageLabel.Text = "...";
             this.MessageLabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MessageLabel_MouseClick);
@@ -552,7 +554,7 @@
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(896, 309);
+            this.listView1.Size = new System.Drawing.Size(832, 334);
             this.listView1.SmallImageList = this.DbColumnPics;
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
@@ -730,7 +732,7 @@
             this.MaskTab.Location = new System.Drawing.Point(4, 22);
             this.MaskTab.Name = "MaskTab";
             this.MaskTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MaskTab.Size = new System.Drawing.Size(902, 443);
+            this.MaskTab.Size = new System.Drawing.Size(838, 468);
             this.MaskTab.TabIndex = 2;
             this.MaskTab.Text = "Search";
             this.MaskTab.UseVisualStyleBackColor = true;
@@ -772,7 +774,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(902, 443);
+            this.tabPage2.Size = new System.Drawing.Size(838, 468);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Trigger";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -800,7 +802,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.triggerCode);
-            this.splitContainer4.Size = new System.Drawing.Size(896, 437);
+            this.splitContainer4.Size = new System.Drawing.Size(832, 462);
             this.splitContainer4.SplitterDistance = 139;
             this.splitContainer4.TabIndex = 1;
             // 
@@ -890,7 +892,7 @@
             this.triggerCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.triggerCode.Location = new System.Drawing.Point(0, 0);
             this.triggerCode.Name = "triggerCode";
-            this.triggerCode.Size = new System.Drawing.Size(896, 294);
+            this.triggerCode.Size = new System.Drawing.Size(832, 319);
             this.triggerCode.TabIndex = 0;
             this.triggerCode.Text = "";
             // 
@@ -901,7 +903,7 @@
             this.tabPageProcedures.Location = new System.Drawing.Point(4, 22);
             this.tabPageProcedures.Name = "tabPageProcedures";
             this.tabPageProcedures.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProcedures.Size = new System.Drawing.Size(902, 443);
+            this.tabPageProcedures.Size = new System.Drawing.Size(838, 468);
             this.tabPageProcedures.TabIndex = 3;
             this.tabPageProcedures.Text = "Stored Procedures";
             this.tabPageProcedures.UseVisualStyleBackColor = true;
@@ -912,7 +914,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 62);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(896, 378);
+            this.groupBox1.Size = new System.Drawing.Size(832, 403);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Source";
@@ -923,7 +925,7 @@
             this.procSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.procSource.Location = new System.Drawing.Point(3, 16);
             this.procSource.Name = "procSource";
-            this.procSource.Size = new System.Drawing.Size(890, 359);
+            this.procSource.Size = new System.Drawing.Size(826, 384);
             this.procSource.TabIndex = 0;
             this.procSource.Text = "";
             // 
@@ -933,7 +935,7 @@
             this.values.Dock = System.Windows.Forms.DockStyle.Top;
             this.values.Location = new System.Drawing.Point(3, 3);
             this.values.Name = "values";
-            this.values.Size = new System.Drawing.Size(896, 59);
+            this.values.Size = new System.Drawing.Size(832, 59);
             this.values.TabIndex = 0;
             this.values.TabStop = false;
             this.values.Text = "Properies";
@@ -951,7 +953,7 @@
             this.searchTableTextBox.BackColor = System.Drawing.Color.Yellow;
             this.searchTableTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.searchTableTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.searchTableTextBox.Location = new System.Drawing.Point(0, 449);
+            this.searchTableTextBox.Location = new System.Drawing.Point(0, 474);
             this.searchTableTextBox.Name = "searchTableTextBox";
             this.searchTableTextBox.Size = new System.Drawing.Size(231, 20);
             this.searchTableTextBox.TabIndex = 1;
@@ -967,7 +969,7 @@
             this.tableView.LabelWrap = false;
             this.tableView.Location = new System.Drawing.Point(0, 0);
             this.tableView.Name = "tableView";
-            this.tableView.Size = new System.Drawing.Size(231, 469);
+            this.tableView.Size = new System.Drawing.Size(231, 494);
             this.tableView.SmallImageList = this.dbPic;
             this.tableView.TabIndex = 0;
             this.tableView.UseCompatibleStateImageBehavior = false;
@@ -1069,13 +1071,326 @@
             // toolStripContainer2.ContentPanel
             // 
             this.toolStripContainer2.ContentPanel.AutoScroll = true;
-            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(1145, 444);
+            this.toolStripContainer2.ContentPanel.Size = new System.Drawing.Size(1081, 469);
             this.toolStripContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer2.Location = new System.Drawing.Point(0, 0);
             this.toolStripContainer2.Name = "toolStripContainer2";
-            this.toolStripContainer2.Size = new System.Drawing.Size(1145, 469);
+            this.toolStripContainer2.Size = new System.Drawing.Size(1081, 494);
             this.toolStripContainer2.TabIndex = 2;
             this.toolStripContainer2.Text = "toolStripContainer2";
+            // 
+            // dialogToolStrip
+            // 
+            this.dialogToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.dialogToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DialogOKBtn,
+            this.dialogCancelBtn});
+            this.dialogToolStrip.Location = new System.Drawing.Point(0, 3);
+            this.dialogToolStrip.Name = "dialogToolStrip";
+            this.dialogToolStrip.Size = new System.Drawing.Size(64, 57);
+            this.dialogToolStrip.TabIndex = 5;
+            // 
+            // DialogOKBtn
+            // 
+            this.DialogOKBtn.Image = global::Projector.Properties.Resources.stock_dataeditsqlquery;
+            this.DialogOKBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DialogOKBtn.Name = "DialogOKBtn";
+            this.DialogOKBtn.Size = new System.Drawing.Size(62, 20);
+            this.DialogOKBtn.Text = "OK";
+            this.DialogOKBtn.Click += new System.EventHandler(this.DialogOKBtn_Click);
+            // 
+            // dialogCancelBtn
+            // 
+            this.dialogCancelBtn.Image = global::Projector.Properties.Resources.delete_16;
+            this.dialogCancelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.dialogCancelBtn.Name = "dialogCancelBtn";
+            this.dialogCancelBtn.Size = new System.Drawing.Size(62, 20);
+            this.dialogCancelBtn.Text = "Cancel";
+            this.dialogCancelBtn.Click += new System.EventHandler(this.dialogCancelBtn_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TableNameView,
+            this.reloadtoolBtn,
+            this.toolStripButton1,
+            this.toolStripSeparator1,
+            this.toolStripButton2,
+            this.toolStripSeparator2,
+            this.toolStripButton3,
+            this.toolStripSeparator3,
+            this.toolStripButton4,
+            this.bookmarkList,
+            this.toolStripButton8,
+            this.toolStripSeparator8,
+            this.sqlHighlighting,
+            this.placeholderReplace,
+            this.explainEnabled,
+            this.toolStripButton10,
+            this.toolStripSeparator15,
+            this.toolStripSplitButton1,
+            this.toolStripSeparator16,
+            this.toolStripDropDownButton1,
+            this.toolStripSeparator20,
+            this.toolStripButton5,
+            this.toolStripButton9});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(581, 25);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // TableNameView
+            // 
+            this.TableNameView.Name = "TableNameView";
+            this.TableNameView.Size = new System.Drawing.Size(36, 22);
+            this.TableNameView.Text = "None";
+            // 
+            // reloadtoolBtn
+            // 
+            this.reloadtoolBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.reloadtoolBtn.Image = global::Projector.Properties.Resources.sql_execute;
+            this.reloadtoolBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.reloadtoolBtn.Name = "reloadtoolBtn";
+            this.reloadtoolBtn.Size = new System.Drawing.Size(23, 22);
+            this.reloadtoolBtn.Text = "Reload Tables";
+            this.reloadtoolBtn.Click += new System.EventHandler(this.reloadtoolBtn_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::Projector.Properties.Resources.reload3;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "Run Query";
+            this.toolStripButton1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::Projector.Properties.Resources.resizecol;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "Auto Resize Columns";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.CheckOnClick = true;
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::Projector.Properties.Resources.sql_editor;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "Enable SQL Editor";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = global::Projector.Properties.Resources.bookmark_book_open;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "save Query";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            // 
+            // bookmarkList
+            // 
+            this.bookmarkList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bookmarkList.DropDownWidth = 300;
+            this.bookmarkList.Name = "bookmarkList";
+            this.bookmarkList.Size = new System.Drawing.Size(121, 25);
+            this.bookmarkList.SelectedIndexChanged += new System.EventHandler(this.bookmarkList_SelectedIndexChanged);
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = global::Projector.Properties.Resources.delete;
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton8.Text = "Remove selected Bookmark...";
+            this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // sqlHighlighting
+            // 
+            this.sqlHighlighting.Checked = true;
+            this.sqlHighlighting.CheckOnClick = true;
+            this.sqlHighlighting.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.sqlHighlighting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.sqlHighlighting.Image = global::Projector.Properties.Resources.highlighter_text;
+            this.sqlHighlighting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.sqlHighlighting.Name = "sqlHighlighting";
+            this.sqlHighlighting.Size = new System.Drawing.Size(23, 22);
+            this.sqlHighlighting.Text = "Syntax Highlighting";
+            // 
+            // placeholderReplace
+            // 
+            this.placeholderReplace.Checked = true;
+            this.placeholderReplace.CheckOnClick = true;
+            this.placeholderReplace.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.placeholderReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.placeholderReplace.Image = global::Projector.Properties.Resources.edit_replace;
+            this.placeholderReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.placeholderReplace.Name = "placeholderReplace";
+            this.placeholderReplace.Size = new System.Drawing.Size(23, 22);
+            this.placeholderReplace.Text = "Replace Placeholder";
+            // 
+            // explainEnabled
+            // 
+            this.explainEnabled.Checked = true;
+            this.explainEnabled.CheckOnClick = true;
+            this.explainEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.explainEnabled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.explainEnabled.Image = global::Projector.Properties.Resources.computer_161;
+            this.explainEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.explainEnabled.Name = "explainEnabled";
+            this.explainEnabled.Size = new System.Drawing.Size(23, 22);
+            this.explainEnabled.Text = "Explain";
+            // 
+            // toolStripButton10
+            // 
+            this.toolStripButton10.Checked = true;
+            this.toolStripButton10.CheckOnClick = true;
+            this.toolStripButton10.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton10.Image = global::Projector.Properties.Resources.ui_list_box_blue;
+            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton10.Name = "toolStripButton10";
+            this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton10.Text = "Show Tables";
+            this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSplitButton1
+            // 
+            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.csvToolStripMenuItem,
+            this.excelToolStripMenuItem});
+            this.toolStripSplitButton1.Image = global::Projector.Properties.Resources.SAVE_16;
+            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
+            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButton1.Text = "Export Result";
+            // 
+            // csvToolStripMenuItem
+            // 
+            this.csvToolStripMenuItem.Name = "csvToolStripMenuItem";
+            this.csvToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.csvToolStripMenuItem.Text = "csv ...";
+            this.csvToolStripMenuItem.Click += new System.EventHandler(this.csvToolStripMenuItem_Click);
+            // 
+            // excelToolStripMenuItem
+            // 
+            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.excelToolStripMenuItem.Text = "Excel ...";
+            this.excelToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton6_Click);
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.leftJoinToolStripMenuItem,
+            this.rowEditToolStripMenuItem,
+            this.toolStripSeparator14,
+            this.showGrouplabelInTableListToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = global::Projector.Properties.Resources.opentype;
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.toolStripDropDownButton1.Text = "Toolbars";
+            // 
+            // leftJoinToolStripMenuItem
+            // 
+            this.leftJoinToolStripMenuItem.CheckOnClick = true;
+            this.leftJoinToolStripMenuItem.Name = "leftJoinToolStripMenuItem";
+            this.leftJoinToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.leftJoinToolStripMenuItem.Text = "Left Join";
+            this.leftJoinToolStripMenuItem.Click += new System.EventHandler(this.leftJoinToolStripMenuItem_Click);
+            // 
+            // rowEditToolStripMenuItem
+            // 
+            this.rowEditToolStripMenuItem.CheckOnClick = true;
+            this.rowEditToolStripMenuItem.Name = "rowEditToolStripMenuItem";
+            this.rowEditToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.rowEditToolStripMenuItem.Text = "Row Edit";
+            this.rowEditToolStripMenuItem.Click += new System.EventHandler(this.rowEditToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(227, 6);
+            // 
+            // showGrouplabelInTableListToolStripMenuItem
+            // 
+            this.showGrouplabelInTableListToolStripMenuItem.Checked = true;
+            this.showGrouplabelInTableListToolStripMenuItem.CheckOnClick = true;
+            this.showGrouplabelInTableListToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGrouplabelInTableListToolStripMenuItem.Name = "showGrouplabelInTableListToolStripMenuItem";
+            this.showGrouplabelInTableListToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.showGrouplabelInTableListToolStripMenuItem.Text = "Show Grouplabel in Table List";
+            this.showGrouplabelInTableListToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.showGrouplabelInTableListToolStripMenuItem_CheckStateChanged);
+            this.showGrouplabelInTableListToolStripMenuItem.Click += new System.EventHandler(this.showGrouplabelInTableListToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator20
+            // 
+            this.toolStripSeparator20.Name = "toolStripSeparator20";
+            this.toolStripSeparator20.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = global::Projector.Properties.Resources.database_link;
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "Open in Group Query ";
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click_1);
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = global::Projector.Properties.Resources.database_add;
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "Create Table";
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
             // leftJoinToolStrip
             // 
@@ -1211,35 +1526,6 @@
             this.leftJoinRunBtn.Text = "Left Join Run";
             this.leftJoinRunBtn.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
-            // dialogToolStrip
-            // 
-            this.dialogToolStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.dialogToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.DialogOKBtn,
-            this.dialogCancelBtn});
-            this.dialogToolStrip.Location = new System.Drawing.Point(32, 0);
-            this.dialogToolStrip.Name = "dialogToolStrip";
-            this.dialogToolStrip.Size = new System.Drawing.Size(118, 25);
-            this.dialogToolStrip.TabIndex = 5;
-            // 
-            // DialogOKBtn
-            // 
-            this.DialogOKBtn.Image = global::Projector.Properties.Resources.stock_dataeditsqlquery;
-            this.DialogOKBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.DialogOKBtn.Name = "DialogOKBtn";
-            this.DialogOKBtn.Size = new System.Drawing.Size(43, 22);
-            this.DialogOKBtn.Text = "OK";
-            this.DialogOKBtn.Click += new System.EventHandler(this.DialogOKBtn_Click);
-            // 
-            // dialogCancelBtn
-            // 
-            this.dialogCancelBtn.Image = global::Projector.Properties.Resources.delete_16;
-            this.dialogCancelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.dialogCancelBtn.Name = "dialogCancelBtn";
-            this.dialogCancelBtn.Size = new System.Drawing.Size(63, 22);
-            this.dialogCancelBtn.Text = "Cancel";
-            this.dialogCancelBtn.Click += new System.EventHandler(this.dialogCancelBtn_Click);
-            // 
             // rowOptTtoolStrip
             // 
             this.rowOptTtoolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -1283,284 +1569,6 @@
             this.toolStripButton7.Text = "Copy Selected Rows to ClipBoard";
             this.toolStripButton7.Click += new System.EventHandler(this.Copy_Click);
             // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TableNameView,
-            this.reloadtoolBtn,
-            this.toolStripButton1,
-            this.toolStripSeparator1,
-            this.toolStripButton2,
-            this.toolStripSeparator2,
-            this.toolStripButton3,
-            this.toolStripSeparator3,
-            this.toolStripButton4,
-            this.bookmarkList,
-            this.toolStripButton8,
-            this.toolStripSeparator8,
-            this.toolStripButton5,
-            this.sqlHighlighting,
-            this.placeholderReplace,
-            this.explainEnabled,
-            this.toolStripButton10,
-            this.toolStripSeparator15,
-            this.toolStripSplitButton1,
-            this.toolStripDropDownButton1,
-            this.toolStripSeparator16,
-            this.toolStripButton9});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 25);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(544, 25);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // TableNameView
-            // 
-            this.TableNameView.Name = "TableNameView";
-            this.TableNameView.Size = new System.Drawing.Size(36, 22);
-            this.TableNameView.Text = "None";
-            // 
-            // reloadtoolBtn
-            // 
-            this.reloadtoolBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.reloadtoolBtn.Image = global::Projector.Properties.Resources.sql_execute;
-            this.reloadtoolBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.reloadtoolBtn.Name = "reloadtoolBtn";
-            this.reloadtoolBtn.Size = new System.Drawing.Size(23, 22);
-            this.reloadtoolBtn.Text = "Reload Tables";
-            this.reloadtoolBtn.Click += new System.EventHandler(this.reloadtoolBtn_Click);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::Projector.Properties.Resources.reload3;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "Run Query";
-            this.toolStripButton1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::Projector.Properties.Resources.resizecol;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Auto Resize Columns";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.CheckOnClick = true;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::Projector.Properties.Resources.sql_editor;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "Enable SQL Editor";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::Projector.Properties.Resources.bookmark_book_open;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "save Query";
-            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
-            // 
-            // bookmarkList
-            // 
-            this.bookmarkList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.bookmarkList.DropDownWidth = 300;
-            this.bookmarkList.Name = "bookmarkList";
-            this.bookmarkList.Size = new System.Drawing.Size(121, 25);
-            this.bookmarkList.SelectedIndexChanged += new System.EventHandler(this.bookmarkList_SelectedIndexChanged);
-            // 
-            // toolStripButton8
-            // 
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = global::Projector.Properties.Resources.delete;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton8.Text = "Remove selected Bookmark...";
-            this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = global::Projector.Properties.Resources.servers_network;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "Open in Group Query ";
-            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click_1);
-            // 
-            // sqlHighlighting
-            // 
-            this.sqlHighlighting.Checked = true;
-            this.sqlHighlighting.CheckOnClick = true;
-            this.sqlHighlighting.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.sqlHighlighting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.sqlHighlighting.Image = global::Projector.Properties.Resources.highlighter_text;
-            this.sqlHighlighting.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.sqlHighlighting.Name = "sqlHighlighting";
-            this.sqlHighlighting.Size = new System.Drawing.Size(23, 22);
-            this.sqlHighlighting.Text = "Syntax Highlighting";
-            // 
-            // placeholderReplace
-            // 
-            this.placeholderReplace.Checked = true;
-            this.placeholderReplace.CheckOnClick = true;
-            this.placeholderReplace.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.placeholderReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.placeholderReplace.Image = global::Projector.Properties.Resources.edit_replace;
-            this.placeholderReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.placeholderReplace.Name = "placeholderReplace";
-            this.placeholderReplace.Size = new System.Drawing.Size(23, 22);
-            this.placeholderReplace.Text = "Replace Placeholder";
-            // 
-            // explainEnabled
-            // 
-            this.explainEnabled.Checked = true;
-            this.explainEnabled.CheckOnClick = true;
-            this.explainEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.explainEnabled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.explainEnabled.Image = global::Projector.Properties.Resources.explain;
-            this.explainEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.explainEnabled.Name = "explainEnabled";
-            this.explainEnabled.Size = new System.Drawing.Size(23, 22);
-            this.explainEnabled.Text = "Explain";
-            // 
-            // toolStripButton10
-            // 
-            this.toolStripButton10.Checked = true;
-            this.toolStripButton10.CheckOnClick = true;
-            this.toolStripButton10.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton10.Image = global::Projector.Properties.Resources.ui_list_box_blue;
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton10.Text = "Show Tables";
-            this.toolStripButton10.Click += new System.EventHandler(this.toolStripButton10_Click);
-            // 
-            // toolStripSeparator15
-            // 
-            this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSplitButton1
-            // 
-            this.toolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.csvToolStripMenuItem,
-            this.excelToolStripMenuItem});
-            this.toolStripSplitButton1.Image = global::Projector.Properties.Resources.SAVE_16;
-            this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton1.Name = "toolStripSplitButton1";
-            this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
-            this.toolStripSplitButton1.Text = "Export Result";
-            // 
-            // csvToolStripMenuItem
-            // 
-            this.csvToolStripMenuItem.Name = "csvToolStripMenuItem";
-            this.csvToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.csvToolStripMenuItem.Text = "csv ...";
-            this.csvToolStripMenuItem.Click += new System.EventHandler(this.csvToolStripMenuItem_Click);
-            // 
-            // excelToolStripMenuItem
-            // 
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.excelToolStripMenuItem.Text = "Excel ...";
-            this.excelToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton6_Click);
-            // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.leftJoinToolStripMenuItem,
-            this.rowEditToolStripMenuItem,
-            this.toolStripSeparator14,
-            this.showGrouplabelInTableListToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = global::Projector.Properties.Resources.search;
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
-            this.toolStripDropDownButton1.Text = "Toolbars";
-            // 
-            // leftJoinToolStripMenuItem
-            // 
-            this.leftJoinToolStripMenuItem.CheckOnClick = true;
-            this.leftJoinToolStripMenuItem.Name = "leftJoinToolStripMenuItem";
-            this.leftJoinToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.leftJoinToolStripMenuItem.Text = "Left Join";
-            this.leftJoinToolStripMenuItem.Click += new System.EventHandler(this.leftJoinToolStripMenuItem_Click);
-            // 
-            // rowEditToolStripMenuItem
-            // 
-            this.rowEditToolStripMenuItem.CheckOnClick = true;
-            this.rowEditToolStripMenuItem.Name = "rowEditToolStripMenuItem";
-            this.rowEditToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.rowEditToolStripMenuItem.Text = "Row Edit";
-            this.rowEditToolStripMenuItem.Click += new System.EventHandler(this.rowEditToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator14
-            // 
-            this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(227, 6);
-            // 
-            // showGrouplabelInTableListToolStripMenuItem
-            // 
-            this.showGrouplabelInTableListToolStripMenuItem.Checked = true;
-            this.showGrouplabelInTableListToolStripMenuItem.CheckOnClick = true;
-            this.showGrouplabelInTableListToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showGrouplabelInTableListToolStripMenuItem.Name = "showGrouplabelInTableListToolStripMenuItem";
-            this.showGrouplabelInTableListToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
-            this.showGrouplabelInTableListToolStripMenuItem.Text = "Show Grouplabel in Table List";
-            this.showGrouplabelInTableListToolStripMenuItem.CheckStateChanged += new System.EventHandler(this.showGrouplabelInTableListToolStripMenuItem_CheckStateChanged);
-            this.showGrouplabelInTableListToolStripMenuItem.Click += new System.EventHandler(this.showGrouplabelInTableListToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator16
-            // 
-            this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton9
-            // 
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.Image = global::Projector.Properties.Resources.application_view_list;
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton9.Text = "Create Table";
-            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
-            // 
             // mysqlWorker
             // 
             this.mysqlWorker.WorkerReportsProgress = true;
@@ -1602,6 +1610,8 @@
             this.toolStripContainer1.BottomToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.BottomToolStripPanel.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.RightToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.RightToolStripPanel.PerformLayout();
             this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
@@ -1642,14 +1652,14 @@
             this.tableContextMenu.ResumeLayout(false);
             this.toolStripContainer2.ResumeLayout(false);
             this.toolStripContainer2.PerformLayout();
-            this.leftJoinToolStrip.ResumeLayout(false);
-            this.leftJoinToolStrip.PerformLayout();
             this.dialogToolStrip.ResumeLayout(false);
             this.dialogToolStrip.PerformLayout();
-            this.rowOptTtoolStrip.ResumeLayout(false);
-            this.rowOptTtoolStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.leftJoinToolStrip.ResumeLayout(false);
+            this.leftJoinToolStrip.PerformLayout();
+            this.rowOptTtoolStrip.ResumeLayout(false);
+            this.rowOptTtoolStrip.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1796,5 +1806,6 @@
         private System.Windows.Forms.ToolStripMenuItem joinTryMenu;
         private System.Windows.Forms.Panel MessagePanel;
         private System.Windows.Forms.Label MessageLabel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator20;
     }
 }

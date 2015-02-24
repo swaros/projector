@@ -9,9 +9,21 @@ namespace Projector
 {
     class MysqlStruct
     {
+        /// <summary>
+        /// The Name of the Table
+        /// </summary>
         public string tableName;
+        /// <summary>
+        /// The Name of the Field
+        /// </summary>
         public string name;
+        /// <summary>
+        /// The Type of the Field
+        /// </summary>
         public string type;
+        /// <summary>
+        /// if this set to NO the value can not be Null
+        /// </summary>
         public string Null;
         public string Key;
         public string Default;

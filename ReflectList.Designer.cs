@@ -31,6 +31,7 @@
             this.splitter = new System.Windows.Forms.SplitContainer();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
+            this.fileLoader = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.autoSort = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -38,7 +39,6 @@
             this.stateLabel = new System.Windows.Forms.ToolStripLabel();
             this.listView = new System.Windows.Forms.ListView();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.fileLoader = new System.Windows.Forms.ToolStripButton();
             this.openFilesDlg = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
@@ -92,6 +92,16 @@
             this.saveButton.Text = "Save Result";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
+            // fileLoader
+            // 
+            this.fileLoader.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.fileLoader.Image = global::Projector.Properties.Resources.folder_open_16;
+            this.fileLoader.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileLoader.Name = "fileLoader";
+            this.fileLoader.Size = new System.Drawing.Size(23, 22);
+            this.fileLoader.Text = "toolStripButton1";
+            this.fileLoader.Click += new System.EventHandler(this.fileLoader_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -105,6 +115,7 @@
             this.autoSort.Name = "autoSort";
             this.autoSort.Size = new System.Drawing.Size(23, 22);
             this.autoSort.Text = "toolStripButton2";
+            this.autoSort.Click += new System.EventHandler(this.autoSort_Click);
             // 
             // toolStripSeparator2
             // 
@@ -140,16 +151,6 @@
             // 
             this.saveFileDialog.FileName = "export.csv";
             this.saveFileDialog.Filter = "CSV|*.csv";
-            // 
-            // fileLoader
-            // 
-            this.fileLoader.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.fileLoader.Image = global::Projector.Properties.Resources.folder_open_16;
-            this.fileLoader.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.fileLoader.Name = "fileLoader";
-            this.fileLoader.Size = new System.Drawing.Size(23, 22);
-            this.fileLoader.Text = "toolStripButton1";
-            this.fileLoader.Click += new System.EventHandler(this.fileLoader_Click);
             // 
             // openFilesDlg
             // 

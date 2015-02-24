@@ -40,13 +40,21 @@ namespace Projector
 
         
       
-
+        /// <summary>
+        /// new instanz of query Composer.
+        /// 
+        /// </summary>
+        /// <param name="tableName">Name of the primary table</param>
         public QueryComposer(string tableName)
         {
             this.TableName = tableName;
         }
 
-
+        /// <summary>
+        /// add an Field that will be used to sort the result
+        /// </summary>
+        /// <param name="OrderBy">Fieldname to sort</param>
+        /// <returns>true if this field was successfully added.false if this field allready added</returns>
         public bool addOrderField(string OrderBy)
         {
             if (!this.orderByField.ContainsKey(OrderBy))
@@ -57,6 +65,11 @@ namespace Projector
             return false;
         }
 
+        /// <summary>
+        /// add a field that will be an part from the result
+        /// </summary>
+        /// <param name="fieldName">name of field</param>
+        /// <returns>false is field allready added</returns>
         public Boolean addUsedFieldNames(string fieldName)
         {
             if (!this.usedFields.ContainsKey(fieldName))
@@ -69,6 +82,9 @@ namespace Projector
             return false;
         }
 
+        /// <summary>
+        /// builds the string by using the definied filednames
+        /// </summary>
         private void buildFieldSring()
         {
             if (this.usedFields.Count > 0)
@@ -85,6 +101,11 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// add an Field to sort and remove all others.
+        /// if set the same fieldname again, the sort order will be switched
+        /// </summary>
+        /// <param name="ord"></param>
         public void autoHandleSingleOrder(string ord)
         {
             if (this.orderByField.ContainsKey(ord))
@@ -98,7 +119,11 @@ namespace Projector
             }
         }
 
-
+        /// <summary>
+        /// removes a order field
+        /// </summary>
+        /// <param name="Orderby"></param>
+        /// <returns></returns>
         public bool removeOrderField(string Orderby)
         {
             if (!this.orderByField.ContainsKey(Orderby))
@@ -109,13 +134,19 @@ namespace Projector
             return false;
         }
 
+        /// <summary>
+        /// removes all order fields
+        /// </summary>
         public void removeAllOrder()
         {
             this.orderByField.Clear();
         }
 
-        //------------ private tools ------------
-
+        
+        /// <summary>
+        /// compose the command to sort the result
+        /// </summary>
+        /// <returns></returns>
         private string composeOrder()
         {
             this.buildFieldSring();
@@ -140,7 +171,10 @@ namespace Projector
             return orderStr;
         }
 
-
+        /// <summary>
+        /// compose the where statements
+        /// </summary>
+        /// <returns></returns>
         private string composeAndWhere()
         {
             string where = "";
@@ -166,6 +200,10 @@ namespace Projector
             return where;
         }
 
+        /// <summary>
+        /// compose the Join statements
+        /// </summary>
+        /// <returns></returns>
         private string getLeftJoin()
         {           
             string res = "";
@@ -191,16 +229,31 @@ namespace Projector
             return res;
         }
 
+        /// <summary>
+        /// sets one resultfield
+        /// usefull for subselects
+        /// </summary>
+        /// <param name="name">fieldname</param>
         public void setResultField(string name)
         {
             this.FieldSelects = name;
         }
 
+        /// <summary>
+        /// checks if just * is used
+        /// </summary>
+        /// <returns></returns>
         public bool ifAllfieldsSelected()
         {
             return (this.FieldSelects == "*");
         }
 
+        /// <summary>
+        /// adds an table for using in a join
+        /// </summary>
+        /// <param name="tableName">Name of the Table</param>
+        /// <param name="myFieldName">Name of the field in this Table</param>
+        /// <param name="refFieldName">Name of field that will be compared</param>
         public void addJoinTable(string tableName,string myFieldName,string refFieldName)
         {
             JoinTable addleftJoins = new JoinTable(this.TableName, tableName);
@@ -210,6 +263,11 @@ namespace Projector
             
         }
 
+        /// <summary>
+        /// adds an Table for using in a Join 
+        /// </summary>
+        /// <param name="mstruct"></param>
+        /// <param name="mstructRight"></param>
         public void addJoinTable(MysqlStruct mstruct, MysqlStruct mstructRight)
         {
             JoinTable addleftJoins = new JoinTable(mstruct.tableName, mstructRight.tableName);
@@ -217,11 +275,19 @@ namespace Projector
             leftJoins.Add(addleftJoins);
         }
 
+        /// <summary>
+        /// resets all Table Joins
+        /// </summary>
         public void resetJoinTable()
         {
             leftJoins = new List<JoinTable>();
         }
 
+        /// <summary>
+        /// returns the Select Query for Union Select
+        /// </summary>
+        /// <param name="tables"></param>
+        /// <returns></returns>
         public string selectUnion(List<string> tables)
         {
             string sql = "";
@@ -240,9 +306,10 @@ namespace Projector
         }
 
 
-        /** 
-         * Returns select query
-         */
+       /// <summary>
+       /// returns the select Query
+       /// </summary>
+       /// <returns>MySQL Query</returns>
         public string getSelect()
         {
             if (TableName != null)
@@ -271,15 +338,16 @@ namespace Projector
             
         }
 
+        /// <summary>
+        /// Returns the insert Statement
+        /// </summary>
+        /// <returns></returns>
         public string getInsert()
         {
             
             if (TableName != null && getSetStatement() != null)
             {
-                string sql = "INSERT INTO " + TableName + " SET " + getSetStatement();
-                
-
-
+                string sql = "INSERT INTO " + TableName + " SET " + getSetStatement();                
                 return sql;
             }
 
@@ -287,25 +355,36 @@ namespace Projector
         }
 
 
-        // set start for limit
+        /// <summary>
+        /// sets the start of Limitation
+        /// </summary>
+        /// <param name="start">Start of Limit</param>
         public void limitStart(Int64 start)
         {
             this.startLimit = start;
         }
 
-        //set range for limit
+        /// <summary>
+        /// set Range of Limitation
+        /// </summary>
+        /// <param name="limit"></param>
         public void setLimitRange(Int64 limit)
         {
             this.limitCount = limit;
         }
 
-        //increase start 
+        /// <summary>
+        /// increase the start limitaion by the current range
+        /// </summary>
         public void nextLimit()
         {
             this.startLimit += this.limitCount;
         }
 
-        //decrease start 
+        /// <summary>
+        /// decrease the Limitation by the current range til
+        /// the minumum of 0
+        /// </summary>
         public void prevLimit()
         {
             if (this.startLimit > this.limitCount)
@@ -313,10 +392,12 @@ namespace Projector
             else
                 this.startLimit = 0;
         }
-
-       
-
-
+        
+        /// <summary>
+        /// add an simple where Statement
+        /// </summary>
+        /// <param name="name">Fieldname</param>
+        /// <param name="value">Comparing String</param>
         public void addWhere(string name, string value)
         {
 
@@ -326,7 +407,6 @@ namespace Projector
             }
             else
             {
-
                 try
                 {
                     whereStates.Add(name, value);
