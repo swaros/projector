@@ -39,6 +39,7 @@
             // MainLabel
             // 
             this.MainLabel.AutoSize = true;
+            this.MainLabel.BackColor = System.Drawing.Color.Transparent;
             this.MainLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.MainLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
@@ -60,7 +61,7 @@
             // 
             // EditBtn
             // 
-            this.EditBtn.Location = new System.Drawing.Point(219, 4);
+            this.EditBtn.Location = new System.Drawing.Point(238, 3);
             this.EditBtn.Name = "EditBtn";
             this.EditBtn.Size = new System.Drawing.Size(33, 23);
             this.EditBtn.TabIndex = 3;
@@ -91,14 +92,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackgroundImage = global::Projector.Properties.Resources.orange_01;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.DescLabel);
             this.Controls.Add(this.EditBtn);
             this.Controls.Add(this.StartBtn);
             this.Controls.Add(this.MainLabel);
             this.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            this.MinimumSize = new System.Drawing.Size(270, 75);
             this.Name = "ScriptStartButton";
-            this.Size = new System.Drawing.Size(255, 78);
+            this.Size = new System.Drawing.Size(274, 78);
             this.ResumeLayout(false);
             this.PerformLayout();
 
