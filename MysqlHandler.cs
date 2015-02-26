@@ -11,7 +11,7 @@ namespace Projector
 {
     class MysqlHandler
     {
-        MySql.Data.MySqlClient.MySqlConnection connection;
+        public MySql.Data.MySqlClient.MySqlConnection connection;
         private string myConnectionString = "";
         Profil currentProfil = null;
         string userName = null;
@@ -282,6 +282,42 @@ namespace Projector
             return this.versionInfo;
              */
         }
+
+        public ResultList selectAsResultList(string sql)
+        {
+            ResultList res = new ResultList();
+            MySql.Data.MySqlClient.MySqlDataReader reader = this.sql_select(sql);
+            if (reader != null)
+            {
+                Boolean todoInit = true;
+                while (reader.Read())
+                {
+                    int insertRow = res.AddRow();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        Object dataValue = null;
+                        try
+                        {
+                            dataValue = reader.GetValue(i);
+                        }
+                        catch (Exception)
+                        {
+                            
+                        }
+                        string column = reader.GetName(i);
+                        if (todoInit)
+                        {                            
+                            res.AddColumn(column);
+                        }
+                        
+                        res.setValue(column, insertRow, dataValue);
+                    }
+                    todoInit = false;
+                }
+            }
+            return res;
+        }
+
 
         /**
          * returns mysql result as hashtable

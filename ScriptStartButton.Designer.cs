@@ -80,6 +80,8 @@
             this.DescLabel.TabIndex = 4;
             this.DescLabel.Text = "Description";
             this.DescLabel.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.DescLabel.MouseLeave += new System.EventHandler(this.DescLabel_MouseLeave);
+            this.DescLabel.MouseHover += new System.EventHandler(this.DescLabel_MouseHover);
             // 
             // runTimer
             // 
@@ -92,7 +94,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.BackgroundImage = global::Projector.Properties.Resources.orange_01;
+            this.BackgroundImage = global::Projector.Properties.Resources.yellow_bar;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.DescLabel);
@@ -100,8 +102,10 @@
             this.Controls.Add(this.StartBtn);
             this.Controls.Add(this.MainLabel);
             this.ForeColor = System.Drawing.Color.DarkSlateBlue;
+            this.Margin = new System.Windows.Forms.Padding(3, 3, 15, 15);
             this.MinimumSize = new System.Drawing.Size(270, 75);
             this.Name = "ScriptStartButton";
+            this.Padding = new System.Windows.Forms.Padding(0, 0, 0, 8);
             this.Size = new System.Drawing.Size(274, 78);
             this.ResumeLayout(false);
             this.PerformLayout();

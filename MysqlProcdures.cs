@@ -8,21 +8,56 @@ namespace Projector
 {
     class MysqlProcedures
     {
+        /// <summary>
+        /// Query to Reads all stored procedures
+        /// </summary>
         private const string readQuery = "SHOW PROCEDURE STATUS";
-        private const string readProcStruct = "SHOW CREATE PROCEDURE [NAME]";
-        private List<StoredProcedure> spList = new List<StoredProcedure>();
-        //private Hashtable storedProcedures = new Hashtable();
 
+        /// <summary>
+        /// Query to get more detailed informations about a specific procedure.
+        /// name Placeholder [NAME] have to replaced by the name of the procedure
+        /// </summary>
+        private const string readProcStruct = "SHOW CREATE PROCEDURE [NAME]";
+
+        /// <summary>
+        /// position for the creation sql in the result
+        /// </summary>
+        private const int createCodeIndex = 2;
+
+        /// <summary>
+        /// Storage of alle Procedures
+        /// </summary>
+        private List<StoredProcedure> spList = new List<StoredProcedure>();        
+
+        /// <summary>
+        /// Flag is the initialreading is dome
+        /// </summary>
         public bool isLoaded = false;
+
+        /// <summary>
+        /// count of stored procedures
+        /// </summary>
         public int count = 0;
+
+        /// <summary>
+        /// The current reade position
+        /// </summary>
         private int current = 0;
 
+        /// <summary>
+        /// Is true if some error occurs
+        /// </summary>
         public bool isError = false;
+
+        /// <summary>
+        /// the errormessage from last occured error
+        /// </summary>
         public string errorMessage = "";
 
-        /**
-         * get next value of stored procedures
-         */
+        /// <summary>
+        /// Gets the current selected Procedure
+        /// </summary>
+        /// <returns>Detailed informations about the current Stored Procedure</returns>
         public StoredProcedure get()
         {
             if (current<count) {
@@ -35,11 +70,19 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// resets the reader
+        /// </summary>
         public void rewind()
         {
             current = 0;
         }
 
+        /// <summary>
+        /// Returns a stored Procedure by the Name
+        /// </summary>
+        /// <param name="name">Name of the Procedure</param>
+        /// <returns></returns>
         public StoredProcedure getProcByName(string name)
         {
             for (int i = 0; i < spList.Count; i++)
@@ -50,9 +93,11 @@ namespace Projector
         }
 
 
-        /**
-         * get the procedures index
-         */
+        /// <summary>
+        /// Reads all Procedures and updates 
+        /// the content
+        /// </summary>
+        /// <param name="database">Used database Connection</param>
         public void getProcedures(MysqlHandler database)
         {
             isError = false;
@@ -108,6 +153,12 @@ namespace Projector
             if (closeConnection) database.disConnect();
         }
 
+        /// <summary>
+        /// gets the creation Query for the given 
+        /// Stored procedure
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="database"></param>
         private void getCreate(StoredProcedure proc, MysqlHandler database)
         {
             if (database.isConnected())
@@ -116,9 +167,9 @@ namespace Projector
 
                 if (res != null)
                 {
-                    while (res.Read() && res.Depth > 0)
+                    while (res.Read() && res.FieldCount > 0)
                     {
-                        string getResult = res.GetString(2);
+                        string getResult = res.GetString(MysqlProcedures.createCodeIndex);
                         if (null != getResult)
                         {
                             proc.created = getResult;

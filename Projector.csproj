@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>77</ApplicationRevision>
+    <ApplicationRevision>78</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -212,6 +212,7 @@
     <Compile Include="MysqlSensor.Designer.cs">
       <DependentUpon>MysqlSensor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MysqlStoredProc.cs" />
     <Compile Include="MysqlStruct.cs" />
     <Compile Include="MysqlTools.cs" />
     <Compile Include="mysqlTrigger.cs" />
@@ -984,6 +985,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <Content Include="Resources\green_bar.png" />
+    <None Include="Resources\yellow_bar1.png" />
+    <None Include="Resources\green_bar1.png" />
+    <Content Include="Resources\red_bar.png" />
+    <None Include="Resources\red_bar1.png" />
+    <Content Include="Resources\yellow_bar.png" />
     <None Include="Resources\server_add.png" />
     <None Include="Resources\palette.png" />
     <None Include="Resources\layout_sidebar.png" />

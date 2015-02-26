@@ -2948,5 +2948,50 @@ namespace Projector
                 textBox1.BackColor = Color.White;
             }
         }
+
+        private void updStoredProcBtn_Click(object sender, EventArgs e)
+        {
+
+            string sql = "DROP PROCEDURE IF EXISTS `"+procName.Text+"`;" + procSource.Text + @";";
+
+            if (!this.database.isConnected())
+            {
+                this.database.connect();
+            }
+            this.database.sql_update(sql);
+            // updates procedures
+            myFuns.getProcedures(this.database);
+            // update table list
+            listTables();
+
+            if (this.database.lastSqlErrorMessage != "")
+            {
+                MessageBox.Show(this.database.lastSqlErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            this.database.disConnect();
+                /*
+CREATE PROCEDURE country_hos
+(IN con CHAR(20))
+BEGIN
+  SELECT Name, HeadOfState FROM Country
+  WHERE Continent = con;
+END //
+DELIMITER ;";*/
+        }
+
+        private void createprocSkellBtn_Click(object sender, EventArgs e)
+        {
+            procSource.Text = @"CREATE PROCEDURE " + procName.Text + @" () " 
+                + System.Environment.NewLine 
+                + @"BEGIN " + System.Environment.NewLine
+                + @"/* type youre code here */ " + System.Environment.NewLine 
+                + @"END;";
+            if (sqlHighlighting.Checked) highlight.parse(procSource);
+        }
+
+        private void procSource_TextChanged(object sender, EventArgs e)
+        {
+            if (sqlHighlighting.Checked) highlight.parse(procSource);
+        }
     }
 }

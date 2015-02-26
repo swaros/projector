@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Fields", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Tables", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Syntax", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(queryBrowser));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.selectedTableLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -100,6 +100,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.procSource = new System.Windows.Forms.RichTextBox();
             this.values = new System.Windows.Forms.GroupBox();
+            this.updStoredProcBtn = new System.Windows.Forms.Button();
             this.procName = new System.Windows.Forms.TextBox();
             this.searchTableTextBox = new System.Windows.Forms.TextBox();
             this.tableView = new System.Windows.Forms.ListView();
@@ -174,6 +175,7 @@
             this.ParsingTimer = new System.Windows.Forms.Timer(this.components);
             this.saveCvsFile = new System.Windows.Forms.SaveFileDialog();
             this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createprocSkellBtn = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -383,16 +385,16 @@
             this.TablesAutoComplete.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.TablesAutoComplete.FullRowSelect = true;
-            listViewGroup1.Header = "Fields";
-            listViewGroup1.Name = "Fields";
-            listViewGroup2.Header = "Tables";
-            listViewGroup2.Name = "Tables";
-            listViewGroup3.Header = "Syntax";
-            listViewGroup3.Name = "Syntax";
+            listViewGroup4.Header = "Fields";
+            listViewGroup4.Name = "Fields";
+            listViewGroup5.Header = "Tables";
+            listViewGroup5.Name = "Tables";
+            listViewGroup6.Header = "Syntax";
+            listViewGroup6.Name = "Syntax";
             this.TablesAutoComplete.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
+            listViewGroup4,
+            listViewGroup5,
+            listViewGroup6});
             this.TablesAutoComplete.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.TablesAutoComplete.Location = new System.Drawing.Point(323, 24);
             this.TablesAutoComplete.MultiSelect = false;
@@ -451,7 +453,7 @@
             // 
             // toolStripMenuItem2
             // 
-            this.toolStripMenuItem2.Image = global::Projector.Properties.Resources.clipboard_paste_document_text;
+            this.toolStripMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem2.Image")));
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem2.Text = "&Paste";
@@ -464,7 +466,7 @@
             // 
             // addToBookmarkToolStripMenuItem
             // 
-            this.addToBookmarkToolStripMenuItem.Image = global::Projector.Properties.Resources.bookmark_book_open;
+            this.addToBookmarkToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("addToBookmarkToolStripMenuItem.Image")));
             this.addToBookmarkToolStripMenuItem.Name = "addToBookmarkToolStripMenuItem";
             this.addToBookmarkToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.addToBookmarkToolStripMenuItem.Text = "Add to Bookmarks...";
@@ -472,7 +474,7 @@
             // 
             // runQueryToolStripMenuItem
             // 
-            this.runQueryToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
+            this.runQueryToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("runQueryToolStripMenuItem.Image")));
             this.runQueryToolStripMenuItem.Name = "runQueryToolStripMenuItem";
             this.runQueryToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.runQueryToolStripMenuItem.Text = "Run Query";
@@ -494,7 +496,7 @@
             // 
             // button1
             // 
-            this.button1.BackgroundImage = global::Projector.Properties.Resources.view_refresh;
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button1.Location = new System.Drawing.Point(5, 3);
             this.button1.Name = "button1";
@@ -590,7 +592,7 @@
             // 
             // Copy
             // 
-            this.Copy.Image = global::Projector.Properties.Resources.clipboard_paste_document_text;
+            this.Copy.Image = ((System.Drawing.Image)(resources.GetObject("Copy.Image")));
             this.Copy.Name = "Copy";
             this.Copy.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.C)));
@@ -627,7 +629,7 @@
             // 
             // updateCellToolStripMenuItem
             // 
-            this.updateCellToolStripMenuItem.Image = global::Projector.Properties.Resources.database_table;
+            this.updateCellToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("updateCellToolStripMenuItem.Image")));
             this.updateCellToolStripMenuItem.Name = "updateCellToolStripMenuItem";
             this.updateCellToolStripMenuItem.Size = new System.Drawing.Size(316, 22);
             this.updateCellToolStripMenuItem.Text = "Update Cell...";
@@ -647,7 +649,7 @@
             // 
             // insertRowMenuItem
             // 
-            this.insertRowMenuItem.Image = global::Projector.Properties.Resources.add_16;
+            this.insertRowMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("insertRowMenuItem.Image")));
             this.insertRowMenuItem.Name = "insertRowMenuItem";
             this.insertRowMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Insert;
             this.insertRowMenuItem.Size = new System.Drawing.Size(316, 22);
@@ -661,7 +663,7 @@
             // 
             // DeleteRowMenuItem
             // 
-            this.DeleteRowMenuItem.Image = global::Projector.Properties.Resources.delete;
+            this.DeleteRowMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("DeleteRowMenuItem.Image")));
             this.DeleteRowMenuItem.Name = "DeleteRowMenuItem";
             this.DeleteRowMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.DeleteRowMenuItem.Size = new System.Drawing.Size(316, 22);
@@ -762,7 +764,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackgroundImage = global::Projector.Properties.Resources.bigsql;
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Location = new System.Drawing.Point(6, 19);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(132, 125);
@@ -928,9 +930,12 @@
             this.procSource.Size = new System.Drawing.Size(826, 384);
             this.procSource.TabIndex = 0;
             this.procSource.Text = "";
+            this.procSource.TextChanged += new System.EventHandler(this.procSource_TextChanged);
             // 
             // values
             // 
+            this.values.Controls.Add(this.createprocSkellBtn);
+            this.values.Controls.Add(this.updStoredProcBtn);
             this.values.Controls.Add(this.procName);
             this.values.Dock = System.Windows.Forms.DockStyle.Top;
             this.values.Location = new System.Drawing.Point(3, 3);
@@ -939,6 +944,16 @@
             this.values.TabIndex = 0;
             this.values.TabStop = false;
             this.values.Text = "Properies";
+            // 
+            // updStoredProcBtn
+            // 
+            this.updStoredProcBtn.Location = new System.Drawing.Point(167, 20);
+            this.updStoredProcBtn.Name = "updStoredProcBtn";
+            this.updStoredProcBtn.Size = new System.Drawing.Size(75, 23);
+            this.updStoredProcBtn.TabIndex = 1;
+            this.updStoredProcBtn.Text = "Update";
+            this.updStoredProcBtn.UseVisualStyleBackColor = true;
+            this.updStoredProcBtn.Click += new System.EventHandler(this.updStoredProcBtn_Click);
             // 
             // procName
             // 
@@ -996,7 +1011,7 @@
             // 
             // joinTryMenu
             // 
-            this.joinTryMenu.Image = global::Projector.Properties.Resources.chain_plus;
+            this.joinTryMenu.Image = ((System.Drawing.Image)(resources.GetObject("joinTryMenu.Image")));
             this.joinTryMenu.Name = "joinTryMenu";
             this.joinTryMenu.Size = new System.Drawing.Size(166, 22);
             this.joinTryMenu.Text = "Try to Join...";
@@ -1016,7 +1031,7 @@
             // 
             // dropTablesToolStripMenuItem
             // 
-            this.dropTablesToolStripMenuItem.Image = global::Projector.Properties.Resources.TRASH_16;
+            this.dropTablesToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dropTablesToolStripMenuItem.Image")));
             this.dropTablesToolStripMenuItem.Name = "dropTablesToolStripMenuItem";
             this.dropTablesToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.dropTablesToolStripMenuItem.Text = "Drop Table(s)";
@@ -1092,7 +1107,7 @@
             // 
             // DialogOKBtn
             // 
-            this.DialogOKBtn.Image = global::Projector.Properties.Resources.stock_dataeditsqlquery;
+            this.DialogOKBtn.Image = ((System.Drawing.Image)(resources.GetObject("DialogOKBtn.Image")));
             this.DialogOKBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.DialogOKBtn.Name = "DialogOKBtn";
             this.DialogOKBtn.Size = new System.Drawing.Size(62, 20);
@@ -1101,7 +1116,7 @@
             // 
             // dialogCancelBtn
             // 
-            this.dialogCancelBtn.Image = global::Projector.Properties.Resources.delete_16;
+            this.dialogCancelBtn.Image = ((System.Drawing.Image)(resources.GetObject("dialogCancelBtn.Image")));
             this.dialogCancelBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.dialogCancelBtn.Name = "dialogCancelBtn";
             this.dialogCancelBtn.Size = new System.Drawing.Size(62, 20);
@@ -1137,7 +1152,7 @@
             this.toolStripButton9});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(581, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(550, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -1150,7 +1165,7 @@
             // reloadtoolBtn
             // 
             this.reloadtoolBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.reloadtoolBtn.Image = global::Projector.Properties.Resources.sql_execute;
+            this.reloadtoolBtn.Image = ((System.Drawing.Image)(resources.GetObject("reloadtoolBtn.Image")));
             this.reloadtoolBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.reloadtoolBtn.Name = "reloadtoolBtn";
             this.reloadtoolBtn.Size = new System.Drawing.Size(23, 22);
@@ -1160,7 +1175,7 @@
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::Projector.Properties.Resources.reload3;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
@@ -1175,7 +1190,7 @@
             // toolStripButton2
             // 
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = global::Projector.Properties.Resources.resizecol;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
@@ -1191,7 +1206,7 @@
             // 
             this.toolStripButton3.CheckOnClick = true;
             this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::Projector.Properties.Resources.sql_editor;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
@@ -1206,7 +1221,7 @@
             // toolStripButton4
             // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::Projector.Properties.Resources.bookmark_book_open;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
@@ -1224,7 +1239,7 @@
             // toolStripButton8
             // 
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = global::Projector.Properties.Resources.delete;
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
@@ -1242,7 +1257,7 @@
             this.sqlHighlighting.CheckOnClick = true;
             this.sqlHighlighting.CheckState = System.Windows.Forms.CheckState.Checked;
             this.sqlHighlighting.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.sqlHighlighting.Image = global::Projector.Properties.Resources.highlighter_text;
+            this.sqlHighlighting.Image = ((System.Drawing.Image)(resources.GetObject("sqlHighlighting.Image")));
             this.sqlHighlighting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.sqlHighlighting.Name = "sqlHighlighting";
             this.sqlHighlighting.Size = new System.Drawing.Size(23, 22);
@@ -1254,7 +1269,7 @@
             this.placeholderReplace.CheckOnClick = true;
             this.placeholderReplace.CheckState = System.Windows.Forms.CheckState.Checked;
             this.placeholderReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.placeholderReplace.Image = global::Projector.Properties.Resources.edit_replace;
+            this.placeholderReplace.Image = ((System.Drawing.Image)(resources.GetObject("placeholderReplace.Image")));
             this.placeholderReplace.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.placeholderReplace.Name = "placeholderReplace";
             this.placeholderReplace.Size = new System.Drawing.Size(23, 22);
@@ -1266,7 +1281,7 @@
             this.explainEnabled.CheckOnClick = true;
             this.explainEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.explainEnabled.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.explainEnabled.Image = global::Projector.Properties.Resources.computer_161;
+            this.explainEnabled.Image = ((System.Drawing.Image)(resources.GetObject("explainEnabled.Image")));
             this.explainEnabled.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.explainEnabled.Name = "explainEnabled";
             this.explainEnabled.Size = new System.Drawing.Size(23, 22);
@@ -1278,7 +1293,7 @@
             this.toolStripButton10.CheckOnClick = true;
             this.toolStripButton10.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton10.Image = global::Projector.Properties.Resources.ui_list_box_blue;
+            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
             this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton10.Name = "toolStripButton10";
             this.toolStripButton10.Size = new System.Drawing.Size(23, 22);
@@ -1296,7 +1311,7 @@
             this.toolStripSplitButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.csvToolStripMenuItem,
             this.excelToolStripMenuItem});
-            this.toolStripSplitButton1.Image = global::Projector.Properties.Resources.SAVE_16;
+            this.toolStripSplitButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButton1.Image")));
             this.toolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButton1.Name = "toolStripSplitButton1";
             this.toolStripSplitButton1.Size = new System.Drawing.Size(32, 22);
@@ -1329,7 +1344,7 @@
             this.rowEditToolStripMenuItem,
             this.toolStripSeparator14,
             this.showGrouplabelInTableListToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = global::Projector.Properties.Resources.opentype;
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
@@ -1375,7 +1390,7 @@
             // toolStripButton5
             // 
             this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = global::Projector.Properties.Resources.database_link;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
             this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
@@ -1385,7 +1400,7 @@
             // toolStripButton9
             // 
             this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.Image = global::Projector.Properties.Resources.database_add;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
             this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton9.Name = "toolStripButton9";
             this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
@@ -1456,7 +1471,7 @@
             this.lowerToolStripMenuItem,
             this.greaterEqualsToolStripMenuItem,
             this.lowerEqualsToolStripMenuItem});
-            this.compareSetting.Image = global::Projector.Properties.Resources.sql_editor;
+            this.compareSetting.Image = ((System.Drawing.Image)(resources.GetObject("compareSetting.Image")));
             this.compareSetting.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.compareSetting.Name = "compareSetting";
             this.compareSetting.Size = new System.Drawing.Size(28, 22);
@@ -1519,7 +1534,7 @@
             // 
             this.leftJoinRunBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.leftJoinRunBtn.Enabled = false;
-            this.leftJoinRunBtn.Image = global::Projector.Properties.Resources.applications_16;
+            this.leftJoinRunBtn.Image = ((System.Drawing.Image)(resources.GetObject("leftJoinRunBtn.Image")));
             this.leftJoinRunBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.leftJoinRunBtn.Name = "leftJoinRunBtn";
             this.leftJoinRunBtn.Size = new System.Drawing.Size(23, 22);
@@ -1542,7 +1557,7 @@
             // rowOptions
             // 
             this.rowOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.rowOptions.Image = global::Projector.Properties.Resources.add_16;
+            this.rowOptions.Image = ((System.Drawing.Image)(resources.GetObject("rowOptions.Image")));
             this.rowOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.rowOptions.Name = "rowOptions";
             this.rowOptions.Size = new System.Drawing.Size(23, 22);
@@ -1552,7 +1567,7 @@
             // toolStripButton6
             // 
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = global::Projector.Properties.Resources.delete_16;
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
@@ -1562,7 +1577,7 @@
             // toolStripButton7
             // 
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = global::Projector.Properties.Resources.clipboard_paste_document_text;
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
@@ -1594,6 +1609,16 @@
             this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
             this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.selectToolStripMenuItem.Text = "Select";
+            // 
+            // createprocSkellBtn
+            // 
+            this.createprocSkellBtn.Location = new System.Drawing.Point(249, 20);
+            this.createprocSkellBtn.Name = "createprocSkellBtn";
+            this.createprocSkellBtn.Size = new System.Drawing.Size(75, 23);
+            this.createprocSkellBtn.TabIndex = 2;
+            this.createprocSkellBtn.Text = "Skeleton";
+            this.createprocSkellBtn.UseVisualStyleBackColor = true;
+            this.createprocSkellBtn.Click += new System.EventHandler(this.createprocSkellBtn_Click);
             // 
             // queryBrowser
             // 
@@ -1807,5 +1832,7 @@
         private System.Windows.Forms.Panel MessagePanel;
         private System.Windows.Forms.Label MessageLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator20;
+        private System.Windows.Forms.Button updStoredProcBtn;
+        private System.Windows.Forms.Button createprocSkellBtn;
     }
 }

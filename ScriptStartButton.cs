@@ -51,6 +51,7 @@ namespace Projector
             {
                 runTimer.Enabled = true;
                 this.StartBtn.Enabled = false;
+                this.BackgroundImage = Projector.Properties.Resources.green_bar;
                 RefScriptExecute exec = new RefScriptExecute(this.script.Script, this.parent);
                 exec.run();
 
@@ -65,9 +66,24 @@ namespace Projector
             }
             else
             {
+                
                 this.runTimer.Enabled = false;
                 this.StartBtn.Enabled = true;
+                if (this.script.Script.getErrorCount() == 0)
+                    this.BackgroundImage = Projector.Properties.Resources.yellow_bar;
+                else
+                    this.BackgroundImage = Projector.Properties.Resources.red_bar;
             }
+        }
+
+        private void DescLabel_MouseHover(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void DescLabel_MouseLeave(object sender, EventArgs e)
+        {
+            
         }
 
     }
