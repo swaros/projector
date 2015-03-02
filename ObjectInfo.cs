@@ -211,7 +211,7 @@ namespace Projector
 
 
                 string keepMe = maskStr;
-                maskStr += Projector.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.ReflectionScript.MASK_DELIMITER + paramPart;
+                maskStr += Projector.Script.ReflectionScript.MASK_DELIMITER + "METHOD" + Projector.Script.ReflectionScript.MASK_DELIMITER + paramPart;
 
                 maskData.Add(maskStr);
                 objStore.methodMask.Add(maskStr);
@@ -221,7 +221,7 @@ namespace Projector
                 if (retval != "")
                 {
                     //maskStr = retval + " " + maskStr;
-                    maskStr = "% = " + keepMe + Projector.ReflectionScript.MASK_DELIMITER + "METHOD ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + retval + " = " + paramPart;
+                    maskStr = "% = " + keepMe + Projector.Script.ReflectionScript.MASK_DELIMITER + "METHOD ASSIGN" + Projector.Script.ReflectionScript.MASK_DELIMITER + retval + " = " + paramPart;
                     maskData.Add(maskStr);
                     objStore.methodMask.Add(maskStr);
                 }

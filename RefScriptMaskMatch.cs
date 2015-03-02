@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Projector
+namespace Projector.Script
 {
     public class RefScriptMaskMatch
     {
@@ -54,7 +54,7 @@ namespace Projector
             {
                 if (this.checkFullMatch(words))
                 {
-                    return Projector.RefScriptMaskMatch.MATCH;
+                    return Projector.Script.RefScriptMaskMatch.MATCH;
                 }                
             }
 
@@ -62,12 +62,12 @@ namespace Projector
             {
                 if (this.checkFullMatch(words))
                 {
-                    return Projector.RefScriptMaskMatch.PARTIAL_MATCH;
+                    return Projector.Script.RefScriptMaskMatch.PARTIAL_MATCH;
                 }                
             }
 
 
-            return Projector.RefScriptMaskMatch.NO_MATCH;
+            return Projector.Script.RefScriptMaskMatch.NO_MATCH;
         }
 
 
@@ -90,9 +90,9 @@ namespace Projector
                 // first case ... words in mask are matching 
                 if (testWord == compareMask || testWord.ToUpper() == compareMask)
                 {
-                    if (!Projector.RefScriptMaskMatch.KeyWords.Contains(testWord))
+                    if (!Projector.Script.RefScriptMaskMatch.KeyWords.Contains(testWord))
                     {
-                        Projector.RefScriptMaskMatch.KeyWords.Add(testWord);
+                        Projector.Script.RefScriptMaskMatch.KeyWords.Add(testWord);
                     }
                     Hit = true;                    
                 }
@@ -132,7 +132,7 @@ namespace Projector
 
         private void buildElements()
         {
-            mainParts = this.sourceStr.Split(Projector.ReflectionScript.MASK_DELIMITER[0]);
+            mainParts = this.sourceStr.Split(Projector.Script.ReflectionScript.MASK_DELIMITER[0]);
             this.lastMatchDefinition = mainParts[0];
             maskPart = mainParts[0].Split(' ');
             definePart = mainParts[1].Split(' ');

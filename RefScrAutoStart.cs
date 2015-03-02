@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-namespace Projector
+namespace Projector.Script
 {
     public class RefScrAutoStart
     {

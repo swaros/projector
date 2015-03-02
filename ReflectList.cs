@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using System.Diagnostics;
+using Projector.Data;
+using Projector.Script;
 
 namespace Projector
 {

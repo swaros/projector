@@ -530,6 +530,7 @@
     <Compile Include="SetTimer.Designer.cs">
       <DependentUpon>SetTimer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="setupForm.cs">
       <SubType>Form</SubType>
     </Compile>

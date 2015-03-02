@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Projector
+namespace Projector.Script
 {
     public class RefScrMath
     {

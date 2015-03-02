@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Diagnostics;
 
-namespace Projector
+namespace Projector.Script
 {
     class ReflectionScriptHighLight
     {
@@ -283,7 +283,7 @@ namespace Projector
                 }
 
                 // must be at the end
-                foreach (String keyWord in Projector.RefScriptMaskMatch.KeyWords)
+                foreach (String keyWord in Projector.Script.RefScriptMaskMatch.KeyWords)
                 {
                     this.RtfColors.markTextLine(keyWord, KeyWordStyle);
                 }

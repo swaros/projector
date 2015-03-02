@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using Projector.Data;
+using Projector.Script;
 
 namespace Projector
 {

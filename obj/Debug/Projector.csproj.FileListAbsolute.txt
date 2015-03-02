@@ -116,3 +116,5 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MainSetup.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PathSelector.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptStartButton.resources
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.config
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csproj.ResolveComReference.cache

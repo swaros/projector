@@ -6,6 +6,10 @@ using System.Collections;
 
 namespace Projector
 {
+    /// <summary>
+    /// this Class get informations about stored procedures
+    /// that already stored in the Database
+    /// </summary>
     class MysqlProcedures
     {
         /// <summary>

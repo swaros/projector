@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace Projector
+namespace Projector.Data
 {
     public class ResultList
     {

@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Windows.Forms;
 
 
-namespace Projector
+namespace Projector.Script
 {
     public class ReflectionScript
     {
@@ -206,41 +206,41 @@ namespace Projector
              */
 
             //base commands
-            this.mask.Add("NEW § %" + Projector.ReflectionScript.MASK_DELIMITER + "OBJECT");
-            this.mask.Add("PROCEDURE % ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");
-            this.mask.Add("EXEC ? ?" + Projector.ReflectionScript.MASK_DELIMITER + "PARSE");    
+            this.mask.Add("NEW § %" + Projector.Script.ReflectionScript.MASK_DELIMITER + "OBJECT");
+            this.mask.Add("PROCEDURE % ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARSE");
+            this.mask.Add("EXEC ? ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARSE");    
 
             // hard coded native stufff
-            this.mask.Add("MESSAGEBOX ?" + Projector.ReflectionScript.MASK_DELIMITER);
-            this.mask.Add("REG ?" + Projector.ReflectionScript.MASK_DELIMITER);
-            this.mask.Add("UNREG ?" + Projector.ReflectionScript.MASK_DELIMITER);
-            this.mask.Add("WAITFOR ?" + Projector.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("MESSAGEBOX ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("REG ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("UNREG ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
+            this.mask.Add("WAITFOR ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
 
-            this.mask.Add("VAR % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "var . = STR");
-            this.mask.Add("STRING % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "string . = STR");
-            this.mask.Add("INTEGER % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.ReflectionScript.MASK_DELIMITER + "integer . = INT");
+            this.mask.Add("VAR % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "var . = STR");
+            this.mask.Add("STRING % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "string . = STR");
+            this.mask.Add("INTEGER % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "integer . = INT");
 
-            this.mask.Add("% = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.ReflectionScript.MASK_DELIMITER + ". = ?");
-            this.mask.Add("% += ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN SELFINC" + Projector.ReflectionScript.MASK_DELIMITER + ". += ?");
+            this.mask.Add("% = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.Script.ReflectionScript.MASK_DELIMITER + ". = ?");
+            this.mask.Add("% += ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN SELFINC" + Projector.Script.ReflectionScript.MASK_DELIMITER + ". += ?");
 
             // environment change
-            this.mask.Add("SET % ?" + Projector.ReflectionScript.MASK_DELIMITER + "VAR SETUP");
+            this.mask.Add("SET % ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR SETUP");
 
 
             // access to parent if exists
-            this.mask.Add("PARENT % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
-            this.mask.Add("PARENT % += ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT SELFINC" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . += ?");
+            this.mask.Add("PARENT % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
+            this.mask.Add("PARENT % += ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN PARENT SELFINC" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT . += ?");
 
-           // this.mask.Add("DOWN % = ?" + Projector.ReflectionScript.MASK_DELIMITER + "ASSIGN DOWNCOPY" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
+           // this.mask.Add("DOWN % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN DOWNCOPY" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT . = ?");
 
             // exection controlls
-            this.mask.Add("STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT" + Projector.ReflectionScript.MASK_DELIMITER + "STOP");
-            this.mask.Add("RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN");
-            this.mask.Add("EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT");
+            this.mask.Add("STOP" + Projector.Script.ReflectionScript.MASK_DELIMITER + "WAIT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "STOP");
+            this.mask.Add("RUN" + Projector.Script.ReflectionScript.MASK_DELIMITER + "RUN" + Projector.Script.ReflectionScript.MASK_DELIMITER + "RUN");
+            this.mask.Add("EXIT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "EXIT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "EXIT");
 
-            this.mask.Add("PARENT STOP" + Projector.ReflectionScript.MASK_DELIMITER + "WAIT PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT STOP");
-            this.mask.Add("PARENT RUN" + Projector.ReflectionScript.MASK_DELIMITER + "RUN PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT RUN");
-            this.mask.Add("PARENT EXIT" + Projector.ReflectionScript.MASK_DELIMITER + "EXIT PARENT" + Projector.ReflectionScript.MASK_DELIMITER + "PARENT EXIT");
+            this.mask.Add("PARENT STOP" + Projector.Script.ReflectionScript.MASK_DELIMITER + "WAIT PARENT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT STOP");
+            this.mask.Add("PARENT RUN" + Projector.Script.ReflectionScript.MASK_DELIMITER + "RUN PARENT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT RUN");
+            this.mask.Add("PARENT EXIT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "EXIT PARENT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "PARENT EXIT");
 
             // just to store something
             // this.mask.Add("VAR § SET ?=STRINGVAR STR");
@@ -1410,7 +1410,7 @@ namespace Projector
             //Match match = Regex.Match(this.code, @"'([^']*)");
 
             // parse all strings so at the end code only will be in the source
-            MatchCollection match = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_STRING);
+            MatchCollection match = Regex.Matches(this.code, Projector.Script.ReflectionScript.REGEX_STRING);
 
             System.Guid  guid = System.Guid.NewGuid();
             guid.ToString();
@@ -1427,7 +1427,7 @@ namespace Projector
 
             // get all subelemets by brackets {} independend from what kind of usage
             // just cut it out, add an marker for later usage
-            //MatchCollection bracketMatch = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_BRACKETS);
+            //MatchCollection bracketMatch = Regex.Matches(this.code, Projector.Script.ReflectionScript.REGEX_BRACKETS);
             List<string> bracketMatch = RegexGroup.getMatch(this.code, 1);
             int codeIdent = 1;
             while (bracketMatch.Count > 0)
@@ -1460,7 +1460,7 @@ namespace Projector
                 bracketMatch = RegexGroup.getMatch(this.code, 1);
             }
             // all content that in normal brackets, that will be used for calculations
-            MatchCollection cBracketsMatch = Regex.Matches(this.code, Projector.ReflectionScript.REGEX_CALC_BRACKETS);
+            MatchCollection cBracketsMatch = Regex.Matches(this.code, Projector.Script.ReflectionScript.REGEX_CALC_BRACKETS);
             for (int i = 0; i < cBracketsMatch.Count; i++)
             {
                 string str = cBracketsMatch[i].Value;
@@ -2240,7 +2240,7 @@ namespace Projector
 
 
                     // split mask into the mask himself (left) and the props (right)
-                    string[] def = hash.Split(Projector.ReflectionScript.MASK_DELIMITER[0]);
+                    string[] def = hash.Split(Projector.Script.ReflectionScript.MASK_DELIMITER[0]);
 
                     // get the mask as words
                     string[] maskPart = def[0].Split(' ');

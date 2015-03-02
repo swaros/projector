@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace Projector
+namespace Projector.Script
 {
     public class RefScriptExecute
     {

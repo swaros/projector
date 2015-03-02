@@ -6,7 +6,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace Projector
+namespace Projector.Script
 {
     public class ReflectionDatabase
     {
