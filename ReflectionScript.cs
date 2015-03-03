@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Reflection;
 using System.Windows.Forms;
+using Projector.Script.Vars;
 
 
 namespace Projector.Script
@@ -77,53 +77,6 @@ namespace Projector.Script
         // contains all settings
         private Hashtable Setup = new Hashtable();
 
-        // VARIABLES: the list of Objects
-        private List<String> objectList = new List<string>();
-
-        // VARIABLES: contains the refrences for all objects
-        private Hashtable objectReferences = new Hashtable();
-
-        private Hashtable objectStorage = new Hashtable();
-
-        // VARIABLES: list of all Int Variables
-        private Hashtable globalRenameHash = new Hashtable();
-
-        // VARIABLES: list of all variables that cutted out so we clean the sourcecode
-        private Hashtable globalParamRenameHash = new Hashtable();
-
-
-        // VARIABLES: list of all string Variables
-        private Hashtable stringFounds = new Hashtable();
-
-        // VARIABLES: list of all Long Variables
-        private Hashtable int64Founds = new Hashtable();
-
-        // VARIABLES: list of all Long Variables
-        private Hashtable int32Founds = new Hashtable();
-
-        // VARIABLES: list of all Long Variables
-        private Hashtable floatFounds = new Hashtable();
-
-        // VARIABLES: list of all Long Variables
-        private Hashtable doubleFounds = new Hashtable();
-
-        // VARIABLES: list of all Boolean Variables
-        private Hashtable BoolFounds = new Hashtable();
-
-        // VARIABLES: list of all subscripts defined by methods
-        private Hashtable namedSubScripts = new Hashtable();
-
-        // CONTROL: all subscripts
-        private Hashtable subScripts = new Hashtable();
-
-        // VARIABLES: list of entries between () brackets that used for calculations
-
-        // ---- this one contains the Maths himself. this will be used for calculations
-        private Hashtable calcingBrackets = new Hashtable();
-
-        // ---- this one contains the results only so it will be easier to fill up vars
-        private Hashtable calcingBracketsResults = new Hashtable();   
-
         // CONTROL: list of objects that be already parsed. (all methods and paramaters extracted)
         private List<string> parsedObjects = new List<string>();
 
@@ -158,6 +111,7 @@ namespace Projector.Script
 
         private Boolean debugMode = false;
 
+        public Variables scrVars = new Variables();
         
         /// <summary>
         /// Reflection script
@@ -202,6 +156,8 @@ namespace Projector.Script
              * WAIT     set the execution state to wait (for this script part)
              * RUN      set the execution state to continue
              * SETUP    use value to change setup value
+             * STR_OBJECT create a Object of type string
+             * INT_OBJECT create a Object from type Int
              * 
              */
 
@@ -216,9 +172,10 @@ namespace Projector.Script
             this.mask.Add("UNREG ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
             this.mask.Add("WAITFOR ?" + Projector.Script.ReflectionScript.MASK_DELIMITER);
 
-            this.mask.Add("VAR % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "var . = STR");
+            //this.mask.Add("VAR % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "var . = STR");
             this.mask.Add("STRING % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "string . = STR");
             this.mask.Add("INTEGER % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "integer . = INT");
+            this.mask.Add("DOUBLE % = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "VAR OBJECT" + Projector.Script.ReflectionScript.MASK_DELIMITER + "double . = Double");
 
             this.mask.Add("% = ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN" + Projector.Script.ReflectionScript.MASK_DELIMITER + ". = ?");
             this.mask.Add("% += ?" + Projector.Script.ReflectionScript.MASK_DELIMITER + "ASSIGN SELFINC" + Projector.Script.ReflectionScript.MASK_DELIMITER + ". += ?");
@@ -368,7 +325,7 @@ namespace Projector.Script
 
         /// <summary>
         /// returns compiled script including
-        /// all subscripts
+        /// all this.scrVars.subScripts
         /// </summary>
         /// <returns></returns>
         public List<ReflectionScriptDefines> getFullScript()
@@ -376,7 +333,7 @@ namespace Projector.Script
 
             List<ReflectionScriptDefines> res = new List<ReflectionScriptDefines>();
             res.AddRange( this.getScript());
-            foreach (DictionaryEntry subScr in this.subScripts)
+            foreach (DictionaryEntry subScr in this.scrVars.subScripts)
             {
                 ReflectionScript refScr = (ReflectionScript)subScr.Value;
                 List<ReflectionScriptDefines> subSource = refScr.getFullScript();                
@@ -396,17 +353,13 @@ namespace Projector.Script
             this.commentedLines.Clear();
             this.lineOffset = 0;
             this.errorMessages.Clear();
-            this.objectList.Clear();
-            this.objectReferences.Clear();
-            this.objectStorage.Clear();
-            this.globalRenameHash.Clear();
-            this.globalParamRenameHash.Clear();
+
+          
             this.buildedSource.Clear();
-            this.namedSubScripts.Clear();
-            this.subScripts.Clear();
+        
             this.errorLines.Clear();
-            this.calcingBrackets.Clear();
-            this.calcingBracketsResults.Clear();
+            this.scrVars.clear();
+
             this.parsedObjects.Clear();
 
             this.setDefaultVars();
@@ -539,10 +492,10 @@ namespace Projector.Script
         public List<string> getCurrentObjectsByType(string objectType)
         {
             List<string> usedBy = new List<string>();
-            if (this.objectReferences.ContainsValue(objectType))
+            if (this.scrVars.getObjectsReference().ContainsValue(objectType))
             {
                
-                foreach (DictionaryEntry de in this.objectReferences)
+                foreach (DictionaryEntry de in this.scrVars.getObjectsReference())
                 {
                     if (de.Value != null && de.Value.ToString() == objectType)
                     {
@@ -550,7 +503,7 @@ namespace Projector.Script
                     }
                 }              
             }
-            foreach (DictionaryEntry scrpt in this.subScripts)
+            foreach (DictionaryEntry scrpt in this.scrVars.subScripts)
             {
                 ReflectionScript refScr = (ReflectionScript)scrpt.Value;
                 List<string> subUsed = refScr.getCurrentObjectsByType(objectType);
@@ -676,7 +629,7 @@ namespace Projector.Script
         {
             List<int> returnList = this.commentedLines;
             
-            foreach (DictionaryEntry subScrDic in this.subScripts)
+            foreach (DictionaryEntry subScrDic in this.scrVars.subScripts)
             {
                 ReflectionScript subScr = (ReflectionScript)subScrDic.Value;
                 int parentOffset = subScr.parentLineNumber;
@@ -722,7 +675,7 @@ namespace Projector.Script
         public String fillUpAll(string source)
         {
             return 
-                this.fillUpMaths(
+                this.scrVars.fillUpMaths(
                     this.fillUpCodeLines(
                         this.fillUpStrings(source)
                     )
@@ -751,7 +704,7 @@ namespace Projector.Script
         /// <returns>String with replaced Placeholders and the Pre and Poststring</returns>
         public String fillUpStrings(string source, String pre, String post)
         {
-            return this.fillUpVars(source, this.globalRenameHash, pre, post);
+            return this.fillUpVars(source,this.scrVars.globalRenameHash, pre, post);
         }
         
         /// <summary>
@@ -762,18 +715,9 @@ namespace Projector.Script
         /// <returns>Full Code</returns>
         public String fillUpCodeLines(string source)
         {
-            return this.fillUpVars(source, this.namedSubScripts);
+            return this.fillUpVars(source, this.scrVars.namedSubScripts);
         }
 
-        /// <summary>
-        /// Fiill all Placeholder for content in brackets
-        /// </summary>
-        /// <param name="source">Code with placeholder</param>
-        /// <returns>Code with Brackets and content in brackets</returns>
-        public String fillUpMaths(string source)
-        {
-            return this.fillUpVars(source, this.calcingBracketsResults);
-        }
 
         /// <summary>
         /// Fill up Placeholder by the given Hashtable
@@ -822,17 +766,17 @@ namespace Projector.Script
 
         public String getCodeByName(string name)
         {
-            if (namedSubScripts.ContainsKey(name))
+            if (this.scrVars.namedSubScripts.ContainsKey(name))
             {
-                return this.fillUpStrings( namedSubScripts[name].ToString(),"\"","\"");
+                return this.fillUpStrings( this.scrVars.namedSubScripts[name].ToString(),"\"","\"");
             }
             return null;
         }
 
         public Hashtable getAllStrings()
         {
-            Hashtable fullStrings = this.globalRenameHash;
-            foreach (DictionaryEntry subScr in this.subScripts)
+            Hashtable fullStrings =this.scrVars.globalRenameHash;
+            foreach (DictionaryEntry subScr in this.scrVars.subScripts)
             {
                 ReflectionScript refScr = (ReflectionScript)subScr.Value;
                 foreach (DictionaryEntry subVars in refScr.getAllStrings())
@@ -844,13 +788,13 @@ namespace Projector.Script
                 }
             }
             return fullStrings;
-            //return this.globalRenameHash;
+            //returnthis.scrVars.globalRenameHash;
         }
         // check if the variable exists from the given object
 
         public Boolean varExists(string name)
         {
-            return this.globalRenameHash.ContainsKey("&" + name);
+            return this.scrVars.globalRenameHash.ContainsKey("&" + name);
         }
 
         public Boolean varExists(ReflectionScriptDefines refObj)
@@ -872,20 +816,7 @@ namespace Projector.Script
                 return this.varExists(refObj.name);
             }
         }
-        public void updateExistingObject(String name, Object value)
-        {
-            this.updateExistingObject(name, value, false);
-        }
-
-        public Boolean objectExists(string name)
-        {
-            return this.objectStorage.ContainsKey(name);
-        }
-
-        public Hashtable getObjects()
-        {
-            return this.objectStorage;
-        }
+      
 
         public Hashtable getRuntimeObjects(Boolean alsoIfNotRunning)
         {
@@ -898,22 +829,24 @@ namespace Projector.Script
                 }
 
             }
-            else
+            
+            if (alsoIfNotRunning)
             {
-                if (alsoIfNotRunning)
-                {
-                    foreach (DictionaryEntry tmpRes in this.getObjects())
-                    {
-                        result.Add(tmpRes.Key, tmpRes.Value);
-                    }
-                }
+               foreach (DictionaryEntry tmpRes in this.scrVars.getObjects())
+               {
+                   if (!result.ContainsKey(tmpRes.Key))
+                   {
+                       result.Add(tmpRes.Key, tmpRes.Value);
+                   }                   
+               }
             }
+            
             if (result == null)
             {
                 result = new Hashtable();
             }
 
-            foreach (DictionaryEntry scrpt in this.subScripts)
+            foreach (DictionaryEntry scrpt in this.scrVars.subScripts)
             {
                 ReflectionScript refScr = (ReflectionScript)scrpt.Value;
                 Hashtable subResult = refScr.getRuntimeObjects(alsoIfNotRunning);
@@ -932,23 +865,23 @@ namespace Projector.Script
 
         public void updateSubScripts()
         {
-            foreach (DictionaryEntry Obj in this.getObjects())
+            foreach (DictionaryEntry Obj in this.scrVars.getObjects())
             {
                 string name = Obj.Key.ToString();
                 Object obj = Obj.Value;
-                if (this.objectReferences.ContainsKey(name))
+                if (this.scrVars.objectIsStored(name))
                 {
-                    string type = this.objectReferences[name].ToString();
-                    foreach (DictionaryEntry scrpt in this.subScripts)
+                    string type = this.scrVars.getObjectsReference(name);
+                    foreach (DictionaryEntry scrpt in this.scrVars.subScripts)
                     {
                         ReflectionScript refScr = (ReflectionScript)scrpt.Value;
-                        if (refScr.objectExists("parent." + name))
+                        if (refScr.scrVars.objectIsStored("parent." + name))
                         {
-                            refScr.updateExistingObject("parent." + name, obj);
+                            refScr.scrVars.updateExistingObject("parent." + name, obj);
                         }
                         else
                         {
-                            refScr.createObject("parent." + name, obj, type);
+                            refScr.scrVars.createObject("parent." + name, obj, type);
                         }
                     }
                 }
@@ -1006,7 +939,7 @@ namespace Projector.Script
 
                 // check before not valid so we are in the state FINISHED...BUT waht abeout oure subscripts?
                 Boolean somIsRunning = false;
-                foreach (DictionaryEntry scrpt in this.subScripts)
+                foreach (DictionaryEntry scrpt in this.scrVars.subScripts)
                 {
                     ReflectionScript refScr = (ReflectionScript)scrpt.Value;
                     if (refScr.imRunning())
@@ -1024,7 +957,7 @@ namespace Projector.Script
             if (this.CurrentExecuter != null)
             {
                 // check before not valid so we are in the state FINISHED...BUT waht abeout oure subscripts?
-                foreach (DictionaryEntry scrpt in this.subScripts)
+                foreach (DictionaryEntry scrpt in this.scrVars.subScripts)
                 {
                     ReflectionScript refScr = (ReflectionScript)scrpt.Value;
                     refScr.StopAll();
@@ -1039,13 +972,13 @@ namespace Projector.Script
 
         public void updateSubScripts(ReflectionScript refScr)
         {
-            foreach (DictionaryEntry Obj in this.getObjects())
+            foreach (DictionaryEntry Obj in this.scrVars.getObjects())
             {
                 string name = Obj.Key.ToString();
                 Object obj = Obj.Value;
-                if (this.objectReferences.ContainsKey(name))
+                if (this.scrVars.objectIsStored(name))
                 {
-                    string type = this.objectReferences[name].ToString();
+                    string type = this.scrVars.getObjectsReference(name);
                     
                     List<string> aliases = new List<string>();
                     aliases.Add("parent.");
@@ -1061,13 +994,13 @@ namespace Projector.Script
                     }*/
                     foreach (string addName in aliases)
                     {
-                        if (refScr.objectExists(addName + name))
+                        if (refScr.scrVars.objectIsStored(addName + name))
                         {
-                            refScr.updateExistingObject(addName + name, obj);
+                            refScr.scrVars.updateExistingObject(addName + name, obj);
                         }
                         else
                         {
-                            refScr.createObject(addName + name, obj, type);
+                            refScr.scrVars.createObject(addName + name, obj, type);
                         }
                     }
                     refScr.updateMeByObject(obj);
@@ -1076,140 +1009,12 @@ namespace Projector.Script
             }
         }
 
-        public void createObject(string name, Object obj, string type)
-        {
-            if (!objectStorage.ContainsKey(name))
-            {
-                objectStorage.Add(name, obj);               
-            }
-            if (!objectReferences.ContainsKey(name))
-            {
-                objectReferences.Add(name, type);
-            }
-        }
-        
-        public Object getRegisteredObject(string name)
-        {
-            if (this.objectStorage.ContainsKey(name))
-            {
-                return (object)this.objectStorage[name];
-            }
-            return null;
-        }
+       
 
 
-        public void updateExistingObject(String name, Object value, Boolean selfInc)
-        {
+      
 
-            Boolean found = false;
-            if (globalRenameHash.ContainsKey("&" + name))
-            {
-                found = true;
-                if (selfInc)
-                {
-                    globalRenameHash["&" + name] += value.ToString();
-                }
-                else
-                {
-                    globalRenameHash["&" + name] = value.ToString();
-                }
-                if (this.debugMode)
-                {
-                    this.updateDebugMessage("&" + name, globalRenameHash["&" + name].ToString());
-                }
-            }
-
-
-            if (objectStorage.ContainsKey(name) && this.objectStorage.ContainsKey(name))
-            {
-                found = true;
-                if (!selfInc)
-                {
-                    this.objectStorage[name] = value;
-                    if (this.debugMode)
-                    {
-                        this.updateDebugMessage("&" + name, value.ToString());
-                    }
-                }
-                else
-                {
-                    if (value is String && this.objectStorage[name] is String)
-                    {
-                        String store = (string) this.objectStorage[name];
-                        store += value;
-                        this.objectStorage[name] = value;
-                    }
-                    else if (value is int && this.objectStorage[name] is int)
-                    {
-                        int store = (int)this.objectStorage[name];
-                        store += (int)value;
-                        this.objectStorage[name] = value;
-                    }
-                    else
-                    {
-                        this.addError("this type can not be incremented");
-                        found = false;
-                    }
-                }
-
-                if (SetupBoolValue(ReflectionScript.SETUP_GLOBAL))
-                {
-                    foreach (DictionaryEntry scrpt in this.subScripts)
-                    {
-                        ReflectionScript refScr = (ReflectionScript)scrpt.Value;
-                        if (refScr.objectExists("parent." + name))
-                        {
-                            refScr.updateExistingObject("parent." + name, this.objectStorage[name]);
-                        }
-                        if (refScr.objectExists( name))
-                        {
-                            refScr.updateExistingObject( name, this.objectStorage[name]);
-                        }
-                    }
-                }
-
-
-                if (this.debugMode)
-                {
-                    this.updateDebugMessage(name, value.ToString());
-                }
-            }
-          
-            if (found == false)
-            {               
-                this.addError("variable &" + name + " not existing/writable");
-            }
-        }
-
-
-        public void updateVarByObject(String name, Object obj)
-        {
-            this.updateVarByObject(name, obj, false);
-        }
-
-        public void updateVarByObject(String name,Object obj, Boolean selfInc)
-        {
-
-            this.updateExistingObject(name, obj, selfInc);
-           
-        }
-
-
-        public void updateVarByMath(String name, RefScrMath math)
-        {
-            this.updateExistingObject(name, math.getResult());
-            
-        }
-
-        public void updateVarByMath(String name, RefScrMath math, Hashtable varTable)
-        {
-            
-            if (varTable.ContainsKey("&" + name))
-            {
-                varTable["&" + name] = math.getResult();
-            }
-        }
-
+      
 
        // ---------------
 
@@ -1219,23 +1024,7 @@ namespace Projector.Script
         }
 
 
-        public double getVarNumber(string name)
-        {
-            if (this.int32Founds.ContainsKey(name))
-            {
-                return (double)this.int32Founds[name];
-            }
-            return 0;
-        }
-
-        public string getVarNumberAsString(string name)
-        {
-            if (this.int32Founds.ContainsKey(name))
-            {
-                return this.int32Founds[name].ToString();
-            }
-            return "0";
-        }
+      
 
         // ---- inline debuginfos following ------------
 
@@ -1368,18 +1157,18 @@ namespace Projector.Script
                 this.updateDebugMessage( name, value );
             }
 
-            if (this.globalRenameHash.ContainsKey(name))
+            if (this.scrVars.globalRenameHash.ContainsKey(name))
             {
-                this.globalRenameHash[name] = value;
+               this.scrVars.globalRenameHash[name] = value;
             }
             else
             {
-                this.globalRenameHash.Add(name, value);
+               this.scrVars.globalRenameHash.Add(name, value);
             }
 
             if (SetupBoolValue(ReflectionScript.SETUP_GLOBAL))
             {
-                foreach (DictionaryEntry  scrpt in this.subScripts)
+                foreach (DictionaryEntry  scrpt in this.scrVars.subScripts)
                 {
                     ReflectionScript refScr = (ReflectionScript)scrpt.Value;
                     refScr.createOrUpdateStringVar("&parent." + name, value);
@@ -1418,8 +1207,8 @@ namespace Projector.Script
             {
                 string str = match[i].Value;
                 string key = "%str_" + i + "%" + guid.ToString(); ;
-                globalRenameHash.Add(key, str.Replace("\"",""));
-                globalParamRenameHash.Add(key, str);
+                this.scrVars.globalRenameHash.Add(key, str.Replace("\"",""));
+                this.scrVars.globalParamRenameHash.Add(key, str);
                 code = code.Replace(str, key);
             }
 
@@ -1438,17 +1227,17 @@ namespace Projector.Script
                     string str = bracketMatch[i];
                     string key = "%subscr_" + codeIdent + "%";
                     //globalRenameHash.Add(key, str);
-                    namedSubScripts.Add(
+                    this.scrVars.namedSubScripts.Add(
                             key,
                             str
                         );
 
                     code = code.Replace("{" + str + "}", key);
-                    globalParamRenameHash.Add(key, str);
+                    this.scrVars.globalParamRenameHash.Add(key, str);
                     /*    
                         int lastCut = str.LastIndexOf('}');                
                         string nCode = str.Substring(1, lastCut - 1);
-                        namedSubScripts.Add(
+                        this.scrVars.namedSubScripts.Add(
                                 key, 
                                 nCode
                             );
@@ -1469,11 +1258,9 @@ namespace Projector.Script
                 string nCode = str.Substring(1, str.Length - 2);
 
                 RefScrMath math = new RefScrMath(this, key, nCode);
-                
-                this.calcingBrackets.Add(key, math);
 
-                this.calcingBracketsResults.Add(key, math.getResult());
-                globalParamRenameHash.Add(key, str);
+                this.scrVars.addMath(key, math);
+                this.scrVars.globalParamRenameHash.Add(key, str);
                 
             }
 
@@ -1511,26 +1298,35 @@ namespace Projector.Script
         {
            foreach (string tparam in testObj.scriptParameters)
            {
-                if (this.calcingBrackets.ContainsKey(tparam))
+                if (this.scrVars.mathIsStored(tparam))
                 {
-                    RefScrMath mathObj = (RefScrMath)this.calcingBrackets[tparam];
+                    RefScrMath mathObj = this.scrVars.getMath(tparam);
                     mathObj.calc();
                     if (testObj.isParentAssigned)
                     {
                         // update for the parent script
                         if (this.Parent != null)
                         {                            
-                            this.Parent.updateVarByMath(testObj.name, mathObj);
+                            this.Parent.scrVars.updateVarByMath(testObj.name, mathObj);
+                            if (this.Parent.scrVars.isErrorOccured())
+                            {
+                                this.addError(this.Parent.scrVars.lastErrorMessage);
+                            }
                         }
                         else
                         {
                             this.addError("There is no Parent Instance");
                         }
+                        
                     }
                     else
                     {
                         // update for the current script
-                        this.updateVarByMath(testObj.name, mathObj);
+                        this.scrVars.updateVarByMath(testObj.name, mathObj);
+                        if (this.scrVars.isErrorOccured())
+                        {
+                            this.addError(this.scrVars.lastErrorMessage);
+                        }
                     }
                 }
                 else
@@ -1539,12 +1335,17 @@ namespace Projector.Script
                     {
                         if (this.Parent != null)
                         {
-                            this.Parent.updateVarByObject(testObj.name, 
+                            this.Parent.scrVars.updateVarByObject(testObj.name, 
                                     this.fillUpAll( 
                                        tparam
                                     ),
                                     testObj.isSelfInc
                                 );
+                            // some errors
+                            if (this.Parent.scrVars.isErrorOccured())
+                            {
+                                this.addError(this.Parent.scrVars.lastErrorMessage);
+                            }
                         }
                         else
                         {
@@ -1553,7 +1354,11 @@ namespace Projector.Script
                     }
                     else
                     {
-                        this.updateVarByObject(testObj.name, this.fillUpAll(tparam), testObj.isSelfInc);
+                        this.scrVars.updateVarByObject(testObj.name, this.fillUpAll(tparam), testObj.isSelfInc);
+                        if (this.scrVars.isErrorOccured())
+                        {
+                            this.addError(this.scrVars.lastErrorMessage);
+                        }
                     }
                 }
                         
@@ -1612,6 +1417,10 @@ namespace Projector.Script
 
         public void updateMeByObject(Object obj)
         {
+            if (obj.ToString() == "" || obj is String || obj is int)
+            {
+                return;
+            }
             ObjectInfo obInfo = new ObjectInfo();
             List<string> objMethods = obInfo.getObjectInfo(obj);
             if (objMethods != null)
@@ -1643,7 +1452,7 @@ namespace Projector.Script
                 }
                 else
                 {
-                    testObj.ReflectObject = this.getRegisteredObject(testObj.namedReference);
+                    testObj.ReflectObject = this.scrVars.getRegisteredObject(testObj.namedReference);
                 }
                 
             }
@@ -1658,16 +1467,20 @@ namespace Projector.Script
                 {
                     foreach (string tparam in testObj.scriptParameters)
                     {
-                        if (this.calcingBrackets.ContainsKey(tparam))
+                        if (this.scrVars.mathIsStored(tparam))
                         {
-                            RefScrMath mathObj = (RefScrMath)this.calcingBrackets[tparam];
+                            RefScrMath mathObj = this.scrVars.getMath(tparam);
                             mathObj.calc();
                             if (testObj.isParentAssigned)
                             {
                                 // update for the parent script
                                 if (this.Parent != null)
                                 {
-                                    this.Parent.updateVarByMath(testObj.name, mathObj);
+                                    this.Parent.scrVars.updateVarByMath(testObj.name, mathObj);
+                                    if (this.Parent.scrVars.isErrorOccured())
+                                    {
+                                        this.addError(this.Parent.scrVars.lastErrorMessage);
+                                    }
                                 }
                                 else
                                 {
@@ -1677,7 +1490,11 @@ namespace Projector.Script
                             else
                             {
                                 // update for the current script
-                                this.updateVarByMath(testObj.name, mathObj);
+                                this.scrVars.updateVarByMath(testObj.name, mathObj);
+                                if (this.scrVars.isErrorOccured())
+                                {
+                                    this.addError(this.scrVars.lastErrorMessage);
+                                }
                             }
                         }
                         else
@@ -1691,7 +1508,7 @@ namespace Projector.Script
                 else
                 {
                     // no plain varibale found
-                    if (this.objectExists(testObj.name))
+                    if (this.scrVars.objectIsStored(testObj.name))
                     {
 
                     }
@@ -1729,12 +1546,14 @@ namespace Projector.Script
             {
                 if (testObj.name != null && testObj.scriptParameters.Count() == 1)
                 {
+                    //this.updateParam()
+                    
                     string name = this.fillUpStrings(testObj.name);
                     int readPos =0;
                     foreach (string varValue in testObj.scriptParameters)
                     {
                         string varName = testObj.name;
-                        readPos++;
+                        
                         string type = "?";
                         if (testObj.scriptParameterTypes.Count() > readPos)
                         {
@@ -1743,14 +1562,15 @@ namespace Projector.Script
 
                         string varStr = this.fillUpStrings(varValue);
                       
-                        if (globalRenameHash.ContainsKey("&" + varName) && !testObj.isSetup)
+                        if (this.scrVars.globalRenameHash.ContainsKey("&" + varName) && !testObj.isSetup)
                         {
                             this.addError("variable " + varName + " allready defined");
                         }
                         else
                         {
                           
-                            globalRenameHash.Add("&" + testObj.name, varStr);
+                            this.scrVars.globalRenameHash.Add("&" + testObj.name, varStr);
+                            
 
                             if (this.SetupBoolValue(ReflectionScript.SETUP_GLOBAL) && this.Parent != null)
                             {
@@ -1764,27 +1584,42 @@ namespace Projector.Script
                                 {
                                     //this.int32Founds.Add(testObj.name, Int32.Parse(varStr));
                                     intValue = Int32.Parse(varStr);
+                                    this.scrVars.createObject(testObj.name, intValue, type);
 
                                 }
                                 catch (Exception ex)
                                 {
                                     this.addError(ex.Message);
                                 }
+                            }
+                            else if (type == "Double" || type == "DOUBLE")
+                            {
+                                Double intValue = 0;
+                                try
+                                {
+                                    //this.int32Founds.Add(testObj.name, Int32.Parse(varStr));
+                                    intValue = Double.Parse(varStr);
+                                    this.scrVars.createObject(testObj.name, intValue, type);
 
-                                RefScrVariable newVar = new RefScrVariable();
-                                newVar.Name = testObj.name;
-                                newVar.Value = intValue;
-                                newVar.referenceOf = null;
-                                newVar.TypeName = "INT";
-
-                                this.int32Founds.Add(newVar.Name, newVar);
-                                
+                                }
+                                catch (Exception ex)
+                                {
+                                    this.addError(ex.Message);
+                                }
+                            }
+                            else if (type == "STR" || type == "String")
+                            {
+                                this.scrVars.createObject(testObj.name, varStr, type);
+                            }
+                            else
+                            {
+                                this.scrVars.createObject(testObj.name, testObj.parameters[readPos], type);
                             }
                             
                         }
-                        
 
-                        
+
+                        readPos++;
                     }                    
                 }
                 else
@@ -1812,7 +1647,7 @@ namespace Projector.Script
 
                             //this.objectStorage.Add(testObj.name,testObject);
                             //this.createObject(testObj.name, testObject, testObj.typeOfObject);
-                            this.createObject(testObj.name, testObj.ReflectObject, testObj.typeOfObject);
+                            this.scrVars.createObject(testObj.name, testObj.ReflectObject, testObj.typeOfObject);
 
                             this.updateMeByObject(testObj);
                             this.parsedObjects.Add(keyForObj);
@@ -1851,9 +1686,9 @@ namespace Projector.Script
 
                         if (this.SetupBoolValue(ReflectionScript.SETUP_GLOBAL))
                         {
-                            foreach (DictionaryEntry parScr in this.globalRenameHash)
+                            foreach (DictionaryEntry parScr in this.scrVars.globalRenameHash)
                             {
-                                testObj.subScript.globalRenameHash.Add("&parent." + parScr.Key.ToString(), parScr.Value);
+                                testObj.subScript.scrVars.globalRenameHash.Add("&parent." + parScr.Key.ToString(), parScr.Value);
                             }
                             updateSubScripts(testObj.subScript);
                         }
@@ -1864,14 +1699,14 @@ namespace Projector.Script
                         this.lineOffset += testObj.subScript.getLineOffset();
 
                         if (testObj.namedReference != null) {
-                            if (this.subScripts.ContainsKey(testObj.namedReference))
+                            if (this.scrVars.subScripts.ContainsKey(testObj.namedReference))
                             {
                                 System.Guid uuid = System.Guid.NewGuid();
-                                this.subScripts.Add(testObj.namedReference + uuid.ToString(), testObj.subScript);
+                                this.scrVars.subScripts.Add(testObj.namedReference + uuid.ToString(), testObj.subScript);
                             }
                             else
                             {
-                                this.subScripts.Add(testObj.namedReference, testObj.subScript);
+                                this.scrVars.subScripts.Add(testObj.namedReference, testObj.subScript);
                             }
 
                         }
@@ -1904,7 +1739,7 @@ namespace Projector.Script
                 foreach (String subCode in testObj.scriptParameters)
                 {
                    // parFull += this.fillUpAll(subCode);
-                    foreach (DictionaryEntry rp in this.globalParamRenameHash)
+                    foreach (DictionaryEntry rp in this.scrVars.globalRenameHash)
                     {
                         parFull += subCode.Replace(rp.Key.ToString(), rp.Value.ToString());
                     }
@@ -1945,6 +1780,20 @@ namespace Projector.Script
                     catch (Exception e)
                     {
                         this.addError("Parameter must be an number" + e.Message);
+                        return null;
+                    }
+                    break;
+                case "Double":
+                case "DOUBLE":
+                    try
+                    {
+                        string tmpStr = part;
+                        Double parInt = Double.Parse(tmpStr);
+                        retValue = parInt;
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError("Parameter must be an double number" + e.Message);
                         return null;
                     }
                     break;
@@ -2012,9 +1861,9 @@ namespace Projector.Script
                 }
             }
 
-            if (this.objectStorage.ContainsKey(param))
+            if (this.scrVars.objectIsStored(param))
             {               
-                return this.objectStorage[param];
+                return this.scrVars.getRegisteredObject(param);
                 
             }
             return param;
@@ -2069,7 +1918,7 @@ namespace Projector.Script
 
                 if (setOrigin && cmdResult.name != null)
                 {
-                    this.updateExistingObject(cmdResult.name, cmdResult.parameters[i]);
+                    this.scrVars.updateExistingObject(cmdResult.name, cmdResult.parameters[i]);
                 }
 
                 if (this.debugMode && cmdResult.parameters[i] != null)
@@ -2122,6 +1971,22 @@ namespace Projector.Script
                     }
 
                 }
+                else if (definedType == "Double" || definedType == "DOUBLE")
+                {
+                    string replaced = this.fillUpStrings(part);
+
+                    try
+                    {
+                        Double parInt = Double.Parse(replaced);
+                        cmdResult.parameters.Add(parInt);
+                    }
+                    catch (Exception e)
+                    {
+                        this.addError(e.Message);
+                        return null;
+                    }
+
+                }
                 else if (definedType == "Decimal")
                 {
                     string replaced = this.fillUpStrings(part);
@@ -2164,9 +2029,9 @@ namespace Projector.Script
                 }
                 else
                 {
-                    if (this.objectStorage.ContainsKey(part))
+                    if (this.scrVars.objectIsStored(part))
                     {
-                        cmdResult.parameters.Add(this.objectStorage[part]);
+                        cmdResult.parameters.Add(this.scrVars.getRegisteredObject(part));
                     }
                     else
                     {
@@ -2297,6 +2162,7 @@ namespace Projector.Script
                             cmdResult.isSelfDec = definePart.Contains("SELFDEC");
                             cmdResult.isSetup = definePart.Contains("SETUP");
                             cmdResult.isParentAssigned = definePart.Contains("PARENT");
+                            cmdResult.varDefines = varDefines;
                             cmdResult.codeToken = this.scopeToken;
 
                             if (definePart.Contains("WAIT"))
@@ -2352,9 +2218,9 @@ namespace Projector.Script
                                 objectType = currentMaskPart.Remove(0, 1);
                             }
 
-                            if (this.objectReferences.Contains(part))
+                            if (this.scrVars.objectIsStored(part))
                             {
-                                if (objectType == "" || this.objectReferences[part].ToString() == objectType)
+                                if (objectType == "" || this.scrVars.getObjectsReference(part) == objectType)
                                 {
                                     referenceObject = part;
 
@@ -2394,14 +2260,14 @@ namespace Projector.Script
 
                     if (cmdResult.isObject && objName != null)
                     {
-                        if (this.objectReferences.Contains(objName))
+                        if (this.scrVars.objectIsStored(objName))
                         {
                             string error = "a Object " + objName + " already exists";
                             return null;
                         } else {
                            
-                           objectList.Add(objName);
-                           this.objectReferences.Add(objName, typeOfObject);
+
+                           //this.scrVars.createObject(objName, referenceObject, typeOfObject);
                         }
                     }                    
                     // build parameters

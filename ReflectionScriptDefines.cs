@@ -41,6 +41,7 @@ namespace Projector.Script
         public int lineCount = 1;
         public int setState = 0;
         public String codeToken = "UNSET";
+        public String[] varDefines;
 
         public ReflectionScript subScript;
 

@@ -28,9 +28,9 @@ namespace Projector.Script
             
         }
 
-        public String getResult()
+        public double getResult()
         {
-            return this.mathBase.Value.ToString();
+            return this.mathBase.Value;
         }
 
 

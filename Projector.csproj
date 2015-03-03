@@ -581,6 +581,7 @@
     <Compile Include="UserTextInput.Designer.cs">
       <DependentUpon>UserTextInput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Variables.cs" />
     <Compile Include="WhereCompareStats.cs" />
     <Compile Include="XmlDataHandler.cs" />
     <Compile Include="XmlSetup.cs" />

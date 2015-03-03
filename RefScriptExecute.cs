@@ -620,12 +620,12 @@ namespace Projector.Script
                             {
                                 if (this.currentScript.Parent != null)
                                 {
-                                    this.currentScript.Parent.updateVarByObject(scrLine.name, execResult);
+                                    this.currentScript.Parent.scrVars.updateVarByObject(scrLine.name, execResult);
                                 }
                             }
                             else
                             {
-                                this.currentScript.updateVarByObject(scrLine.name, execResult);
+                                this.currentScript.scrVars.updateVarByObject(scrLine.name, execResult);
                             }
                         }
                     }
