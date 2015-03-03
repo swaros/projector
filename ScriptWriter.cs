@@ -250,6 +250,53 @@ namespace Projector
             }
         }
 
+        private String getObjectState(Object lookAtThese)
+        {
+            string stateInfo = "";
+            if (lookAtThese is String)
+            {
+                string val = (string)lookAtThese;
+                if (val == "")
+                {
+                    val = "\"\"";
+                }
+                return val;
+            }
+
+            if (lookAtThese is int || lookAtThese is Double)
+            {
+                return lookAtThese.ToString();
+            }
+
+            if (lookAtThese is Boolean)
+            {
+                Boolean chk = (Boolean)lookAtThese;
+                if (chk)
+                {
+                    return "TRUE";
+                }
+                return "FALSE";
+            }
+
+            if (lookAtThese is Form)
+            {
+                Form checkForm = (Form)lookAtThese;
+
+                stateInfo += "(" + checkForm.Width + "x" + checkForm.Height + ")";
+
+                if (checkForm.Visible)
+                {
+                    stateInfo += "VISIBLE";
+                }
+                else
+                {
+                    stateInfo += "Invisible";
+                }
+            }
+            return stateInfo;
+        }
+
+
         private void getScriptObjects()
         {
             ObjectListing.Items.Clear();
@@ -263,23 +310,8 @@ namespace Projector
 
                     addItem.Text = obInfo.Key.ToString();
                     addItem.SubItems.Add(obType.FullName);
-                    string stateInfo = "";
-                    if (obInfo.Value is Form)
-                    {
-                        Form checkForm = (Form)obInfo.Value;
-
-                        stateInfo += "(" + checkForm.Width + "x" + checkForm.Height + ")";
-
-                        if (checkForm.Visible)
-                        {
-                            stateInfo += "VISIBLE";
-                        }
-                        else
-                        {
-                            stateInfo += "Invisible";
-                        }
-                    }
-
+                    string stateInfo = this.getObjectState(obInfo.Value);
+                   
                     addItem.SubItems.Add(stateInfo);
 
                     // finally add this
