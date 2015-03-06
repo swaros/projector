@@ -85,7 +85,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoCompletion.cs" />
+    <Compile Include="BaseDrawing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BaseDrawing.Designer.cs">
+      <DependentUpon>BaseDrawing.cs</DependentUpon>
+    </Compile>
     <Compile Include="BookmarkManager.cs" />
+    <Compile Include="ChartDrawer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ChartDrawer.Designer.cs">
+      <DependentUpon>ChartDrawer.cs</DependentUpon>
+    </Compile>
     <Compile Include="CmdEvent.cs" />
     <Compile Include="CodeFormater.cs" />
     <Compile Include="CodeStringPrepaerator.cs" />
@@ -291,6 +303,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BaseDrawing.resx">
+      <DependentUpon>BaseDrawing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChartDrawer.resx">
+      <DependentUpon>ChartDrawer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorChoose.resx">
       <DependentUpon>ColorChoose.cs</DependentUpon>
     </EmbeddedResource>
