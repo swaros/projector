@@ -852,6 +852,11 @@ namespace Projector
             autoSort_Click(null, null);
         }
 
+        public void ToolsVisibility(Boolean onOff)
+        {
+            this.splitter.Panel1Collapsed = !onOff;
+        }
+
         private void autoSort_Click(object sender, EventArgs e)
         {
             columnAutoSizeMode++;
