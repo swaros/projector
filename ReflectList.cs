@@ -858,5 +858,21 @@ namespace Projector
             if (columnAutoSizeMode > 1) columnAutoSizeMode = 0;
             autosortColumns();
         }
+
+        private void listView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (this.listView.Sorting == SortOrder.None)
+            {
+                this.listView.Sorting = SortOrder.Ascending;
+            }
+            else if (this.listView.Sorting == SortOrder.Ascending)
+            {
+                this.listView.Sorting = SortOrder.Descending;
+            }
+            else
+            {
+                this.listView.Sorting = SortOrder.None;
+            }
+        }
     }
 }

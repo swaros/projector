@@ -8,16 +8,30 @@ namespace Projector.Script
 {
     public class RefScrMath
     {
-       
+        /// <summary>
+        /// base prop object
+        /// </summary>
         private RefScrMathObj mathBase;
 
+        /// <summary>
+        /// parent script that uses "me"
+        /// </summary>
         private ReflectionScript parentScript;
 
+        /// <summary>
+        /// some casting error
+        /// </summary>
         private Boolean castError = false;
 
 
         
-
+        /// <summary>
+        /// Constructs the Math object.
+        /// 
+        /// </summary>
+        /// <param name="parent">The script that uses the the math</param>
+        /// <param name="Name">Name of the Calculation</param>
+        /// <param name="code">the code that contains the calculation</param>
         public RefScrMath(ReflectionScript parent,string Name,string code)
         {
             this.parentScript = parent;
@@ -28,17 +42,29 @@ namespace Projector.Script
             
         }
 
+        /// <summary>
+        /// returns the result of the calculation
+        /// </summary>
+        /// <returns></returns>
         public double getResult()
         {
             return this.mathBase.Value;
         }
 
-
+        /// <summary>
+        /// start the caclutaion by addition. this will
+        /// trigger the net calculation
+        /// </summary>
         public void calc()
         {
             this.addition();            
         }
 
+        /// <summary>
+        /// try to cast an string into an number
+        /// </summary>
+        /// <param name="str">the param as string</param>
+        /// <returns>the casted result or 0 if casting fails</returns>
         private double tryCast(string str)
         {
             double result = 0;
@@ -47,7 +73,7 @@ namespace Projector.Script
             {
                 result = Double.Parse(str);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -56,7 +82,9 @@ namespace Projector.Script
         }
 
 
-        // the last caclutaion will be the entrypoint
+        /// <summary>
+        /// handle all additions and triggers the subtraction
+        /// </summary>
         private void  addition()
         {
             string[] additionParts = this.mathBase.code.Split(new char[] {'+'}, StringSplitOptions.RemoveEmptyEntries);
@@ -85,7 +113,12 @@ namespace Projector.Script
 
 
 
-
+        /// <summary>
+        /// Handle all sunstractions and triggers the 
+        /// multiplication
+        /// </summary>
+        /// <param name="part">the code that is not parsed already</param>
+        /// <returns></returns>
         private double substract(string part)
         {
             double firstCheck = this.tryCast(part);
@@ -117,6 +150,12 @@ namespace Projector.Script
             return val;
         }
 
+        /// <summary>
+        /// handle all mutliplications and triggers the 
+        /// substractions
+        /// </summary>
+        /// <param name="part">the code that is not parsed already</param>
+        /// <returns></returns>
         private double mutliplication(string part)
         {
             double firstCheck = this.tryCast(part);
@@ -147,6 +186,11 @@ namespace Projector.Script
             return val;
         }
 
+        /// <summary>
+        /// handles als division and finishs the regular calculation
+        /// </summary>
+        /// <param name="part">the code that is not parsed already</param>
+        /// <returns></returns>
         private double division(string part)
         {
             double firstCheck = this.tryCast(part);
@@ -176,5 +220,8 @@ namespace Projector.Script
 
             return val;
         }
+
+
+
     }
 }
