@@ -97,10 +97,22 @@ namespace Projector
             widgets.Add(rBt8);
 
             ReflectNewWidget rBt9 = new ReflectNewWidget();
-            rBt9.Name = "ProfilWorker";
+            rBt9.Name = "ProfileWorker";
             rBt9.Icon = Projector.Properties.Resources.emblem_people;
             rBt9.CodeInsert = "NEW ProfilWorker !MyProfilWorker";
             widgets.Add(rBt9);
+
+            ReflectNewWidget rBt10 = new ReflectNewWidget();
+            rBt10.Name = "ListView";
+            rBt10.Icon = Projector.Properties.Resources.tag;
+            rBt10.CodeInsert = "NEW ListView !MyListView";
+            widgets.Add(rBt10);
+
+            ReflectNewWidget rBt11 = new ReflectNewWidget();
+            rBt11.Name = "Result List";
+            rBt11.Icon = Projector.Properties.Resources.tag;
+            rBt11.CodeInsert = "NEW ResultList !MyResult";
+            widgets.Add(rBt11);
 
             return widgets;
         }

@@ -251,6 +251,24 @@ namespace Projector
             }
         }
 
+        private String getResultByType(string type)
+        {
+            List<string> possibles = this.script.getCurrentObjectsByType(type);
+            if (possibles.Count < 1)
+            {
+                return type;
+            }
+
+            if (possibles.Count == 1)
+            {
+                return possibles[0];
+            }
+            
+
+            return type;
+        }
+
+
         private void updateObjectTree(List<MethodInfo> methods, string parentName, int imageNr, TreeNode toNode, string binding)
         {
             foreach (MethodInfo Minfo in methods)
@@ -278,7 +296,16 @@ namespace Projector
                             parameters += " \"" + inf.Name + "\"";
                             break;
                         default:
-                            parameters += " " + inf.Name + ":" + inf.ParameterType.Name;
+                            string replaced = this.getResultByType(inf.ParameterType.Name);
+                            if (replaced == inf.ParameterType.Name)
+                            {
+                                parameters += " " + inf.Name + ":" + inf.ParameterType.Name;
+                            }
+                            else
+                            {
+                                parameters += " " + replaced;
+                            }
+                            
                             break;
                     }
 
@@ -286,9 +313,31 @@ namespace Projector
                     
                 }
 
+                string pre = "";
+                string returnVar = Minfo.ReturnType.Name;
+                if (returnVar != "" && returnVar != "Void")
+                {
+                    switch (returnVar)
+                    {              
+                        /* 
+                        case "Boolean":
+                            parameters += " false";
+                            break;
+                        case "Int32":
+                        case "Int":
+                            parameters += " 0";
+                            break;
+                        case "String":
+                            pre += ;
+                            break;*/
+                        default:
+                            pre += getResultByType(returnVar) + " = ";
+                            break;
+                    }
+                }
                 
                 mNode.Text = Minfo.Name;
-                mNode.ToolTipText = parentName + binding + Minfo.Name + parameters;
+                mNode.ToolTipText =pre + parentName + binding + Minfo.Name + parameters;
                 mNode.ImageIndex = imageNr;
                 mNode.SelectedImageIndex = mNode.ImageIndex;
                 
