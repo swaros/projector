@@ -251,7 +251,7 @@ namespace Projector
             }
         }
 
-        private String getResultByType(string type)
+        private String getResultByType(string type, Boolean ask = false)
         {
             List<string> possibles = this.script.getCurrentObjectsByType(type);
             if (possibles.Count < 1)
@@ -263,8 +263,13 @@ namespace Projector
             {
                 return possibles[0];
             }
-            
-
+            if (ask)
+            {
+                ObjectBrowser browse = new ObjectBrowser();
+                browse.objectList.Items.AddRange(possibles.ToArray());
+                browse.ShowDialog();
+                type = browse.objectList.Text;
+            }
             return type;
         }
 
@@ -274,72 +279,13 @@ namespace Projector
             foreach (MethodInfo Minfo in methods)
             {
 
-                TreeNode mNode = new TreeNode();
-
-                string parameters = "";
-                ParameterInfo[] pInfo = Minfo.GetParameters();
-                foreach (ParameterInfo inf in pInfo)
-                {
-                    switch (inf.ParameterType.Name)
-                    {
-                        case "ReflectionScript":
-                            parameters += " { }";
-                            break;
-                        case "Boolean":
-                            parameters += " false";
-                            break;
-                        case "Int32":
-                        case "Int":                        
-                            parameters += " 0";
-                            break;
-                        case "String":
-                            parameters += " \"" + inf.Name + "\"";
-                            break;
-                        default:
-                            string replaced = this.getResultByType(inf.ParameterType.Name);
-                            if (replaced == inf.ParameterType.Name)
-                            {
-                                parameters += " " + inf.Name + ":" + inf.ParameterType.Name;
-                            }
-                            else
-                            {
-                                parameters += " " + replaced;
-                            }
-                            
-                            break;
-                    }
-
-
-                    
-                }
-
-                string pre = "";
-                string returnVar = Minfo.ReturnType.Name;
-                if (returnVar != "" && returnVar != "Void")
-                {
-                    switch (returnVar)
-                    {              
-                        /* 
-                        case "Boolean":
-                            parameters += " false";
-                            break;
-                        case "Int32":
-                        case "Int":
-                            parameters += " 0";
-                            break;
-                        case "String":
-                            pre += ;
-                            break;*/
-                        default:
-                            pre += getResultByType(returnVar) + " = ";
-                            break;
-                    }
-                }
+                TreeNode mNode = new TreeNode();               
                 
                 mNode.Text = Minfo.Name;
-                mNode.ToolTipText =pre + parentName + binding + Minfo.Name + parameters;
+                mNode.ToolTipText = parentName + binding + Minfo.Name;
                 mNode.ImageIndex = imageNr;
                 mNode.SelectedImageIndex = mNode.ImageIndex;
+                mNode.Tag = Minfo;
                 
                 toNode.Nodes.Add(mNode);
                 //this.AutoComplete.addWord(methodmask, parentName);
@@ -1020,12 +966,76 @@ namespace Projector
                     || (genericTree.SelectedNode.ImageIndex == ScriptWriter.TREE_INT_IMG_IDENT)
                     )
                 {
+                   
+                    //codingBox.Text = "";
+
+                    if (genericTree.SelectedNode.Tag is MethodInfo)
+                    {
+                        MethodInfo Minfo = (MethodInfo)genericTree.SelectedNode.Tag;
+                        string parameters = "";
+                        ParameterInfo[] pInfo = Minfo.GetParameters();
+                        foreach (ParameterInfo inf in pInfo)
+                        {
+                            switch (inf.ParameterType.Name)
+                            {
+                                case "ReflectionScript":
+                                    parameters += " { }";
+                                    break;
+                                case "Boolean":
+                                    parameters += " false";
+                                    break;
+                                case "Int32":
+                                case "Int":
+                                    parameters += " 0";
+                                    break;
+                                case "String":
+                                    parameters += " \"" + inf.Name + "\"";
+                                    break;
+                                default:
+                                    string replaced = this.getResultByType(inf.ParameterType.Name, true);
+                                    if (replaced == inf.ParameterType.Name)
+                                    {
+                                        parameters += " " + inf.Name + ":" + inf.ParameterType.Name;
+                                    }
+                                    else
+                                    {
+                                        parameters += " " + replaced;
+                                    }
+
+                                    break;
+                            }
+
+                        }
+
+                        string pre = "";
+                        string returnVar = Minfo.ReturnType.Name;
+                        if (returnVar != "" && returnVar != "Void")
+                        {
+                            switch (returnVar)
+                            {
+                                /* 
+                                case "Boolean":
+                                    parameters += " false";
+                                    break;
+                                case "Int32":
+                                case "Int":
+                                    parameters += " 0";
+                                    break;
+                                case "String":
+                                    pre += ;
+                                    break;*/
+                                default:
+                                    pre += getResultByType(returnVar,true) + " = ";
+                                    break;
+                            }
+                        }
+                        genericTree.SelectedNode.ToolTipText = pre + genericTree.SelectedNode.ToolTipText + parameters;
+                    }
                     //codingBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
                     int startPos = codingBox.SelectionStart;
                     int sellength = codingBox.SelectionLength;
                     codingBox.Text = codingBox.Text.Remove(startPos, sellength);
                     codingBox.Text = codingBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
-                    //codingBox.Text = "";
                     codingBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
 
                 }

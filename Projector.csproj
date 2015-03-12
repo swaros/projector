@@ -235,6 +235,12 @@
       <DependentUpon>mysqlWatch.cs</DependentUpon>
     </Compile>
     <Compile Include="NumberFlow.cs" />
+    <Compile Include="ObjectBrowser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectBrowser.Designer.cs">
+      <DependentUpon>ObjectBrowser.cs</DependentUpon>
+    </Compile>
     <Compile Include="ObjectCloner.cs" />
     <Compile Include="ObjectInfo.cs" />
     <Compile Include="ObjectStorage.cs" />
@@ -359,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mysqlWatch.resx">
       <DependentUpon>mysqlWatch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ObjectBrowser.resx">
+      <DependentUpon>ObjectBrowser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PasteListView.resx">
       <DependentUpon>PasteListView.cs</DependentUpon>

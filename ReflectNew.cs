@@ -99,7 +99,7 @@ namespace Projector
             ReflectNewWidget rBt9 = new ReflectNewWidget();
             rBt9.Name = "ProfileWorker";
             rBt9.Icon = Projector.Properties.Resources.emblem_people;
-            rBt9.CodeInsert = "NEW ProfilWorker !MyProfilWorker";
+            rBt9.CodeInsert = "NEW ProfileWorker !MyProfilWorker";
             widgets.Add(rBt9);
 
             ReflectNewWidget rBt10 = new ReflectNewWidget();
