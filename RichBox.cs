@@ -62,7 +62,103 @@ namespace Projector
         {
             return this.FontHeight + 2;
         }
-        
+
+        /// <summary>
+        /// returns the current line as string
+        /// </summary>
+        /// <returns></returns>
+        public string getSelectedLine()
+        {
+            int cursorPosition = this.SelectionStart;
+            int lineIndex = this.GetLineFromCharIndex(cursorPosition);
+            string lineText = this.Lines[lineIndex];
+            return lineText;
+        }
+
+        /// <summary>
+        /// get the selected line number
+        /// </summary>
+        /// <returns></returns>
+        public int getCurrentLineNumber()
+        {
+            int cursorPosition = this.SelectionStart;
+            int lineIndex = this.GetLineFromCharIndex(cursorPosition);            
+            return lineIndex;
+        }
+
+        /// <summary>
+        /// duplicates the given line Number
+        /// </summary>
+        /// <param name="nr"></param>
+        public void duplicateLine(int nr)
+        {
+            int cursorPosition = this.SelectionStart;
+            string newText = "";
+            for (int i = 0; i < this.Lines.Count(); i++)
+            {
+                newText += this.Lines[i] + "\n";
+                if (i == nr)
+                {
+                    newText += this.Lines[i] + "\n";
+                    cursorPosition += this.Lines[i].Length + 1;
+                }
+            }
+            this.Text = newText;
+            this.SelectionStart = cursorPosition;
+        }
+
+        /// <summary>
+        /// removes the given line Number
+        /// </summary>
+        /// <param name="nr"></param>
+        public void removeLine(int nr)
+        {
+            int cursorPosition = this.SelectionStart;
+            string newText = "";
+            for (int i = 0; i < this.Lines.Count(); i++)
+            {                
+                if (i != nr)
+                {
+                    newText += this.Lines[i] + "\n";
+
+                }
+                else
+                {
+                    cursorPosition -= this.Lines[i].Length + 1;
+                }
+            }
+            this.Text = newText;
+            if (cursorPosition >= 0)
+            {
+                this.SelectionStart = cursorPosition;
+            }
+        }
+
+
+        public void addLine(string line)
+        {
+            if (this.SelectionStart >= 0)
+            {
+                this.SelectedText += "\n" + line;
+                                
+                
+            }
+        }
+
+        /// <summary>
+        /// replace string in the whole text
+        /// </summary>
+        /// <param name="old"></param>
+        /// <param name="newstr"></param>
+        public void replace(string old, string newstr)
+        {
+            if (old == "")
+            {
+                return;
+            }
+            this.Text = this.Text.Replace(old, newstr);
+        }
+
 
         protected override void WndProc(ref Message m)
         {

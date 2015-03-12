@@ -9,6 +9,6 @@ namespace Projector.Script
     {
         Object getObject(ReflectionScriptDefines refObject, Object parent);
         Object execute();
-        
+        List<ReflectNewWidget> getWidgets();
     }
 }

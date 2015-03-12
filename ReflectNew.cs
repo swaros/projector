@@ -30,6 +30,81 @@ namespace Projector
 
         }
 
+        public List<ReflectNewWidget> getWidgets()
+        {
+            List<ReflectNewWidget> widgets = new List<ReflectNewWidget>();
+
+            ReflectNewWidget rForm = new ReflectNewWidget();
+            rForm.Name = "Form";
+            rForm.Icon = Projector.Properties.Resources.computer_16;
+            rForm.CodeInsert = "NEW ReflectForm !MyForm";
+            widgets.Add(rForm);
+
+            ReflectNewWidget rList = new ReflectNewWidget();
+            rList.Name = "List";
+            rList.Icon = Projector.Properties.Resources.ui_list_box_blue;
+            rList.CodeInsert = "NEW ReflectList !MyReflectList";
+            widgets.Add(rList);
+
+
+            ReflectNewWidget rBt = new ReflectNewWidget();
+            rBt.Name = "Button";
+            rBt.Icon = Projector.Properties.Resources.sqlresult;
+            rBt.CodeInsert = "NEW ReflectButton !MyButton";
+            widgets.Add(rBt);
+
+            ReflectNewWidget rBt2 = new ReflectNewWidget();
+            rBt2.Name = "Input Text";
+            rBt2.Icon = Projector.Properties.Resources.tag;
+            rBt2.CodeInsert = "NEW LabelText !MyTextBox";
+            widgets.Add(rBt2);
+
+            ReflectNewWidget rBt3 = new ReflectNewWidget();
+            rBt3.Name = "Input Number";
+            rBt3.Icon = Projector.Properties.Resources.tag;
+            rBt3.CodeInsert = "NEW LabelInteger !MyNumberBox";
+            widgets.Add(rBt3);
+
+
+            ReflectNewWidget rBt4 = new ReflectNewWidget();
+            rBt4.Name = "Date";
+            rBt4.Icon = Projector.Properties.Resources.tag;
+            rBt4.CodeInsert = "NEW DateSelect !MyDateBox";
+            widgets.Add(rBt4);
+
+            ReflectNewWidget rBt5 = new ReflectNewWidget();
+            rBt5.Name = "Group Query";
+            rBt5.Icon = Projector.Properties.Resources.database_link;
+            rBt5.CodeInsert = "NEW GroupQuery !MyGroupQuery";
+            widgets.Add(rBt5);
+
+            ReflectNewWidget rBt6 = new ReflectNewWidget();
+            rBt6.Name = "DB";
+            rBt6.Icon = Projector.Properties.Resources.database;
+            rBt6.CodeInsert = "NEW ReflectionDatabase !MyDb";
+            widgets.Add(rBt6);
+
+            ReflectNewWidget rBt7 = new ReflectNewWidget();
+            rBt7.Name = "DB Browser";
+            rBt7.Icon = Projector.Properties.Resources.database_table;
+            rBt7.CodeInsert = "NEW queryBrowser !MyDbBrowser";
+            widgets.Add(rBt7);
+
+            ReflectNewWidget rBt8 = new ReflectNewWidget();
+            rBt8.Name = "String Worker";
+            rBt8.Icon = Projector.Properties.Resources.edit_replace;
+            rBt8.CodeInsert = "NEW RString !MyStringWorker";
+            widgets.Add(rBt8);
+
+            ReflectNewWidget rBt9 = new ReflectNewWidget();
+            rBt9.Name = "ProfilWorker";
+            rBt9.Icon = Projector.Properties.Resources.emblem_people;
+            rBt9.CodeInsert = "NEW ProfilWorker !MyProfilWorker";
+            widgets.Add(rBt9);
+
+            return widgets;
+        }
+
         public Hashtable getStoredObjects()
         {
             return this.obReferences;

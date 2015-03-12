@@ -112,6 +112,9 @@ namespace Projector.Script
         private Boolean debugMode = false;
 
         public Variables scrVars = new Variables();
+
+        // all registered classes that will be used in a static way
+        private Hashtable staticUsageObjects = new Hashtable();
         
         /// <summary>
         /// Reflection script
@@ -210,8 +213,35 @@ namespace Projector.Script
         {
             this.addSetupIfNotExists(ReflectionScript.SETUP_MAXWAIT, 0); // max wait 10 seconds for finishing threads
             this.addSetupIfNotExists(ReflectionScript.SETUP_GLOBAL, true);
+
+            this.registerStatics();
             
         }
+
+        /// <summary>
+        /// registers all static Objects
+        /// </summary>
+        private void registerStatics()
+        {
+            this.staticUsageObjects.Clear();
+            this.staticUsageObjects.Add("NEW", new ReflectNew());
+        }
+
+        public List<ReflectNewWidget> getAllWidgets()
+        {
+            List<ReflectNewWidget> allWidgets = new List<ReflectNewWidget>();
+            foreach (DictionaryEntry rObj in this.staticUsageObjects)
+            {
+                if (rObj.Value is ReflectNew)
+                {
+                    ReflectNew tmObj = (ReflectNew) rObj.Value;
+                    List<ReflectNewWidget> obWidgets = tmObj.getWidgets();
+                    allWidgets.AddRange(obWidgets);
+                }
+            }
+            return allWidgets;
+        }
+
 
         /// <summary>
         /// add a setup with with an key and content
@@ -676,99 +706,18 @@ namespace Projector.Script
         {
             return 
                 this.scrVars.fillUpMaths(
-                    this.fillUpCodeLines(
-                        this.fillUpStrings(source)
+                    this.scrVars.fillUpCodeLines(
+                        this.scrVars.fillUpStrings(source)
                     )
                 );
         }
 
-        /// <summary>
-        /// Fills all Placeholder and returns the 
-        /// content
-        /// </summary>
-        /// <param name="source">string with placeholders</param>
-        /// <returns>string with replaced placeholders</returns>
-        public String fillUpStrings(string source)
-        {
-            string myStrings = this.fillUpStrings(source, "", "");            
-            return myStrings;
-        }
-
-        /// <summary>
-        /// Fills all PlaceHolder and Returns
-        /// the Content
-        /// </summary>
-        /// <param name="source">String wuth Placeholder</param>
-        /// <param name="pre">String that will be added before</param>
-        /// <param name="post">String that will be added at the end</param>
-        /// <returns>String with replaced Placeholders and the Pre and Poststring</returns>
-        public String fillUpStrings(string source, String pre, String post)
-        {
-            return this.fillUpVars(source,this.scrVars.globalRenameHash, pre, post);
-        }
-        
-        /// <summary>
-        /// Returns the full Code of code with placeholders
-        /// or an Placeholder himself
-        /// </summary>
-        /// <param name="source">Placeholder or Code with placeholders</param>
-        /// <returns>Full Code</returns>
-        public String fillUpCodeLines(string source)
-        {
-            return this.fillUpVars(source, this.scrVars.namedSubScripts);
-        }
-
-
-        /// <summary>
-        /// Fill up Placeholder by the given Hashtable
-        /// as source for key and value. The key will be the
-        /// name of the Placeholder that will be replaced by the 
-        /// value.
-        /// This Method works recusiv
-        /// </summary>
-        /// <param name="source">Source with placeholder</param>
-        /// <param name="useThis">Hashtable that contans the keys and values</param>
-        /// <returns>return filled source</returns>
-        public String fillUpVars(string source, Hashtable useThis)
-        {
-           return this.fillUpVars(source, useThis, "", "");
-        }
-
-
-        /**
-         * fills up all placeHolder
-         * with content from assigned Hashtable
-         */
-        public String fillUpVars(string source, Hashtable useThis, string pre, string post)
-        {
-            string newStr = this.fillUpVarsBack(source, useThis, pre, post );
-            string chkStr = source;
-            while (newStr != source)
-            {
-                source = newStr;
-                newStr = fillUpVarsBack(source, useThis, pre , post);
-            }
-            return newStr;
-        }
-
-        /**
-         * fills placeholder recursiv
-         */
-        public String fillUpVarsBack(string source, Hashtable useThis, string pre, string post)
-        {
-            string newSrc = source;
-            foreach (DictionaryEntry de in useThis)
-            {                
-               newSrc = newSrc.Replace(de.Key.ToString(), pre + de.Value.ToString() + post);
-            }
-            return newSrc;
-        }
 
         public String getCodeByName(string name)
         {
             if (this.scrVars.namedSubScripts.ContainsKey(name))
             {
-                return this.fillUpStrings( this.scrVars.namedSubScripts[name].ToString(),"\"","\"");
+                return this.scrVars.fillUpStrings( this.scrVars.namedSubScripts[name].ToString(),"\"","\"");
             }
             return null;
         }
@@ -1548,7 +1497,7 @@ namespace Projector.Script
                 {
                     //this.updateParam()
                     
-                    string name = this.fillUpStrings(testObj.name);
+                    string name = this.scrVars.fillUpStrings(testObj.name);
                     int readPos =0;
                     foreach (string varValue in testObj.scriptParameters)
                     {
@@ -1560,7 +1509,7 @@ namespace Projector.Script
                             type = testObj.scriptParameterTypes[readPos];
                         }
 
-                        string varStr = this.fillUpStrings(varValue);
+                        string varStr = this.scrVars.fillUpStrings(varValue);
                       
                         if (this.scrVars.globalRenameHash.ContainsKey("&" + varName) && !testObj.isSetup)
                         {
@@ -1634,33 +1583,40 @@ namespace Projector.Script
             {
                 string cmd = testObj.code.ToUpper();
                 string keyForObj = testObj.typeOfObject + "." + testObj.name;
-                if (testObj.isObject && cmd == "NEW")
+                if (this.staticUsageObjects.ContainsKey(cmd))
                 {
-                    if (!this.parsedObjects.Contains(keyForObj))
-                    {
-                        ReflectNew reflector = new ReflectNew();
-                        Object testObject = reflector.getObject(testObj, this);
-                        if (testObject != null)
-                        {
-                            testObj.ReflectObject = testObject;
+                    switch (cmd) {
+                    
+                        case "NEW":                     
+                            if (!this.parsedObjects.Contains(keyForObj))
+                            {
+                                ReflectNew reflector = (ReflectNew) this.staticUsageObjects[cmd];
+                                Object testObject = reflector.getObject(testObj, this);
+                                if (testObject != null)
+                                {
+                                    testObj.ReflectObject = testObject;
 
 
-                            //this.objectStorage.Add(testObj.name,testObject);
-                            //this.createObject(testObj.name, testObject, testObj.typeOfObject);
-                            this.scrVars.createObject(testObj.name, testObj.ReflectObject, testObj.typeOfObject);
+                                    //this.objectStorage.Add(testObj.name,testObject);
+                                    //this.createObject(testObj.name, testObject, testObj.typeOfObject);
+                                    this.scrVars.createObject(testObj.name, testObj.ReflectObject, testObj.typeOfObject);
 
-                            this.updateMeByObject(testObj);
-                            this.parsedObjects.Add(keyForObj);
+                                    this.updateMeByObject(testObj);
+                                    this.parsedObjects.Add(keyForObj);
+                                }
+                                else
+                                {
+                                    this.addError("Object " + keyForObj + " can not be created. Check Name");
+                                }
+                            }
+                            else
+                            {
+                                this.addError("Object " + keyForObj + " was already created");
+                            }
+                            break;
                         }
-                        else
-                        {
-                            this.addError("Object " + keyForObj + " can not be created. Check Name");
-                        }
-                    }
-                    else
-                    {
-                        this.addError("Object " + keyForObj + " was already created");
-                    }
+                    
+                
                 }
             }
 
@@ -1824,7 +1780,7 @@ namespace Projector.Script
                     break;
                 case "ReflectionScript":
                     ReflectionScript tmpSript = new ReflectionScript();
-                    tmpSript.setCode(this.fillUpCodeLines(part));
+                    tmpSript.setCode(this.scrVars.fillUpCodeLines(part));
                     retValue = tmpSript;
                     break;
                 default :
@@ -1957,7 +1913,7 @@ namespace Projector.Script
                 string definedType = varDefines[partPosition];
                 if (definedType == "INT" || definedType == "Int32")
                 {
-                    string replaced = this.fillUpStrings(part);
+                    string replaced = this.scrVars.fillUpStrings(part);
 
                     try
                     {
@@ -1973,7 +1929,7 @@ namespace Projector.Script
                 }
                 else if (definedType == "Double" || definedType == "DOUBLE")
                 {
-                    string replaced = this.fillUpStrings(part);
+                    string replaced = this.scrVars.fillUpStrings(part);
 
                     try
                     {
@@ -1989,7 +1945,7 @@ namespace Projector.Script
                 }
                 else if (definedType == "Decimal")
                 {
-                    string replaced = this.fillUpStrings(part);
+                    string replaced = this.scrVars.fillUpStrings(part);
                     try
                     {
                         Decimal parInt = Decimal.Parse(replaced);
@@ -2004,11 +1960,11 @@ namespace Projector.Script
                 }
                 else if (definedType == "STR" || definedType == "String")
                 {
-                    cmdResult.parameters.Add(this.fillUpStrings(part));
+                    cmdResult.parameters.Add(this.scrVars.fillUpStrings(part));
                 }
                 else if (definedType == "BOOL" || definedType == "Boolean")
                 {
-                    string replaced = this.fillUpStrings(part);
+                    string replaced = this.scrVars.fillUpStrings(part);
                     if (replaced.ToUpper() == "TRUE" || replaced == "1")
                     {
                         cmdResult.parameters.Add(true);
@@ -2020,12 +1976,12 @@ namespace Projector.Script
                 }
                 else if (definedType == "ReflectionScript")
                 {
-                    cmdResult.parameters.Add(this.fillUpCodeLines(part));
+                    cmdResult.parameters.Add(this.scrVars.fillUpCodeLines(part));
                     cmdResult.parseable = true;
                 }
                 else if (definedType == "?")
                 {
-                    cmdResult.parameters.Add(this.fillUpStrings(part));
+                    cmdResult.parameters.Add(this.scrVars.fillUpStrings(part));
                 }
                 else
                 {

@@ -114,7 +114,7 @@
             this.autoSort.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.autoSort.Name = "autoSort";
             this.autoSort.Size = new System.Drawing.Size(23, 22);
-            this.autoSort.Text = "toolStripButton2";
+            this.autoSort.Text = "Arange Columns";
             this.autoSort.Click += new System.EventHandler(this.autoSort_Click);
             // 
             // toolStripSeparator2

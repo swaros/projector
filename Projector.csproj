@@ -407,6 +407,9 @@
     <EmbeddedResource Include="ScriptColors.resx">
       <DependentUpon>ScriptColors.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScriptComponent.resx">
+      <DependentUpon>ScriptComponent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScriptExecuter.resx">
       <DependentUpon>ScriptExecuter.cs</DependentUpon>
     </EmbeddedResource>
@@ -415,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScriptWriter.resx">
       <DependentUpon>ScriptWriter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchReplace.resx">
+      <DependentUpon>SearchReplace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SetTimer.resx">
       <DependentUpon>SetTimer.cs</DependentUpon>
@@ -498,6 +504,7 @@
       <DependentUpon>ReflectList.cs</DependentUpon>
     </Compile>
     <Compile Include="ReflectNew.cs" />
+    <Compile Include="ReflectNewWidget.cs" />
     <Compile Include="ReflectObjectInterface.cs" />
     <Compile Include="RefScrAutoScrContainer.cs" />
     <Compile Include="RefScrAutoStart.cs" />
@@ -522,6 +529,12 @@
     <Compile Include="ScriptColors.Designer.cs">
       <DependentUpon>ScriptColors.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScriptComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScriptComponent.Designer.cs">
+      <DependentUpon>ScriptComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScriptErrors.cs" />
     <Compile Include="ScriptExecuter.cs">
       <SubType>Form</SubType>
@@ -540,6 +553,12 @@
     </Compile>
     <Compile Include="ScriptWriter.Designer.cs">
       <DependentUpon>ScriptWriter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SearchReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchReplace.Designer.cs">
+      <DependentUpon>SearchReplace.cs</DependentUpon>
     </Compile>
     <Compile Include="Serializer.cs" />
     <Compile Include="SetTimer.cs">

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using Projector.Script;
+using System.Reflection;
 
 namespace Projector
 {
@@ -52,15 +53,17 @@ namespace Projector
 
         RefScriptExecute executer;
 
+        SearchReplace searchReplaceDlg = new SearchReplace();
+
         public ScriptWriter(Object targetObject, Boolean openFile)
         {                      
             initStuff(targetObject);
-
+           
             if (openFile)
             {
                 loadToolStripMenuItem_Click(null, null);            
             }
-            
+          
 
         }
 
@@ -110,8 +113,22 @@ namespace Projector
             Highlight = new ReflectionScriptHighLight(script, codingBox);
             this.AutoComplete = new AutoCompletion(codingBox);
             this.AutoComplete.assignListBox(wordListing);
+            this.debugToolStrip.Visible = false;
+
+            this.updateWidgets();
         }
 
+        private void updateWidgets()
+        {
+            List<ReflectNewWidget> widgets = this.script.getAllWidgets();
+            foreach (ReflectNewWidget wid in widgets)
+            {
+                ScriptComponent tmpComp = new ScriptComponent();
+                tmpComp.assignWidget(wid);
+                tmpComp.assignScript(this.codingBox);
+                this.addItems.Controls.Add(tmpComp);
+            }
+        }
 
         private void updateColors(int markLine)
         {
@@ -234,7 +251,54 @@ namespace Projector
             }
         }
 
+        private void updateObjectTree(List<MethodInfo> methods, string parentName, int imageNr, TreeNode toNode, string binding)
+        {
+            foreach (MethodInfo Minfo in methods)
+            {
 
+                TreeNode mNode = new TreeNode();
+
+                string parameters = "";
+                ParameterInfo[] pInfo = Minfo.GetParameters();
+                foreach (ParameterInfo inf in pInfo)
+                {
+                    switch (inf.ParameterType.Name)
+                    {
+                        case "ReflectionScript":
+                            parameters += " { }";
+                            break;
+                        case "Boolean":
+                            parameters += " false";
+                            break;
+                        case "Int32":
+                        case "Int":                        
+                            parameters += " 0";
+                            break;
+                        case "String":
+                            parameters += " \"" + inf.Name + "\"";
+                            break;
+                        default:
+                            parameters += " " + inf.Name + ":" + inf.ParameterType.Name;
+                            break;
+                    }
+
+
+                    
+                }
+
+                
+                mNode.Text = Minfo.Name;
+                mNode.ToolTipText = parentName + binding + Minfo.Name + parameters;
+                mNode.ImageIndex = imageNr;
+                mNode.SelectedImageIndex = mNode.ImageIndex;
+                
+                toNode.Nodes.Add(mNode);
+                //this.AutoComplete.addWord(methodmask, parentName);
+
+            }
+        }
+
+        //List<MethodInfo>
         private void updateObjectTree(List<string> objList, string parentName, int imageNr, TreeNode toNode, string binding)
         {
             foreach (string methodmask in objList)
@@ -385,7 +449,7 @@ namespace Projector
                         {
                             TreeNode objInstance = new TreeNode(instOf);
                             objInstance.Name = instOf;
-                            updateObjectTree(usedObject.methodNames, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
+                            updateObjectTree(usedObject.methods, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
                             updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
                             updateObjectTree(usedObject.Integers, instOf, ScriptWriter.TREE_INT_IMG_IDENT, objInstance, ".");
                             updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");
@@ -879,6 +943,7 @@ namespace Projector
         private void ScriptWriter_FormClosing(object sender, FormClosingEventArgs e)
         {
             checkBeforeOpen();
+            this.searchReplaceDlg.Close();
         }
 
         private void showToolbarToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1035,6 +1100,37 @@ namespace Projector
             {
                 varWatchList.Items.Add(addWatchVar.textinfo.Text);
             }
+        }
+
+        private void showSriptBreaksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Boolean vis = showSriptBreaksToolStripMenuItem.Checked;
+            this.debugToolStrip.Visible = vis;
+            
+        }
+
+        private void duplicateLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int lNr = this.codingBox.getCurrentLineNumber();            
+            this.codingBox.duplicateLine(lNr);
+
+        }
+
+        private void removeLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int lNr = this.codingBox.getCurrentLineNumber();
+            this.codingBox.removeLine(lNr);
+        }
+
+        private void seachAndReplaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.searchReplaceDlg.Visible == false)
+            {
+                this.searchReplaceDlg = new SearchReplace();
+                this.searchReplaceDlg.Show();
+                this.searchReplaceDlg.codeRef = this.codingBox;
+            }
+            this.searchReplaceDlg.BringToFront();
         }
     }
 }
