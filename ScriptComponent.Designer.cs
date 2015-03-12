@@ -52,6 +52,7 @@
             this.NameOfTool.Size = new System.Drawing.Size(76, 13);
             this.NameOfTool.TabIndex = 1;
             this.NameOfTool.Text = "COMPONENT";
+            this.NameOfTool.DoubleClick += new System.EventHandler(this.ToolImage_DoubleClick);
             // 
             // ScriptComponent
             // 
@@ -61,6 +62,7 @@
             this.Controls.Add(this.ToolImage);
             this.Name = "ScriptComponent";
             this.Size = new System.Drawing.Size(133, 21);
+            this.DoubleClick += new System.EventHandler(this.ToolImage_DoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.ToolImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
