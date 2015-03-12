@@ -445,9 +445,9 @@ namespace Projector
                             TreeNode objInstance = new TreeNode(instOf);
                             objInstance.Name = instOf;
                             updateObjectTree(usedObject.methods, instOf, ScriptWriter.TREE_METHOD_IMG_IDENT, objInstance, " ");
-                            updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
+                            /*updateObjectTree(usedObject.Strings, instOf, ScriptWriter.TREE_STRING_IMG_IDENT, objInstance, ".");
                             updateObjectTree(usedObject.Integers, instOf, ScriptWriter.TREE_INT_IMG_IDENT, objInstance, ".");
-                            updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");
+                            updateObjectTree(usedObject.Booleans, instOf, ScriptWriter.TREE_BOOL_IMG_IDENT, objInstance, ".");*/
 
                             usedBy.Nodes.Add(objInstance);    
                         }
@@ -1029,14 +1029,15 @@ namespace Projector
                                     break;
                             }
                         }
-                        genericTree.SelectedNode.ToolTipText = pre + genericTree.SelectedNode.ToolTipText + parameters;
+                        //genericTree.SelectedNode.ToolTipText = pre + genericTree.SelectedNode.ToolTipText + parameters;
+                        int startPos = codingBox.SelectionStart;
+                        int sellength = codingBox.SelectionLength;
+                        codingBox.Text = codingBox.Text.Remove(startPos, sellength);
+                        codingBox.Text = codingBox.Text.Insert(startPos, pre + genericTree.SelectedNode.ToolTipText + parameters);
+                        codingBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
                     }
                     //codingBox.SelectedRtf = genericTree.SelectedNode.ToolTipText;
-                    int startPos = codingBox.SelectionStart;
-                    int sellength = codingBox.SelectionLength;
-                    codingBox.Text = codingBox.Text.Remove(startPos, sellength);
-                    codingBox.Text = codingBox.Text.Insert(startPos, genericTree.SelectedNode.ToolTipText);
-                    codingBox.SelectionStart = startPos + genericTree.SelectedNode.ToolTipText.Length;
+                    
 
                 }
             }
