@@ -9,6 +9,7 @@ namespace Projector.Script
     public class ReflectNewWidget
     {
         public string Name;
+        public String RefId;
         public Image Icon;
         public String CodeInsert;
     }

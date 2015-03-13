@@ -385,6 +385,9 @@ namespace Projector
         {
             Boolean addMethods = false;
             //genericTree.Nodes.Clear();
+
+            
+
             foreach(RefScrObjectStorage usedObject in Projector.ObjectInfo.getAllObjects() ){
                 string nodeKey = usedObject.originObjectName;
                 TreeNode objectNode;

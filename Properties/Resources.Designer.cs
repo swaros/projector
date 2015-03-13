@@ -83,6 +83,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap application_form {
+            get {
+                object obj = ResourceManager.GetObject("application_form", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap application_side_tree {
             get {
                 object obj = ResourceManager.GetObject("application_side_tree", resourceCulture);
@@ -96,6 +106,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap application_view_list {
             get {
                 object obj = ResourceManager.GetObject("application_view_list", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap application2 {
+            get {
+                object obj = ResourceManager.GetObject("application2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -661,6 +681,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap date {
+            get {
+                object obj = ResourceManager.GetObject("date", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap db {
             get {
                 object obj = ResourceManager.GetObject("db", resourceCulture);
@@ -1098,6 +1128,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap form {
+            get {
+                object obj = ResourceManager.GetObject("form", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap forward {
             get {
                 object obj = ResourceManager.GetObject("forward", resourceCulture);
@@ -1238,6 +1278,16 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kdb_form {
+            get {
+                object obj = ResourceManager.GetObject("kdb_form", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap layer_group_add {
             get {
                 object obj = ResourceManager.GetObject("layer_group_add", resourceCulture);
@@ -1251,6 +1301,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap layout_sidebar {
             get {
                 object obj = ResourceManager.GetObject("layout_sidebar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Line_chart {
+            get {
+                object obj = ResourceManager.GetObject("Line_chart", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1906,6 +1966,76 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap stock_form_button {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_combobox_16 {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_combobox_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_design_mode_16 {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_design_mode_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_label_16 {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_label_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_listbox {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_listbox", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_table_control {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_table_control", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_form_text_box_16 {
+            get {
+                object obj = ResourceManager.GetObject("stock_form_text_box_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap stock_insert_chart {
             get {
                 object obj = ResourceManager.GetObject("stock_insert_chart", resourceCulture);
@@ -2116,9 +2246,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap window_system_32 {
+        internal static System.Drawing.Bitmap window_system {
             get {
-                object obj = ResourceManager.GetObject("window-system-32", resourceCulture);
+                object obj = ResourceManager.GetObject("window_system", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

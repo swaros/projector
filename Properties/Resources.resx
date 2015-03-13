@@ -235,7 +235,7 @@
   <data name="folder_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="window-system-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="window_system" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\window-system-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folder_601" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -750,5 +750,44 @@
   </data>
   <data name="yellow_bar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\yellow_bar1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="application2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\application2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="application_form" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\application_form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="date" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\date.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="form" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="kdb_form" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\kdb_form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Line_chart" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Line_chart.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_combobox_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-combobox-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_design_mode_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-design-mode-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_label_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-label-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_listbox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-listbox.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_table_control" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-table-control.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stock_form_text_box_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stock_form-text-box-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

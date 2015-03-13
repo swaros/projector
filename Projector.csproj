@@ -35,7 +35,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>\\bigpoint.local\SharedData\Development\Public\Projector\</InstallUrl>
-    <ApplicationRevision>78</ApplicationRevision>
+    <ApplicationRevision>79</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -154,6 +154,12 @@
     <Compile Include="DiffResultWindow.Designer.cs">
       <DependentUpon>DiffResultWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="DiffSensor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DiffSensor.Designer.cs">
+      <DependentUpon>DiffSensor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditMacro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +188,12 @@
       <DependentUpon>ImportSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="InsertSelect.cs" />
+    <Compile Include="IntervalTimer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IntervalTimer.Designer.cs">
+      <DependentUpon>IntervalTimer.cs</DependentUpon>
+    </Compile>
     <Compile Include="JoinTable.cs" />
     <Compile Include="LabelInteger.cs">
       <SubType>UserControl</SubType>
@@ -336,6 +348,9 @@
     <EmbeddedResource Include="DiffResultWindow.resx">
       <DependentUpon>DiffResultWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DiffSensor.resx">
+      <DependentUpon>DiffSensor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditMacro.resx">
       <DependentUpon>EditMacro.cs</DependentUpon>
     </EmbeddedResource>
@@ -347,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImportSettings.resx">
       <DependentUpon>ImportSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntervalTimer.resx">
+      <DependentUpon>IntervalTimer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LabelInteger.resx">
       <DependentUpon>LabelInteger.cs</DependentUpon>
@@ -1033,11 +1051,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1259675516_Synchronize.ico" />
+    <None Include="Resources\application_form.png" />
+    <None Include="Resources\form.png" />
+    <None Include="Resources\date.png" />
+    <None Include="Resources\application2.png" />
     <Content Include="Resources\green_bar.png" />
     <None Include="Resources\yellow_bar1.png" />
     <None Include="Resources\green_bar1.png" />
+    <None Include="Resources\kdb_form.png" />
+    <None Include="Resources\Line_chart.png" />
     <Content Include="Resources\red_bar.png" />
     <None Include="Resources\red_bar1.png" />
+    <None Include="Resources\stock_form-listbox.png" />
+    <None Include="Resources\stock_form-design-mode-16.png" />
+    <None Include="Resources\stock_form-table-control.png" />
+    <None Include="Resources\stock_form-text-box-16.png" />
+    <None Include="Resources\stock_form-label-16.png" />
+    <None Include="Resources\stock_form-combobox-16.png" />
+    <None Include="Resources\stock_form-button.png" />
     <Content Include="Resources\yellow_bar.png" />
     <None Include="Resources\server_add.png" />
     <None Include="Resources\palette.png" />

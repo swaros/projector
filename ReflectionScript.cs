@@ -227,6 +227,10 @@ namespace Projector.Script
             this.staticUsageObjects.Add("NEW", new ReflectNew());
         }
 
+        /// <summary>
+        /// Returns all used Widgets plain as list
+        /// </summary>
+        /// <returns></returns>
         public List<ReflectNewWidget> getAllWidgets()
         {
             List<ReflectNewWidget> allWidgets = new List<ReflectNewWidget>();
@@ -241,7 +245,7 @@ namespace Projector.Script
             }
             return allWidgets;
         }
-
+        
 
         /// <summary>
         /// add a setup with with an key and content

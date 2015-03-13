@@ -36,7 +36,7 @@ namespace Projector
 
             ReflectNewWidget rForm = new ReflectNewWidget();
             rForm.Name = "Form";
-            rForm.Icon = Projector.Properties.Resources.computer_16;
+            rForm.Icon = Projector.Properties.Resources.application2;
             rForm.CodeInsert = "NEW ReflectForm !MyForm";
             widgets.Add(rForm);
 
@@ -49,26 +49,26 @@ namespace Projector
 
             ReflectNewWidget rBt = new ReflectNewWidget();
             rBt.Name = "Button";
-            rBt.Icon = Projector.Properties.Resources.sqlresult;
+            rBt.Icon = Projector.Properties.Resources.stock_form_button;
             rBt.CodeInsert = "NEW ReflectButton !MyButton";
             widgets.Add(rBt);
 
             ReflectNewWidget rBt2 = new ReflectNewWidget();
             rBt2.Name = "Input Text";
-            rBt2.Icon = Projector.Properties.Resources.tag;
+            rBt2.Icon = Projector.Properties.Resources.stock_form_text_box_16;
             rBt2.CodeInsert = "NEW LabelText !MyTextBox";
             widgets.Add(rBt2);
 
             ReflectNewWidget rBt3 = new ReflectNewWidget();
             rBt3.Name = "Input Number";
-            rBt3.Icon = Projector.Properties.Resources.tag;
+            rBt3.Icon = Projector.Properties.Resources.stock_form_text_box_16;
             rBt3.CodeInsert = "NEW LabelInteger !MyNumberBox";
             widgets.Add(rBt3);
 
 
             ReflectNewWidget rBt4 = new ReflectNewWidget();
             rBt4.Name = "Date";
-            rBt4.Icon = Projector.Properties.Resources.tag;
+            rBt4.Icon = Projector.Properties.Resources.date;
             rBt4.CodeInsert = "NEW DateSelect !MyDateBox";
             widgets.Add(rBt4);
 
@@ -110,9 +110,22 @@ namespace Projector
 
             ReflectNewWidget rBt11 = new ReflectNewWidget();
             rBt11.Name = "Result List";
-            rBt11.Icon = Projector.Properties.Resources.tag;
+            rBt11.Icon = Projector.Properties.Resources.stock_form_table_control;
             rBt11.CodeInsert = "NEW ResultList !MyResult";
             widgets.Add(rBt11);
+
+
+            ReflectNewWidget rBt12 = new ReflectNewWidget();
+            rBt12.Name = "Sensor";
+            rBt12.Icon = Projector.Properties.Resources.Line_chart;
+            rBt12.CodeInsert = "NEW DiffSensor !MySensor";
+            widgets.Add(rBt12);
+
+            ReflectNewWidget rBt13 = new ReflectNewWidget();
+            rBt13.Name = "Timer";
+            rBt13.Icon = Projector.Properties.Resources.player_time;
+            rBt13.CodeInsert = "NEW IntervalTimer !MyTimer";
+            widgets.Add(rBt13);
 
             return widgets;
         }
@@ -211,6 +224,15 @@ namespace Projector
             {
                 return this.getResultList(refObject, parent);
             }
+
+            if (refObject.typeOfObject == "DiffSensor")
+            {
+                return this.getDiffSensor(refObject, parent);
+            }
+            if (refObject.typeOfObject == "IntervalTimer")
+            {
+                return this.getTimer(refObject, parent);
+            }
             return null;
         }
 
@@ -238,7 +260,11 @@ namespace Projector
         {
             return new ResultList();
         }
-      
+
+        private IntervalTimer getTimer(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new IntervalTimer();
+        }
 
         /// <summary>
         /// add an Controll to a parent Object depending of the type of parent
@@ -265,6 +291,12 @@ namespace Projector
             return newTextBox;
         }
 
+        private DiffSensor getDiffSensor(ReflectionScriptDefines refObject, Object parent)
+        {
+            DiffSensor newTextBox = new DiffSensor();
+            newTextBox = (DiffSensor)NewControlObject(newTextBox, refObject, parent);
+            return newTextBox;
+        }
 
         private ReflectButton getButton(ReflectionScriptDefines refObject, Object parent)
         {
