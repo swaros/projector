@@ -536,7 +536,8 @@ namespace Projector.Script
                 
             }
 
-            if (scrLine.isAssignement && scrLine.name != null)
+            // execute object assignements that NOT are methods. so just code assignements
+            if (scrLine.isAssignement && scrLine.name != null && scrLine.isMethod == false)
             {
                 // for any assignement a variable must be exists and allready defined
                 this.currentScript.recalcBrackets(scrLine);

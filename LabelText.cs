@@ -46,6 +46,25 @@ namespace Projector
         {
             this.Left = left;
         }
+        public void setEnabled(Boolean onOff)
+        {
+            this.Enabled = onOff;
+        }
+
+        public void setVisibility(Boolean onOff)
+        {
+            this.Visible = onOff;
+        }
+        public void setInputWidth(int width)
+        {
+            this.TextBox.Width = width;
+        }
+
+        public void setLabelWidth(int width)
+        {
+            this.TextLabel.AutoSize = false;
+            this.TextLabel.Width = width;
+        }
 
     }
 }

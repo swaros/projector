@@ -172,6 +172,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FormGroup.Designer.cs">
+      <DependentUpon>FormGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="GroupProfilWorker.cs" />
     <Compile Include="GroupQuery.cs">
       <SubType>Form</SubType>
@@ -181,6 +187,12 @@
     </Compile>
     <Compile Include="HighlighterMysql.cs" />
     <Compile Include="HighlightStyle.cs" />
+    <Compile Include="ImageLoader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImageLoader.Designer.cs">
+      <DependentUpon>ImageLoader.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImportSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,8 +369,14 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormGroup.resx">
+      <DependentUpon>FormGroup.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupQuery.resx">
       <DependentUpon>GroupQuery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageLoader.resx">
+      <DependentUpon>ImageLoader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImportSettings.resx">
       <DependentUpon>ImportSettings.cs</DependentUpon>

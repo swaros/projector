@@ -61,6 +61,58 @@ namespace Projector
             this.Text = getDate();
         }
 
+        public void setEnabled(Boolean onOff)
+        {
+            this.Enabled = onOff;
+        }
+
+        public void setVisibility(Boolean onOff)
+        {
+            this.Visible = onOff;
+        }
+
+        public void setDateByMysql(string dateString)
+        {
+            DateTime time;
+            try
+            {
+                time = DateTime.Parse(dateString);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+             
+            this.selectdate.Value = time;
+            if (time.Hour < 10)
+            {
+                this.HoureBox.Text = "0" + time.Hour.ToString();
+            }
+            else
+            {
+                this.HoureBox.Text = time.Hour.ToString();
+            }
+
+            if (time.Minute < 10)
+            {
+                this.MinBox.Text = "0" + time.Minute.ToString();
+            }
+            else
+            {
+                this.MinBox.Text = time.Minute.ToString();
+            }
+
+            if (time.Second < 10)
+            {
+                this.SecBox.Text = "0" + time.Second.ToString();
+            }
+            else
+            {
+                this.SecBox.Text = time.Second.ToString();
+            }
+        }
+
+
         public String getDate()
         {
             if (this.MinBox.Visible)

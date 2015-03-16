@@ -179,3 +179,5 @@ C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csprojResolveAs
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ObjectBrowser.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.DiffSensor.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.IntervalTimer.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ImageLoader.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.FormGroup.resources

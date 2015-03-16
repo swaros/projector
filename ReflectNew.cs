@@ -127,6 +127,18 @@ namespace Projector
             rBt13.CodeInsert = "NEW IntervalTimer !MyTimer";
             widgets.Add(rBt13);
 
+            ReflectNewWidget rBt14 = new ReflectNewWidget();
+            rBt14.Name = "Image";
+            rBt14.Icon = Projector.Properties.Resources.picgladi;
+            rBt14.CodeInsert = "NEW ImageLoader !MyImage";
+            widgets.Add(rBt14);
+            /*
+            ReflectNewWidget rBt15 = new ReflectNewWidget();
+            rBt15.Name = "Group Box";
+            rBt15.Icon = Projector.Properties.Resources.stock_exit_group;
+            rBt15.CodeInsert = "NEW FormGroup !MyGroup";
+            widgets.Add(rBt15);
+            */
             return widgets;
         }
 
@@ -233,6 +245,15 @@ namespace Projector
             {
                 return this.getTimer(refObject, parent);
             }
+            if (refObject.typeOfObject == "ImageLoader")
+            {
+                return this.getPicture(refObject, parent);
+            }
+            
+            if (refObject.typeOfObject == "FormGroup")
+            {
+                return this.getFormGroup(refObject, parent);
+            }
             return null;
         }
 
@@ -280,8 +301,25 @@ namespace Projector
             {
                 Form parForm = (Form)parent;
                 parForm.Controls.Add(addThis);
+                return addThis;
             }
+
+            if (parent is ContainerControl)
+            {
+                ContainerControl parForm = (ContainerControl)parent;
+                parForm.Controls.Add(addThis);
+                return addThis;
+            }
+
             return addThis;
+        }
+
+
+        private FormGroup getFormGroup(ReflectionScriptDefines refObject, Object parent)
+        {
+            FormGroup newTextBox = new FormGroup();
+            newTextBox = (FormGroup)NewControlObject(newTextBox, refObject, parent);
+            return newTextBox;
         }
 
         private PrConsole getConsole(ReflectionScriptDefines refObject, Object parent)
@@ -295,6 +333,15 @@ namespace Projector
         {
             DiffSensor newTextBox = new DiffSensor();
             newTextBox = (DiffSensor)NewControlObject(newTextBox, refObject, parent);
+            return newTextBox;
+        }
+
+
+
+        private ImageLoader getPicture(ReflectionScriptDefines refObject, Object parent)
+        {
+            ImageLoader newTextBox = new ImageLoader();
+            newTextBox = (ImageLoader)NewControlObject(newTextBox, refObject, parent);
             return newTextBox;
         }
 

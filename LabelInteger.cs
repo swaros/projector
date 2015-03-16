@@ -40,7 +40,15 @@ namespace Projector
         {
             return (int)this.numericUpDown.Value;
         }
+        public void setEnabled(Boolean onOff)
+        {
+            this.Enabled = onOff;
+        }
 
+        public void setVisibility(Boolean onOff)
+        {
+            this.Visible = onOff;
+        }
         public void setTop(int top)
         {
             this.Top = top;
@@ -49,6 +57,17 @@ namespace Projector
         public void setLeft(int left)
         {
             this.Left = left;
+        }
+
+        public void setInputWidth(int width)
+        {
+            this.numericUpDown.Width = width;
+        }
+
+        public void setLabelWidth(int width)
+        {
+            this.TextLabel.AutoSize = false;
+            this.TextLabel.Width = width;
         }
     }
 }
