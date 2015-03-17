@@ -10,6 +10,7 @@ using System.Collections;
 using System.Diagnostics;
 using Projector.Data;
 using Projector.Script;
+using System.Security.Cryptography;
 
 namespace Projector
 {
@@ -561,6 +562,26 @@ namespace Projector
         public void setHeight(int val)
         {
             this.Height = val;
+        }
+
+        public void showIcons()
+        {
+            this.listView.View = View.LargeIcon;
+            
+            foreach (ListViewItem lw in this.listView.Items)
+            {
+                lw.ImageIndex = 0;
+                lw.StateImageIndex = 0;
+                
+            }
+            
+        }
+
+
+
+        public void showDetails()
+        {
+            this.listView.View = View.Details;
         }
 
         public string getEntry(string entry, int rownumber)

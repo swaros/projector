@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projector.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace Projector.Script
         }
 
         public void splitAndIterate(string source, string splitBy, string nameOfVar, ReflectionScript script)
-        {
+        {            
             if (script != null)
             {
                 
@@ -36,6 +37,22 @@ namespace Projector.Script
             }
         }
 
+        public ResultList Split(string splitByChars,string fieldName)
+        {
+            ResultList splitResult = new ResultList();
+            if (this.val == "")
+            {
+                return splitResult;
+            }
+            string[] parts = this.val.Split(splitByChars.ToCharArray());
+            splitResult.AddColumn(fieldName);
+            foreach (string part in parts)
+            {
+                int newIndex = splitResult.AddRow();
+                splitResult.setValue(fieldName, newIndex,part);
+            }
+            return splitResult;
+        } 
 
         public string between(string startStr, string endStr)
         {

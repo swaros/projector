@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReflectList));
             this.splitter = new System.Windows.Forms.SplitContainer();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
@@ -40,6 +42,7 @@
             this.listView = new System.Windows.Forms.ListView();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFilesDlg = new System.Windows.Forms.OpenFileDialog();
+            this.listItemsPic = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitter)).BeginInit();
             this.splitter.Panel1.SuspendLayout();
             this.splitter.Panel2.SuspendLayout();
@@ -140,6 +143,7 @@
             this.listView.FullRowSelect = true;
             this.listView.GridLines = true;
             this.listView.HideSelection = false;
+            this.listView.LargeImageList = this.listItemsPic;
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(403, 365);
@@ -159,6 +163,12 @@
             this.openFilesDlg.DefaultExt = "csv";
             this.openFilesDlg.Filter = "csv Text|*.csv";
             this.openFilesDlg.Title = "Open Data Content";
+            // 
+            // listItemsPic
+            // 
+            this.listItemsPic.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("listItemsPic.ImageStream")));
+            this.listItemsPic.TransparentColor = System.Drawing.Color.Transparent;
+            this.listItemsPic.Images.SetKeyName(0, "application2.png");
             // 
             // ReflectList
             // 
@@ -192,5 +202,6 @@
         private System.Windows.Forms.ToolStripProgressBar Progress;
         private System.Windows.Forms.ToolStripButton fileLoader;
         private System.Windows.Forms.OpenFileDialog openFilesDlg;
+        private System.Windows.Forms.ImageList listItemsPic;
     }
 }
