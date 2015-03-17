@@ -115,6 +115,8 @@ namespace Projector.Script
 
         // all registered classes that will be used in a static way
         private Hashtable staticUsageObjects = new Hashtable();
+
+        private int lineNumbers = 0;
         
         /// <summary>
         /// Reflection script
@@ -386,6 +388,7 @@ namespace Projector.Script
         {
             this.commentedLines.Clear();
             this.lineOffset = 0;
+            this.lineNumbers = 0;
             this.errorMessages.Clear();
 
           
@@ -659,14 +662,14 @@ namespace Projector.Script
        /// returns an List of linenumbers that contains just comments
        /// </summary>
        /// <returns>List of Line Numbers</returns>
-        public List<int> getCommentLines()
+        public List<int> getCommentLines(int offset = 0)
         {
             List<int> returnList = this.commentedLines;
             
             foreach (DictionaryEntry subScrDic in this.scrVars.subScripts)
             {
                 ReflectionScript subScr = (ReflectionScript)subScrDic.Value;
-                int parentOffset = subScr.parentLineNumber;
+                int parentOffset = subScr.parentLineNumber + offset;
                 List<int> subComments = subScr.getCommentLines();
                 int offsets = 0;
                 foreach (int subLnr in subComments)
@@ -1226,7 +1229,7 @@ namespace Projector.Script
         {
             int lineNr = 0;
             emptyLines.Clear();
-
+            this.lineNumbers = this.lines.Count();
             foreach (String currentLine in this.lines)
             {
                 this.currentReadLine = lineNr;   
@@ -1245,6 +1248,11 @@ namespace Projector.Script
                 }
                 lineNr++;
             }
+        }
+
+        public int getFullLineNumbers()
+        {
+            return this.lineNumbers;
         }
 
         public void recalcBrackets(ReflectionScriptDefines testObj)
@@ -1656,7 +1664,12 @@ namespace Projector.Script
                         testObj.subScript.setCode(fullCode);
                         
                         updateDebugInfo(testObj.subScript);
-                        this.lineOffset += testObj.subScript.getLineOffset();
+                        // add the lines thats used in the subscript to the current lineoffset
+                        int lines = testObj.subScript.getFullLineNumbers();
+                        if (lines > 0)
+                        {
+                            this.lineOffset += lines -1 ;
+                        }
 
                         if (testObj.namedReference != null) {
                             if (this.scrVars.subScripts.ContainsKey(testObj.namedReference))
