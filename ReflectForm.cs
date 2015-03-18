@@ -138,16 +138,19 @@ namespace Projector
             }
         }
 
-        public void WebPostRequest(string username, string password, string baseUrl, string callUrl)
+        public void WebPostRequest(string username, string password, string callUrl)
         {
-            this.sendHtToWeb(username, password, baseUrl, callUrl);
+            this.sendHtToWeb(username, password,  callUrl);
         }
 
 
-        private void sendHtToWeb(string username, string password,string baseUrl, string callUrl)
+        private void sendHtToWeb(string username, string password, string callUrl)
         {
+            string oldCap = this.getCaption();
+            this.Enabled = false;
+            this.setCaption("WAIT: Sending Content to Web...");
             NetHtAccess webCall = new NetHtAccess();
-            webCall.setBaseDomain(baseUrl);
+            
             webCall.setUri(callUrl);
             webCall.setUser(username, password);
             webCall.resetParameters();
@@ -173,6 +176,13 @@ namespace Projector
 
             }
             webCall.load();
+            string error = webCall.getLastError();
+            if (error != "")
+            {
+                MessageBox.Show(error, "Error On Webrequest", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            this.Enabled = true;
+            this.setCaption(oldCap);    
         }
 
 

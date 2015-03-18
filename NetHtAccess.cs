@@ -145,14 +145,16 @@ namespace Projector.Net.Secured
             NetworkCredential myCred = new NetworkCredential(this.UserName, this.PassWord);
             CredentialCache myCache = new CredentialCache();
 
-            myCache.Add(new Uri(this.BaseDomain), "Basic", myCred);
+            myCache.Add(new Uri(this.callUri), "Basic", myCred);
 
-            WebRequest request = (HttpWebRequest) WebRequest.Create(this.callUri);
-            ((HttpWebRequest)request).UserAgent = "ProjectorRequest";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.callUri);
             request.PreAuthenticate = true;
+            request.UserAgent = "ProjectorRequest";
+            
 
             request.Method = WebRequestMethods.Http.Post;
             request.Credentials = myCache;
+            //request.Credentials = new NetworkCredential(this.UserName, this.PassWord);
             request.ContentType = this.contentType;
             
             if (this.parameters.Count > 0)
@@ -171,7 +173,7 @@ namespace Projector.Net.Secured
                 request.ContentLength = byteArray.Length;                
                 Stream dataStream = request.GetRequestStream();                
                 dataStream.Write(byteArray, 0, byteArray.Length);
-                dataStream.Flush();    
+                //dataStream.Flush();    
                 dataStream.Close();
             }
 
