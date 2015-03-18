@@ -12,7 +12,7 @@ namespace Projector
     public partial class LabelText : UserControl
     {
 
-        
+        public Boolean doNotSend = false;
 
         public LabelText()
         {
@@ -64,6 +64,12 @@ namespace Projector
         {
             this.TextLabel.AutoSize = false;
             this.TextLabel.Width = width;
+        }
+
+        public void setpasswordChars()
+        {
+            this.TextBox.UseSystemPasswordChar = true;
+            this.doNotSend = true;
         }
 
     }

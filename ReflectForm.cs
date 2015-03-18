@@ -1,4 +1,5 @@
-﻿using Projector.Script;
+﻿using Projector.Net.Secured;
+using Projector.Script;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,6 +137,44 @@ namespace Projector
                 }
             }
         }
+
+        public void WebPostRequest(string username, string password, string baseUrl, string callUrl)
+        {
+            this.sendHtToWeb(username, password, baseUrl, callUrl);
+        }
+
+
+        private void sendHtToWeb(string username, string password,string baseUrl, string callUrl)
+        {
+            NetHtAccess webCall = new NetHtAccess();
+            webCall.setBaseDomain(baseUrl);
+            webCall.setUri(callUrl);
+            webCall.setUser(username, password);
+            webCall.resetParameters();
+            foreach (Control element in this.Controls)
+            {
+                Boolean sendThisAsString = true;
+                //this.onCloseScript.updateVarByObject()
+                if (element is LabelText)
+                {
+                    LabelText lt = (LabelText)element;
+                    if (lt.doNotSend)
+                    {
+                        sendThisAsString = false;
+                    }
+                }
+
+                if (sendThisAsString)
+                {
+                    string nameOfObject = element.Name;
+                    string objectValue = element.Text;
+                    webCall.addOrReplaceParam(nameOfObject, objectValue);
+                }
+
+            }
+            webCall.load();
+        }
+
 
         private void ReflectForm_FormClosing(object sender, FormClosingEventArgs e)
         {
