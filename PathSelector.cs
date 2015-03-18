@@ -72,6 +72,7 @@ namespace Projector
             else
             {
                 this.FolderPath.ForeColor = Color.DarkGreen;
+                this.setPath(this.FolderPath.Text);
             }
         }
     }

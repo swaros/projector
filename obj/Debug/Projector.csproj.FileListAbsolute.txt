@@ -180,3 +180,4 @@ C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.exe.manifest
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.application
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.exe
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.pdb
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
