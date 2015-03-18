@@ -16,6 +16,7 @@ namespace Projector
         public List<RichBoxMarker> LineMarker = new List<RichBoxMarker>();
         public List<RichBoxMarker> ExecutionMarker = new List<RichBoxMarker>();
 
+        public int lineOffset = 0;
 
         public Boolean selectionIsVisible()
         {

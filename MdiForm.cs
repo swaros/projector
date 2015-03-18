@@ -203,7 +203,7 @@ namespace Projector
           //  ReflectionScript script = new ReflectionScript();
           //  script.setCode(code);
             ScriptWriter scriptEditor = new ScriptWriter(this);
-            scriptEditor.codeBox.Text = code;
+            scriptEditor.setCode(code);
             scriptEditor.ShowDialog();
 
 

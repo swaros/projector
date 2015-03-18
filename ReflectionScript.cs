@@ -737,7 +737,8 @@ namespace Projector.Script
                 ReflectionScript refScr = (ReflectionScript)subScr.Value;
                 foreach (DictionaryEntry subVars in refScr.getAllStrings())
                 {
-                    if (!fullStrings.ContainsKey(subVars.Key))
+                    string keyname = subVars.Key.ToString();
+                    if (keyname.Length > 0 && keyname[0] != '%' && !fullStrings.ContainsKey(subVars.Key))
                     {
                         fullStrings.Add(subVars.Key, subVars.Value);
                     }
@@ -1369,9 +1370,11 @@ namespace Projector.Script
                 }
                 if (obInfo.lastObjectInfo != null)
                 {
+                    /*
                     updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Strings);
                     updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Integers);
                     updateStringsByHashtable(testObj, obInfo.lastObjectInfo.Booleans);                
+                     */
                 }
             }
         }

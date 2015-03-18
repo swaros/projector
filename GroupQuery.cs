@@ -849,7 +849,8 @@ namespace Projector
                 string sql = System.IO.File.ReadAllText(openSqlFileDialog.FileName);
                 string massSqlScript = this.buildScriptByMassQuery(sql);
                 ScriptWriter scrWriter = new ScriptWriter(this);
-                scrWriter.codeBox.Text = massSqlScript;
+                //scrWriter.codeBox.Text = massSqlScript;
+                scrWriter.setCode(massSqlScript);
 
                 scrWriter.Show();
                 //string[] queryListing = sql.Split(';');

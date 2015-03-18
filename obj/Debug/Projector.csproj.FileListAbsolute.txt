@@ -116,11 +116,6 @@ C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.MainSetup.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.PathSelector.resources
 C:\Users\tziegler\Documents\Visual Studio 2010\Projects\Projector\Projector\obj\Debug\Projector.ScriptStartButton.resources
-C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.config
-C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.manifest
-C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.application
-C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe
-C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.pdb
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csproj.ResolveComReference.cache
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.BaseDrawing.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ChartDrawer.resources
@@ -131,16 +126,21 @@ C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.CreateStructFor
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.CretaeInsertSelect.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.DateSelect.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.DiffResultWindow.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.DiffSensor.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.EditMacro.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ProjectorForm.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.FormGroup.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.GroupQuery.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ImageLoader.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ImportSettings.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.IntervalTimer.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.LabelInteger.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.LabelText.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.MainSetup.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.MdiForm.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.MysqlSensor.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.mysqlWatch.resources
+C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ObjectBrowser.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.PasteListView.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.PathSelector.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.PlaceholderEditForm.resources
@@ -170,14 +170,13 @@ C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.StyleForm.resou
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.TableStructForm.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.UserTextInput.resources
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csproj.GenerateResource.Cache
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.config
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe.manifest
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.application
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.exe
+C:\Users\tziegler\Documents\GitHub\projector\bin\Debug\Projector.pdb
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.TrustInfo.xml
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.exe.manifest
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.application
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.exe
 C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.pdb
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.csprojResolveAssemblyReference.cache
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ObjectBrowser.resources
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.DiffSensor.resources
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.IntervalTimer.resources
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.ImageLoader.resources
-C:\Users\tziegler\Documents\GitHub\projector\obj\Debug\Projector.FormGroup.resources

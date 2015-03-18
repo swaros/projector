@@ -17,6 +17,7 @@ namespace Projector
         //  ReflectionScript script = new ReflectionScript();
         //  script.setCode(code);
 
+
         public const string SCRIPT_IDENT = "ReflectionScript";
 
         private const int TREE_METHOD_IMG_IDENT = 4;
@@ -85,6 +86,11 @@ namespace Projector
 
         }
 
+        public void setCode(string code)
+        {
+            this.codingBox.Text = code;
+        }
+
         private void initStuff(Object targetObject)
         {
             
@@ -139,6 +145,7 @@ namespace Projector
 
         private void updateColors()
         {
+            Boolean tryToSpeedUp_dev = false;
             if (!runButton.Enabled)
             {
                 return;
@@ -153,24 +160,38 @@ namespace Projector
                 startLn = 0;
             }
             workerLabel.Text = startLn.ToString();
-            /*
-            Highlight.startLine = startLn;
-            Highlight.startPos = this.codingBox.SelectionStart;
-             */
-            Highlight.startLine = 0;
-            Highlight.startPos = 0;
+
+            if (tryToSpeedUp_dev)
+            {
+                Highlight.startLine = startLn;
+                Highlight.startPos = this.codingBox.SelectionStart;
+            }
+            else
+            {
+                Highlight.startLine = 0;
+                Highlight.startPos = 0;
+            }
+
             Highlight.setWordMode(switchDrawMode.Checked);
             Highlight.reDraw(true);
             workerLabel.Text = Highlight.preRuntime + " | " + Highlight.runtime + " | " + Highlight.postRuntime;
+            
+            if (Highlight.runtimeValue > 400)
+            {
+                this.refreshTimer.Interval = (int)Highlight.runtimeValue + 200;
+            }
+            
+
         }
 
-        private void codingBox_Vscroll(object sender, EventArgs e)
+        private void codingBox_Vscroll(object sender, EventArgs e)        
         {
+            /*
             workerLabel.Text = "invisible";
             if (codingBox.selectionIsVisible())
             {
                 workerLabel.Text = "visible";
-            }
+            }*/
         }
 
         private void codingBox_TextChanged(object sender, EventArgs e)
@@ -179,7 +200,8 @@ namespace Projector
             //errorTextBox.Text = script.getErrors();
             if (!isRunning)
             {
-                refreshTimer.Enabled = true;
+                //refreshTimer.Enabled = true;
+                resetRedrawTick();
             }
             
             
@@ -189,7 +211,7 @@ namespace Projector
         {
             keyTrigger.Enabled = false;
 
-            //            refreshTimer.Enabled = true;
+            //refreshTimer.Enabled = true;
             //this.recheckScript();
 
             this.AutoComplete.setSelection(e);
@@ -868,9 +890,9 @@ namespace Projector
                 return;
             }
 
-            keyTrigger.Enabled = true;
+            //keyTrigger.Enabled = true;
             AutoComplete.keypressHandler( e );
-            resetRedrawTick();
+            //resetRedrawTick();
         }
 
         private void enlargeContent()

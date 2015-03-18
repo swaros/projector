@@ -214,7 +214,10 @@ namespace Projector
                 this.Width = this.Setup.getIntSettingWidthDefault("client.width", this.Width);
                 this.Height = this.Setup.getIntSettingWidthDefault("client.height", this.Height);
 
-                
+                if (this.Top < -1) this.Top = 1;
+                if (this.Left < -1) this.Left = 1;
+                if (this.Width < 200) this.Width = 200;
+                if (this.Height < 200) this.Height = 200;
 
                 mainSlitter.Panel1Collapsed = this.Setup.getBooleanSettingWidthDefault("client.showgroups", mainSlitter.Panel1Collapsed);
                 groupButtonsToolStripMenuItem.Checked = !mainSlitter.Panel1Collapsed;

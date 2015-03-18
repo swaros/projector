@@ -1147,6 +1147,12 @@ namespace Projector
         private void tableView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             // only simple click allowed
+
+            if (!e.IsSelected)
+            {
+                return;
+            }
+
             if (Control.ModifierKeys == Keys.Shift || Control.ModifierKeys == Keys.Control || Control.ModifierKeys == Keys.Alt)
             {
                 return;
@@ -2770,9 +2776,7 @@ namespace Projector
                 List<string> unionTables = new List<string>();
                 for (int i = 0; i < tableView.SelectedItems.Count; i++)
                 {
-                    //sql += union + "(SELECT * FROM  " + tableView.SelectedItems[i].Text + ")" + System.Environment.NewLine;
-                    
-                   // union = "UNION" + System.Environment.NewLine;
+
                     unionTables.Add(tableView.SelectedItems[i].Text);
                 }
 
@@ -2780,7 +2784,7 @@ namespace Projector
                 copyConfirm.sqlTextBox.Text = maskQuery.selectUnion(unionTables);
                 if (copyConfirm.ShowDialog() == DialogResult.OK)
                 {
-                    textBox1.Text = sql;
+                    textBox1.Text = copyConfirm.sqlTextBox.Text;
                     fireQuery();
                     if (sqlHighlighting.Checked) this.highlight.parse(textBox1);
                 }

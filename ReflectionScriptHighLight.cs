@@ -56,6 +56,8 @@ namespace Projector.Script
         public string postRuntime = "0";
         public string preRuntime = "0";
 
+        public long runtimeValue = 0;
+
         private int drawMode = 0;
 
         Color[] execColors = new Color[10];
@@ -248,8 +250,9 @@ namespace Projector.Script
             }
             Stopwatch watch = new Stopwatch();
             watch.Start();
-
+            
             this.drawingRtf.Rtf = this.assignedRtf.Rtf;
+           
             this.drawingRtf.highlighting = true;
             int startpos = this.assignedRtf.SelectionStart;
             int endPos = this.assignedRtf.SelectionLength;
@@ -266,9 +269,7 @@ namespace Projector.Script
                 if (this.markLine < 0)
                     this.getElements();
             }
-
           
-
             if (this.markLine < 0)
             {
                 this.drawingRtf.Select(this.startPos, this.drawingRtf.TextLength);
@@ -309,6 +310,7 @@ namespace Projector.Script
                 watch.Stop();
 
                 this.preRuntime = watch.ElapsedMilliseconds.ToString();
+                this.runtimeValue = watch.ElapsedMilliseconds;
                 watch.Restart();
 
                 this.RtfColors.markWordsAll(variables, VaribalesStyle);
@@ -333,7 +335,6 @@ namespace Projector.Script
                         this.RtfColors.markFullLine(err.lineNumber, InProgressStyle, true, false, err.errorMessage + " @" + err.lineNumber, err.wordPosition);
                     }
                     
-
                 }
             }
             // marks an line 

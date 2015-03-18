@@ -1001,7 +1001,6 @@
         private System.Windows.Forms.ToolStripButton switchDrawMode;
         private System.Windows.Forms.ToolStripMenuItem setupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorsToolStripMenuItem;
-        public RichBox codeBox;
         private System.Windows.Forms.ToolStripMenuItem inspectRunToolStripMenuItem;
         private System.Windows.Forms.Timer runningCheck;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
