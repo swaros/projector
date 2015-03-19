@@ -23,6 +23,9 @@ namespace Projector
 
         private ReflectionScript OnMessageScript;
 
+        private ReflectionScript OnWebResultScript;
+
+        private string webRequestName = "httpResponse";
 
         public ReflectForm()
         {
@@ -62,6 +65,12 @@ namespace Projector
         public void OnMessage(ReflectionScript script)
         {
             this.OnMessageScript = script;
+        }
+
+        public void OnWebResponse(string nameOfVar,ReflectionScript script)
+        {
+            this.webRequestName = nameOfVar;
+            this.OnWebResultScript = script;
         }
 
         public void OnCloseForm(ReflectionScript script)
@@ -146,6 +155,11 @@ namespace Projector
 
         private void sendHtToWeb(string username, string password, string callUrl)
         {
+            if (httpWorker.IsBusy)
+            {
+                MessageBox.Show("There is an Request already Send and in Progress. A Webrequest is Limited by one per RequestForm.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string oldCap = this.getCaption();
             this.Enabled = false;
             this.setCaption("WAIT: Sending Content to Web...");
@@ -167,6 +181,13 @@ namespace Projector
                     }
                 }
 
+                if (element is ImageLoader)
+                {
+                    ImageLoader img = (ImageLoader)element;
+                    sendThisAsString = false;
+                    webCall.addOrReplaceParam(element.Name, img);
+                }
+
                 if (sendThisAsString)
                 {
                     string nameOfObject = element.Name;
@@ -175,12 +196,8 @@ namespace Projector
                 }
 
             }
-            webCall.load();
-            string error = webCall.getLastError();
-            if (error != "")
-            {
-                MessageBox.Show(error, "Error On Webrequest", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            httpWorker.RunWorkerAsync(webCall);
+            
             this.Enabled = true;
             this.setCaption(oldCap);    
         }
@@ -197,6 +214,44 @@ namespace Projector
             this.closeRequestAction();
             Application.DoEvents();
             
+        }
+
+        private void httpWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            NetHtAccess webCall = (NetHtAccess)e.Argument;
+            webCall.load();
+            httpWorker.ReportProgress(1, webCall);
+            
+        }
+
+        private void httpWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //NetHtAccess webCall = (NetHtAccess)e.Result;
+            this.Enabled = true;
+        }
+
+        private void httpWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            NetHtAccess webCall = (NetHtAccess)e.UserState;
+            string error = webCall.getLastError();
+            if (error != "")
+            {
+                MessageBox.Show(error, "Error On Webrequest", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                if (this.OnWebResultScript != null)
+                {
+                    if (this.webRequestName != "")
+                    {
+                        this.OnWebResultScript.createOrUpdateStringVar("&" + this.webRequestName, webCall.getContent());
+                    }
+                    RefScriptExecute exec = new RefScriptExecute(this.OnWebResultScript, this);
+                    exec.run();
+
+                }
+            }
+            this.Enabled = true;
         }
     }
 }

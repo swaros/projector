@@ -170,6 +170,7 @@
     <Compile Include="EditMacro.Designer.cs">
       <DependentUpon>EditMacro.cs</DependentUpon>
     </Compile>
+    <Compile Include="FileSelector.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

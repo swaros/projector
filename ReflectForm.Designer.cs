@@ -29,7 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReflectForm));
+            this.httpWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
+            // 
+            // httpWorker
+            // 
+            this.httpWorker.WorkerReportsProgress = true;
+            this.httpWorker.WorkerSupportsCancellation = true;
+            this.httpWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.httpWorker_DoWork);
+            this.httpWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.httpWorker_ProgressChanged);
+            this.httpWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.httpWorker_RunWorkerCompleted);
             // 
             // ReflectForm
             // 
@@ -49,5 +58,7 @@
         }
 
         #endregion
+
+        private System.ComponentModel.BackgroundWorker httpWorker;
     }
 }

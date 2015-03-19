@@ -108,32 +108,75 @@ namespace Projector.Net.Secured
             }
         }
 
+
+        /// <summary>
+        /// adds or replace existing Objects 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void addOrReplaceParam(string name, Object value)
+        {
+            if (this.parameters.ContainsKey(name))
+            {
+                this.parameters[name] = value;
+            }
+            else
+            {
+                this.parameters.Add(name, value);
+            }
+        }
+
+        private string ImageToBase64(System.Drawing.Image image, System.Drawing.Imaging.ImageFormat format)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                // Convert Image to byte[]
+                image.Save(ms, format);
+                byte[] imageBytes = ms.ToArray();
+
+                // Convert byte[] to Base64 String
+                string base64String = Convert.ToBase64String(imageBytes);
+                return base64String;
+            }
+        }
+
         /// <summary>
         /// builds webRequest parameters
         /// </summary>
         /// <param name="wr"></param>
-        private void setPostData(WebRequest wr)
+        private void setPostData(WebRequest request)
         {
-            
+
             NameValueCollection outgoingQueryString = HttpUtility.ParseQueryString(String.Empty);
-            string add = "";
+
             foreach (DictionaryEntry req in this.parameters)
             {
-                //postData += add + req.Key.ToString() + "=" + req.Value.ToString();
-                //add = "&";
+                if (req.Value is String)
+                {
+                    if (req.Value.ToString() != "")
+                        outgoingQueryString.Add(req.Key.ToString(), req.Value.ToString());
+                }
 
-                if (req.Value.ToString() != "")
-                    outgoingQueryString.Add(req.Key.ToString(), req.Value.ToString());
-                
+                if (req.Value is ImageLoader)
+                {
+                    ImageLoader img = (ImageLoader)req.Value;
+                    if (img.getPath() != "" && File.Exists(img.getPath()))
+                    {
+                        System.Drawing.Image myImage = System.Drawing.Image.FromFile(img.getPath());                        
+                        string base64Image = ImageToBase64(myImage, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        outgoingQueryString.Add(req.Key.ToString(), base64Image);
+                        outgoingQueryString.Add(req.Key.ToString() + "_path", img.getPath());
+
+                    }
+                }
+
             }
             string postData = outgoingQueryString.ToString();
             byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-            wr.ContentLength = byteArray.Length;
-            // Get the request stream.
-            Stream dataStream = wr.GetRequestStream();
-            // Write the data to the request stream.
+            request.ContentLength = byteArray.Length;
+            Stream dataStream = request.GetRequestStream();
             dataStream.Write(byteArray, 0, byteArray.Length);
-            // Close the Stream object.
+            //dataStream.Flush();    
             dataStream.Close();
         }
 
@@ -159,7 +202,8 @@ namespace Projector.Net.Secured
             
             if (this.parameters.Count > 0)
             {
-                //this.setPostData(request);
+                this.setPostData(request);
+                /*
                 NameValueCollection outgoingQueryString = HttpUtility.ParseQueryString(String.Empty);
 
                 foreach (DictionaryEntry req in this.parameters)
@@ -174,7 +218,7 @@ namespace Projector.Net.Secured
                 Stream dataStream = request.GetRequestStream();                
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 //dataStream.Flush();    
-                dataStream.Close();
+                dataStream.Close();*/
             }
 
 

@@ -35,7 +35,7 @@ namespace Projector
             List<ReflectNewWidget> widgets = new List<ReflectNewWidget>();
 
             ReflectNewWidget rForm = new ReflectNewWidget();
-            rForm.Name = "Form";
+            rForm.Name = "ReflectForm";
             rForm.Icon = Projector.Properties.Resources.application2;
             rForm.CodeInsert = "NEW ReflectForm !MyForm";
             widgets.Add(rForm);
@@ -48,50 +48,50 @@ namespace Projector
 
 
             ReflectNewWidget rBt = new ReflectNewWidget();
-            rBt.Name = "Button";
+            rBt.Name = "ReflectButton";
             rBt.Icon = Projector.Properties.Resources.stock_form_button;
             rBt.CodeInsert = "NEW ReflectButton !MyButton";
             widgets.Add(rBt);
 
             ReflectNewWidget rBt2 = new ReflectNewWidget();
-            rBt2.Name = "Input Text";
+            rBt2.Name = "LabelText";
             rBt2.Icon = Projector.Properties.Resources.stock_form_text_box_16;
             rBt2.CodeInsert = "NEW LabelText !MyTextBox";
             widgets.Add(rBt2);
 
             ReflectNewWidget rBt3 = new ReflectNewWidget();
-            rBt3.Name = "Input Number";
+            rBt3.Name = "InputNumber";
             rBt3.Icon = Projector.Properties.Resources.stock_form_text_box_16;
             rBt3.CodeInsert = "NEW LabelInteger !MyNumberBox";
             widgets.Add(rBt3);
 
 
             ReflectNewWidget rBt4 = new ReflectNewWidget();
-            rBt4.Name = "Date";
+            rBt4.Name = "DateSelect";
             rBt4.Icon = Projector.Properties.Resources.date;
             rBt4.CodeInsert = "NEW DateSelect !MyDateBox";
             widgets.Add(rBt4);
 
             ReflectNewWidget rBt5 = new ReflectNewWidget();
-            rBt5.Name = "Group Query";
+            rBt5.Name = "GroupQuery";
             rBt5.Icon = Projector.Properties.Resources.database_link;
             rBt5.CodeInsert = "NEW GroupQuery !MyGroupQuery";
             widgets.Add(rBt5);
 
             ReflectNewWidget rBt6 = new ReflectNewWidget();
-            rBt6.Name = "DB";
+            rBt6.Name = "ReflectionDatabase";
             rBt6.Icon = Projector.Properties.Resources.database;
             rBt6.CodeInsert = "NEW ReflectionDatabase !MyDb";
             widgets.Add(rBt6);
 
             ReflectNewWidget rBt7 = new ReflectNewWidget();
-            rBt7.Name = "DB Browser";
+            rBt7.Name = "queryBrowser";
             rBt7.Icon = Projector.Properties.Resources.database_table;
             rBt7.CodeInsert = "NEW queryBrowser !MyDbBrowser";
             widgets.Add(rBt7);
 
             ReflectNewWidget rBt8 = new ReflectNewWidget();
-            rBt8.Name = "String Worker";
+            rBt8.Name = "RString";
             rBt8.Icon = Projector.Properties.Resources.edit_replace;
             rBt8.CodeInsert = "NEW RString !MyStringWorker";
             widgets.Add(rBt8);
@@ -109,36 +109,43 @@ namespace Projector
             widgets.Add(rBt10);
 
             ReflectNewWidget rBt11 = new ReflectNewWidget();
-            rBt11.Name = "Result List";
+            rBt11.Name = "ResultList";
             rBt11.Icon = Projector.Properties.Resources.stock_form_table_control;
             rBt11.CodeInsert = "NEW ResultList !MyResult";
             widgets.Add(rBt11);
 
 
             ReflectNewWidget rBt12 = new ReflectNewWidget();
-            rBt12.Name = "Sensor";
+            rBt12.Name = "DiffSensor";
             rBt12.Icon = Projector.Properties.Resources.Line_chart;
             rBt12.CodeInsert = "NEW DiffSensor !MySensor";
             widgets.Add(rBt12);
 
             ReflectNewWidget rBt13 = new ReflectNewWidget();
-            rBt13.Name = "Timer";
+            rBt13.Name = "IntervalTimer";
             rBt13.Icon = Projector.Properties.Resources.player_time;
             rBt13.CodeInsert = "NEW IntervalTimer !MyTimer";
             widgets.Add(rBt13);
 
             ReflectNewWidget rBt14 = new ReflectNewWidget();
-            rBt14.Name = "Image";
+            rBt14.Name = "ImageLoader";
             rBt14.Icon = Projector.Properties.Resources.picgladi;
             rBt14.CodeInsert = "NEW ImageLoader !MyImage";
             widgets.Add(rBt14);
             /*
             ReflectNewWidget rBt15 = new ReflectNewWidget();
-            rBt15.Name = "Group Box";
+            rBt15.Name = "FormGroup";
             rBt15.Icon = Projector.Properties.Resources.stock_exit_group;
             rBt15.CodeInsert = "NEW FormGroup !MyGroup";
             widgets.Add(rBt15);
             */
+
+            ReflectNewWidget rBt16 = new ReflectNewWidget();
+            rBt16.Name = "FileSelector";
+            rBt16.Icon = Projector.Properties.Resources.folder_open_16;
+            rBt16.CodeInsert = "NEW FileSelector !MyFileSelect";
+            widgets.Add(rBt16);
+
             return widgets;
         }
 
@@ -254,7 +261,18 @@ namespace Projector
             {
                 return this.getFormGroup(refObject, parent);
             }
+
+            if (refObject.typeOfObject == "FileSelector")
+            {
+                return this.getFileSelector(refObject, parent);
+            }
+
             return null;
+        }
+
+        private FileSelector getFileSelector(ReflectionScriptDefines refObject, Object parent)
+        {
+            return new FileSelector();
         }
 
         private ReflectionDatabase getDatabase(ReflectionScriptDefines refObject, Object parent)

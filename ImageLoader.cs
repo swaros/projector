@@ -11,6 +11,7 @@ namespace Projector
 {
     public partial class ImageLoader : UserControl
     {
+        public Image refImage;
         public ImageLoader()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace Projector
             {
                 return;
             }
-
+            this.refImage = this.loadImage.Image;
             this.Width = this.loadImage.Size.Width;
             this.Height = this.loadImage.Size.Height;
 
@@ -64,7 +65,11 @@ namespace Projector
             this.Top = top;
         }
 
-       
+        public String getPath()
+        {
+            return this.loadImage.ImageLocation;
+        }
+
         public void reDraw()
         {
             this.loadImage.Update();

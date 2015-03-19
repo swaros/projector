@@ -66,6 +66,17 @@ namespace Projector
             this.TextLabel.Width = width;
         }
 
+        public void setHeight(int height)
+        {
+            if (height > 20)
+            {
+                this.TextBox.Multiline = true;
+                
+                this.TextBox.Height = height;
+                
+            }
+        }
+
         public void setpasswordChars()
         {
             this.TextBox.UseSystemPasswordChar = true;
