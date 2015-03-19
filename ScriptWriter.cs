@@ -402,6 +402,20 @@ namespace Projector
         }
 
 
+        private ReflectNewWidget getWidgetByObjectName(string name)
+        {
+            List<ReflectNewWidget> allWidgets = this.script.getAllWidgets();
+            foreach (ReflectNewWidget widget in allWidgets)
+            {
+                if (widget.Name == name)
+                {
+                    return widget;
+                }
+            }
+            return null;
+        }
+
+
         // updates the generic tree depending on actually used objects
         private void extractObjectInfos()
         {
@@ -415,10 +429,27 @@ namespace Projector
                 TreeNode objectNode;
                 if (!genericTree.Nodes.ContainsKey(nodeKey))
                 {
+                    ReflectNewWidget objectWidget = this.getWidgetByObjectName(nodeKey);
+
+                    if (objectWidget != null)
+                    {
+                        if (!genericTree.ImageList.Images.ContainsKey(nodeKey))
+                        {
+                            genericTree.ImageList.Images.Add(nodeKey, objectWidget.Icon);
+                        }
+                    }
+
                     objectNode = new TreeNode(nodeKey);
                     objectNode.Name = nodeKey;
                     objectNode.ImageIndex = ScriptWriter.TREE_OBJECT_IMG_IDENT;
                     objectNode.SelectedImageIndex = objectNode.ImageIndex;
+
+                    if (genericTree.ImageList.Images.ContainsKey(nodeKey))
+                    {
+                        int index = genericTree.ImageList.Images.IndexOfKey(nodeKey);
+                        objectNode.ImageIndex = index;
+                        objectNode.SelectedImageIndex = index;
+                    }
 
                     if (addMethods)
                     {
