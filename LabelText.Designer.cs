@@ -62,6 +62,8 @@
             this.TextBox.Size = new System.Drawing.Size(100, 20);
             this.TextBox.TabIndex = 1;
             this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+            this.TextBox.Enter += new System.EventHandler(this.TextBox_Enter);
+            this.TextBox.Leave += new System.EventHandler(this.TextBox_Leave);
             // 
             // LabelText
             // 

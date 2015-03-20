@@ -410,6 +410,11 @@ namespace Projector.Script
         {
             this.createOrUpdateStringVar("&PATH.DOCUMENTS", System.Environment.GetFolderPath(System.Environment.SpecialFolder.CommonDocuments) + System.IO.Path.DirectorySeparatorChar.ToString());
             this.createOrUpdateStringVar(".PATH.SEP", System.IO.Path.DirectorySeparatorChar.ToString());
+            this.createOrUpdateStringVar("&PATH.SEP", System.IO.Path.DirectorySeparatorChar.ToString());
+            this.createOrUpdateStringVar("&SYSTEM.USERNAME", System.Environment.UserName);
+            this.createOrUpdateStringVar("&SYSTEM.USERDOMAIN", System.Environment.UserDomainName);
+            this.createOrUpdateStringVar("&SYSTEM.OSVERSION", System.Environment.OSVersion.VersionString);
+            this.createOrUpdateStringVar("&SYSTEM.CURRENTDIR", System.Environment.CurrentDirectory);
             this.createOrUpdateStringVar(".NL.", "\n");
         }
 

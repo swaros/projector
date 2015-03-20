@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Projector.Script;
 
 namespace Projector
 {
@@ -14,14 +15,39 @@ namespace Projector
 
         public Boolean doNotSend = false;
 
+
+        private ReflectionScript onLeaveScr;
+        private ReflectionScript onEnterScr;
+        private ReflectionScript onChangeScr;
+
         public LabelText()
         {
             InitializeComponent();
         }
 
+        public void OnTextChange(ReflectionScript scr)
+        {
+            this.onChangeScr = scr;
+        }
+
+        public void OnLeave(ReflectionScript scr)
+        {
+            this.onLeaveScr = scr;
+        }
+
+        public void OnEnter(ReflectionScript scr)
+        {
+            this.onEnterScr = scr;
+        }
+
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
             this.Text = TextBox.Text;
+            if (this.onChangeScr != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.onChangeScr, this);
+                exec.run();
+            }
         }
 
         public void setLabel(string name)
@@ -66,6 +92,11 @@ namespace Projector
             this.TextLabel.Width = width;
         }
 
+        public void isPostElement(Boolean onOff)
+        {
+            this.doNotSend = !onOff;
+        }
+
         public void setHeight(int height)
         {
             if (height > 20)
@@ -81,6 +112,24 @@ namespace Projector
         {
             this.TextBox.UseSystemPasswordChar = true;
             this.doNotSend = true;
+        }
+
+        private void TextBox_Leave(object sender, EventArgs e)
+        {
+            if (this.onLeaveScr != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.onLeaveScr, this);
+                exec.run();
+            }
+        }
+
+        private void TextBox_Enter(object sender, EventArgs e)
+        {
+            if (this.onEnterScr != null)
+            {
+                RefScriptExecute exec = new RefScriptExecute(this.onEnterScr, this);
+                exec.run();
+            }
         }
 
     }
