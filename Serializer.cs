@@ -24,6 +24,10 @@ namespace Projector
             PConfigContent objectToSerialize;
             Stream stream = null;
             stream = File.Open(filename, FileMode.Open);
+            if (stream.Length < 1)
+            {
+                return null;
+            }
             BinaryFormatter bFormatter = new BinaryFormatter();
             if (stream != null)
             {

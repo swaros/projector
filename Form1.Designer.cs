@@ -83,6 +83,7 @@
             this.openScript = new System.Windows.Forms.OpenFileDialog();
             this.connectionTest = new System.ComponentModel.BackgroundWorker();
             this.ScriptDawTimer = new System.Windows.Forms.Timer(this.components);
+            this.setPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -186,7 +187,8 @@
             this.setupToolStripMenuItem,
             this.groupsToolStripMenuItem,
             this.toolStripSeparator8,
-            this.mainSettingsToolStripMenuItem});
+            this.mainSettingsToolStripMenuItem,
+            this.setPasswordToolStripMenuItem});
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.einstellungenToolStripMenuItem.Text = "&Options";
@@ -387,7 +389,7 @@
             this.addProfil});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(578, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(547, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
@@ -566,6 +568,13 @@
             this.ScriptDawTimer.Interval = 250;
             this.ScriptDawTimer.Tick += new System.EventHandler(this.ScriptDawTimer_Tick);
             // 
+            // setPasswordToolStripMenuItem
+            // 
+            this.setPasswordToolStripMenuItem.Name = "setPasswordToolStripMenuItem";
+            this.setPasswordToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.setPasswordToolStripMenuItem.Text = "Set Password...";
+            this.setPasswordToolStripMenuItem.Click += new System.EventHandler(this.setPasswordToolStripMenuItem_Click);
+            // 
             // ProjectorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -656,6 +665,7 @@
         private System.Windows.Forms.ToolStripButton enableGroupView;
         private System.Windows.Forms.Timer ScriptDawTimer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem setPasswordToolStripMenuItem;
 
 
     }

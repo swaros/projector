@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using Projector.Crypt;
 
 namespace Projector
 {
@@ -15,24 +16,44 @@ namespace Projector
         private List<PConfigContent> Content;
         private PConfigContent parentNode;
 
+        public static string password;
 
         public PConfigContent()
         {
+            
+        }
 
+        private string getDeCryptStringContent(string valueName,SerializationInfo info)
+        {
+            string str = (string)info.GetValue(valueName, typeof(string));
+            if (PConfigContent.password != null && str != null && PConfigContent.password.Length >= PrCrypt.MIN_LENGTH && !PrCrypt.error)
+            {
+                str = PrCrypt.Decrypt(str, PConfigContent.password);
+            }
+            return str;
+        }
+
+        private string getCryptStringContent(string str)
+        {            
+            if (PConfigContent.password != null && str != null && PConfigContent.password.Length >= PrCrypt.MIN_LENGTH && !PrCrypt.error)
+            {
+                str = PrCrypt.Encrypt(str, PConfigContent.password);
+            }
+            return str;
         }
 
         public PConfigContent(SerializationInfo info, StreamingContext ctxt)
         {
-            this.Name = (string)info.GetValue("Name", typeof(string));
-            this.FlatContent = (string)info.GetValue("FlatContent", typeof(string));
+            this.Name = this.getDeCryptStringContent("Name",info);
+            this.FlatContent = this.getDeCryptStringContent("FlatContent", info); 
             this.Content = (List<PConfigContent>)info.GetValue("Childs", typeof(List<PConfigContent>));
             this.parentNode = (PConfigContent)info.GetValue("parent", typeof(PConfigContent));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
         {
-            info.AddValue("Name", this.Name);
-            info.AddValue("FlatContent", this.FlatContent);
+            info.AddValue("Name", this.getCryptStringContent( this.Name));
+            info.AddValue("FlatContent", this.getCryptStringContent( this.FlatContent) );
             info.AddValue("Childs", this.Content);
             info.AddValue("parent", this.parentNode, typeof(PConfigContent));
         }

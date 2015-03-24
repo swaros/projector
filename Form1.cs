@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Collections;
 using Projector.Script;
+using Projector.Crypt;
 
 namespace Projector
 {
@@ -106,6 +107,23 @@ namespace Projector
         /// </summary>
         Image bgImage;
 
+        /// <summary>
+        /// flag to save any changes automatically
+        /// </summary>
+        Boolean AutoSave = true;
+
+        /// <summary>
+        /// occurs on loading fails.
+        /// also on decryption fails
+        /// </summary>
+        Boolean LoadingError = false;
+
+        /// <summary>
+        /// the current session password
+        /// </summary>
+        private string userPassword = null;
+
+
         private int WorbenchBackGroundImage = 0;
 
         /// <summary>
@@ -114,14 +132,58 @@ namespace Projector
         public ProjectorForm()
         {
             InitializeComponent();
+            this.Text = "Projector [not secured]";
+            this.mainInit();
+                      
+        }
+
+        private void mainInit()
+        {
             this.mainScriptFolder = Application.StartupPath;
             Setup.loadRuntimeConfig();
-            bgImage = Projector.Properties.Resources.bg_07;
-            //bgImage = Projector.Properties.Resources.bg_03;
-            updateProfilSelector();
-
-
+            this.checkSettings();
+           
         }
+
+        private Boolean checkSettings(Boolean callMain = true)
+        {
+            try
+            {
+                string chkit = this.Setup.getSettingWidthDefault("client.left", "projector");
+                bgImage = Projector.Properties.Resources.bg_07;
+                updateProfilSelector();
+                this.Enabled = true;
+            }
+            catch (Exception e)
+            {
+                //MessageBox.Show(e.Message, "Loading Error");
+                this.Text = "Projector [password set]";
+                AutoSave = false;
+                LoadingError = true;
+                this.Enabled = false;
+                this.userPassword = null;
+                this.retryDecrypt(callMain);
+                return false;
+            }
+            return true;
+        }
+
+        private void retryDecrypt(Boolean callMain = true)
+        {
+            PasswordForm pwForm = new PasswordForm();
+            PrCrypt.error = false;
+            if (pwForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string pw = pwForm.passwordText.Text;
+                this.userPassword = pw;
+                Setup.setPassword(pw);
+                AutoSave = true;
+                LoadingError = false;
+                if (callMain) this.mainInit();
+            }
+            
+        }
+
 
         /// <summary>
         /// add an selected Proflibutton to to index 
@@ -185,8 +247,15 @@ namespace Projector
         /// <param name="forSaving">if true the values are stored, on false some dafault values be used </param>
         private void copySettings(Boolean forSaving)
         {
+            if (LoadingError)
+            {
+                return;
+            }
+
             if (forSaving)
             {
+               
+
                 this.Setup.setValue("client.left", this.Left);
                 this.Setup.setValue("client.top", this.Top);
                 this.Setup.setValue("client.width", this.Width);
@@ -203,12 +272,15 @@ namespace Projector
 
                 this.Setup.setList("client.groups.names", this.profilGroups);
                 this.Setup.setValue("client.maximized", this.WindowState == FormWindowState.Maximized);
-                this.Setup.setValue("client.workbench.bgimage", this.WorbenchBackGroundImage);    
-                
+                this.Setup.setValue("client.workbench.bgimage", this.WorbenchBackGroundImage);
+                this.Setup.setValue("client.checkval", "projector");        
                 
             }
             else
             {
+
+              
+
                 this.Left = this.Setup.getIntSettingWidthDefault("client.left", this.Left);
                 this.Top = this.Setup.getIntSettingWidthDefault("client.top", this.Top);
                 this.Width = this.Setup.getIntSettingWidthDefault("client.width", this.Width);
@@ -266,8 +338,21 @@ namespace Projector
         /// <param name="e"></param>
         private void ProjectorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.copySettings(true);
-            this.Setup.saveRuntimeConfig();
+            this.Enabled = false;
+            if (AutoSave)
+            {
+                this.Text = "Saving Project...";
+                this.copySettings(true);
+                if (this.userPassword != null){
+                    this.Setup.setPassword( this.userPassword );
+                }
+                else
+                {
+                    this.Setup.setPassword(null);
+                }
+                
+                this.Setup.saveRuntimeConfig();
+            }
         }
 
         /// <summary>
@@ -317,10 +402,12 @@ namespace Projector
         /// </summary>
         private void drawGroupButtons()
         {
+            if (LoadingError) return;
 
             flowLayoutControllPanel.Controls.Clear();
             
             List<String> groups = this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_NAMES, new List<string>());
+            if (groups == null) return;
 
             chooseGroup.Items.Clear();
             chooseGroup.Items.Add("[ALL]");
@@ -691,6 +778,8 @@ namespace Projector
         /// </summary>
         private void DrawQuickButtonStyle()
         {
+            if (LoadingError) return;
+
             this.resetDefaultWindowsStyle();
             flowLayout.Controls.Clear();
             List<string> grp = this.getGroupMembers(chooseGroup.Text);
@@ -751,14 +840,18 @@ namespace Projector
         /// <returns></returns>
         private List<string> getGroupMembers(string name)
         {
-            if (name != "[ALL]")
+            if (!LoadingError)
             {
-                return this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + name, new List<string>());
+                if (name != "[ALL]")
+                {
+                    return this.Setup.getListWidthDefault(PConfig.KEY_GROUPS_MEMBERS + "." + name, new List<string>());
+                }
+                else
+                {
+                    return this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
+                }
             }
-            else
-            {
-                return this.Setup.getListWidthDefault(PConfig.KEY_PROFILS, new List<string>());
-            }
+            return null;
 
         }
 
@@ -1267,6 +1360,13 @@ namespace Projector
         {
             initApp();
             updateProfilSelector();
+
+            // some decryption errors?
+            //get out!
+            if (PrCrypt.error || LoadingError)
+            {
+                Application.Exit();
+            }
         }
 
         /// <summary>
@@ -1336,6 +1436,7 @@ namespace Projector
         {
             if (saveProject.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                this.Setup.setPassword(this.userPassword);               
                 this.Setup.saveConfigToFile(saveProject.FileName);
 
             }
@@ -1350,7 +1451,15 @@ namespace Projector
         {
             if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+
+                this.Setup.setPassword(this.userPassword);
+                
                 this.Setup.loadConfigFromFile(openProjectDlg.FileName);
+                if (!this.checkSettings(false))
+                {
+                    MessageBox.Show("Loading Error. Keep in Mind to set Userpassword BEFORE you read Decrypted Projects. Now i will reset to Default Settings ", "Reading Error", MessageBoxButtons.OK , MessageBoxIcon.Error);
+                    this.mainInit();
+                }
                 this.updateProfilSelector();
             }
         }
@@ -1838,6 +1947,24 @@ namespace Projector
             groupButtonsToolStripMenuItem.Checked = !groupButtonsToolStripMenuItem.Checked;
             enableGroupView.Checked = groupButtonsToolStripMenuItem.Checked;
             groupButtonsToolStripMenuItem_Click(sender, e);
+        }
+
+        private void setPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasswordForm pwForm = new PasswordForm();
+            PrCrypt.error = false;
+            if (pwForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string pw = pwForm.passwordText.Text;
+                this.userPassword = pw;
+                this.Text = "Projector [password Set]";
+                if (pw.Length < PrCrypt.MIN_LENGTH)
+                {
+                    MessageBox.Show("Password is disabled because you need mor then 7 Chars.", "Password disabled");
+                    this.Text = "Projector [not secured]";
+                    this.userPassword = null;
+                }
+            }
         }
 
        

@@ -278,6 +278,12 @@
     <Compile Include="PanelDrawing.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PasteListView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -309,6 +315,7 @@
     <Compile Include="PrConsole.Designer.cs">
       <DependentUpon>PrConsole.cs</DependentUpon>
     </Compile>
+    <Compile Include="PrCrypt.cs" />
     <Compile Include="ProcSync.cs" />
     <Compile Include="Profil.cs" />
     <Compile Include="ProfilButton.cs">
@@ -410,6 +417,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ObjectBrowser.resx">
       <DependentUpon>ObjectBrowser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PasteListView.resx">
       <DependentUpon>PasteListView.cs</DependentUpon>

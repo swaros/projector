@@ -6,6 +6,7 @@ using System.IO;
 using System.Collections;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Projector.Crypt;
 
 namespace Projector
 {
@@ -49,6 +50,11 @@ namespace Projector
         public String getNameSpace()
         {
             return this.NameSpace;
+        }
+
+        public void setPassword(string password)
+        {
+            PConfigContent.password = password;
         }
 
         public PConfig(SerializationInfo info, StreamingContext ctxt)
