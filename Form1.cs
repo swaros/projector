@@ -171,6 +171,7 @@ namespace Projector
         private void retryDecrypt(Boolean callMain = true)
         {
             PasswordForm pwForm = new PasswordForm();
+            pwForm.setPasswordRequired();
             PrCrypt.error = false;
             if (pwForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -1436,9 +1437,25 @@ namespace Projector
         {
             if (saveProject.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                this.Setup.setPassword(this.userPassword);               
-                this.Setup.saveConfigToFile(saveProject.FileName);
 
+                int chooseType = saveProject.FilterIndex;
+                if (chooseType == 2)
+                {
+                    PasswordForm pwInp = new PasswordForm();
+                    pwInp.setPasswordRequired();
+                    pwInp.setLabel("Set Password to Encrypt the File");
+                    if (pwInp.ShowDialog() != System.Windows.Forms.DialogResult.OK && pwInp.passwordText.MaxLength >= PrCrypt.MIN_LENGTH)
+                    {
+                        // get out on abort
+                        MessageBox.Show("Export aborted","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        return;
+                    }
+                    this.Setup.setPassword(pwInp.passwordText.Text);
+                }
+
+                
+                this.Setup.saveConfigToFile(saveProject.FileName);
+                this.Setup.setPassword(this.userPassword);
             }
         }
 
@@ -1452,7 +1469,20 @@ namespace Projector
             if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
 
-                this.Setup.setPassword(this.userPassword);
+                int chooseType = saveProject.FilterIndex;
+                if (chooseType == 2)
+                {
+                    PasswordForm pwInp = new PasswordForm();
+                    pwInp.setPasswordRequired();
+                    pwInp.setLabel("Set Password to Decrypt the Import");
+                    if (pwInp.ShowDialog() != System.Windows.Forms.DialogResult.OK && pwInp.passwordText.MaxLength >= PrCrypt.MIN_LENGTH)
+                    {
+                        // get out on abort
+                        MessageBox.Show("Import aborted", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                    this.Setup.setPassword(pwInp.passwordText.Text);
+                }
                 
                 this.Setup.loadConfigFromFile(openProjectDlg.FileName);
                 if (!this.checkSettings(false))

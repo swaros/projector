@@ -45,6 +45,7 @@
             this.groupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.mainSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchButtonModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +84,6 @@
             this.openScript = new System.Windows.Forms.OpenFileDialog();
             this.connectionTest = new System.ComponentModel.BackgroundWorker();
             this.ScriptDawTimer = new System.Windows.Forms.Timer(this.components);
-            this.setPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -219,6 +219,13 @@
             this.mainSettingsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.mainSettingsToolStripMenuItem.Text = "Main Settings...";
             this.mainSettingsToolStripMenuItem.Click += new System.EventHandler(this.mainSettingsToolStripMenuItem_Click);
+            // 
+            // setPasswordToolStripMenuItem
+            // 
+            this.setPasswordToolStripMenuItem.Name = "setPasswordToolStripMenuItem";
+            this.setPasswordToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.setPasswordToolStripMenuItem.Text = "Set Password...";
+            this.setPasswordToolStripMenuItem.Click += new System.EventHandler(this.setPasswordToolStripMenuItem_Click);
             // 
             // displayToolStripMenuItem
             // 
@@ -538,14 +545,12 @@
             // 
             // openProjectDlg
             // 
-            this.openProjectDlg.DefaultExt = "xml";
-            this.openProjectDlg.FileName = "Project.pconf";
-            this.openProjectDlg.Filter = "Xml Profil|*.pconf";
+            this.openProjectDlg.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec";
             this.openProjectDlg.Title = "Open Project";
             // 
             // saveProject
             // 
-            this.saveProject.Filter = "Xml Profil|*.pconf";
+            this.saveProject.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec";
             this.saveProject.Title = "Project Save";
             // 
             // openScript
@@ -567,13 +572,6 @@
             // 
             this.ScriptDawTimer.Interval = 250;
             this.ScriptDawTimer.Tick += new System.EventHandler(this.ScriptDawTimer_Tick);
-            // 
-            // setPasswordToolStripMenuItem
-            // 
-            this.setPasswordToolStripMenuItem.Name = "setPasswordToolStripMenuItem";
-            this.setPasswordToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.setPasswordToolStripMenuItem.Text = "Set Password...";
-            this.setPasswordToolStripMenuItem.Click += new System.EventHandler(this.setPasswordToolStripMenuItem_Click);
             // 
             // ProjectorForm
             // 

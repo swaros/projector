@@ -68,8 +68,10 @@
             this.passwordText.Location = new System.Drawing.Point(16, 45);
             this.passwordText.Name = "passwordText";
             this.passwordText.Size = new System.Drawing.Size(172, 20);
-            this.passwordText.TabIndex = 3;
+            this.passwordText.TabIndex = 1;
             this.passwordText.UseSystemPasswordChar = true;
+            this.passwordText.TextChanged += new System.EventHandler(this.passwordText_TextChanged);
+            this.passwordText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordText_KeyDown);
             // 
             // PasswordForm
             // 
@@ -85,7 +87,7 @@
             this.MinimizeBox = false;
             this.Name = "PasswordForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Insert Password to Unlock";
+            this.Text = "Insert Password";
             this.ResumeLayout(false);
             this.PerformLayout();
 
