@@ -11,6 +11,9 @@ namespace Projector
 
     class ConfigSerializer
     {
+
+        public Boolean readingError = false;
+
         public void SerializeObject(string filename, PConfigContent objectToSerialize)
         {
             Stream stream = File.Open(filename, FileMode.Create);
@@ -29,9 +32,20 @@ namespace Projector
                 return null;
             }
             BinaryFormatter bFormatter = new BinaryFormatter();
+            this.readingError = false;
             if (stream != null)
             {
-                Object tmp = bFormatter.Deserialize(stream);
+                Object tmp;
+                try
+                {
+                    tmp = bFormatter.Deserialize(stream);
+                }
+                catch (System.Runtime.Serialization.SerializationException)
+                {
+                    this.readingError = true;
+                    return null;
+                }
+                
                 objectToSerialize = (PConfigContent)tmp;
                 stream.Close();
                 return objectToSerialize;

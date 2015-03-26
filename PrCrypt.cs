@@ -391,8 +391,43 @@ namespace Projector.Crypt
             } while (bytesRead != 0);
 
             // close everything 
-            cs.Close(); // this will also close the unrelying fsOut stream 
+            try
+            {
+                cs.Close(); // this will also close the unrelying fsOut stream 
+            }
+            catch (System.Security.Cryptography.CryptographicException)
+            {
+                error = true;
+            }
+            
             fsIn.Close();
+        }
+
+
+        public static void CryptFile(string fileName, string passWord){
+            string path = System.IO.Path.GetTempFileName();
+            string pathBackup = System.IO.Path.GetTempFileName();
+            Encrypt(fileName, path, passWord);
+            System.IO.File.Replace(path, fileName,pathBackup);
+            System.IO.File.Delete(pathBackup);
+        }
+
+        public static void DeCryptFile(string fileName, string passWord)
+        {
+            string path = System.IO.Path.GetTempFileName();
+            string pathBackup = System.IO.Path.GetTempFileName();
+            
+            Decrypt(fileName, path, passWord);
+            try 
+            {
+                System.IO.File.Replace(path, fileName, pathBackup);
+                System.IO.File.Delete(pathBackup);
+            }
+            catch (IOException)
+            {
+                error = true;
+            }
+            
         }
     }
 }

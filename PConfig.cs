@@ -85,8 +85,8 @@ namespace Projector
         public void saveRuntimeConfig()
         {
             if (PConfig.Configuration != null)
-            {
-                fileHandle.SerializeObject(this.getDefaultFilename(), PConfig.Configuration);
+            {                
+                fileHandle.SerializeObject(this.getDefaultFilename(), PConfig.Configuration);                
             }
             
         }

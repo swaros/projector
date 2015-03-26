@@ -137,6 +137,12 @@ namespace Projector
                       
         }
 
+        /// <summary>
+        /// Main initialisation.
+        /// Try to load the current default config
+        /// and check if these sucessfully. otherwise (because of decryption error)
+        /// user is asked again for the password to retry
+        /// </summary>
         private void mainInit()
         {
             this.mainScriptFolder = Application.StartupPath;
@@ -145,6 +151,12 @@ namespace Projector
            
         }
 
+        /// <summary>
+        /// try to parse the loaded content. 
+        /// thats possible only if not the whole file is decrypted.
+        /// </summary>
+        /// <param name="callMain">if true the main setup willl called again</param>
+        /// <returns></returns>
         private Boolean checkSettings(Boolean callMain = true)
         {
             try
@@ -168,6 +180,11 @@ namespace Projector
             return true;
         }
 
+        /// <summary>
+        /// retrys to decrypt by displaying the password prompt to
+        /// User
+        /// </summary>
+        /// <param name="callMain">if true the main setup willl called again</param>
         private void retryDecrypt(Boolean callMain = true)
         {
             PasswordForm pwForm = new PasswordForm();
@@ -254,9 +271,7 @@ namespace Projector
             }
 
             if (forSaving)
-            {
-               
-
+            {               
                 this.Setup.setValue("client.left", this.Left);
                 this.Setup.setValue("client.top", this.Top);
                 this.Setup.setValue("client.width", this.Width);
@@ -279,9 +294,7 @@ namespace Projector
             }
             else
             {
-
               
-
                 this.Left = this.Setup.getIntSettingWidthDefault("client.left", this.Left);
                 this.Top = this.Setup.getIntSettingWidthDefault("client.top", this.Top);
                 this.Width = this.Setup.getIntSettingWidthDefault("client.width", this.Width);
@@ -376,12 +389,19 @@ namespace Projector
             }
         }
 
+        /// <summary>
+        /// speed up redrawing by hiding
+        /// the layout
+        /// </summary>
         public void HoldLayout()
         {
             flowLayout.Visible = false;
             flowLayout.SuspendLayout();
         }
 
+        /// <summary>
+        /// show layout after redrawings
+        /// </summary>
         public void RedrawLayout()
         {
             this.flowLayout.ResumeLayout();
@@ -1437,7 +1457,7 @@ namespace Projector
         {
             if (saveProject.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
+                string pw = "";
                 int chooseType = saveProject.FilterIndex;
                 if (chooseType == 2)
                 {
@@ -1450,11 +1470,18 @@ namespace Projector
                         MessageBox.Show("Export aborted","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         return;
                     }
+                    pw = pwInp.passwordText.Text;
                     this.Setup.setPassword(pwInp.passwordText.Text);
                 }
 
                 
                 this.Setup.saveConfigToFile(saveProject.FileName);
+
+                if (chooseType == 2)
+                {
+                    PrCrypt.CryptFile(saveProject.FileName, pw);
+                }
+
                 this.Setup.setPassword(this.userPassword);
             }
         }
@@ -1468,8 +1495,9 @@ namespace Projector
         {
             if (openProjectDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
-                int chooseType = saveProject.FilterIndex;
+                PrCrypt.error = false;
+                int chooseType = openProjectDlg.FilterIndex;
+                string pw = "";
                 if (chooseType == 2)
                 {
                     PasswordForm pwInp = new PasswordForm();
@@ -1481,10 +1509,24 @@ namespace Projector
                         MessageBox.Show("Import aborted", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
+                    pw = pwInp.passwordText.Text;
                     this.Setup.setPassword(pwInp.passwordText.Text);
+                    string tmp = System.IO.Path.GetTempFileName();
+                    PrCrypt.Decrypt(openProjectDlg.FileName, tmp, pw);
+                    if (PrCrypt.error)
+                    {
+                        MessageBox.Show("Decryption Error. Check Password ", "Reading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.Setup.loadConfigFromFile(tmp);
+                    System.IO.File.Delete(tmp);
+                }
+                else
+                {
+                    this.Setup.loadConfigFromFile(openProjectDlg.FileName);
                 }
                 
-                this.Setup.loadConfigFromFile(openProjectDlg.FileName);
+                
                 if (!this.checkSettings(false))
                 {
                     MessageBox.Show("Loading Error. Keep in Mind to set Userpassword BEFORE you read Decrypted Projects. Now i will reset to Default Settings ", "Reading Error", MessageBoxButtons.OK , MessageBoxIcon.Error);
