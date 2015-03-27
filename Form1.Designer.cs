@@ -106,7 +106,7 @@
             this.profilesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(685, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(940, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -285,9 +285,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ProfilInfo,
             this.connectionState});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 414);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 489);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(685, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(940, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -309,11 +309,11 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.MainContainer);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(685, 365);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(940, 440);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(685, 390);
+            this.toolStripContainer1.Size = new System.Drawing.Size(940, 465);
             this.toolStripContainer1.TabIndex = 2;
             this.toolStripContainer1.Text = "toolStripContainer1";
             // 
@@ -327,7 +327,7 @@
             this.MainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainContainer.Location = new System.Drawing.Point(0, 0);
             this.MainContainer.Name = "MainContainer";
-            this.MainContainer.Size = new System.Drawing.Size(685, 365);
+            this.MainContainer.Size = new System.Drawing.Size(940, 440);
             this.MainContainer.TabIndex = 0;
             // 
             // mainSlitter
@@ -345,7 +345,7 @@
             // mainSlitter.Panel2
             // 
             this.mainSlitter.Panel2.Controls.Add(this.flowLayout);
-            this.mainSlitter.Size = new System.Drawing.Size(685, 365);
+            this.mainSlitter.Size = new System.Drawing.Size(940, 440);
             this.mainSlitter.SplitterDistance = 172;
             this.mainSlitter.TabIndex = 1;
             // 
@@ -355,7 +355,7 @@
             this.flowLayoutControllPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutControllPanel.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutControllPanel.Name = "flowLayoutControllPanel";
-            this.flowLayoutControllPanel.Size = new System.Drawing.Size(172, 365);
+            this.flowLayoutControllPanel.Size = new System.Drawing.Size(172, 440);
             this.flowLayoutControllPanel.TabIndex = 0;
             this.flowLayoutControllPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.flowLayoutControllPanel_DragEnter);
             // 
@@ -366,7 +366,7 @@
             this.flowLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayout.Location = new System.Drawing.Point(0, 0);
             this.flowLayout.Name = "flowLayout";
-            this.flowLayout.Size = new System.Drawing.Size(509, 365);
+            this.flowLayout.Size = new System.Drawing.Size(764, 440);
             this.flowLayout.TabIndex = 0;
             this.flowLayout.DragDrop += new System.Windows.Forms.DragEventHandler(this.flowLayout_DragDrop);
             this.flowLayout.DragEnter += new System.Windows.Forms.DragEventHandler(this.flowLayout_DragEnter);
@@ -577,7 +577,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(685, 436);
+            this.ClientSize = new System.Drawing.Size(940, 511);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);

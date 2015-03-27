@@ -84,6 +84,7 @@ namespace Projector
         public queryBrowser()
         {
             InitializeComponent();
+            this.addImages();
             this.AutoText = new AutoCompletion(textBox1);
             splitContainer1.Panel1Collapsed = true;
             tabControl1.SelectedIndex = 1;
@@ -103,6 +104,16 @@ namespace Projector
             dialogToolStrip.Visible = false;
             editBox.Visible = false;
         }
+
+        private void addImages()
+        {
+            //this.DbColumnPics
+            ResToImage.addImageToList(this.DbColumnPics, Projector.Properties.Resources.database);
+            ResToImage.addImageToList(this.DbColumnPics, Projector.Properties.Resources.stock_form_table_control);
+            ResToImage.addImageToList(this.DbColumnPics, Projector.Properties.Resources.icon_key);
+            ResToImage.addImageToList(this.DbColumnPics, Projector.Properties.Resources.report);
+        }
+
 
         public void loadPlaceHolder()
         {
@@ -1272,6 +1283,30 @@ namespace Projector
             e.Result = tmpObj;
         }
 
+        private void updateHeader()
+        {
+            List<MysqlStruct> str = this.database.getAllFieldsStruct(this.getCurrentTable());
+            int index = 0;
+            foreach (ColumnHeader head in listView1.Columns)
+            {
+                MysqlStruct curStr = str[index];
+                if (curStr.Key == "PRI")
+                {
+                    head.ImageIndex = 2;
+                }
+                else if (curStr.Key == "MUL")
+                {
+                    head.ImageIndex = 3;
+                }
+                else
+                {
+                    head.ImageIndex = 1;
+                }
+                
+                index++;
+            }
+        }
+
         private void mysqlWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
            ListviewForWorker tmpObj = (ListviewForWorker)e.Result;
@@ -1290,6 +1325,7 @@ namespace Projector
                    worker.searchAndmark("null", listView1, 0, Color.SkyBlue);
                }
                autosortColumns();
+               this.updateHeader();
                this.executeScript(this.onFinishedScript); 
            }
            else
@@ -1307,6 +1343,9 @@ namespace Projector
                }
                
            }
+
+           
+
            //listView1.Items = tmpObj.listView.Items;
            //runningLabel.Text = "Finished";
            tableView.Enabled = true;

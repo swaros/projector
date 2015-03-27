@@ -63,16 +63,6 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1260538310_Binoculars {
-            get {
-                object obj = ResourceManager.GetObject("1260538310_Binoculars", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap add_16 {
             get {
                 object obj = ResourceManager.GetObject("add_16", resourceCulture);
@@ -376,6 +366,16 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap bigsql {
             get {
                 object obj = ResourceManager.GetObject("bigsql", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Binoculars {
+            get {
+                object obj = ResourceManager.GetObject("Binoculars", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

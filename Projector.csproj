@@ -518,6 +518,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Antlr3>
     <None Include="ClassDiagram2.cd" />
+    <None Include="mono_build.sh" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -577,6 +578,7 @@
     <Compile Include="RefScrVariable.cs" />
     <Compile Include="RefSrcStates.cs" />
     <Compile Include="RegexGroup.cs" />
+    <Compile Include="ResToImage.cs" />
     <Compile Include="ResultList.cs" />
     <Compile Include="RichBox.cs">
       <SubType>Component</SubType>
