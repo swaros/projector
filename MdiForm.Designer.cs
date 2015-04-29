@@ -94,14 +94,14 @@
             // querysToolStripMenuItem
             // 
             this.querysToolStripMenuItem.Name = "querysToolStripMenuItem";
-            this.querysToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.querysToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.querysToolStripMenuItem.Text = "Query Watch...";
             this.querysToolStripMenuItem.Click += new System.EventHandler(this.querysToolStripMenuItem_Click);
             // 
             // sensorsToolStripMenuItem
             // 
             this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
-            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.sensorsToolStripMenuItem.Text = "Sensors...";
             this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.sensorsToolStripMenuItem_Click);
             // 
@@ -109,7 +109,7 @@
             // 
             this.querysToolStripMenuItem1.Name = "querysToolStripMenuItem1";
             this.querysToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.querysToolStripMenuItem1.Size = new System.Drawing.Size(205, 22);
+            this.querysToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
             this.querysToolStripMenuItem1.Text = "Query Browser...";
             this.querysToolStripMenuItem1.Click += new System.EventHandler(this.querysToolStripMenuItem1_Click);
             // 
@@ -196,21 +196,21 @@
             this.refreshAllToolStripMenuItem.Name = "refreshAllToolStripMenuItem";
             this.refreshAllToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.R)));
-            this.refreshAllToolStripMenuItem.Size = new System.Drawing.Size(336, 22);
+            this.refreshAllToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.refreshAllToolStripMenuItem.Text = "&Refresh All Query Browser";
             this.refreshAllToolStripMenuItem.Click += new System.EventHandler(this.refreshAllToolStripMenuItem_Click);
             // 
             // makeSnapshotAsScriptToolStripMenuItem
             // 
             this.makeSnapshotAsScriptToolStripMenuItem.Name = "makeSnapshotAsScriptToolStripMenuItem";
-            this.makeSnapshotAsScriptToolStripMenuItem.Size = new System.Drawing.Size(336, 22);
+            this.makeSnapshotAsScriptToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.makeSnapshotAsScriptToolStripMenuItem.Text = "&Make Snapshot as Script";
             this.makeSnapshotAsScriptToolStripMenuItem.Click += new System.EventHandler(this.makeSnapshotAsScriptToolStripMenuItem_Click);
             // 
             // editScriptToolStripMenuItem
             // 
             this.editScriptToolStripMenuItem.Name = "editScriptToolStripMenuItem";
-            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(336, 22);
+            this.editScriptToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.editScriptToolStripMenuItem.Text = "&Edit Script...";
             this.editScriptToolStripMenuItem.Click += new System.EventHandler(this.editScriptToolStripMenuItem_Click);
             // 
@@ -219,14 +219,14 @@
             this.scriptExec.Name = "scriptExec";
             this.scriptExec.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
             | System.Windows.Forms.Keys.R)));
-            this.scriptExec.Size = new System.Drawing.Size(336, 22);
+            this.scriptExec.Size = new System.Drawing.Size(283, 22);
             this.scriptExec.Text = "E&xecute Script";
             this.scriptExec.Click += new System.EventHandler(this.scriptExec_Click);
             // 
             // loadScriptToolStripMenuItem
             // 
             this.loadScriptToolStripMenuItem.Name = "loadScriptToolStripMenuItem";
-            this.loadScriptToolStripMenuItem.Size = new System.Drawing.Size(336, 22);
+            this.loadScriptToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.loadScriptToolStripMenuItem.Text = "Load Script...";
             this.loadScriptToolStripMenuItem.Click += new System.EventHandler(this.loadScriptToolStripMenuItem_Click);
             // 
@@ -308,6 +308,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(130, 132);
             this.toolStripButton1.Text = "Query Browser";
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton1.Click += new System.EventHandler(this.querysToolStripMenuItem1_Click);
             // 
             // toolStripButton2

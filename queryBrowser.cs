@@ -1286,6 +1286,9 @@ namespace Projector
         private void updateHeader()
         {
             List<MysqlStruct> str = this.database.getAllFieldsStruct(this.getCurrentTable());
+            if (str.Count() < 1)
+                return;   
+
             int index = 0;
             foreach (ColumnHeader head in listView1.Columns)
             {
