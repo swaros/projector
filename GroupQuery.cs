@@ -659,6 +659,7 @@ namespace Projector
             {
                 resultView.Columns.Add("Group");
                 statusLabel.Text = "writing group no.: " + pp;
+                onStatusChange("csv ... write group no.: " + pp + "  " + filename);
                 statusLabel.Invalidate();
                 Application.DoEvents();
                 for (int ai = 0; ai < resultView.Items.Count; ai++)
@@ -680,6 +681,7 @@ namespace Projector
                 pp++;
             }
             statusLabel.Text = "writing DONE ("+ filename +") ";
+            
         }
 
         private ListView buildSumList()

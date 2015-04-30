@@ -16,12 +16,16 @@ namespace Projector
         private Boolean diffMode = true;
         private Boolean GrowMode = false;
         private Boolean valueAdded = false;
+
+        private string nextLabel = "";
+
         public DiffSensor()
         {
             InitializeComponent();
             this.sensorPanel.lineColor = Color.LightYellow;
             this.sensorPanel.BackColor = Color.DarkGreen;
             this.sensorPanel.Label = "Sensor";
+            this.sensorPanel.showValues = true;
         }
 
         public void setEnabled(Boolean onoff)
@@ -49,6 +53,17 @@ namespace Projector
             this.setDValue(value);
         }
 
+        public void setNextLabel(string label)
+        {
+            this.nextLabel = label;
+        }
+
+        public void Clear()
+        {
+            this.sensorPanel.Clear();
+            this.reDraw();
+        }
+
         private void setDValue(Double value)
         {
             double submitted = value;
@@ -70,7 +85,17 @@ namespace Projector
                 this.lastValue = submitted;
             }
             this.valueAdded = true;
-            this.sensorPanel.addValue(value);
+            if (this.nextLabel != "")
+            {
+                this.sensorPanel.addValue(value, this.nextLabel);
+                this.sensorPanel.useLabels = true;
+                this.nextLabel = "";
+            }
+            else
+            {
+                this.sensorPanel.addValue(value);
+            }
+            
         }
 
         public void setValueAsString(string valueAsString)

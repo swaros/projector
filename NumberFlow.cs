@@ -8,6 +8,7 @@ namespace Projector
     class NumberFlow
     {
         private List<double> numbers = new List<double>();
+        private List<string> labels = new List<string>();
         private double maxValue = 1;
         private double minValue = 0;
         private int maxEntrys = 100;
@@ -18,6 +19,17 @@ namespace Projector
         public int MaxOutput = 100;
         public int getmaxDivisor = 2;
 
+
+        public void Clear()
+        {
+            this.numbers.Clear();
+            this.labels.Clear();
+            Count = 0;
+            MaxOutput = 100;
+            getmaxDivisor = 2;
+            maxValue = 1;
+            minValue = 0;
+        }
 
         public double getmax()
         {
@@ -41,17 +53,24 @@ namespace Projector
 
         public void add(double Number)
         {
+            this.add(Number, "");
+        }
+
+        public void add(double Number, string label)
+        {
             if (numbers.Count >= maxEntrys)
             {
                 //if (numbers[0] == maxValue) findMax();                
                 //if (numbers[0] == minValue) findMin();
 
                 numbers.RemoveAt(0);
+                labels.RemoveAt(0);
                 findMax();
                 findMin();
             }
 
             numbers.Add(Number);
+            labels.Add(label);
             if (Number > maxValue) maxValue = Number;
             if (Number < minValue) minValue = Number;
             Count = numbers.Count;
@@ -78,6 +97,17 @@ namespace Projector
         {
             if (pos >= 0 && pos < numbers.Count) return numbers[pos];
             else return 0;
+        }
+
+        public string getLabelAt(int pos)
+        {
+            if (pos >= 0 && pos < labels.Count) return labels[pos];
+            else return "";
+        }
+
+        public string getCurrentLabel()
+        {
+            return getLabelAt(readerPos);
         }
 
         public double read()

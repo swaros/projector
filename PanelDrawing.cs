@@ -20,6 +20,9 @@ namespace Projector
         public Color labelColor = Color.White;
         public Color lineColor = Color.White;
         public Color elementsColor = Color.Gray;
+        public int infoLabelMinLength = 150;
+
+        public Boolean useLabels = false;
 
         public bool showTime = true;
         public bool showValues = false;
@@ -49,12 +52,21 @@ namespace Projector
             return diff.Ticks;
         }
 
-        
+        public void Clear()
+        {
+            this.flow.Clear();
+        }
 
         public void addValue(Double value)
         {
             flow.add(value);
            
+        }
+
+        public void addValue(Double value, string label)
+        {
+            flow.add(value, label);
+
         }
 
         public void draw(Graphics gOrigin)
@@ -95,6 +107,7 @@ namespace Projector
             for (int i = 0; i < flow.Count; i++)
             {
                 Int64 val = (Int64)flow.getAtMax(i);
+                
 
                 int leftStart = this.Width - startX;
 
@@ -109,8 +122,27 @@ namespace Projector
                     {
                        
                         Font drawFont = new Font("Arial", 7);
-                        drawRect.Height = 15;
-                        g.DrawString(val + "", drawFont, fontBrush, drawRect);
+                        System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical);
+                        long yoffset = Middle - (val - 15);
+                        if (yoffset < 20) yoffset = 20;
+                       
+                        g.DrawString(flow.getAt(i) + "", drawFont, fontBrush, leftStart,yoffset, drawFormat);
+                        if (useLabels)
+                        {
+                            string displayLabel = flow.getLabelAt(i);
+                            int minWidth = this.infoLabelMinLength;
+                            
+                            if (step > minWidth)
+                            {
+                                minWidth = step;
+                            }
+
+                            
+                            g.DrawString(displayLabel, drawFont, fontBrush, leftStart + 10, Middle - (val - 15), drawFormat);
+
+                            
+
+                        }
 
                     }
 
@@ -137,7 +169,9 @@ namespace Projector
 
                         Font drawFont = new Font("Arial", 7);
                         drawRect.Height = 15;
-                        g.DrawString(val + "", drawFont, fontBrush, drawRect);
+                        g.DrawString(flow.getAt(i) + "", drawFont, fontBrush, drawRect);
+
+                         
 
                     }
 
@@ -151,7 +185,7 @@ namespace Projector
                      , new Point(LastX + halfBar - step / 2, LastY)
                      , new Point(LastX + halfBar, LastY));
 
-                
+               
 
                 startX += step + space;
                 LastX = leftStart;
