@@ -410,7 +410,7 @@ namespace Projector.Script.Vars
                     else
                     {
                         this.lastErrorCode = Projector.Script.Vars.Variables.ERROR_INCOMPATIBLE_TYPE;
-                        this.lastErrorMessage = "Cast Error " + value + " can not converted from " + valueType.Name + " in to " + originType.Name;
+                        this.lastErrorMessage = name + "::Cast Error [" + value + "] can not converted from [" + valueType.Name + "] in to [" + originType.Name + "]";
                         this.isError = true;
                         return false;
                     }
@@ -442,7 +442,7 @@ namespace Projector.Script.Vars
                         catch (Exception ex)
                         {
                             this.lastErrorCode = Projector.Script.Vars.Variables.ERROR_INCOMPATIBLE_TYPE;
-                            this.lastErrorMessage = "Cast Error. " + value + " can to be converted to INT. " + ex.Message;
+                            this.lastErrorMessage = name + "::Cast Error. " + value + " can to be converted to INT. |" + ex.Message;
                             this.isError = true;
                             return false;
                         }
@@ -470,7 +470,7 @@ namespace Projector.Script.Vars
                             globalRenameHash["&" + name] = store;
                          */
                         this.lastErrorCode = Projector.Script.Vars.Variables.ERROR_INCOMPATIBLE_TYPE;
-                        this.lastErrorMessage = "Type Double can not be used for Type Integer.";
+                        this.lastErrorMessage = name + "::Type Double can not be used for Type Integer.";
                         this.isError = true;
 
                     }
@@ -485,7 +485,7 @@ namespace Projector.Script.Vars
                         catch (Exception ex)
                         {
                             this.lastErrorCode = Projector.Script.Vars.Variables.ERROR_INCOMPATIBLE_TYPE;
-                            this.lastErrorMessage = "Cast Error. " + value + " can to be converted to Double. " + ex.Message;
+                            this.lastErrorMessage = name + "::Cast Error. " + value + " can to be converted to Double. " + ex.Message;
                             this.isError = true;
                             return false;
                         }

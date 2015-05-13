@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 namespace Projector
 {
-
    
     class PanelDrawing : Panel
     {
@@ -18,7 +17,8 @@ namespace Projector
         public Color positivColor = Color.Green;
         public Color negativColor = Color.Red;
         public Color labelColor = Color.White;
-        public Color lineColor = Color.White;
+        public Color SublabelColor = Color.Yellow;    
+        public Color lineColor = Color.Orange;
         public Color elementsColor = Color.Gray;
         public int infoLabelMinLength = 150;
 
@@ -75,8 +75,6 @@ namespace Projector
             Bitmap bmp = new Bitmap(this.Width, this.Height);
             Graphics g = Graphics.FromImage(bmp);
 
-
-
             int startX = 0;
             int step = 8;
             int space = 1;
@@ -106,13 +104,8 @@ namespace Projector
             int LastY =Middle;
             for (int i = 0; i < flow.Count; i++)
             {
-                Int64 val = (Int64)flow.getAtMax(i);
-                
-
-                int leftStart = this.Width - startX;
-
-                
-
+                Int64 val = (Int64)flow.getAtMax(i);                
+                int leftStart = this.Width - startX;                
                 if (val > 0)
                 {
                     drawRect = new RectangleF(leftStart, Middle - val, step, val);
@@ -135,18 +128,13 @@ namespace Projector
                             if (step > minWidth)
                             {
                                 minWidth = step;
-                            }
-
+                            }                            
+                            g.DrawString(displayLabel, drawFont, new SolidBrush(SublabelColor), leftStart + 10, Middle - (val - 15), drawFormat);
                             
-                            g.DrawString(displayLabel, drawFont, fontBrush, leftStart + 10, Middle - (val - 15), drawFormat);
-
-                            
-
                         }
-
                     }
-
                 }
+
                 if (val<0)
                 {
                     long bval = 0;
@@ -160,38 +148,28 @@ namespace Projector
                         //throw;
                     }
 
-                    drawRect = new RectangleF(leftStart, Middle, step, bval);
-                    
+                    drawRect = new RectangleF(leftStart, Middle, step, bval);                    
                     g.FillRectangle(BGred, drawRect);
 
                     if (showValues)
                     {
-
                         Font drawFont = new Font("Arial", 7);
                         drawRect.Height = 15;
                         g.DrawString(flow.getAt(i) + "", drawFont, fontBrush, drawRect);
-
                          
-
                     }
-
                 }
-                int halfBar = (step / 2);
-                
+                int halfBar = (step / 2);                
                 //g.DrawLine(new Pen(lineColor), new Point(leftStart + halfBar, (int)(Middle - val)), new Point(LastX + halfBar, LastY));
                 g.DrawBezier(new Pen(lineColor)
                      , new Point(leftStart + halfBar, (int)(Middle - val))
                      , new Point(leftStart + halfBar + step/2, (int)(Middle - val))
                      , new Point(LastX + halfBar - step / 2, LastY)
                      , new Point(LastX + halfBar, LastY));
-
-               
-
+              
                 startX += step + space;
                 LastX = leftStart;
-                LastY = (int) (Middle - val);
-
-                
+                LastY = (int) (Middle - val);            
 
             }
 
@@ -200,10 +178,10 @@ namespace Projector
 
             Font drawFontLabel = new Font("Arial", 7);
             drawRect = new RectangleF(this.Width / 3, 0, this.Width / 2, 20);
-            g.DrawString(flow.getmax() + "", drawFontLabel, new SolidBrush(elementsColor), drawRect);
+            g.DrawString(flow.getmax() + "", drawFontLabel, new SolidBrush(labelColor), drawRect);
 
             drawRect.Y = this.Height - 15;
-            g.DrawString(flow.getMin() + "", drawFontLabel, new SolidBrush(elementsColor), drawRect);
+            g.DrawString(flow.getMin() + "", drawFontLabel, new SolidBrush(labelColor), drawRect);
 
             // copy bitmap
             gOrigin.DrawImageUnscaled(bmp,new Point(0,0));

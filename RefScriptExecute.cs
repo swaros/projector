@@ -6,6 +6,7 @@ using System.Collections;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Projector.Script.Vars;
 
 namespace Projector.Script
 {
@@ -35,7 +36,7 @@ namespace Projector.Script
         /// </summary>
         private Stopwatch RunTime = new Stopwatch();
         private Hashtable WaitingTimers = new Hashtable();
-        
+
         /// <summary>
         /// the level of executers. Root is always 0
         /// </summary>
@@ -56,7 +57,7 @@ namespace Projector.Script
         /// <summary>
         /// storage for all created objectes til run
         /// </summary>
-        private Hashtable objectReferences = new Hashtable();
+        // private Hashtable objectReferences = new Hashtable();
 
         private Object parentObject;
 
@@ -75,7 +76,10 @@ namespace Projector.Script
         /// </summary>
         private Boolean forceAbort = false;
 
-
+        /// <summary>
+        /// variable container
+        /// </summary>
+        private Variables scrVars = new Variables();
 
         /// <summary>
         /// the current executed script line stored for debugging
@@ -88,7 +92,7 @@ namespace Projector.Script
         private int currentExecLine = 0;
 
         public int startLine = 0;
-        
+
         public String getRunIdent()
         {
             if (this.ProcID != "unset")
@@ -102,7 +106,7 @@ namespace Projector.Script
             }
             System.Guid uuid = System.Guid.NewGuid();
             return uuid.ToString();
-            
+
         }
 
         public RefScriptExecute(ReflectionScript script, Object parent)
@@ -111,7 +115,7 @@ namespace Projector.Script
             this.currentScript = script;
             this.currentScript.CurrentExecuter = this;
             this.ProcID = this.getRunIdent();
-            this.init();            
+            this.init();
         }
 
         public void setWatcher(Object watcher, String MethodName)
@@ -125,7 +129,7 @@ namespace Projector.Script
 
         private void init()
         {
-            this.objectDefines.Add("NEW",new ReflectNew());
+            this.objectDefines.Add("NEW", new ReflectNew());
         }
 
         public void StopNow()
@@ -191,7 +195,7 @@ namespace Projector.Script
 
         public Boolean run()
         {
-            
+
             if (this.currentScript.Parent != null && this.currentScript.Parent.CurrentExecuter != null)
             {
                 this.watcherMethod = this.currentScript.Parent.CurrentExecuter.watcherMethod;
@@ -214,6 +218,16 @@ namespace Projector.Script
                 Boolean runSucceed = this.exec();
                 return (runSucceed == true && this.internalError == false);
             }
+            else
+            {
+                this.internalError = true;
+                if (this.currentScript.Parent != null)
+                {
+                    this.currentScript.updateErrorsToParent();
+                }
+
+            }
+
             return false;
         }
 
@@ -223,13 +237,13 @@ namespace Projector.Script
             this.internalError = false;
             if (this.currentScript.getNotRuntimeErrorCount() == 0)
             {
-                this.currentExecLine = 0;               
-            }            
+                this.currentExecLine = 0;
+            }
         }
 
         public Boolean Next()
         {
-           
+
             if (this.currentExecLine >= this.currentScript.getScript().Count)
             {
                 this.runState = RefScriptExecute.STATE_FINISHED;
@@ -243,8 +257,8 @@ namespace Projector.Script
             this.runState = RefScriptExecute.STATE_RUN;
             Boolean execRes = this.execSingleLine();
             this.runState = RefScriptExecute.STATE_WAIT;
-          
-            
+
+
             return execRes;
 
         }
@@ -274,7 +288,7 @@ namespace Projector.Script
             }
 
             this.runState = RefScriptExecute.STATE_RUN;
-            Boolean execRes = this.execSingleLine();            
+            Boolean execRes = this.execSingleLine();
             //this.currentExecLine++;
             return execRes;
 
@@ -295,7 +309,7 @@ namespace Projector.Script
 
         public Hashtable getRuntimeObjects()
         {
-            return this.objectReferences;
+            return this.scrVars.getObjects();
         }
 
 
@@ -305,33 +319,33 @@ namespace Projector.Script
             {
                 return this.currentScript.Parent.CurrentExecuter.getObjectFromRoot(name);
             }
-            if (objectReferences.ContainsKey(name))
+            if (this.scrVars.objectIsStored(name))
             {
-                return objectReferences[name];
+                return this.scrVars.getRegisteredObject(name);
             }
             return null;
         }
 
         public Object findObject(string name)
         {
-            if (objectReferences.ContainsKey(name))
+            if (this.scrVars.objectIsStored(name))
             {
-                return objectReferences[name];
+                return this.scrVars.getRegisteredObject(name);
             }
             if (this.currentScript.Parent != null)
             {
                 return this.currentScript.Parent.CurrentExecuter.findObject(name);
             }
-           
+
             return null;
         }
 
 
         public Object getRegisteredObject(string name)
         {
-            if (objectReferences.ContainsKey(name))
+            if (this.scrVars.objectIsStored(name))
             {
-                return objectReferences[name];
+                return this.scrVars.getRegisteredObject(name);
             }
 
             if (this.currentScript.Parent != null)
@@ -367,7 +381,7 @@ namespace Projector.Script
 
         private Boolean execLine(ReflectionScriptDefines scrLine)
         {
-          
+
             // what ever happens ..tis line is executed
             this.currentExecLine++;
 
@@ -420,7 +434,7 @@ namespace Projector.Script
                 {
                     ProcSync.removeSubProc(RefScriptExecute.PROC_NAME + this.ProcID, procIdent);
                 }
-                
+
             }
 
             if (cmd == "EXEC")
@@ -431,28 +445,28 @@ namespace Projector.Script
                 {
                     if (externalScript == "")
                     {
-                        externalScript = this.currentScript.fillUpAll(parStr);                       
+                        externalScript = this.currentScript.fillUpAll(parStr);
                     }
                     else
                     {
                         execPars.Add(this.currentScript.fillUpAll(parStr));
                     }
-                    
+
                 }
 
-                
+
                 PConfig seting = new PConfig();
                 string scrPath = seting.getSettingWidthDefault("client.scriptpath", System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments));
                 string scrFileName = scrPath + System.IO.Path.DirectorySeparatorChar.ToString() + externalScript;
                 if (System.IO.File.Exists(scrFileName))
                 {
-                    
+
                     string code = System.IO.File.ReadAllText(scrFileName);
                     ReflectionScript exScrpt = new ReflectionScript();
                     exScrpt.setCode(code);
                     exScrpt.addSetupIfNotExists(ReflectionScript.SETUP_PREVIEW, true);
                     RefScriptExecute subExec = new RefScriptExecute(exScrpt, this.parentObject);
-                    int ppp=0;
+                    int ppp = 0;
                     foreach (string parToExec in execPars)
                     {
                         ppp++;
@@ -533,7 +547,7 @@ namespace Projector.Script
                 {
                     this.runState = scrLine.setState;
                 }
-                
+
             }
 
             // execute object assignements that NOT are methods. so just code assignements
@@ -542,17 +556,17 @@ namespace Projector.Script
                 // for any assignement a variable must be exists and allready defined
                 this.currentScript.recalcBrackets(scrLine);
 
-               
+
             }
 
 
             if (scrLine.isVariable && !scrLine.isSetup)
             {
-                this.currentScript.updateParam( scrLine, true );
+                this.currentScript.updateParam(scrLine, true);
             }
 
             if (scrLine.isObject && this.objectDefines.ContainsKey(cmd))
-            {              
+            {
                 scrLine.Referenz = objectDefines[cmd];
                 this.execReflectObject(scrLine);
                 if (scrLine.ReflectObject == null)
@@ -567,9 +581,9 @@ namespace Projector.Script
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
                     return false;
                 }
-                if (!this.objectReferences.ContainsKey(scrLine.name))
+                if (!this.scrVars.objectIsStored(scrLine.name))
                 {
-                    this.objectReferences.Add(scrLine.name, scrLine.ReflectObject);
+                    this.scrVars.createObject(scrLine.name, scrLine.ReflectObject, scrLine.typeOfObject);
                 }
                 else
                 {
@@ -583,13 +597,13 @@ namespace Projector.Script
                     lastErrorCode = Projector.RefSrcStates.EXEC_ERROR_INVALIDOBJECT;
                     return false;
                 }
-                
-                
+
+
             }
 
             if (scrLine.isMethod && scrLine.namedReference != null)
             {
-                
+
                 Object useObject = this.getRegisteredObject(scrLine.namedReference);
                 //Object useObject = scrLine.ReflectObject;
                 //Object useObject = this.currentScript.getRegisteredObject(scrLine.namedReference);
@@ -600,7 +614,7 @@ namespace Projector.Script
 
                     Object execResult = this.execMethod(useObject, scrLine);
                     scrLine.ReflectObject = useObject;
-
+                    this.currentScript.scrVars.updateExistingObject(scrLine.namedReference, useObject);
                     if (this.lastErrorCode > 0)
                     {
                         ScriptErrors error = new ScriptErrors();
@@ -613,7 +627,7 @@ namespace Projector.Script
                     else
                     {
 
-                        //this.currentScript.updateMeByObject(scrLine);
+                        this.currentScript.updateMeByObject(scrLine);
 
                         if (scrLine.isAssignement && execResult != null)
                         {
@@ -660,12 +674,12 @@ namespace Projector.Script
             {
                 while (this.runState == RefScriptExecute.STATE_RUN)
                 {
-                   Boolean execResult = this.Continue();
-                   if (execResult == false)
-                   {
-                       return false;
-                   }
-                }                
+                    Boolean execResult = this.Continue();
+                    if (execResult == false)
+                    {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -752,10 +766,10 @@ namespace Projector.Script
                     this.internalError = true;
                     return null;
                 }
-                
+
             }
 
-            
+
         }
 
         public int getCurrentExecutionLine()
@@ -766,7 +780,7 @@ namespace Projector.Script
         private void updateMessage(ReflectionScriptDefines refObj)
         {
             if (this.parentWatcher != null && watcherMethod != null)
-            {          
+            {
                 int startLn = 0;
 
                 if (this.currentScript.Parent != null)
@@ -776,7 +790,7 @@ namespace Projector.Script
 
                 Type queryWinType = this.parentWatcher.GetType();
                 MethodInfo myMethodInfo = queryWinType.GetMethod(this.watcherMethod);
-                object[] mParam = new object[] { refObj, refObj.lineNumber + startLn, this.runState , this.runlevel};
+                object[] mParam = new object[] { refObj, refObj.lineNumber + startLn, this.runState, this.runlevel };
                 refObj.ReflectObject = myMethodInfo.Invoke(this.parentWatcher, mParam);
             }
             Application.DoEvents();
@@ -784,7 +798,7 @@ namespace Projector.Script
 
 
         private ReflectionScriptDefines execReflectObject(ReflectionScriptDefines refObj)
-        {           
+        {
             Type queryWinType = refObj.Referenz.GetType();
             MethodInfo myMethodInfo = queryWinType.GetMethod("getObject");
             object[] mParam = new object[] { refObj, this.parentObject };

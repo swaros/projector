@@ -642,6 +642,23 @@ namespace Projector.Script
         }
 
         /// <summary>
+        /// send all errors to all levels of parents
+        /// </summary>
+        public void updateErrorsToParent()
+        {
+            if (this.Parent != null)
+            {
+                List<ScriptErrors> errList = this.getAllErrors();
+                foreach (ScriptErrors err in errList)
+                {
+                    this.Parent.addError(err);
+                }
+                this.Parent.updateErrorsToParent();
+            }
+        }
+
+
+        /// <summary>
         /// Returns count of all Errors they are NOT
         /// Runtime errors.
         /// </summary>
@@ -1896,11 +1913,11 @@ namespace Projector.Script
                 string type = cmdResult.scriptParameterTypes[i];
                 string defined = cmdResult.scriptParameters[i];
                 cmdResult.parameters[i] = this.upateParamValue(cmdResult.parameters[i], type, defined);
-
+                /*
                 if (setOrigin && cmdResult.name != null)
                 {
                     this.scrVars.updateExistingObject(cmdResult.name, cmdResult.parameters[i]);
-                }
+                }*/
 
                 if (this.debugMode && cmdResult.parameters[i] != null)
                 {

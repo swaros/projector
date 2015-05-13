@@ -1178,7 +1178,26 @@ namespace Projector
             if (script.imRunning())
             {
                 this.getRunningProcesses();
-                workerLabel.Text = "Still Running";
+
+                List<ScriptErrors> errList = script.getAllErrors();
+                int errCnt = errList.Count();
+                if (errCnt == 0)
+                    workerLabel.Text = "Still Running";
+                else
+                {
+                    workerLabel.Text = "Running but Errors occurs " + errCnt;
+                    logbook.Items.Clear();
+                    logbook.Items.Add("-------------------------");
+                    foreach (ScriptErrors err in errList)
+                    {
+                        logbook.Items.Add(err.errorMessage);
+                        logbook.Items.Add(err.lineNumber);
+                    }
+                    codeSplitContainer.Panel2Collapsed = false;
+                    showDebug.Checked = true;
+                    sourceControll.SelectedIndex = 3;
+                }
+                    
             }
             else
             {
