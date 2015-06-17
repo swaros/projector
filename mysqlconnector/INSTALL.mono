@@ -1,0 +1,2 @@
+cd path_to_your MySql.Data.dll assembly
+gacutil -i MySql.Data.dll
