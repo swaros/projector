@@ -41,7 +41,7 @@ namespace Projector
             widgets.Add(rForm);
 
             ReflectNewWidget rList = new ReflectNewWidget();
-            rList.Name = "List";
+            rList.Name = "ReflectList";
             rList.Icon = Projector.Properties.Resources.ui_list_box_blue;
             rList.CodeInsert = "NEW ReflectList !MyReflectList";
             widgets.Add(rList);
@@ -60,7 +60,7 @@ namespace Projector
             widgets.Add(rBt2);
 
             ReflectNewWidget rBt3 = new ReflectNewWidget();
-            rBt3.Name = "InputNumber";
+            rBt3.Name = "LabelInteger";
             rBt3.Icon = Projector.Properties.Resources.stock_form_text_box_16;
             rBt3.CodeInsert = "NEW LabelInteger !MyNumberBox";
             widgets.Add(rBt3);
