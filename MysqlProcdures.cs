@@ -173,7 +173,16 @@ namespace Projector
                 {
                     while (res.Read() && res.FieldCount > 0)
                     {
-                        string getResult = res.GetString(MysqlProcedures.createCodeIndex);
+                        string getResult;
+                        try
+                        {
+                            getResult = res.GetString(MysqlProcedures.createCodeIndex);
+                        }
+                        catch (System.Data.SqlTypes.SqlNullValueException nullEx)
+                        {
+                            getResult = null;
+                        }
+                        
                         if (null != getResult)
                         {
                             proc.created = getResult;

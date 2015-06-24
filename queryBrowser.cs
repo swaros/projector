@@ -1292,20 +1292,22 @@ namespace Projector
             int index = 0;
             foreach (ColumnHeader head in listView1.Columns)
             {
-                MysqlStruct curStr = str[index];
-                if (curStr.Key == "PRI")
+                if (index < str.Count)
                 {
-                    head.ImageIndex = 2;
+                    MysqlStruct curStr = str[index];
+                    if (curStr.Key == "PRI")
+                    {
+                        head.ImageIndex = 2;
+                    }
+                    else if (curStr.Key == "MUL")
+                    {
+                        head.ImageIndex = 3;
+                    }
+                    else
+                    {
+                        head.ImageIndex = 1;
+                    }
                 }
-                else if (curStr.Key == "MUL")
-                {
-                    head.ImageIndex = 3;
-                }
-                else
-                {
-                    head.ImageIndex = 1;
-                }
-                
                 index++;
             }
         }
