@@ -188,7 +188,7 @@ namespace Projector
             }
             else
             {
-                rowClickBtn.Image = Properties.Resources.arrow_back_24;
+                rowClickBtn.Image = Properties.Resources.arrowback24;
                 rowClickBtn.Text = "Select Index to Add Fields";
                 this.Cursor = Cursors.Default;
             }

@@ -157,7 +157,7 @@
   <data name="documents_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\documents_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_back_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowback32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-back_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="database_connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -166,7 +166,7 @@
   <data name="picgladi" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\picgladi.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="applications_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applications32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\applications_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="REDO_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -268,7 +268,7 @@
   <data name="layer_group_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\layer-group-add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_back_161" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowback161" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-back_161.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete_user_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -301,7 +301,7 @@
   <data name="database_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\database_server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_down_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowdown16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-down_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="internet_group_chat" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -310,7 +310,7 @@
   <data name="Explorer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Explorer.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="applications_161" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applications161" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\applications_161.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PRINT_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -361,7 +361,7 @@
   <data name="folder_60" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_60.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="application_side_tree" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applicationsidetree" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_side_tree.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="explain" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -403,7 +403,7 @@
   <data name="Network" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Network.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="applications_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applications16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\applications_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="arrow_up_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -424,7 +424,7 @@
   <data name="delete_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="application_view_list" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applicationviewlist" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_view_list.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="folder_closed_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -512,7 +512,7 @@
   <data name="folder_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_back_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowback16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-back_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gnome_mime_application_x_sql" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -611,7 +611,7 @@
   <data name="folder_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="applications_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applications24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\applications_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="arrow_forward_161" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -620,7 +620,7 @@
   <data name="disc_media_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\disc-media_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_back_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowback24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-back_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stock_record_macro" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -632,7 +632,7 @@
   <data name="folder_closed_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder-closed_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_down_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowdown32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-down_32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -678,7 +678,7 @@
   <data name="database_gear" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\database_gear.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_forward_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowforward16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-forward_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tool_preferences" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -712,10 +712,10 @@
   <data name="REDO_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\REDO_32.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow_down_24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="arrowdown24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arrow-down_24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="add16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="database_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -754,7 +754,7 @@
   <data name="application2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="application_form" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="applicationform" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\application_form.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="date" type="System.Resources.ResXFileRef, System.Windows.Forms">

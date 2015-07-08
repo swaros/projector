@@ -67,7 +67,7 @@ namespace Projector
             {
                 groupName.ForeColor = Color.DarkRed;
                 groupName.BackColor = Color.LightYellow;
-                manipulateBtn.Image = Projector.Properties.Resources.add_16;
+                manipulateBtn.Image = Projector.Properties.Resources.add16;
                 for (int i = 0; i < this.GroupedDatabases.Items.Count; i++)
                 {
                     this.GroupedDatabases.Items[i].Checked = false;

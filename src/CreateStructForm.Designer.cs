@@ -519,7 +519,7 @@
             // rowClickBtn
             // 
             this.rowClickBtn.Enabled = false;
-            this.rowClickBtn.Image = global::Projector.Properties.Resources.arrow_back_24;
+            this.rowClickBtn.Image = global::Projector.Properties.Resources.arrowback24;
             this.rowClickBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.rowClickBtn.Location = new System.Drawing.Point(534, 6);
             this.rowClickBtn.Name = "rowClickBtn";

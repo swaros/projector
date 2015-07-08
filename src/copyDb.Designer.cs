@@ -799,7 +799,7 @@
             // syncToRightToolStripMenuItem
             // 
             this.syncToRightToolStripMenuItem.Enabled = false;
-            this.syncToRightToolStripMenuItem.Image = global::Projector.Properties.Resources.arrow_forward_16;
+            this.syncToRightToolStripMenuItem.Image = global::Projector.Properties.Resources.arrowforward16;
             this.syncToRightToolStripMenuItem.Name = "syncToRightToolStripMenuItem";
             this.syncToRightToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.syncToRightToolStripMenuItem.Text = "&Sync to Right";
@@ -1307,7 +1307,7 @@
             // toolStripButton4
             // 
             this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::Projector.Properties.Resources.applications_16;
+            this.toolStripButton4.Image = global::Projector.Properties.Resources.applications16;
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22);

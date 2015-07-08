@@ -839,7 +839,7 @@ namespace Projector
             syncBtn.Click += new System.EventHandler(syncDbBtnClick);
             syncBtn.Width = 150;
             syncBtn.Height = 60;
-            syncBtn.Image = Projector.Properties.Resources.arrow_back_32;
+            syncBtn.Image = Projector.Properties.Resources.arrowback32;
 
 
             syncBtn.ImageAlign = ContentAlignment.TopCenter;

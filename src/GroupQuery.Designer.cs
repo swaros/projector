@@ -278,7 +278,7 @@
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Enabled = false;
-            this.toolStripButton1.Image = global::Projector.Properties.Resources.applications_32;
+            this.toolStripButton1.Image = global::Projector.Properties.Resources.applications32;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(36, 36);

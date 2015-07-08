@@ -234,7 +234,7 @@ namespace Projector
                 check.Add(displayname);
                 chform.Name = displayname;
 
-                if (chform.Text == "queryBrowser") MainTools.Items.Add(displayname,  Projector.Properties.Resources.application_view_list, windowSelect);
+                if (chform.Text == "queryBrowser") MainTools.Items.Add(displayname,  Projector.Properties.Resources.applicationviewlist, windowSelect);
                 else MainTools.Items.Add(displayname, pic, windowSelect);
                 nr++;
             }

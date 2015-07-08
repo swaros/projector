@@ -87,7 +87,7 @@
             // 
             // button73
             // 
-            this.button73.Image = global::Projector.Properties.Resources.applications_24;
+            this.button73.Image = global::Projector.Properties.Resources.applications24;
             this.button73.Location = new System.Drawing.Point(3, 3);
             this.button73.Name = "button73";
             this.button73.Size = new System.Drawing.Size(75, 64);

@@ -36,7 +36,7 @@
             // ToolImage
             // 
             this.ToolImage.Image = global::Projector.Properties.Resources.url;
-            this.ToolImage.InitialImage = global::Projector.Properties.Resources.applications_161;
+            this.ToolImage.InitialImage = global::Projector.Properties.Resources.applications161;
             this.ToolImage.Location = new System.Drawing.Point(0, 0);
             this.ToolImage.Name = "ToolImage";
             this.ToolImage.Size = new System.Drawing.Size(16, 16);

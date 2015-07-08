@@ -63,39 +63,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap add_16 {
+        internal static System.Drawing.Bitmap add16 {
             get {
-                object obj = ResourceManager.GetObject("add_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap application_form {
-            get {
-                object obj = ResourceManager.GetObject("application_form", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap application_side_tree {
-            get {
-                object obj = ResourceManager.GetObject("application_side_tree", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap application_view_list {
-            get {
-                object obj = ResourceManager.GetObject("application_view_list", resourceCulture);
+                object obj = ResourceManager.GetObject("add16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +83,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap applications_16 {
+        internal static System.Drawing.Bitmap applicationform {
             get {
-                object obj = ResourceManager.GetObject("applications_16", resourceCulture);
+                object obj = ResourceManager.GetObject("applicationform", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +93,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap applications_161 {
+        internal static System.Drawing.Bitmap applications16 {
             get {
-                object obj = ResourceManager.GetObject("applications_161", resourceCulture);
+                object obj = ResourceManager.GetObject("applications16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +103,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap applications_24 {
+        internal static System.Drawing.Bitmap applications161 {
             get {
-                object obj = ResourceManager.GetObject("applications_24", resourceCulture);
+                object obj = ResourceManager.GetObject("applications161", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +113,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap applications_32 {
+        internal static System.Drawing.Bitmap applications24 {
             get {
-                object obj = ResourceManager.GetObject("applications_32", resourceCulture);
+                object obj = ResourceManager.GetObject("applications24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +123,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_back_16 {
+        internal static System.Drawing.Bitmap applications32 {
             get {
-                object obj = ResourceManager.GetObject("arrow_back_16", resourceCulture);
+                object obj = ResourceManager.GetObject("applications32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +133,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_back_161 {
+        internal static System.Drawing.Bitmap applicationsidetree {
             get {
-                object obj = ResourceManager.GetObject("arrow_back_161", resourceCulture);
+                object obj = ResourceManager.GetObject("applicationsidetree", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,59 +143,9 @@ namespace Projector.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arrow_back_24 {
+        internal static System.Drawing.Bitmap applicationviewlist {
             get {
-                object obj = ResourceManager.GetObject("arrow_back_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap arrow_back_32 {
-            get {
-                object obj = ResourceManager.GetObject("arrow_back_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap arrow_down_16 {
-            get {
-                object obj = ResourceManager.GetObject("arrow_down_16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap arrow_down_24 {
-            get {
-                object obj = ResourceManager.GetObject("arrow_down_24", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap arrow_down_32 {
-            get {
-                object obj = ResourceManager.GetObject("arrow_down_32", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap arrow_forward_16 {
-            get {
-                object obj = ResourceManager.GetObject("arrow_forward_16", resourceCulture);
+                object obj = ResourceManager.GetObject("applicationviewlist", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -286,6 +206,86 @@ namespace Projector.Properties {
         internal static System.Drawing.Bitmap arrow_up_32 {
             get {
                 object obj = ResourceManager.GetObject("arrow_up_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowback16 {
+            get {
+                object obj = ResourceManager.GetObject("arrowback16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowback161 {
+            get {
+                object obj = ResourceManager.GetObject("arrowback161", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowback24 {
+            get {
+                object obj = ResourceManager.GetObject("arrowback24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowback32 {
+            get {
+                object obj = ResourceManager.GetObject("arrowback32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowdown16 {
+            get {
+                object obj = ResourceManager.GetObject("arrowdown16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowdown24 {
+            get {
+                object obj = ResourceManager.GetObject("arrowdown24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowdown32 {
+            get {
+                object obj = ResourceManager.GetObject("arrowdown32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arrowforward16 {
+            get {
+                object obj = ResourceManager.GetObject("arrowforward16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

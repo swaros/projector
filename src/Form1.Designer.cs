@@ -162,7 +162,7 @@
             // 
             // databaseWatchToolStripMenuItem
             // 
-            this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications_161;
+            this.databaseWatchToolStripMenuItem.Image = global::Projector.Properties.Resources.applications161;
             this.databaseWatchToolStripMenuItem.Name = "databaseWatchToolStripMenuItem";
             this.databaseWatchToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.W)));
             this.databaseWatchToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
@@ -424,7 +424,7 @@
             // profilSelector
             // 
             this.profilSelector.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.profilSelector.Image = global::Projector.Properties.Resources.arrow_down_16;
+            this.profilSelector.Image = global::Projector.Properties.Resources.arrowdown16;
             this.profilSelector.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.profilSelector.Name = "profilSelector";
             this.profilSelector.Size = new System.Drawing.Size(29, 22);

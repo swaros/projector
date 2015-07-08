@@ -647,7 +647,7 @@
             // 
             this.showDebug.CheckOnClick = true;
             this.showDebug.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.showDebug.Image = global::Projector.Properties.Resources.application_view_list;
+            this.showDebug.Image = global::Projector.Properties.Resources.applicationviewlist;
             this.showDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.showDebug.Name = "showDebug";
             this.showDebug.Size = new System.Drawing.Size(23, 22);
@@ -658,7 +658,7 @@
             // navigatorBtn
             // 
             this.navigatorBtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.navigatorBtn.Image = global::Projector.Properties.Resources.application_side_tree;
+            this.navigatorBtn.Image = global::Projector.Properties.Resources.applicationsidetree;
             this.navigatorBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.navigatorBtn.Name = "navigatorBtn";
             this.navigatorBtn.Size = new System.Drawing.Size(23, 22);
@@ -796,7 +796,7 @@
             // 
             // showToolbarToolStripMenuItem
             // 
-            this.showToolbarToolStripMenuItem.Image = global::Projector.Properties.Resources.application_side_tree;
+            this.showToolbarToolStripMenuItem.Image = global::Projector.Properties.Resources.applicationsidetree;
             this.showToolbarToolStripMenuItem.Name = "showToolbarToolStripMenuItem";
             this.showToolbarToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.showToolbarToolStripMenuItem.Text = "&Show Toolbar";

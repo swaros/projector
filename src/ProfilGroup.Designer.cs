@@ -56,7 +56,7 @@
             // 
             // manipulateBtn
             // 
-            this.manipulateBtn.Image = global::Projector.Properties.Resources.add_16;
+            this.manipulateBtn.Image = global::Projector.Properties.Resources.add16;
             this.manipulateBtn.Location = new System.Drawing.Point(277, 21);
             this.manipulateBtn.Name = "manipulateBtn";
             this.manipulateBtn.Size = new System.Drawing.Size(38, 34);
