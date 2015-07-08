@@ -15,8 +15,11 @@ namespace Projector
     {
         public static void addImageToList(ImageList imgList, Image img) 
         {
-            imgList.Images.Add(img);
-            imgList.Images.SetKeyName(imgList.Images.Count - 1, "Image" + imgList.Images.Count);
+            if (img != null)
+            {
+                imgList.Images.Add(img);
+                imgList.Images.SetKeyName(imgList.Images.Count - 1, "Image" + imgList.Images.Count);
+            }            
         }
 
         public static void addResToImageList(ImageList imgList, string resName)
