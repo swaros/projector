@@ -7,6 +7,6 @@ gacutil -i MySql.Data.dll
 
 # Compilation on Linux
 ## Requirements
-* Mono (Debian based: sudo apt-get install mono-complete
+* Mono (Debian based: sudo apt-get install mono-complete monodevelop
 
 Open the project in monodevelop and compile it.
