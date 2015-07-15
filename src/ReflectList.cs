@@ -148,6 +148,33 @@ namespace Projector
             return list;
         }
 
+        public ResultList resultFromSelected()
+        {
+            ResultList tmp = new ResultList();
+            if (this.listView.SelectedItems.Count > 0)
+            {
+                Boolean todoInit = true;
+                for (int i = 0; i < this.listView.SelectedItems.Count; i++)
+                {
+                    int rowNr = tmp.AddRow();
+                    for (int a = 0; a < listView.Columns.Count; a++)
+                    {
+                        string header = listView.Columns[a].Text;
+                        string value = listView.SelectedItems[i].SubItems[a].Text.ToString();
+                        if (todoInit)
+                        {
+                            tmp.AddColumn(header);
+                        }                        
+                        tmp.setValue(header, rowNr, value);
+                    }
+                    todoInit = false;
+                }
+            }
+            return tmp;
+        }
+
+
+
         public void joinFields(string left, string right, string newName, string between)
         {
             Stopwatch watch = new Stopwatch();
@@ -321,6 +348,17 @@ namespace Projector
             this.resetlabel();
         }
 
+        public void setEnabled(Boolean onOff)
+        {
+            this.listView.Enabled = onOff;
+            this.toolStrip.Enabled = onOff;
+        }
+
+        public void unMark()
+        {
+            this.listView.SelectedItems.Clear();
+        }
+
         public void mark(string fieldname, string value)
         {
             Stopwatch watch = new Stopwatch();
@@ -370,6 +408,171 @@ namespace Projector
                 }
             }
             this.resetlabel();
+        }
+
+        public void markAll(string fieldname, string value)
+        {
+            Stopwatch watch = new Stopwatch();
+            this.setStatusMsg("Mark:");
+            int lPos = -1;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == fieldname)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+                for (int i = 0; i < this.listView.Items.Count; i++)
+                {
+
+                    string lText = this.listView.Items[i].SubItems[lPos].Text;
+                    if (lText == value)
+                    {
+                        this.listView.TopItem = this.listView.Items[i];
+                        this.listView.Items[i].Selected = true;
+                        this.listView.Update();
+                        Application.DoEvents();
+
+                    }
+                    if (watch.ElapsedMilliseconds > 1000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
+                        this.listView.TopItem = this.listView.Items[i];
+                        this.setStatusMsg("Search..." + i + "/" + this.listView.Items.Count);
+                        this.listView.Update();
+                        Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return;
+                        }
+                        watch.Restart();
+                    }
+                }
+            }
+            this.resetlabel();
+        }
+
+
+        public double getSumFromField(string fieldname)
+        {
+            double sum = 0;
+            Stopwatch watch = new Stopwatch();
+            this.setStatusMsg("Mark:");
+            int lPos = -1;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == fieldname)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+                for (int i = 0; i < this.listView.Items.Count; i++)
+                {
+
+                    string lText = this.listView.Items[i].SubItems[lPos].Text;
+                    double tmpVal = 0;
+
+                    try
+                    {
+                        tmpVal = double.Parse(lText);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                    sum += tmpVal;
+
+                    if (watch.ElapsedMilliseconds > 1000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.Items.Count;
+                        this.Progress.Value = i;
+                        this.listView.TopItem = this.listView.Items[i];
+                        this.setStatusMsg("Search..." + i + "/" + this.listView.Items.Count);
+                        this.listView.Update();
+                        Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return sum;
+                        }
+                        watch.Restart();
+                    }
+                }
+            }
+            this.resetlabel();
+            return sum;
+        }
+
+        public double getSumFromMarkField(string fieldname)
+        {
+            double sum = 0;
+            Stopwatch watch = new Stopwatch();
+            this.setStatusMsg("Mark:");
+            int lPos = -1;
+            for (int a = 0; a < listView.Columns.Count; a++)
+            {
+
+                if (listView.Columns[a].Text == fieldname)
+                {
+                    lPos = a;
+                }
+            }
+
+            if (lPos > -1)
+            {
+                watch.Start();
+                for (int i = 0; i < this.listView.SelectedItems.Count; i++)
+                {
+
+                    string lText = this.listView.SelectedItems[i].SubItems[lPos].Text;
+                    double tmpVal = 0;
+
+                    try
+                    {
+                        tmpVal = double.Parse(lText);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                    sum += tmpVal;
+
+                    if (watch.ElapsedMilliseconds > 1000)
+                    {
+                        this.Progress.Visible = true;
+                        this.Progress.Maximum = this.listView.SelectedItems.Count;
+                        this.Progress.Value = i;
+                        this.listView.TopItem = this.listView.SelectedItems[i];
+                        this.setStatusMsg("Search..." + i + "/" + this.listView.SelectedItems.Count);
+                        this.listView.Update();
+                        Application.DoEvents();
+                        if (ifAbort())
+                        {
+                            resetlabel();
+                            return sum;
+                        }
+                        watch.Restart();
+                    }
+                }
+            }
+            this.resetlabel();
+            return sum;
         }
 
 

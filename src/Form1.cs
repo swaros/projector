@@ -1473,7 +1473,6 @@ namespace Projector
                     pw = pwInp.passwordText.Text;
                     this.Setup.setPassword(pwInp.passwordText.Text);
                 }
-
                 
                 this.Setup.saveConfigToFile(saveProject.FileName);
 

@@ -6,14 +6,25 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+
 namespace Projector
 {
 
     class ConfigSerializer
     {
-
+        /// <summary>
+        /// status on serialisation
+        /// </summary>
         public Boolean readingError = false;
 
+
+
+
+        /// <summary>
+        /// save Config Object Binary serialized
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="objectToSerialize"></param>
         public void SerializeObject(string filename, PConfigContent objectToSerialize)
         {
             Stream stream = File.Open(filename, FileMode.Create);
@@ -22,6 +33,14 @@ namespace Projector
             stream.Close();
         }
 
+
+
+
+        /// <summary>
+        /// Loads Config Object Binary serialized
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public PConfigContent DeSerializeObject(string filename)
         {
             PConfigContent objectToSerialize;

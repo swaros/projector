@@ -1376,6 +1376,75 @@ namespace Projector.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACCESSIBLE
+        ///ALTER
+        ///AS
+        ///BEFORE
+        ///BINARY
+        ///BY
+        ///CASE
+        ///CHARACTER
+        ///COLUMN
+        ///CONTINUE
+        ///CROSS
+        ///CURRENT_TIMESTAMP
+        ///DATABASE
+        ///DAY_MICROSECOND
+        ///DEC
+        ///DEFAULT
+        ///DESC
+        ///DISTINCT
+        ///DOUBLE
+        ///EACH
+        ///ENCLOSED
+        ///EXIT
+        ///FETCH
+        ///FLOAT8
+        ///FOREIGN
+        ///GRANT
+        ///HIGH_PRIORITY
+        ///HOUR_SECOND
+        ///IN
+        ///INNER
+        ///INSERT
+        ///INT2
+        ///INT8
+        ///INTO
+        ///JOIN
+        ///KILL
+        ///LEFT
+        ///LINEAR
+        ///LOCALTIME
+        ///LONG
+        ///LOOP
+        ///MATCH
+        ///MEDIUMTEXT
+        ///MINUTE_SECOND
+        ///NATURAL
+        ///NULL
+        ///OPTIMIZE
+        ///OR
+        ///OUTER
+        ///PRIMARY
+        ///RANGE
+        ///READ_WRITE
+        ///REGEXP
+        ///REPEAT
+        ///RESTRICT
+        ///RIGHT
+        ///SCHEMAS
+        ///SENSITIVE
+        ///SHOW
+        ///SPECIFIC
+        ///SQLSTATE        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string mysql_reserved {
+            get {
+                return ResourceManager.GetString("mysql_reserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Einstellungen Testen.
         /// </summary>
         internal static string MysqlCheckConnetion {

@@ -47,21 +47,40 @@ namespace Projector
 
         public PConfig() { }
 
+        /// <summary>
+        /// returns current namespace
+        /// </summary>
+        /// <returns></returns>
         public String getNameSpace()
         {
             return this.NameSpace;
         }
 
+
+        /// <summary>
+        /// sets current Password for cypt/decrypt config content on loading and saving
+        /// </summary>
+        /// <param name="password"></param>
         public void setPassword(string password)
         {
             PConfigContent.password = password;
         }
 
+        /// <summary>
+        /// serialisation handler
+        /// </summary>
+        /// <param name="info"></param>
+        /// <param name="ctxt"></param>
         public PConfig(SerializationInfo info, StreamingContext ctxt)
         {
 
         }
 
+        /// <summary>
+        /// loads last stored runtime configuration
+        /// from the default location, or initialize 
+        /// a new clear config, if file not exists
+        /// </summary>
         public void loadRuntimeConfig()
         {
             if (System.IO.File.Exists( this.getDefaultFilename() ))
@@ -76,12 +95,19 @@ namespace Projector
             this.resetReader();
         }
 
+        /// <summary>
+        /// initialize basic configuration  objects
+        /// </summary>
         private void initBaseConfig(){
             PConfig.Configuration = new PConfigContent();
             PConfig.Configuration.SetFlatConfig(this.NameSpace, null);
             
         }
 
+        /// <summary>
+        /// Save current working configuration  
+        /// in defined file
+        /// </summary>
         public void saveRuntimeConfig()
         {
             if (PConfig.Configuration != null)
@@ -91,6 +117,12 @@ namespace Projector
             
         }
 
+        /// <summary>
+        /// Loads binary file as config if exists
+        ///  
+        /// </summary>
+        /// <param name="filename">name of file that should be loaded</param>
+        /// <returns>false if flie not exists</returns>
         public Boolean loadConfigFromFile(string filename)
         {
             if (System.IO.File.Exists(filename))
@@ -107,6 +139,10 @@ namespace Projector
             return false;
         }
 
+        /// <summary>
+        /// save configuration as binary file
+        /// </summary>
+        /// <param name="filename">name of file</param>
         public void saveConfigToFile(string filename)
         {
             if (PConfig.Configuration != null)
@@ -114,6 +150,7 @@ namespace Projector
                 fileHandle.SerializeObject(filename, PConfig.Configuration);
             }
         }
+
 
         public PConfigContent getConfig()
         {

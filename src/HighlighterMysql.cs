@@ -90,14 +90,19 @@ namespace Projector
 
             if (File.Exists(path + Path.DirectorySeparatorChar + definitionFile))
             {
-                reservedWords = File.ReadAllLines(path + Path.DirectorySeparatorChar + definitionFile);
-
-                for (int i = 0; i < reservedWords.Length; i++)
-                {
-                    tp.addKeyWord(reservedWords[i],1);
-                }
-
+                reservedWords = File.ReadAllLines(path + Path.DirectorySeparatorChar + definitionFile);                
             }
+            else
+            {
+                string reservedWordsFull = Projector.Properties.Resources.mysql_reserved;
+                reservedWords = reservedWordsFull.Split(System.Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            }
+
+            for (int i = 0; i < reservedWords.Length; i++)
+            {
+                tp.addKeyWord(reservedWords[i], 1);
+            }
+
             tp.addKeyWord("(", 2);
             tp.addKeyWord(")", 2);
             tp.addKeyWord(",", 2);

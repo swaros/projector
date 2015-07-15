@@ -1171,7 +1171,7 @@
     <None Include="Resources\padlock_closed.png" />
     <None Include="Resources\recherche.png" />
     <None Include="Resources\1260366040_resizecol.png" />
-    <None Include="Resources\1260538310_Binoculars.png" />
+    <None Include="Resources\BGBinoculars.png" />
     <None Include="Resources\bigsql.png" />
     <Content Include="mysql_reserved.def" />
     <Content Include="Resources\1279103131_padlock_closed.png" />

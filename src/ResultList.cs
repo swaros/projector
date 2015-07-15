@@ -103,6 +103,25 @@ namespace Projector.Data
             }
             return false;
         }
+
+        /// <summary>
+        /// add an named Column if not Exists
+        /// </summary>
+        /// <param name="name">the Column Name</param>
+        /// <returns>false if Column with this name already exists</returns>
+        public Boolean AddColumnWithNumber(string name)
+        {
+            name = name + (this.ColumnCount + 1);
+            if (!this.ColumnNames.Contains(name))
+            {
+                this.ColumnNames.Add(name);
+                this.ColumnIndex.Add(name, this.ColumnCount);
+                this.setColumnCount(this.getColumnCount() + 1);
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// add a new Row and returns the
         /// index for the added row
