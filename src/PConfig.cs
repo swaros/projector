@@ -7,6 +7,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Projector.Crypt;
+using Projector.Storage;
 
 namespace Projector
 {
@@ -151,11 +152,39 @@ namespace Projector
             }
         }
 
+        public bool importFromXml(string filename)
+        {
+            StorageXmlLoader xmlLoader = new StorageXmlLoader();
+            if (xmlLoader.load(filename))
+            {
+                PConfigContent loadedConfig = xmlLoader.tryToReadConfig();
+                if (loadedConfig != null)
+                {
+                    // a couple of checks
+                    if (loadedConfig.getName() == "Unamed")
+                    {
+                        return false;
+                    }
+
+                    if (loadedConfig.getChildByName(PConfig.KEY_MAIN) == null )
+                    {
+                        return false;
+                    }
+
+                    PConfig.Configuration = loadedConfig;
+                    return true;
+                }               
+            }
+            return false;
+        }
+
 
         public PConfigContent getConfig()
         {
             return PConfig.Configuration;
         }
+
+
 
         public void resetReader()
         {

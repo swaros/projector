@@ -545,12 +545,14 @@
             // 
             // openProjectDlg
             // 
-            this.openProjectDlg.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec";
+            this.openProjectDlg.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec|Xml Import|*." +
+    "xml";
             this.openProjectDlg.Title = "Open Project";
             // 
             // saveProject
             // 
-            this.saveProject.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec";
+            this.saveProject.Filter = "Projector unsecured Profil|*.pconf|Projector secured Profil|*.prsec|Xml export|*." +
+    "xml";
             this.saveProject.Title = "Project Save";
             // 
             // openScript

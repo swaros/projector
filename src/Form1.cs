@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Collections;
 using Projector.Script;
 using Projector.Crypt;
+using Projector.Storage;
 
 namespace Projector
 {
@@ -1459,6 +1460,16 @@ namespace Projector
             {
                 string pw = "";
                 int chooseType = saveProject.FilterIndex;
+
+                // just xml export
+                if (chooseType == 3)
+                {
+                    StorageXml xmlExport = new StorageXml();
+                    xmlExport.addNodeByConfig(this.Setup.getConfig());
+                    xmlExport.save(saveProject.FileName);
+                    return;
+                }
+
                 if (chooseType == 2)
                 {
                     PasswordForm pwInp = new PasswordForm();
@@ -1497,6 +1508,19 @@ namespace Projector
                 PrCrypt.error = false;
                 int chooseType = openProjectDlg.FilterIndex;
                 string pw = "";
+
+                if (chooseType == 3)
+                {
+                    if (this.Setup.importFromXml(openProjectDlg.FileName) == false)
+                    {
+                        MessageBox.Show("Error on Importing Settings from " + openProjectDlg.FileName);
+                    }
+                    drawGroupButtons();
+                    this.updateProfilSelector();
+                    return;
+                }
+
+
                 if (chooseType == 2)
                 {
                     PasswordForm pwInp = new PasswordForm();
@@ -1531,6 +1555,7 @@ namespace Projector
                     MessageBox.Show("Loading Error. Keep in Mind to set Userpassword BEFORE you read Decrypted Projects. Now i will reset to Default Settings ", "Reading Error", MessageBoxButtons.OK , MessageBoxIcon.Error);
                     this.mainInit();
                 }
+                drawGroupButtons();
                 this.updateProfilSelector();
             }
         }

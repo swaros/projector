@@ -256,7 +256,7 @@ namespace Projector
         /// get the child by name
         /// </summary>
         /// <param name="name">name of the existing child</param>
-        /// <returns>retusn the child or null if not exists</returns>
+        /// <returns>return the child or null if not exists</returns>
         public PConfigContent getChildByName(string name)
         {
             if (this.ChildUsable())
