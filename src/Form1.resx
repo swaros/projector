@@ -127,6 +127,20 @@
     <value>236, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="enableGroupView.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAG3SURBVDhPpZO5SwNBFMa3NBaWYp9CUQOChX+Ff0QS7byw
+        UTBoY2nvFdkVrQSPbE41YESioAmooODdmJhNjEFBc/P53myyRFDxePDbmdmd79v33jBS02Qg0zDug8nh
+        /RWsYa3Ek78GayV243CtrUJecP4I3svBWsOAP2QyGaTT6W/hPbyX41ODm9s7XBM81lJ996XBpj8ARVaw
+        qCwKFIbWiizTnKBRrhDw6X0zjbEBPTi0OKWYfMVTKku84TH5Ak1LI6GliKTBQ0JDLBYTmjph4NDdpv3D
+        sM62wj5ngW2uDbNbI4gensLj9sCtqgYqcRDeF5oPBraZFkRy/Yi8DSKaH0CP04JtXwjlUhn5fN6gUChA
+        dW0IjehBvcMvFraZNhyReGq/C5HsEHqdHQj6dlEsFHFxeWWQy+Wgbnxl8DqApfNuykI32K4Y3MfiBrrB
+        utBUTkEvwTrdjKNsH4IpK6JUin2+HVveHZSKZTw/vxiIEmoN6isGS3sOYWKnTLgfy+EJXJxdwu1yiZoN
+        SHx2ciw0wuDfd6FxdCXEE86Ey+Ge8GgaY+jmMfSnKnx0PLKGtRKFmej8G5L5HdWS81ZnUjDSAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
   <data name="style_0.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8

@@ -406,14 +406,13 @@
             this.toolStripSeparator7});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(647, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(578, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
             // 
-            this.showProfilLabel.AutoSize = false;
             this.showProfilLabel.Name = "showProfilLabel";
-            this.showProfilLabel.Size = new System.Drawing.Size(145, 22);
+            this.showProfilLabel.Size = new System.Drawing.Size(45, 22);
             this.showProfilLabel.Text = "Default";
             this.showProfilLabel.Click += new System.EventHandler(this.showProfilLabel_Click);
             // 
@@ -425,7 +424,7 @@
             // enableGroupView
             // 
             this.enableGroupView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.enableGroupView.Image = global::Projector.Properties.Resources.layout_sidebar;
+            this.enableGroupView.Image = ((System.Drawing.Image)(resources.GetObject("enableGroupView.Image")));
             this.enableGroupView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.enableGroupView.Name = "enableGroupView";
             this.enableGroupView.Size = new System.Drawing.Size(23, 22);
