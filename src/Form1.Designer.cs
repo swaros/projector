@@ -84,6 +84,11 @@
             this.openScript = new System.Windows.Forms.OpenFileDialog();
             this.connectionTest = new System.ComponentModel.BackgroundWorker();
             this.ScriptDawTimer = new System.Windows.Forms.Timer(this.components);
+            this.addNewProfilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simpleButtonsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workbenchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scriptsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
@@ -231,7 +236,11 @@
             // 
             this.displayToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.switchButtonModeToolStripMenuItem,
-            this.groupButtonsToolStripMenuItem});
+            this.groupButtonsToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.simpleButtonsToolStripMenuItem,
+            this.workbenchToolStripMenuItem,
+            this.scriptsToolStripMenuItem});
             this.displayToolStripMenuItem.Name = "displayToolStripMenuItem";
             this.displayToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.displayToolStripMenuItem.Text = "&Display";
@@ -260,7 +269,8 @@
             // 
             this.profilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.groupSelectedToolStripMenuItem,
-            this.removeSelectedToolStripMenuItem});
+            this.removeSelectedToolStripMenuItem,
+            this.addNewProfilToolStripMenuItem});
             this.profilesToolStripMenuItem.Name = "profilesToolStripMenuItem";
             this.profilesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.profilesToolStripMenuItem.Text = "Pro&files";
@@ -387,22 +397,23 @@
             this.toolStripButton3,
             this.chooseGroup,
             this.toolStripSeparator4,
+            this.addProfil,
             this.scriptRunButton,
             this.toolStripSeparator5,
             this.style_0,
             this.style_2,
             this.style_3,
-            this.toolStripSeparator7,
-            this.addProfil});
+            this.toolStripSeparator7});
             this.toolStrip1.Location = new System.Drawing.Point(3, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(547, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(647, 25);
             this.toolStrip1.TabIndex = 0;
             // 
             // showProfilLabel
             // 
+            this.showProfilLabel.AutoSize = false;
             this.showProfilLabel.Name = "showProfilLabel";
-            this.showProfilLabel.Size = new System.Drawing.Size(45, 22);
+            this.showProfilLabel.Size = new System.Drawing.Size(145, 22);
             this.showProfilLabel.Text = "Default";
             this.showProfilLabel.Click += new System.EventHandler(this.showProfilLabel_Click);
             // 
@@ -575,6 +586,39 @@
             this.ScriptDawTimer.Interval = 250;
             this.ScriptDawTimer.Tick += new System.EventHandler(this.ScriptDawTimer_Tick);
             // 
+            // addNewProfilToolStripMenuItem
+            // 
+            this.addNewProfilToolStripMenuItem.Name = "addNewProfilToolStripMenuItem";
+            this.addNewProfilToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.addNewProfilToolStripMenuItem.Text = "Add New Profil";
+            this.addNewProfilToolStripMenuItem.Click += new System.EventHandler(this.add);
+            // 
+            // simpleButtonsToolStripMenuItem
+            // 
+            this.simpleButtonsToolStripMenuItem.Name = "simpleButtonsToolStripMenuItem";
+            this.simpleButtonsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.simpleButtonsToolStripMenuItem.Text = "Simple Buttons";
+            this.simpleButtonsToolStripMenuItem.Click += new System.EventHandler(this.simpleButtonsToolStripMenuItem_Click);
+            // 
+            // workbenchToolStripMenuItem
+            // 
+            this.workbenchToolStripMenuItem.Name = "workbenchToolStripMenuItem";
+            this.workbenchToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.workbenchToolStripMenuItem.Text = "Workbench";
+            this.workbenchToolStripMenuItem.Click += new System.EventHandler(this.workbenchToolStripMenuItem_Click);
+            // 
+            // scriptsToolStripMenuItem
+            // 
+            this.scriptsToolStripMenuItem.Name = "scriptsToolStripMenuItem";
+            this.scriptsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
+            this.scriptsToolStripMenuItem.Text = "Scripts";
+            this.scriptsToolStripMenuItem.Click += new System.EventHandler(this.scriptsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(222, 6);
+            // 
             // ProjectorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -666,6 +710,11 @@
         private System.Windows.Forms.Timer ScriptDawTimer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem setPasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewProfilToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripMenuItem simpleButtonsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workbenchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scriptsToolStripMenuItem;
 
 
     }

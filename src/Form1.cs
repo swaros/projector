@@ -2063,6 +2063,29 @@ namespace Projector
             }
         }
 
+        private void add(object sender, EventArgs e)
+        {
+            addProfil_Click(null, null);
+        }
+
+        private void simpleButtonsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 0;
+            this.updateStyleButtons();
+        }
+
+        private void workbenchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 2;
+            this.updateStyleButtons();
+        }
+
+        private void scriptsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.buttonStyle = 3;
+            this.updateStyleButtons();
+        }
+
        
 
 
