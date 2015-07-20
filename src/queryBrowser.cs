@@ -120,9 +120,17 @@ namespace Projector
             PlaceHolderSerializer pSerializer = new PlaceHolderSerializer();
             if (System.IO.File.Exists(pSerializer.getDefaultFilename(sensorProfil)))
             {
+                this.statusMessage("Loading Placeholder");
                 placeHolder = pSerializer.DeSerializeObject(pSerializer.getDefaultFilename(sensorProfil));
             }
         }
+
+        private void statusMessage(string message)
+        {
+            this.toolStripMessage.Text = message;
+            Application.DoEvents();
+        }
+
 
         private String getOrder()
         {
@@ -343,6 +351,7 @@ namespace Projector
             
         }
 
+
         
 
         public void listTables()
@@ -351,6 +360,7 @@ namespace Projector
             database.connect();
             tableView.Items.Clear();
             tableView.Groups.Clear();
+            this.statusMessage("Reading Tables");
             if (database != null)
             {
                 MySql.Data.MySqlClient.MySqlDataReader reader = database.sql_select("show tables");
@@ -364,10 +374,12 @@ namespace Projector
                 }
 
                 trigger_Tables.Items.Clear();
+                this.statusMessage("Reading Tables ...copy to list(s)");
                 database.sql_data2ListView(reader, tableView);
                 reader.Close();
                 leftJoinTables.Items.Clear();
 
+                this.statusMessage("Reading Tables ...adding Tablenames to Highlighter");
                 string[] mysqlWords = highlight.getReservedWords();
                 if (null != mysqlWords)
                 {
@@ -383,10 +395,11 @@ namespace Projector
                     int w = tableView.Width / tableView.Columns.Count;
 
                     tableView.Columns[0].Width = w;
-
+                    this.statusMessage("Reading Tables ... Update Internal References");
                     for (int i = 0; i < tableView.Items.Count; i++)
                     {
                         //textBox1.AutoCompleteCustomSource.Add(tableView.Items[i].Text);
+                        
                         TablesAutoComplete.Items.Add(tableView.Items[i].Text);
                         autoCompleteList.Add(tableView.Items[i].Text);
                         trigger_Tables.Items.Add(tableView.Items[i].Text);
@@ -421,7 +434,7 @@ namespace Projector
                 work.setImageIndex(tableView, 1, 2);
                 if (startTable != "") work.searchAndSelect(startTable, tableView, 0);
                 TablesAutoComplete.Visible = false;
-
+                this.statusMessage("Reading Tables ... Reading Trigger");
                 MySql.Data.MySqlClient.MySqlDataReader triggerReader = database.sql_select("show triggers");
                 database.sql_data2ListView(triggerReader, TriggerList);
 
@@ -436,6 +449,7 @@ namespace Projector
                     
 
                 }
+                this.statusMessage("Reading Tables ... Apply Styles");
                 if (this.currentStyle == null)
                 {
                     work.setRowColors(tableView, Color.LightBlue, Color.LightCyan);
@@ -444,10 +458,11 @@ namespace Projector
                 {
                     work.setRowColors(tableView, this.currentStyle.itemRowA, this.currentStyle.itemRowB, this.currentStyle.itemTextColor);                    
                 }
-
+                
                 work.autoSizeColumns(tableView, ColumnHeaderAutoResizeStyle.ColumnContent);
                 database.disConnect();
-                
+
+                this.statusMessage("Reading Tables ... Reading Stored Procedures");
                 myFuns.getProcedures(database);
                 ListViewGroup procGroup = new ListViewGroup();
                 procGroup.Header = "Procedures";
@@ -478,6 +493,7 @@ namespace Projector
                    // MessageBox.Show(this, myFuns.errorMessage, "Error on Reading Mysql Procedures", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            this.statusMessage("");
         }
 
 

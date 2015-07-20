@@ -98,9 +98,9 @@ namespace Projector
             qb.sensorProfil = currentProfil;
             qb.loadPlaceHolder();
             qb.MdiParent = this;
-            qb.listTables();
+            
             qb.Show();
-
+            qb.listTables();
             listWindows();
         }
 
