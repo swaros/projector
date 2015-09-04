@@ -36,6 +36,12 @@ namespace Projector
             }
         }
 
+        public void TriggerClick()
+        {
+            this.Button_Click(null, null);
+        }
+
+
         public void setEnabled(Boolean onoff)
         {
             this.Enabled = onoff;
